@@ -7,7 +7,7 @@ public class CharacterMover
     private Character character;
     private Transform transform;
     public bool isMoving = false;
-    private Vector2Int currCell => Map.grid.GetCell2D(character.gameObject);
+    public Vector2Int currCell => Map.grid.GetCell2D(character.gameObject);
     private const float TIME_TO_MOVE_ONE_CELL = .375f;
 
     public CharacterMover(Character character)

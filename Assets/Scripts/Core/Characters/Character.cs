@@ -14,6 +14,8 @@ public abstract class Character : MonoBehaviour
     public CharacterTurner turn { get; private set; }
     public Vector2Int facing => turn.Facing;
 
+    public Vector2Int currCell => mover.currCell;
+
 
 
 
