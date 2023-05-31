@@ -18,21 +18,39 @@ public class CharacterMover
 
     public void TryMove(Vector2Int direction)
     {
-        if (isMoving)
+        if (isMoving || !direction.IsBasic())
             return;
 
-        if (!direction.IsBasic())
-            return;
         character.turn.Turn(direction);
 
-        //Moving cardinal direction
+        if (CanMove(direction))
+        {
+            Map.occupiedCells.Add((currCell + direction), character);
+            Map.occupiedCells.Remove(currCell);
+            character.StartCoroutine(Co_Move(direction));
+        };
+
+    }
+
+    private bool CanMove(Vector2Int direction)
+    {
+        //Character Check
         if (isOccupied(direction)) //Not moving into occupied cell
-            return;
+            return false;
 
-        Map.occupiedCells.Add((currCell + direction), character);
-        Map.occupiedCells.Remove(currCell);
-        character.StartCoroutine(Co_Move(direction));
+        //Tilemap Check
+        Ray2D ray = new Ray2D(currCell.Center2D(), direction);
 
+        RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction);
+        Debug.DrawRay(ray.origin, ray.direction, new Color(20, 20, 255), 2f);
+
+
+        if (hits.Length > 0)
+            return false;
+
+
+
+        return true;
 
     }
 

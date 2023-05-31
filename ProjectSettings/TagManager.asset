@@ -41,3 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 4125358697
+    locked: 0
+  - name: Decorations
+    uniqueID: 490636833
+    locked: 0
+  - name: Collision
+    uniqueID: 3988253435
+    locked: 0
+  - name: Collision Deco
+    uniqueID: 257958567
+    locked: 0
+  - name: Characters
+    uniqueID: 890429281
+    locked: 0
+  - name: Delayed Render
+    uniqueID: 36806195
+    locked: 0
