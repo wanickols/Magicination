@@ -7,6 +7,7 @@ public class InputHandler
     {
         None,
         MoveLeft, MoveRight, MoveUp, MoveDown,
+        Interact,
     }
 
     Command command;
@@ -36,6 +37,10 @@ public class InputHandler
         {
             command = Command.MoveRight;
         }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            command = Command.Interact;
+        }
 
         HandleCommand();
     }
@@ -57,6 +62,9 @@ public class InputHandler
             case (Command.MoveRight):
                 ProcessMovementInput(Direction.Right);
                 break;
+            case (Command.Interact):
+                ProccessInteract();
+                break;
 
         }
     }
@@ -64,6 +72,21 @@ public class InputHandler
     //Currently it just moves it, but might add more later so abstracted it
     private void ProcessMovementInput(Vector2Int direction)
     {
-        player.mover.Move(direction);
+        player.mover.TryMove(direction);
+    }
+
+    private void ProccessInteract()
+    {
+
+        Vector2Int targetCell = player.facing + Map.grid.GetCell2D(player.gameObject);
+
+
+        if (!Map.occupiedCells.ContainsKey(targetCell))
+            return;
+
+        if (Map.occupiedCells[targetCell] is IInteractable interactable)
+        {
+            interactable.Interact();
+        }
     }
 }

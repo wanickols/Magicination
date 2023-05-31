@@ -1,5 +1,8 @@
 using UnityEngine;
 
+
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 //For any character in the game
 public abstract class Character : MonoBehaviour
 {
@@ -27,6 +30,7 @@ public abstract class Character : MonoBehaviour
         //Puts characters in center of tile at spawn
         Vector2Int currentCell = Map.grid.GetCell2D(this.gameObject);
         transform.position = Map.grid.GetCellCenter2D(currentCell);
+        Map.occupiedCells.Add(currentCell, this);
     }
 
     // Update is called once per frame
