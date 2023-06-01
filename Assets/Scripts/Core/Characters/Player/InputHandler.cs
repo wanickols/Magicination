@@ -78,13 +78,13 @@ public class InputHandler
     private void ProccessInteract()
     {
 
-        Vector2Int targetCell = player.facing + Map.grid.GetCell2D(player.gameObject);
+        Vector2Int targetCell = player.facing + Game.Map.grid.GetCell2D(player.gameObject);
 
 
-        if (!Map.occupiedCells.ContainsKey(targetCell))
+        if (!Game.Map.occupiedCells.ContainsKey(targetCell))
             return;
 
-        if (Map.occupiedCells[targetCell] is IInteractable interactable)
+        if (Game.Map.occupiedCells[targetCell] is IInteractable interactable)
         {
             interactable.Interact();
         }
