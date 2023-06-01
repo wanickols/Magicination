@@ -67,4 +67,23 @@ public class CharacterTests
 
     }
 
+    [UnityTest]
+    public IEnumerator Character_facing_updates_correctly()
+    {
+        while (!isReady) { yield return null; }
+
+        sut.turn.Turn(Direction.Down);
+        Assert.AreEqual(Direction.Down, sut.facing);
+
+        sut.turn.Turn(Direction.Left);
+        Assert.AreEqual(Direction.Left, sut.facing);
+
+        sut.turn.Turn(Direction.Right);
+        Assert.AreEqual(Direction.Right, sut.facing);
+
+        sut.turn.Turn(Direction.Up);
+        Assert.AreEqual(Direction.Up, sut.facing);
+
+    }
+
 }
