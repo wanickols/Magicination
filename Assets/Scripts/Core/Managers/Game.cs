@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -32,6 +31,7 @@ public class Game : MonoBehaviour
             Player = gameObject.GetComponent<Player>();
         }
 
+        State = GameState.World;
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(Player);
     }
@@ -49,14 +49,16 @@ public class Game : MonoBehaviour
         }
     }
 
-    private void EndBattle()
-    {
-        SceneManager.LoadScene(0);
-    }
-
     private void StartBattle()
     {
-        SceneManager.LoadScene(1);
+        SceneLoader.loadBattleScene();
+        State = GameState.Battle;
+    }
 
+    private void EndBattle()
+    {
+        SceneLoader.reloadSavedScene();
+
+        State = GameState.World;
     }
 }
