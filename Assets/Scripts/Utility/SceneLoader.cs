@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public static class SceneLoader
 {
-    private static int debugSceneBuildIndex = 0;
+
     private static int battleSceneBuildIndex = 1;
     private static int savedSceneBuildIndex;
     private static Vector2 savedPlayerLocation;
