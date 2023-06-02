@@ -86,4 +86,23 @@ public class CharacterTests
 
     }
 
+    [UnityTest]
+    public IEnumerator Updates_cell_map_dictionary()
+    {
+        while (!isReady) { yield return null; }
+
+        Vector2Int firstCell = sut.currCell;
+
+        Assert.IsTrue(Game.Map.occupiedCells.ContainsKey(firstCell));
+        Assert.AreEqual(sut, Game.Map.occupiedCells[firstCell]);
+
+        sut.mover.TryMove(Direction.Left);
+        yield return new WaitForSeconds(.5f);
+
+        Assert.IsTrue(Game.Map.occupiedCells.ContainsKey(sut.currCell));
+        Assert.IsFalse(Game.Map.occupiedCells.ContainsKey(firstCell));
+        Assert.AreEqual(sut, Game.Map.occupiedCells[sut.currCell]);
+
+    }
+
 }
