@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum GameState
@@ -42,7 +43,7 @@ public class Game : MonoBehaviour
         {
             //TEMP
             Battle.enemyPack = Resources.Load<EnemyPack>("ScriptableObjects/Enemies/EnemyPacks/TestEnemyPack");
-            StartBattle();
+            StartCoroutine(Co_StartBattle());
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -51,10 +52,13 @@ public class Game : MonoBehaviour
         }
     }
 
-    private void StartBattle()
+    private IEnumerator Co_StartBattle()
     {
-        SceneLoader.loadBattleScene();
         State = GameState.Battle;
+        Instantiate(Resources.Load("BattlePrefabs/BattleTransition"), Player.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(2f);
+        SceneLoader.loadBattleScene();
+
     }
 
     private void EndBattle()
