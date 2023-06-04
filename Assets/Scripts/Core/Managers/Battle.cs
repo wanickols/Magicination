@@ -5,6 +5,7 @@ public class Battle : MonoBehaviour
 {
     //Mange the turns, trigger the next turn when one is done
     //End battle when it's over
+    public static EnemyPack enemyPack;
 
     private List<Actor> TurnOrder = new List<Actor>();
     private int turnNumber = 0;
@@ -12,6 +13,7 @@ public class Battle : MonoBehaviour
     private void Awake()
     {
         SpawnPartyMembers();
+        SpawnEnemies();
     }
 
     private void Update()
@@ -44,6 +46,22 @@ public class Battle : MonoBehaviour
             spawnPostion.y += 1.2f;
             TurnOrder.Add(temp.GetComponent<Ally>());
         }
+
+    }
+
+    private void SpawnEnemies()
+    {
+        for (int i = 0; i < enemyPack.Data.Count; i++)
+        {
+            Vector2 spawnPos = new Vector2(enemyPack.XSpawnCoordinates[i], enemyPack.YSpawnCoordinates[i]);
+            GameObject enemy = Instantiate(enemyPack.Data[i].ActorPrefab, spawnPos, Quaternion.identity);
+            TurnOrder.Add(enemy.GetComponent<Enemy>());
+
+        }
+    }
+
+    private void Start()
+    {
 
     }
 }

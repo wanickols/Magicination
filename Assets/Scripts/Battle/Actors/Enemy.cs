@@ -1,3 +1,6 @@
+using System.Collections;
+using UnityEngine;
+
 public class Enemy : Actor
 {
     protected override void Start()
@@ -7,9 +10,40 @@ public class Enemy : Actor
         targetPosition.x = startingPosition.x + offset;
     }
 
-    //Will Eventually be enemy actor script
     public override void StartTurn()
     {
-        //TODO
+        isTakingTurn = true;
+
+        StartCoroutine(Co_MoveToAttack());
+    }
+
+    protected override IEnumerator Co_MoveToAttack()
+    {
+        float elapsedTime = 0;
+
+        while ((Vector2)transform.position != targetPosition)
+        {
+            transform.position = Vector2.Lerp(startingPosition, targetPosition, elapsedTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        StartCoroutine(Co_EnemyChooseAction());
+    }
+
+    private IEnumerator Co_EnemyChooseAction()
+    {
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                Debug.Log("Command Accepted");
+                break;
+            }
+            yield return null;
+        }
+
+        StartCoroutine(Co_MoveToStarting());
+
     }
 }
