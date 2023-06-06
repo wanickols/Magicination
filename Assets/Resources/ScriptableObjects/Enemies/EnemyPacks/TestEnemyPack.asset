@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e1fd26002ce1844aa77c14548e1daa, type: 3}
   m_Name: TestEnemyPack
   m_EditorClassIdentifier: 
-  data:
+  enemies:
   - {fileID: 11400000, guid: a1df6b963055c494c8b1ec7b0d415377, type: 2}
   - {fileID: 11400000, guid: a1df6b963055c494c8b1ec7b0d415377, type: 2}
   xSpawnCoordinates:

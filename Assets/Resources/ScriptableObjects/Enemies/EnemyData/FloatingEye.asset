@@ -10,6 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee4c5948a48e50b468211f4fc9e1f7fc, type: 3}
-  m_Name: TestEnemy
+  m_Name: FloatingEye
   m_EditorClassIdentifier: 
   actorPrefab: {fileID: 2832430299845234393, guid: d051278af23c43447a9df80bb7d37c54, type: 3}
+  stats:
+    hp: 10
+    maxHp: 10
+    mp: 0
+    maxMp: 0
+    atk: 4
+    matk: 0
+    def: 2
+    mdef: 0
+    spd: 10
+    evs: 1

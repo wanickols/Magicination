@@ -4,8 +4,12 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     [SerializeField] private GameObject actorPrefab;
+    [SerializeField] private Stats stats;
 
     public GameObject ActorPrefab => actorPrefab;
+    public Stats Stats => stats;
+
+
 
 
 }

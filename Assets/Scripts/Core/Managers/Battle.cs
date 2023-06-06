@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Battle : MonoBehaviour
@@ -7,19 +8,28 @@ public class Battle : MonoBehaviour
     //End battle when it's over
     public static EnemyPack enemyPack;
 
-    private List<Actor> TurnOrder = new List<Actor>();
+    private List<Actor> turnOrder = new List<Actor>();
     private int turnNumber = 0;
+    private bool setUpComplete = false;
+
+    public IReadOnlyList<Actor> TurnOrder => turnOrder;
 
     private void Awake()
     {
         SpawnPartyMembers();
         SpawnEnemies();
+
     }
+
 
     private void Update()
     {
-        if (TurnOrder[turnNumber].isTakingTurn)
-            return;
+        if (!setUpComplete)
+        {
+            DetermineTurnOrder();
+        };
+
+        if (turnOrder[turnNumber].isTakingTurn) return;
 
         CheckForEnd();
         GoToNextTurn();
@@ -32,8 +42,8 @@ public class Battle : MonoBehaviour
 
     private void GoToNextTurn()
     {
-        turnNumber = (turnNumber + 1) % TurnOrder.Count;
-        TurnOrder[turnNumber].StartTurn();
+        turnNumber = (turnNumber + 1) % turnOrder.Count;
+        turnOrder[turnNumber].StartTurn();
 
     }
 
@@ -43,22 +53,40 @@ public class Battle : MonoBehaviour
         foreach (PartyMember member in Party.ActiveMembers)
         {
             var temp = Instantiate(member.actorPrefab, spawnPostion, Quaternion.identity);
+            Ally ally = temp.GetComponent<Ally>();
+            ally.Stats = member.Stats;
+            turnOrder.Add(ally);
+
             spawnPostion.y += 1.2f;
-            TurnOrder.Add(temp.GetComponent<Ally>());
+
         }
 
     }
 
     private void SpawnEnemies()
     {
-        for (int i = 0; i < enemyPack.Data.Count; i++)
+        for (int i = 0; i < enemyPack.Enemies.Count; i++)
         {
             Vector2 spawnPos = new Vector2(enemyPack.XSpawnCoordinates[i], enemyPack.YSpawnCoordinates[i]);
-            GameObject enemy = Instantiate(enemyPack.Data[i].ActorPrefab, spawnPos, Quaternion.identity);
-            TurnOrder.Add(enemy.GetComponent<Enemy>());
+            GameObject enemyActor = Instantiate(enemyPack.Enemies[i].ActorPrefab, spawnPos, Quaternion.identity);
+            Enemy enemy = enemyActor.GetComponent<Enemy>();
+            enemy.Stats = enemyPack.Enemies[i].Stats;
+            turnOrder.Add(enemyActor.GetComponent<Enemy>());
 
         }
     }
+
+    private void DetermineTurnOrder()
+    {
+        turnOrder = turnOrder.OrderByDescending(actor => actor.Stats.Initative).ToList();
+        foreach (var actor in turnOrder)
+        {
+            Debug.Log($"{actor.name} {actor.Stats.EVS}");
+        }
+        turnOrder[0].StartTurn();
+        setUpComplete = true;
+    }
+
 
     private void Start()
     {

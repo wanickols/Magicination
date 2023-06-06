@@ -9,10 +9,15 @@ public static class Party
 
     static Party()
     {
-        PartyMember Sora = new PartyMember(Resources.Load<GameObject>("BattlePrefabs/PartyMember"));
-        PartyMember Ash = new PartyMember(Resources.Load<GameObject>("BattlePrefabs/PartyMember"));
-        PartyMember Tidus = new PartyMember(Resources.Load<GameObject>("BattlePrefabs/PartyMember"));
-        PartyMember Link = new PartyMember(Resources.Load<GameObject>("BattlePrefabs/PartyMember"));
+        Stats soraStats = new Stats(10, 10, 0, 0, 3, 1, 2, 0, 4, 1);
+        Stats ashStats = new Stats(10, 10, 0, 0, 3, 1, 2, 0, 1, 1);
+        Stats tidusStats = new Stats(10, 10, 0, 0, 3, 1, 2, 0, 5, 1);
+        Stats linkStats = new Stats(10, 10, 0, 0, 3, 1, 2, 0, 2, 1);
+
+        PartyMember Sora = new PartyMember(Resources.Load<GameObject>("BattlePrefabs/PartyMember"), soraStats);
+        PartyMember Ash = new PartyMember(Resources.Load<GameObject>("BattlePrefabs/PartyMember"), ashStats);
+        PartyMember Tidus = new PartyMember(Resources.Load<GameObject>("BattlePrefabs/PartyMember"), tidusStats);
+        PartyMember Link = new PartyMember(Resources.Load<GameObject>("BattlePrefabs/PartyMember"), linkStats);
 
         activeMembers.Add(Sora);
         activeMembers.Add(Tidus);

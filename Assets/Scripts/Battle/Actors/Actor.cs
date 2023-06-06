@@ -6,6 +6,7 @@ public abstract class Actor : MonoBehaviour
     //Store actor's stats and methods for taking a turn
     protected Vector2 startingPosition;
     [SerializeField] protected Vector2 targetPosition;
+    public Stats Stats { get; set; }
 
     public bool isTakingTurn { get; protected set; } = false;
     protected virtual void Start()
