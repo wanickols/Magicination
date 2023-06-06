@@ -8,6 +8,7 @@ public class InputHandler
         None,
         MoveLeft, MoveRight, MoveUp, MoveDown,
         Interact,
+        OpenMenu,
     }
 
     Command command;
@@ -18,30 +19,35 @@ public class InputHandler
 
     public void CheckInput()
     {
+        if (Game.State == GameState.World)
+        {
+            command = Command.None;
 
-        command = Command.None;
-
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        {
-            command = Command.MoveUp;
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            {
+                command = Command.MoveUp;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+            {
+                command = Command.MoveDown;
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            {
+                command = Command.MoveLeft;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            {
+                command = Command.MoveRight;
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                command = Command.Interact;
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                command = Command.OpenMenu;
+            }
         }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            command = Command.MoveDown;
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            command = Command.MoveLeft;
-        }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            command = Command.MoveRight;
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            command = Command.Interact;
-        }
-
         HandleCommand();
     }
 
@@ -65,7 +71,9 @@ public class InputHandler
             case (Command.Interact):
                 ProccessInteract();
                 break;
-
+            case (Command.OpenMenu):
+                ProcessOpenMenu();
+                break;
         }
     }
 
@@ -89,4 +97,10 @@ public class InputHandler
             interactable.Interact();
         }
     }
+    private void ProcessOpenMenu()
+    {
+        Game.OpenMenu();
+
+    }
+
 }

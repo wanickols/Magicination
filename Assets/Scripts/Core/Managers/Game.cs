@@ -11,9 +11,12 @@ public enum GameState
 
 public class Game : MonoBehaviour
 {
-    public GameState State { get; private set; }
+    public static GameState State { get; private set; }
     public static Map Map { get; private set; }
     public static Player Player { get; private set; }
+
+    public static void OpenMenu() => State = GameState.Menu;
+    public static void CloseMenu() => State = GameState.World;
 
     [SerializeField] private Map startingMap;
     [SerializeField] private GameObject playerPrefab;
