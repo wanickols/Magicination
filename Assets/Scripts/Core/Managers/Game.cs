@@ -44,8 +44,7 @@ public class Game : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            //TEMP
-            Battle.enemyPack = Resources.Load<EnemyPack>("ScriptableObjects/Enemies/EnemyPacks/TestEnemyPack");
+            Battle.enemyPack = ResourceLoader.Load<EnemyPack>(ResourceLoader.TwoEyes);
             StartCoroutine(Co_StartBattle());
         }
 
@@ -58,7 +57,7 @@ public class Game : MonoBehaviour
     private IEnumerator Co_StartBattle()
     {
         State = GameState.Battle;
-        Instantiate(Resources.Load("BattlePrefabs/BattleTransition"), Player.transform.position, Quaternion.identity);
+        Instantiate(ResourceLoader.Load<GameObject>(ResourceLoader.BattleTransition), Player.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(2f);
         SceneLoader.loadBattleScene();
 

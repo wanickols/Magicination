@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5072f5086c88d4fa623a650b4b1d5e, type: 3}
+  m_Name: Aaron
+  m_EditorClassIdentifier: 
+  _name: Aaron
+  actorPrefab: {fileID: 2832430299845234393, guid: 7cf866aeb870638428411e342836889f, type: 3}
+  stats:
+    lv: 1
+    exp: 1
+    nxtExp: 100
+    hp: 10
+    maxHp: 10
+    mp: 0
+    maxMp: 0
+    atk: 3
+    matk: 3
+    def: 1
+    mdef: 1
+    spd: 4
+    evs: 1
+  portrait: {fileID: 21300000, guid: 5df3704d82bdd134e9747a216c4eff6a, type: 3}

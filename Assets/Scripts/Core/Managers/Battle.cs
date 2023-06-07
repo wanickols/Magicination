@@ -52,7 +52,7 @@ public class Battle : MonoBehaviour
         Vector2 spawnPostion = new Vector2(-5, -1.8f);
         foreach (PartyMember member in Party.ActiveMembers)
         {
-            var temp = Instantiate(member.actorPrefab, spawnPostion, Quaternion.identity);
+            var temp = Instantiate(member.ActorPrefab, spawnPostion, Quaternion.identity);
             Ally ally = temp.GetComponent<Ally>();
             ally.Stats = member.Stats;
             turnOrder.Add(ally);

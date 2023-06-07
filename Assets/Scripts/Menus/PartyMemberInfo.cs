@@ -1,12 +1,11 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PartyMemberInfo : MonoBehaviour
 {
     private PartyMember partyMember;
 
-    [SerializeField] private Image partyMemberPortrait;
+    [SerializeField] private Sprite partyMemberPortrait;
     [SerializeField] private TextMeshProUGUI memberName;
     [SerializeField] private TextMeshProUGUI memberLevel;
     [SerializeField] private TextMeshProUGUI memberHP;
@@ -17,9 +16,10 @@ public class PartyMemberInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        partyMember = Party.ActiveMembers[0];
+        int siblingIndex = this.gameObject.transform.GetSiblingIndex();
+        partyMember = Party.ActiveMembers[siblingIndex];
         memberName.text = partyMember.Name;
-        partyMemberPortrait = partyMember.portrait;
+        partyMemberPortrait = partyMember.Portrait;
         GetStats();
     }
 

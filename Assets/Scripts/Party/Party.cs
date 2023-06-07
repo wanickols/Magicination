@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class Party
 {
@@ -9,20 +8,16 @@ public static class Party
 
     static Party()
     {
-        Stats soraStats = new Stats(1, 0, 10, 10, 0, 0, 3, 1, 2, 0, 4, 1);
-        Stats ashStats = new Stats(1, 0, 10, 10, 0, 0, 3, 1, 2, 0, 1, 1);
-        Stats tidusStats = new Stats(1, 0, 10, 10, 0, 0, 3, 1, 2, 0, 5, 1);
-        Stats linkStats = new Stats(1, 0, 10, 10, 0, 0, 3, 1, 2, 0, 2, 1);
+        PartyMember Aaron = ResourceLoader.Load<PartyMember>(ResourceLoader.Aaron);
+        PartyMember Kaja = ResourceLoader.Load<PartyMember>(ResourceLoader.Kaja);
+        PartyMember Seth = ResourceLoader.Load<PartyMember>(ResourceLoader.Seth);
+        PartyMember Zera = ResourceLoader.Load<PartyMember>(ResourceLoader.Zera);
 
-        PartyMember Sora = new PartyMember("Sora", null, Resources.Load<GameObject>("BattlePrefabs/PartyMember"), soraStats);
-        PartyMember Ash = new PartyMember("Ash", null, Resources.Load<GameObject>("BattlePrefabs/PartyMember"), ashStats);
-        PartyMember Tidus = new PartyMember("Tidus", null, Resources.Load<GameObject>("BattlePrefabs/PartyMember"), tidusStats);
-        PartyMember Link = new PartyMember("Link", null, Resources.Load<GameObject>("BattlePrefabs/PartyMember"), linkStats);
+        activeMembers.Add(Aaron);
+        activeMembers.Add(Kaja);
+        activeMembers.Add(Seth);
+        activeMembers.Add(Zera);
 
-        activeMembers.Add(Sora);
-        activeMembers.Add(Tidus);
-        activeMembers.Add(Ash);
-        activeMembers.Add(Link);
     }
 
 
