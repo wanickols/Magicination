@@ -49,7 +49,7 @@ public class Battle : MonoBehaviour
 
     private void SpawnPartyMembers()
     {
-        Vector2 spawnPostion = new Vector2(-5, -1.8f);
+        Vector2 spawnPostion = new Vector2(-3, -1.8f);
         foreach (PartyMember member in Party.ActiveMembers)
         {
             var temp = Instantiate(member.ActorPrefab, spawnPostion, Quaternion.identity);
