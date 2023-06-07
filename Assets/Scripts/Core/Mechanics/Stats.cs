@@ -3,6 +3,9 @@ using UnityEngine;
 [System.Serializable]
 public class Stats
 {
+    private const int MAX_POSSIBLE_LEVEL = 99;
+    private const int MAX_POSSIBLE_EXP = 9999999;
+
     private const int MAX_POSSIBLE_HP = 9999; //Health Points
     private const int MAX_POSSIBLE_MP = 9999; //Magic Points
 
@@ -16,6 +19,9 @@ public class Stats
     private const int MAX_POSSIBLE_EVS = 99; //Evasion
 
 
+    [SerializeField] private int lv;
+    [SerializeField] private int exp;
+    [SerializeField] private int nxtExp;
     [SerializeField] private int hp;
     [SerializeField] private int maxHp;
     [SerializeField] private int mp;
@@ -27,8 +33,10 @@ public class Stats
     [SerializeField] private int spd;
     [SerializeField] private int evs;
 
-    public Stats(int hp, int maxHp, int mp, int maxMp, int atk, int matk, int def, int mdef, int spd, int evs)
+    public Stats(int lv, int exp, int hp, int maxHp, int mp, int maxMp, int atk, int matk, int def, int mdef, int spd, int evs)
     {
+        this.lv = lv;
+        this.exp = exp;
         this.hp = hp;
         this.maxHp = maxHp;
         this.maxMp = maxMp;
@@ -45,12 +53,40 @@ public class Stats
     public int Initative => SPD + Random.Range(-1, 2); //Battle order determinant
 
 
+    public int LV
+    {
+        get => lv;
+        set
+        {
+            lv = Mathf.Clamp(value, 1, MAX_POSSIBLE_LEVEL);
+        }
+    }
+
+    public int EXP
+    {
+        get => exp;
+        set
+        {
+            exp = Mathf.Clamp(value, 0, nxtExp);
+        }
+    }
+
+    public int NXTEXP
+    {
+        get => (int)(exp * 1.5f); //todo make a better func for this
+        set
+        {
+            nxtExp = Mathf.Clamp(value, 0, MAX_POSSIBLE_EXP);
+        }
+    }
+
+
     public int HP
     {
         get => hp;
         set
         {
-            hp = Mathf.Clamp(value, 0, MAX_POSSIBLE_HP);
+            hp = Mathf.Clamp(value, 0, maxHp);
         }
     }
 
@@ -59,7 +95,7 @@ public class Stats
         get => mp;
         set
         {
-            mp = Mathf.Clamp(value, 0, MAX_POSSIBLE_MP);
+            mp = Mathf.Clamp(value, 0, maxMp);
         }
     }
 
