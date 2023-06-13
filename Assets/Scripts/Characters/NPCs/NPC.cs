@@ -29,7 +29,6 @@ public class NPC : Character, IInteractable
     public void Interact()
     {
         Interaction.StartInteraction();
-
     }
 
     protected override void Update()

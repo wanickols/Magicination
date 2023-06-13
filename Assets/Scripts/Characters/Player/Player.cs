@@ -1,12 +1,13 @@
 public class Player : Character
 {
 
-    private InputHandler InputHandler;
+    private InputHandler inputHandler;
+    public InputHandler InputHandler => inputHandler;
 
     protected override void Awake()
     {
         base.Awake();
-        InputHandler = new InputHandler(this);
+        inputHandler = new InputHandler(this);
     }
 
     // Start is called before the first frame update
@@ -19,6 +20,6 @@ public class Player : Character
     protected override void Update()
     {
         base.Update();
-        InputHandler.CheckInput();
+        inputHandler.CheckInput();
     }
 }

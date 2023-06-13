@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5f0248776090c745a1fe11ab9767499, type: 3}
   m_Name: TestInteraction
   m_EditorClassIdentifier: 
+  inkJSON: {fileID: 4900000, guid: e85219b9410b0a84981a4ae6be33fa69, type: 3}

@@ -8,6 +8,7 @@ public class InputHandler
         None,
         MoveLeft, MoveRight, MoveUp, MoveDown,
         Interact,
+        Continue, //For Dialogue
         OpenMenu,
     }
 
@@ -15,6 +16,7 @@ public class InputHandler
     public InputHandler(Player player)
     {
         this.player = player;
+
     }
 
     public void CheckInput()
@@ -48,8 +50,24 @@ public class InputHandler
                 command = Command.OpenMenu;
             }
         }
+
+
         HandleCommand();
     }
+
+    public bool ContinueDialogueCheck()
+    {
+        if (Game.State == GameState.Dialogue)
+        {
+            if (Input.GetKeyUp(KeyCode.Space))
+                return true;
+        }
+
+        return false;
+    }
+
+
+
 
     //Converts command to direction
     private void HandleCommand()
@@ -76,6 +94,7 @@ public class InputHandler
                 break;
         }
     }
+
 
     //Currently it just moves it, but might add more later so abstracted it
     private void ProcessMovementInput(Vector2Int direction)
