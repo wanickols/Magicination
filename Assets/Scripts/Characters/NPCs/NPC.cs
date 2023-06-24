@@ -14,22 +14,18 @@ public class NPC : Character, IInteractable
     }
 
 
-    [SerializeField] private Interaction interaction;
     [SerializeField] private List<Dir> moveRoute = new List<Dir>();
     [SerializeField] private float moveDelay = 0f;
     [SerializeField] private bool neverMoves = false;
     [SerializeField] private bool movesRandomely = false;
     [SerializeField] private bool loopRoute = false;
+    [SerializeField] private NPCInfo NPCInfo = null;
 
     private int currRoutePos = 0;
     private float timeElapsed = 0f;
 
-    public Interaction Interaction => interaction;
+    public void Interact() => NPCInfo.createInteraction();
 
-    public void Interact()
-    {
-        Interaction.StartInteraction();
-    }
 
     protected override void Update()
     {

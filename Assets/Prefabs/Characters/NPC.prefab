@@ -119,9 +119,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9345d35f06d55ba469367775d08a9020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interaction: {fileID: 11400000, guid: 485428d1b17281944a45a315593e8f7e, type: 2}
   moveRoute: 
   moveDelay: 1
   neverMoves: 1
   movesRandomely: 0
   loopRoute: 0
+  NPCInfo:
+    name: Seth
+    inkJSON: {fileID: 4900000, guid: e85219b9410b0a84981a4ae6be33fa69, type: 3}
+    sprite: {fileID: 21300000, guid: 5df3704d82bdd134e9747a216c4eff6a, type: 3}
+    Interaction: {fileID: 11400000, guid: ba9e67ededa7b9748960bf37cd41268e, type: 2}
