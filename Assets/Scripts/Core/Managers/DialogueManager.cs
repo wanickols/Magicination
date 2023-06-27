@@ -1,5 +1,6 @@
 using Ink.Runtime;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,9 +11,13 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject DialoguePanel;
+    private Animator dialogueAnimator;
+
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private Image Headshot;
+
+
 
     [Header("Globals Ink FIle")]
     [SerializeField] private String globalsInkFile;
@@ -42,6 +47,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueIsPlaying = false;
         DialoguePanel.SetActive(false);
+        dialogueAnimator = DialoguePanel.GetComponent<Animator>();
 
         choicesText = new TextMeshProUGUI[choices.Length];
         int i = 0;
@@ -72,11 +78,10 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         DialoguePanel.SetActive(true);
 
-
-
         Game.OpenDialogue();
         ContinueStory();
     }
+
 
     private void ContinueStory()
     {
@@ -88,16 +93,20 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            ExitDialogueMode();
+            StartCoroutine(CO_ExitDialogueMode());
         }
     }
 
-    private void ExitDialogueMode()
+    private IEnumerator CO_ExitDialogueMode()
     {
+
+        dialogueAnimator.SetBool("closeDialogue", true);
+        yield return new WaitForSeconds(.5f);
         dialogueIsPlaying = false;
         DialoguePanel.SetActive(false);
         dialogueText.text = "";
         Game.CloseDialogue();
+
     }
 
     private void DisplayChoices()

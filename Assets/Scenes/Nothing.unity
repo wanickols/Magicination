@@ -312,6 +312,32 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bc001ab63de00f4783fa44dc15248c1, type: 3}
+--- !u!1 &1306473408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4930552374520761693, guid: d67dd212a63e1bc46ad5234a981b0bb2, type: 3}
+  m_PrefabInstance: {fileID: 3172041244846008300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1306473412
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306473408}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 25caf58296d6cf1499614fdb74e0d3a3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1793700890
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +493,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7104492303094152822, guid: d67dd212a63e1bc46ad5234a981b0bb2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7435950301315561966, guid: d67dd212a63e1bc46ad5234a981b0bb2, type: 3}
       propertyPath: globalsInkFile
       value: Assets/Dialogue/Global.ink
@@ -518,5 +548,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4930552374520761693, guid: d67dd212a63e1bc46ad5234a981b0bb2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1306473412}
   m_SourcePrefab: {fileID: 100100000, guid: d67dd212a63e1bc46ad5234a981b0bb2, type: 3}
