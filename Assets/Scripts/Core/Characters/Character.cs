@@ -7,26 +7,22 @@ namespace Core
     //For any character in the game
     public abstract class Character : MonoBehaviour
     {
-
+        [SerializeField] protected MapLocation playerLocation;
         private Map map;
-
         public CharacterMover mover { get; private set; }
-        public CharacterAnimator Animator { get; private set; }
+        public CharacterAnimator animator { get; private set; }
         public bool isMoving => mover.isMoving;
-
-        public CharacterTurner turn { get; private set; }
-        public Vector2Int facing => turn.Facing;
+        public CharacterTurner turner { get; private set; }
+        public Vector2Int facing => turner.Facing;
 
         public Vector2Int currCell => mover.currCell;
-
-
 
 
         protected virtual void Awake()
         {
 
-            turn = new CharacterTurner();
-            Animator = new CharacterAnimator(this);
+
+            animator = new CharacterAnimator(this);
         }
 
         // Start is called before the first frame update
@@ -34,10 +30,11 @@ namespace Core
         {
             map = Game.manager.Map;
             mover = new CharacterMover(this, map);
+            turner = new CharacterTurner(mover, playerLocation);
             //Puts characters in center of tile at spawn
-            Vector2Int currentCell = map.GetCell2D(gameObject);
-            transform.position = map.GetCellCenter2D(currentCell);
-            map.addCell(currentCell, this);
+
+            transform.position = map.GetCellCenter2D(mover.currCell);
+            map.addCell(mover.currCell, this);
         }
 
         // Update is called once per frame
@@ -45,8 +42,13 @@ namespace Core
         {
 
             //Animator
-            Animator.ChooseLayer();
-            Animator.UpdateParameters();
+            animator.ChooseLayer();
+            animator.UpdateParameters();
         }
+
+        public abstract void setCurrCell();
+
+
+
     }
 }

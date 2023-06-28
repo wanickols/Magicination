@@ -1,3 +1,4 @@
+using Battle;
 using TMPro;
 using UnityEngine;
 
@@ -20,19 +21,21 @@ namespace Core
         {
             int siblingIndex = this.gameObject.transform.GetSiblingIndex();
             partyMember = Party.ActiveMembers[siblingIndex];
-            memberName.text = partyMember.Name;
-            partyMemberPortrait = partyMember.Portrait;
-            GetStats();
+
+            DisplayInfo();
         }
 
-        public void GetStats()
+        public void DisplayInfo()
         {
+            Stats stats = partyMember.Stats;
+            memberName.text = partyMember.Name;
+            partyMemberPortrait = partyMember.Portrait;
 
-            memberLevel.text = partyMember.Stats.LV.ToString();
-            memberHP.text = $"{partyMember.Stats.HP}/{partyMember.Stats.MAXHP}";
-            memberMP.text = $"{partyMember.Stats.MP}/{partyMember.Stats.MAXMP}";
-            memberCurrEXP.text = partyMember.Stats.EXP.ToString();
-            memberNextEXP.text = partyMember.Stats.NXTEXP.ToString();
+            memberLevel.text = stats.LV.ToString();
+            memberHP.text = $"{stats.HP}/{stats.MAXHP}";
+            memberMP.text = $"{stats.MP}/{stats.MAXMP}";
+            memberCurrEXP.text = stats.EXP.ToString();
+            memberNextEXP.text = stats.NXTEXP.ToString();
 
 
         }

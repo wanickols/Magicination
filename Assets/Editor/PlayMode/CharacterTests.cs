@@ -76,16 +76,16 @@ public class CharacterTests
     {
         while (!isReady) { yield return null; }
 
-        sut.turn.Turn(Direction.Down);
+        sut.turner.Turn(Direction.Down);
         Assert.AreEqual(Direction.Down, sut.facing);
 
-        sut.turn.Turn(Direction.Left);
+        sut.turner.Turn(Direction.Left);
         Assert.AreEqual(Direction.Left, sut.facing);
 
-        sut.turn.Turn(Direction.Right);
+        sut.turner.Turn(Direction.Right);
         Assert.AreEqual(Direction.Right, sut.facing);
 
-        sut.turn.Turn(Direction.Up);
+        sut.turner.Turn(Direction.Up);
         Assert.AreEqual(Direction.Up, sut.facing);
 
     }

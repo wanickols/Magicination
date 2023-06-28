@@ -47,7 +47,6 @@ namespace Core
             return GetCellCenter2D(grid.GetCell2D(gameObject));
         }
 
-
         public void addCell(Vector2Int cell, MonoBehaviour mono)
         {
             occupiedCells.Add(cell, mono);

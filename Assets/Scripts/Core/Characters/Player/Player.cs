@@ -1,8 +1,11 @@
-
 namespace Core
 {
     public class Player : Character
     {
+
+
+
+
         protected override void Awake()
         {
             base.Awake();
@@ -19,6 +22,12 @@ namespace Core
         {
             base.Update();
 
+        }
+
+
+        public override void setCurrCell()
+        {
+            playerLocation.location = mover.currCell;
         }
     }
 }

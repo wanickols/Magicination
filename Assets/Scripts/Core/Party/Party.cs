@@ -12,17 +12,10 @@ namespace Core
 
         static Party()
         {
-            PartyMember Aaron = Resources.Load<PartyMember>(Paths.Aaron);
-            PartyMember Kaja = Resources.Load<PartyMember>(Paths.Kaja);
-            PartyMember Seth = Resources.Load<PartyMember>(Paths.Seth);
-            PartyMember Zera = Resources.Load<PartyMember>(Paths.Zera);
-
-            activeMembers.Add(Aaron);
-            activeMembers.Add(Kaja);
-            //activeMembers.Add(Seth);
-            //activeMembers.Add(Zera);
-
+            generateParty();
         }
+
+
 
 
         public static void AddActiveMember(PartyMember memberToAdd)
@@ -42,6 +35,20 @@ namespace Core
 
             activeMembers.Remove(memberToRemove);
             reserveMembers.Add(memberToRemove);
+        }
+
+        private static void generateParty()
+        {
+            PartyMember Aaron = Resources.Load<PartyMember>(Paths.Aaron);
+            PartyMember Kaja = Resources.Load<PartyMember>(Paths.Kaja);
+            PartyMember Seth = Resources.Load<PartyMember>(Paths.Seth);
+            PartyMember Zera = Resources.Load<PartyMember>(Paths.Zera);
+
+            activeMembers.Add(Aaron);
+            activeMembers.Add(Kaja);
+            //activeMembers.Add(Seth);
+            //activeMembers.Add(Zera);
+
         }
     }
 }

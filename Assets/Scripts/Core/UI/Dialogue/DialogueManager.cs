@@ -37,36 +37,20 @@ namespace Core
             else
                 instance = this;
 
-
             dialogueVariables = new DialogueVariables(globalsInkFile);
-        }
-
-        private void Start()
-        {
-
-        }
-
-        private void Update()
-        {
-
         }
 
         public void EnableDialogueMode(Story story, Sprite sprite, string name)
         {
-
             openDialogue?.Invoke(name, sprite);
-
             currentStory = story;
             dialogueVariables.StartListening(story);
-
-
             ContinueStory();
         }
 
 
         private void ContinueStory()
         {
-
             if (currentStory.canContinue)
             {
                 setDialogueText?.Invoke(currentStory.Continue(), currentStory.currentChoices);
@@ -76,13 +60,14 @@ namespace Core
                 closeDialogue?.Invoke();
             }
         }
-        public void MakeChoice(int choiceIndex)
+
+        private void MakeChoice(int choiceIndex)
         {
             currentStory.ChooseChoiceIndex(choiceIndex);
             ContinueStory();
         }
 
-        public Ink.Runtime.Object GetVariableState(string variableName)
+        private Ink.Runtime.Object GetVariableState(string variableName)
         {
             Ink.Runtime.Object variableValue = null;
 

@@ -17,7 +17,7 @@ namespace Core
 
         private bool isOpen = false;
 
-        private bool IsAnimating => (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
+        private bool IsAnimating => animator.IsAnimating();
 
         private void Awake()
         {

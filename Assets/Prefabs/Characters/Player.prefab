@@ -212,3 +212,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9916cc9c54ecc044aac7b2a6a24e70ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLocation: {fileID: 11400000, guid: 67f6edd73fce6e84dab56ea3032edd22, type: 2}
+  playerPosition: {fileID: 11400000, guid: 67f6edd73fce6e84dab56ea3032edd22, type: 2}

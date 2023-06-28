@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7105861467430238202
 SpriteRenderer:
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 3283908738752815405}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 434219e5c34cc024683f2c8e994c9d8a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9345d35f06d55ba469367775d08a9020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLocation: {fileID: 11400000, guid: 67f6edd73fce6e84dab56ea3032edd22, type: 2}
   moveRoute: 
   moveDelay: 1
   neverMoves: 1
@@ -128,4 +129,3 @@ MonoBehaviour:
     name: Seth
     inkJSON: {fileID: 4900000, guid: e85219b9410b0a84981a4ae6be33fa69, type: 3}
     sprite: {fileID: 21300000, guid: 5df3704d82bdd134e9747a216c4eff6a, type: 3}
-    Interaction: {fileID: 11400000, guid: ba9e67ededa7b9748960bf37cd41268e, type: 2}

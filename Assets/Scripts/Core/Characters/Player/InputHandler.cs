@@ -46,28 +46,20 @@ namespace Core
             else if (Game.manager.State == GameState.World)
             {
 
-
                 if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-                {
                     command = Command.MoveUp;
-                }
-                else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-                {
-                    command = Command.MoveDown;
-                }
-                else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-                {
-                    command = Command.MoveLeft;
-                }
-                else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-                {
-                    command = Command.MoveRight;
-                }
-                else if (Input.GetKeyDown(KeyCode.E))
-                {
-                    command = Command.Interact;
-                }
 
+                else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+                    command = Command.MoveDown;
+
+                else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+                    command = Command.MoveLeft;
+
+                else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                    command = Command.MoveRight;
+
+                else if (Input.GetKeyDown(KeyCode.E))
+                    command = Command.Interact;
             }
 
             HandleCommand();
@@ -83,8 +75,6 @@ namespace Core
 
             return Command.None;
         }
-
-
 
 
         //Converts command to direction
@@ -116,9 +106,6 @@ namespace Core
             }
         }
 
-
-
-
         //Currently it just moves it, but might add more later so abstracted it
         private void ProcessMovementInput(Vector2Int direction)
         {
@@ -128,17 +115,16 @@ namespace Core
         private void ProccessInteract()
         {
 
-            Vector2Int targetCell = player.facing + map.GetCell2D(player.gameObject);
+            Vector2Int targetCell = player.facing + player.currCell;
 
 
             if (!map.containsKey(targetCell))
                 return;
 
             IInteractable interactable = map.isInteractable(targetCell);
+
             if (interactable != null)
-            {
                 interactable.Interact();
-            }
         }
         private void ProcessToggleMenu()
         {

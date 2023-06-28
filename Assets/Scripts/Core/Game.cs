@@ -2,15 +2,6 @@ using UnityEngine;
 
 namespace Core
 {
-    public enum GameState
-    {
-        World,
-        Cutscene,
-        Dialogue,
-        Battle,
-        Menu
-    }
-
     public class Game : MonoBehaviour
     {
 

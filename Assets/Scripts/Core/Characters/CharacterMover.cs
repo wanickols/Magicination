@@ -25,7 +25,7 @@ namespace Core
             if (isMoving || !direction.IsBasic())
                 return;
 
-            character.turn.Turn(direction);
+            character.turner.Turn(direction);
 
             if (CanMove(direction))
             {
@@ -44,22 +44,14 @@ namespace Core
 
             //Tilemap Check
             Ray2D ray = new Ray2D(map.grid.Center2D(currCell), direction);
-
             RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction);
-            Debug.DrawRay(ray.origin, ray.direction, new Color(20, 20, 255), 2f);
 
-            Vector2Int distance = (currCell + direction) - currCell;
 
             foreach (RaycastHit2D hit in hits)
-            {
                 if (hit.distance <= map.cellsize)
                     return false;
-            }
-
-
 
             return true;
-
         }
 
         private bool isOccupied(Vector2Int direction) => map.containsKey(currCell + direction);
@@ -68,11 +60,8 @@ namespace Core
         {
             isMoving = true;
 
-
             Vector2 startingPosition = map.grid.Center2D(currCell);
             Vector2 endingPosition = map.grid.Center2D(currCell + direction);
-
-
 
             float elapsedTime = 0;
 
@@ -84,9 +73,8 @@ namespace Core
                 yield return null;
             }
             transform.position = endingPosition;
-
+            character.setCurrCell();
             isMoving = false;
-
         }
     }
 }

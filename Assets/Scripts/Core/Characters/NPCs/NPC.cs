@@ -6,14 +6,6 @@ namespace Core
 
     public class NPC : Character, IInteractable
     {
-        private enum Dir
-        {
-            Up,
-            Down,
-            Left,
-            Right
-        }
-
 
         [SerializeField] private List<Dir> moveRoute = new List<Dir>();
         [SerializeField] private float moveDelay = 0f;
@@ -25,7 +17,11 @@ namespace Core
         private int currRoutePos = 0;
         private float timeElapsed = 0f;
 
-        public void Interact() => NPCInfo.createInteraction();
+        public void Interact()
+        {
+            turner.TurnToPlayer();
+            NPCInfo.createInteraction();
+        }
 
 
         protected override void Update()
@@ -92,5 +88,7 @@ namespace Core
             if (loopRoute)
                 currRoutePos = currRoutePos % moveRoute.Count;
         }
+
+        public override void setCurrCell() { }
     }
 }
