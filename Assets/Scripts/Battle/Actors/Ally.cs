@@ -1,52 +1,52 @@
 using System.Collections;
 using UnityEngine;
-
-public class Ally : Actor
+namespace Battle
 {
-
-    protected override void Start()
+    public class Ally : Actor
     {
-        base.Start();
-        float offset = 2f;
-        targetPosition.x = startingPosition.x + offset;
-    }
 
-    public override void StartTurn()
-    {
-        isTakingTurn = true;
-
-        StartCoroutine(Co_MoveToAttack());
-    }
-
-    protected override IEnumerator Co_MoveToAttack()
-    {
-        float elapsedTime = 0;
-
-        while ((Vector2)transform.position != targetPosition)
+        protected override void Start()
         {
-            transform.position = Vector2.Lerp(startingPosition, targetPosition, elapsedTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            base.Start();
+            float offset = 2f;
+            targetPosition.x = startingPosition.x + offset;
         }
 
-        StartCoroutine(Co_GetPlayerCommand());
-    }
-
-    private IEnumerator Co_GetPlayerCommand()
-    {
-        while (true)
+        public override void StartTurn()
         {
-            if (Input.GetKeyDown(KeyCode.C))
+            isTakingTurn = true;
+
+            StartCoroutine(Co_MoveToAttack());
+        }
+
+        protected override IEnumerator Co_MoveToAttack()
+        {
+            float elapsedTime = 0;
+
+            while ((Vector2)transform.position != targetPosition)
             {
-                Debug.Log("Command Accepted");
-                break;
+                transform.position = Vector2.Lerp(startingPosition, targetPosition, elapsedTime);
+                elapsedTime += Time.deltaTime;
+                yield return null;
             }
-            yield return null;
+
+            StartCoroutine(Co_GetPlayerCommand());
         }
 
-        StartCoroutine(Co_MoveToStarting());
+        private IEnumerator Co_GetPlayerCommand()
+        {
+            while (true)
+            {
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    Debug.Log("Command Accepted");
+                    break;
+                }
+                yield return null;
+            }
 
+            StartCoroutine(Co_MoveToStarting());
+
+        }
     }
-
-
 }

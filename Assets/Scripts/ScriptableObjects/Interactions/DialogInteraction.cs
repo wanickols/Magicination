@@ -1,21 +1,25 @@
 using Ink.Runtime;
 using UnityEngine;
-[CreateAssetMenu(fileName = "Interactions", menuName = "Dialog Interaction")]
-public class DialogInteraction : Interaction
+
+namespace Core
 {
-
-    public string Name;
-    public Story InkJSON;
-    public Sprite Sprite;
-
-    public override void StartInteraction()
+    [CreateAssetMenu(fileName = "Interactions", menuName = "Dialog Interaction")]
+    public class DialogInteraction : Interaction
     {
-        if (Game.manager.State != GameState.Dialogue)
+
+        public string Name;
+        public Story InkJSON;
+        public Sprite Sprite;
+
+        public override void StartInteraction()
         {
+            if (Game.manager.State != GameState.Dialogue)
+            {
 
-            DialogueManager.instance.EnableDialogueMode(InkJSON, Sprite, Name);
+                DialogueManager.instance.EnableDialogueMode(InkJSON, Sprite, Name);
 
-            Debug.Log("Interaction Successful");
+                Debug.Log("Interaction Successful");
+            }
         }
     }
 }

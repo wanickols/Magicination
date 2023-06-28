@@ -1,8 +1,10 @@
+using Core;
 using NUnit.Framework;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+
 public class CharacterTests
 {
 
@@ -106,5 +108,4 @@ public class CharacterTests
         Assert.AreEqual(sut, map.getOccupuiedCell(sut.currCell));
 
     }
-
 }

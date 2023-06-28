@@ -1,3 +1,4 @@
+using Battle;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Party Member", menuName = "New Party Member")]
