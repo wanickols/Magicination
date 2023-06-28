@@ -1,7 +1,14 @@
+using System;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    //Events
+    public event Action openMenu;
+    public event Action closeMenu;
+
+
+
     private Animator animator;
     private string menuOpenAnimation = "MenuOpen";
     private string menuCloseAnimation = "MenuClose";
@@ -23,13 +30,11 @@ public class MainMenu : MonoBehaviour
 
         if (isOpen)
         {
-            Game.manager.returnState();
             Close();
 
         }
         else
         {
-            Game.manager.changeState(GameState.Menu);
             Open();
         }
     }
@@ -38,11 +43,13 @@ public class MainMenu : MonoBehaviour
     {
         isOpen = true;
         animator.Play(menuOpenAnimation);
+        openMenu?.Invoke();
     }
 
     public void Close()
     {
         isOpen = false;
         animator.Play(menuCloseAnimation);
+        closeMenu?.Invoke();
     }
 }

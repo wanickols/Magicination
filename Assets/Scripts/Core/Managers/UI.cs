@@ -19,26 +19,34 @@ public class UI : MonoBehaviour
     //Choices
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
-
-
-    [SerializeField] private GameObject DialogueManagerPrefab;
     private DialogueManager dialogueManager;
 
+    [Header("Menu UI")]
+    [SerializeField] private GameObject MainMenuPrefab;
+
+    private MainMenu mainMenu;
 
     private void Awake()
     {
-
-        dialogueManager = GetComponentInChildren<DialogueManager>();
+        initMenu();
+        initDialogue();
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        //Dialogue Events
-        dialogueManager.setDialogueText += setDialogueText;
-        dialogueManager.openDialogue += openDialogue;
-        dialogueManager.closeDialogue += closeDialogue;
+        initEvents();
+    }
 
+    private void initMenu()
+    {
+        GameObject menu = Instantiate(MainMenuPrefab, this.transform);
+        mainMenu = menu.GetComponentInChildren<MainMenu>();
+    }
+
+    private void initDialogue()
+    {
+        dialogueManager = GetComponentInChildren<DialogueManager>();
 
         //Dialogue Init
         DialoguePanel.SetActive(false);
@@ -51,11 +59,15 @@ public class UI : MonoBehaviour
             choicesText[i++] = choice.GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        //Other UI
-
     }
 
-
+    private void initEvents()
+    {
+        //Dialogue Events
+        dialogueManager.setDialogueText += setDialogueText;
+        dialogueManager.openDialogue += openDialogue;
+        dialogueManager.closeDialogue += closeDialogue;
+    }
 
 
     //Dialgoue
@@ -76,10 +88,9 @@ public class UI : MonoBehaviour
     {
         dialogueAnimator.SetBool("closeDialogue", true);
         yield return new WaitForSeconds(.5f);
-
         DialoguePanel.SetActive(false);
         dialogueText.text = "";
-        Game.manager.returnState();
+
     }
 
     private void setDialogueText(string text, List<Choice> choices)

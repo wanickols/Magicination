@@ -19,49 +19,67 @@ public class Game : MonoBehaviour
 
     //Seriazlied
     [SerializeField] private Map startingMap;
-    [SerializeField] private GameObject playerPrefab, uiPrefab, MainMenuPrefab;
+    [SerializeField] private GameObject playerPrefab, uiPrefab;
     [SerializeField] private Vector2Int startingCell;
-    [SerializeField] private MainMenu mainMenu;
+
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private SceneLoader sceneLoader;
 
     //Private
     private GameState previousState = GameState.World;
-
     private UI uiManager;
-
-    public Map Map { get; private set; }
     private Player player;
+    private MainMenu mainMenu;
+
+    //Public
+    public Map Map { get; private set; }
+
+    //Awake and Start
+    private void Awake()
+    {
+        //Singleton implementations (yes I know issues with these)
+        if (manager != null && manager != this)
+            Destroy(this);
+        else
+            manager = this;
+
+        //Gamestate
+        State = GameState.World;
+    }
+    private void Start()
+    {
+        initMap();
+        initUI();
+        initPlayer(); //map
+        initSceneLoader(); // player, map 
+        initInput(); // player, UI, Map
+        initDialogue(); //UI
+        initEvents(); //Dialogue, UI
+        DontDestroyOnLoad(this);
+    }
 
     //Init Functions
     private void initMap()
     {
-        if (Map == null)
-        {
-            Map = Instantiate(startingMap);
-        }
+        Map = Instantiate(startingMap);
         DontDestroyOnLoad(Map);
     }
 
+    private void initUI()
+    {
+        GameObject gameObject = Instantiate(uiPrefab, this.transform);
+        uiManager = gameObject.GetComponent<UI>();
+        initMenu();
+    }
     private void initPlayer()
     {
-        if (player == null)
-        {
-            GameObject gameObject = Instantiate(playerPrefab, Map.grid.Center2D(startingCell), Quaternion.identity);
-            player = gameObject.GetComponent<Player>();
-        }
+        GameObject gameObject = Instantiate(playerPrefab, Map.grid.Center2D(startingCell), Quaternion.identity);
+        player = gameObject.GetComponent<Player>();
         DontDestroyOnLoad(player);
     }
-
-
-
     private void initMenu()
     {
-        if (mainMenu == null)
-        {
-            GameObject menu = Instantiate(MainMenuPrefab, this.transform);
-            mainMenu = menu.GetComponentInChildren<MainMenu>();
-        }
+        mainMenu = GetComponentInChildren<MainMenu>();
     }
     private void initSceneLoader()
     {
@@ -69,76 +87,41 @@ public class Game : MonoBehaviour
     }
     private void initInput()
     {
-        if (player == null)
-            initPlayer(); //Should never run
-
-        if (mainMenu == null)
-            initMenu();
-
         inputHandler = new InputHandler(player, mainMenu, Map);
     }
 
-    private void initUI()
+    private void initDialogue()
     {
-        if (uiManager == null)
-        {
-            GameObject gameObject = Instantiate(uiPrefab, this.transform);
-
-            uiManager = gameObject.GetComponent<UI>();
-            DialogueManager.instance.Init(inputHandler);
-        }
+        DialogueManager.instance.Init(inputHandler);
     }
 
-    //Awake
-    private void Awake()
-    {
-
-
-
-        //Singleton implementations (yes I know issues with these)
-        if (manager != null && manager != this)
-            Destroy(this);
-        else
-            manager = this;
-
-
-        initMap();
-        initMenu();
-        initPlayer(); //map
-
-        //Gamestate
-        State = GameState.World;
-
-
-    }
-
-    private void Start()
-    {
-        initSceneLoader(); // player, map 
-        initInput(); // player, menu, Map
-        initUI();
-        initEvents();
-        DontDestroyOnLoad(this);
-    }
 
     private void initEvents()
     {
+        //Dialogue
         DialogueManager.instance.openDialogue += openDialogue;
+        DialogueManager.instance.closeDialogue += closeDialogue;
+
+        //Menu
+        mainMenu.openMenu += openMenu;
+        mainMenu.closeMenu += closeMenu;
 
     }
 
-    private void openDialogue(string name, Sprite sprite)
-    {
-        changeState(GameState.Dialogue);
-    }
+    //Event Listeners
+    private void openDialogue(string name, Sprite sprite) => changeState(GameState.Dialogue);
+    private void closeDialogue() => returnState();
+
+    private void openMenu() => changeState(GameState.Menu);
+    private void closeMenu() => returnState();
 
     //Game State Management
-    public void changeState(GameState state)
+    private void changeState(GameState state)
     {
         previousState = State;
         State = state;
     }
-    public void returnState() => State = previousState;
+    private void returnState() => State = previousState;
 
 
     //Testing
@@ -159,7 +142,7 @@ public class Game : MonoBehaviour
         }
     }
 
-
+    //TODO: move this to scene loader, can use event
     private IEnumerator Co_StartBattle()
     {
         Map.gameObject.SetActive(false);
