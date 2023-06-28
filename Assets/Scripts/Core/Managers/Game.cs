@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public enum GameState
@@ -19,7 +18,7 @@ public class Game : MonoBehaviour
 
     //Seriazlied
     [SerializeField] private Map startingMap;
-    [SerializeField] private GameObject playerPrefab, uiPrefab;
+    [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab;
     [SerializeField] private Vector2Int startingCell;
 
     [SerializeField] private InputHandler inputHandler;
@@ -45,17 +44,23 @@ public class Game : MonoBehaviour
 
         //Gamestate
         State = GameState.World;
-    }
-    private void Start()
-    {
         initMap();
         initUI();
         initPlayer(); //map
+    }
+    private void Start()
+    {
+
         initSceneLoader(); // player, map 
         initInput(); // player, UI, Map
         initDialogue(); //UI
         initEvents(); //Dialogue, UI
         DontDestroyOnLoad(this);
+    }
+
+    private void Update()
+    {
+        inputHandler.CheckInput();
     }
 
     //Init Functions
@@ -64,38 +69,24 @@ public class Game : MonoBehaviour
         Map = Instantiate(startingMap);
         DontDestroyOnLoad(Map);
     }
-
     private void initUI()
     {
-        GameObject gameObject = Instantiate(uiPrefab, this.transform);
-        uiManager = gameObject.GetComponent<UI>();
+        uiManager = Instantiate(uiPrefab, this.transform).GetComponent<UI>();
         initMenu();
     }
     private void initPlayer()
     {
-        GameObject gameObject = Instantiate(playerPrefab, Map.grid.Center2D(startingCell), Quaternion.identity);
-        player = gameObject.GetComponent<Player>();
+        player = Instantiate(playerPrefab, Map.grid.Center2D(startingCell), Quaternion.identity).GetComponent<Player>();
         DontDestroyOnLoad(player);
     }
-    private void initMenu()
-    {
-        mainMenu = GetComponentInChildren<MainMenu>();
-    }
-    private void initSceneLoader()
-    {
-        sceneLoader = new SceneLoader(player, Map);
-    }
-    private void initInput()
-    {
-        inputHandler = new InputHandler(player, mainMenu, Map);
-    }
+    private void initMenu() => mainMenu = GetComponentInChildren<MainMenu>();
+    private void initSceneLoader() => sceneLoader = new SceneLoader(player, Map);
+    private void initInput() => inputHandler = new InputHandler(player, mainMenu, Map);
 
-    private void initDialogue()
-    {
-        DialogueManager.instance.Init(inputHandler);
-    }
+    private void initDialogue() => DialogueManager.instance.Init(inputHandler);
 
 
+    //Events
     private void initEvents()
     {
         //Dialogue
@@ -105,6 +96,17 @@ public class Game : MonoBehaviour
         //Menu
         mainMenu.openMenu += openMenu;
         mainMenu.closeMenu += closeMenu;
+
+    }
+    private void destroyEvents()
+    {
+        //Dialogue
+        DialogueManager.instance.openDialogue -= openDialogue;
+        DialogueManager.instance.closeDialogue -= closeDialogue;
+
+        //Menu
+        mainMenu.openMenu -= openMenu;
+        mainMenu.closeMenu -= closeMenu;
 
     }
 
@@ -123,35 +125,15 @@ public class Game : MonoBehaviour
     }
     private void returnState() => State = previousState;
 
-
-    //Testing
-    private void Update()
-    {
-
-        inputHandler.CheckInput();
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-
-            StartCoroutine(Co_StartBattle());
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            EndBattle();
-        }
-    }
-
     //TODO: move this to scene loader, can use event
-    private IEnumerator Co_StartBattle()
+    private void StartBattle(EnemyPack pack)
     {
-        Map.gameObject.SetActive(false);
-        Battle.enemyPack = ResourceLoader.Load<EnemyPack>(ResourceLoader.TwoEyes);
 
         previousState = State = GameState.Battle;
-        Instantiate(ResourceLoader.Load<GameObject>(ResourceLoader.BattleTransition), player.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(2f);
-        sceneLoader.loadBattleScene();
+        Map.gameObject.SetActive(false);
+        Battle.enemyPack = pack;
+
+        sceneLoader.loadScene(SceneLoader.scene.battle, transitionPrefab);
 
     }
 
@@ -160,11 +142,16 @@ public class Game : MonoBehaviour
         if (State == GameState.Battle)
         {
             Map.gameObject.SetActive(true);
-            sceneLoader.reloadSavedScene();
+            sceneLoader.loadScene(SceneLoader.savedScene);
 
             previousState = State = GameState.World;
 
         }
+    }
+
+    private void OnDestroy()
+    {
+        destroyEvents();
     }
 
 

@@ -25,5 +25,8 @@ public static class Extensions
         return grid.GetCellCenterWorld(threeDimenCell);
     }
 
+    //Animator
+    public static bool IsAnimating(this Animator animator, int layer = 0) => animator.GetCurrentAnimatorStateInfo(layer).normalizedTime < 1;
+
 
 }
