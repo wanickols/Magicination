@@ -1,7 +1,7 @@
 using UnityEngine;
 
 //Extending Grid to work with 2d and not 3d vectors
-public static class GridExtensions
+public static class Extensions
 {
 
     public static Vector2Int GetCell2D(this Grid grid, GameObject gameObject)
