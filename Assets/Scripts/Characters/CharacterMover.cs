@@ -7,13 +7,15 @@ public class CharacterMover
     private Character character;
     private Transform transform;
     public bool isMoving = false;
-    public Vector2Int currCell => Game.manager.MapGetCell2D(character.gameObject);
+    public Vector2Int currCell => map.GetCell2D(character.gameObject);
     private const float TIME_TO_MOVE_ONE_CELL = .375f;
+    private Map map;
 
-    public CharacterMover(Character character)
+    public CharacterMover(Character character, Map map)
     {
         this.character = character;
         this.transform = character.transform;
+        this.map = map;
     }
 
     public void TryMove(Vector2Int direction)
@@ -25,8 +27,8 @@ public class CharacterMover
 
         if (CanMove(direction))
         {
-            Game.manager.MapAddCell((currCell + direction), character);
-            Game.manager.MapRemoveCell(currCell);
+            map.addCell((currCell + direction), character);
+            map.removeCell(currCell);
             character.StartCoroutine(Co_Move(direction));
         };
 
@@ -39,7 +41,7 @@ public class CharacterMover
             return false;
 
         //Tilemap Check
-        Ray2D ray = new Ray2D(currCell.Center2D(), direction);
+        Ray2D ray = new Ray2D(map.grid.Center2D(currCell), direction);
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction);
         Debug.DrawRay(ray.origin, ray.direction, new Color(20, 20, 255), 2f);
@@ -48,7 +50,7 @@ public class CharacterMover
 
         foreach (RaycastHit2D hit in hits)
         {
-            if (hit.distance <= Game.manager.CellSize)
+            if (hit.distance <= map.cellsize)
                 return false;
         }
 
@@ -58,15 +60,15 @@ public class CharacterMover
 
     }
 
-    private bool isOccupied(Vector2Int direction) => Game.manager.MapContainsKey(currCell + direction);
+    private bool isOccupied(Vector2Int direction) => map.containsKey(currCell + direction);
 
     private IEnumerator Co_Move(Vector2Int direction)
     {
         isMoving = true;
 
 
-        Vector2 startingPosition = currCell.Center2D();
-        Vector2 endingPosition = (currCell + direction).Center2D();
+        Vector2 startingPosition = map.grid.Center2D(currCell);
+        Vector2 endingPosition = map.grid.Center2D(currCell + direction);
 
 
 

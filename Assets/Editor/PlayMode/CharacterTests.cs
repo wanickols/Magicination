@@ -8,6 +8,7 @@ public class CharacterTests
 
     private bool isReady = false;
     private Player sut; //System Under Test
+    private Map map;
     Vector2Int curr; //Current Cell
 
 
@@ -21,6 +22,7 @@ public class CharacterTests
     public void sceneReady(Scene scene, LoadSceneMode mode)
     {
         sut = GameObject.FindObjectOfType<Player>();
+        map = GameObject.FindObjectOfType<Map>();
         Debug.Log(sut.name);
         isReady = true;
     }
@@ -93,15 +95,15 @@ public class CharacterTests
 
         Vector2Int firstCell = sut.currCell;
 
-        Assert.IsTrue(Game.manager.MapContainsKey(firstCell));
-        Assert.AreEqual(sut, Game.manager.getOccupuiedCell(firstCell));
+        Assert.IsTrue(map.containsKey(firstCell));
+        Assert.AreEqual(sut, map.getOccupuiedCell(firstCell));
 
         sut.mover.TryMove(Direction.Left);
         yield return new WaitForSeconds(.5f);
 
-        Assert.IsTrue(Game.manager.MapContainsKey(sut.currCell));
-        Assert.IsFalse(Game.manager.MapContainsKey(firstCell));
-        Assert.AreEqual(sut, Game.manager.getOccupuiedCell(sut.currCell));
+        Assert.IsTrue(map.containsKey(sut.currCell));
+        Assert.IsFalse(map.containsKey(firstCell));
+        Assert.AreEqual(sut, map.getOccupuiedCell(sut.currCell));
 
     }
 

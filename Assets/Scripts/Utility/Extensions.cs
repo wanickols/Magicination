@@ -18,5 +18,12 @@ public static class Extensions
         return (Vector2)grid.GetCellCenterWorld(threeDimenCell);
     }
 
+    public static Vector2 Center2D(this Grid grid, Vector2Int cell)
+    {
+        Vector3Int threeDimenCell = new Vector3Int(cell.x, cell.y, 0);
+
+        return grid.GetCellCenterWorld(threeDimenCell);
+    }
+
 
 }

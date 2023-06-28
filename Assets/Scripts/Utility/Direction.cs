@@ -19,13 +19,6 @@ public static class Direction
         }
     }
 
-    public static Vector2 Center2D(this Vector2Int cell)
-    {
-        Vector3Int threeDimenCell = new Vector3Int(cell.x, cell.y, 0);
-
-        return (Vector2)Game.manager.GetCellCenterWorld(threeDimenCell);
-    }
-
     //Four Main directions
     public static readonly Vector2Int Up = new Vector2Int(0, 1);
     public static readonly Vector2Int Down = new Vector2Int(0, -1);

@@ -34,12 +34,18 @@ public class DialogueManager : MonoBehaviour
     private TextMeshProUGUI[] choicesText;
 
     private DialogueVariables dialogueVariables;
+    private InputHandler inputHandler;
+
+    public void Init(InputHandler handler)
+    {
+        this.inputHandler = handler;
+    }
 
 
     private void Awake()
     {
-        instance = this;
 
+        instance = this;
         dialogueVariables = new DialogueVariables(globalsInkFile);
     }
 
@@ -63,7 +69,7 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueIsPlaying)
             return;
 
-        if (Game.manager.ContinueDialogueCheck())
+        if (inputHandler.ContinueDialogueCheck())
             ContinueStory();
     }
 

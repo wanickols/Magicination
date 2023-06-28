@@ -7,6 +7,8 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
 
+    private Map map;
+
     public CharacterMover mover { get; private set; }
     public CharacterAnimator Animator { get; private set; }
     public bool isMoving => mover.isMoving;
@@ -21,7 +23,7 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void Awake()
     {
-        mover = new CharacterMover(this);
+
         turn = new CharacterTurner();
         Animator = new CharacterAnimator(this);
     }
@@ -29,10 +31,12 @@ public abstract class Character : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        map = Game.manager.Map;
+        mover = new CharacterMover(this, map);
         //Puts characters in center of tile at spawn
-        Vector2Int currentCell = Game.manager.MapGetCell2D(gameObject);
-        transform.position = Game.manager.MapGetCellCenter2D(currentCell);
-        Game.manager.MapAddCell(currentCell, this);
+        Vector2Int currentCell = map.GetCell2D(gameObject);
+        transform.position = map.GetCellCenter2D(currentCell);
+        map.addCell(currentCell, this);
     }
 
     // Update is called once per frame

@@ -7,14 +7,20 @@ public class SceneLoader
     private static int battleSceneBuildIndex = 1;
     private static int savedSceneBuildIndex;
     private static Vector2 savedPlayerLocation;
-    public static Player player;
+    private Player player;
+    private Map map;
 
+    public SceneLoader(Player player, Map map)
+    {
+        this.player = player;
+        this.map = map;
+    }
 
-    public static void loadBattleScene()
+    public void loadBattleScene()
     {
         //Save current
         savedSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        savedPlayerLocation = player.currCell.Center2D();
+        savedPlayerLocation = map.grid.Center2D(player.currCell);
 
         // Player
         player.gameObject.SetActive(false);
@@ -23,13 +29,13 @@ public class SceneLoader
         SceneManager.LoadScene(battleSceneBuildIndex);
     }
 
-    public static void reloadSavedScene()
+    public void reloadSavedScene()
     {
         SceneManager.sceneLoaded += restorePlayerPositonAndGameObject;
         SceneManager.LoadScene(savedSceneBuildIndex);
     }
 
-    public static void restorePlayerPositonAndGameObject(Scene scene, LoadSceneMode mode)
+    public void restorePlayerPositonAndGameObject(Scene scene, LoadSceneMode mode)
     {
 
         player.transform.position = savedPlayerLocation;

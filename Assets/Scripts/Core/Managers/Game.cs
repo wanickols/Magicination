@@ -15,6 +15,7 @@ public class Game : MonoBehaviour
 
     //Instance
     public static Game manager { get; private set; }
+    public GameState State { get; private set; }
 
     //Seriazlied
     [SerializeField] private Map startingMap;
@@ -27,12 +28,7 @@ public class Game : MonoBehaviour
     //Private
     private GameState previousState = GameState.World;
     private DialogueManager dialogueManager;
-
-
-
-    //Public
-    public GameState State { get; private set; }
-    private Map Map;
+    public Map Map { get; private set; }
     private Player player;
 
     //Init Functions
@@ -49,20 +45,13 @@ public class Game : MonoBehaviour
     {
         if (player == null)
         {
-            GameObject gameObject = Instantiate(playerPrefab, startingCell.Center2D(), Quaternion.identity);
+            GameObject gameObject = Instantiate(playerPrefab, Map.grid.Center2D(startingCell), Quaternion.identity);
             player = gameObject.GetComponent<Player>();
         }
         DontDestroyOnLoad(player);
     }
 
-    private void initDialogue()
-    {
-        if (dialogueManager == null)
-        {
-            GameObject dialogue = Instantiate(DialogueManagerPrefab, this.transform);
-            dialogueManager = dialogue.GetComponent<DialogueManager>();
-        }
-    }
+
 
     private void initMenu()
     {
@@ -72,20 +61,31 @@ public class Game : MonoBehaviour
             mainMenu = menu.GetComponentInChildren<MainMenu>();
         }
     }
-
-    private void initInput()
-    {
-        if (player != null)
-            initPlayer(); //Should never run
-
-        inputHandler = new InputHandler(player);
-    }
-
     private void initSceneLoader()
     {
-        sceneLoader = new SceneLoader();
-        SceneLoader.player = player;
+        sceneLoader = new SceneLoader(player, Map);
     }
+    private void initInput()
+    {
+        if (player == null)
+            initPlayer(); //Should never run
+
+        if (mainMenu == null)
+            initMenu();
+
+        inputHandler = new InputHandler(player, mainMenu, Map);
+    }
+    private void initDialogue()
+    {
+        if (dialogueManager == null)
+        {
+            GameObject dialogue = Instantiate(DialogueManagerPrefab, this.transform);
+            dialogueManager = dialogue.GetComponent<DialogueManager>();
+            dialogueManager.Init(inputHandler);
+        }
+    }
+
+
 
     //Awake
     private void Awake()
@@ -99,16 +99,13 @@ public class Game : MonoBehaviour
 
 
         initMap();
-        initPlayer();
-        initDialogue();
         initMenu();
+        initPlayer(); //map
+        initSceneLoader(); // player, map 
+        initInput(); // player, menu, Map
+        initDialogue(); //input
 
-        //Input
-        initInput();
 
-        //Scene
-        initSceneLoader();
-        //Battle
 
         //Gamestate
         State = GameState.World;
@@ -144,39 +141,6 @@ public class Game : MonoBehaviour
     }
 
 
-    //--------Interaction between systems-----------//
-
-    //------------Menu------------//
-    public void ToggleMenu() => mainMenu.toggle();
-
-    //------------Map------------//
-    //Grid
-    public float CellSize => Map.cellsize;
-
-    //Cells
-    public Vector2Int MapGetCell2D(GameObject gameObject)
-    {
-        return Map.GetCell2D(gameObject);
-    }
-    public Vector2 MapGetCellCenter2D(Vector2Int cell)
-    {
-        return Map.GetCellCenter2D(cell);
-    }
-
-    //Occupied Cells
-    public void MapAddCell(Vector2Int cell, MonoBehaviour mono) => Map.addCell(cell, mono);
-    public void MapRemoveCell(Vector2Int cell) => Map.removeCell(cell);
-    public bool MapContainsKey(Vector2Int cell) => Map.containsKey(cell);
-
-    public IInteractable MapIsInteractable(Vector2Int cell) => Map.isInteractable(cell);
-
-
-    //Directions
-    public Vector2 GetCellCenterWorld(Vector3Int threeDimenCell) => Map.GetCellCenterWorld(threeDimenCell);
-
-    //------------Input------------//
-    public bool ContinueDialogueCheck() => inputHandler.ContinueDialogueCheck();
-
     private IEnumerator Co_StartBattle()
     {
         Map.gameObject.SetActive(false);
@@ -185,7 +149,7 @@ public class Game : MonoBehaviour
         previousState = State = GameState.Battle;
         Instantiate(ResourceLoader.Load<GameObject>(ResourceLoader.BattleTransition), player.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(2f);
-        SceneLoader.loadBattleScene();
+        sceneLoader.loadBattleScene();
 
     }
 
@@ -194,7 +158,7 @@ public class Game : MonoBehaviour
         if (State == GameState.Battle)
         {
             Map.gameObject.SetActive(true);
-            SceneLoader.reloadSavedScene();
+            sceneLoader.reloadSavedScene();
 
             previousState = State = GameState.World;
 
@@ -202,6 +166,4 @@ public class Game : MonoBehaviour
     }
 
 
-    //Test Functions
-    public MonoBehaviour getOccupuiedCell(Vector2Int cell) => Map.getOccupuiedCell(cell);
 }

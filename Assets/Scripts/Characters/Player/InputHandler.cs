@@ -3,6 +3,9 @@ using UnityEngine;
 public class InputHandler
 {
     private Player player;
+    private MainMenu mainMenu;
+    private Map map;
+
     private enum Command
     {
         None,
@@ -13,9 +16,11 @@ public class InputHandler
     }
 
     Command command;
-    public InputHandler(Player player)
+    public InputHandler(Player player, MainMenu menu, Map map)
     {
         this.player = player;
+        this.mainMenu = menu;
+        this.map = map;
 
     }
 
@@ -115,13 +120,13 @@ public class InputHandler
     private void ProccessInteract()
     {
 
-        Vector2Int targetCell = player.facing + Game.manager.MapGetCell2D(player.gameObject);
+        Vector2Int targetCell = player.facing + map.GetCell2D(player.gameObject);
 
 
-        if (!Game.manager.MapContainsKey(targetCell))
+        if (!map.containsKey(targetCell))
             return;
 
-        IInteractable interactable = Game.manager.MapIsInteractable(targetCell);
+        IInteractable interactable = map.isInteractable(targetCell);
         if (interactable != null)
         {
             interactable.Interact();
@@ -129,7 +134,7 @@ public class InputHandler
     }
     private void ProcessToggleMenu()
     {
-        Game.manager.ToggleMenu();
+        mainMenu.toggle();
     }
 
 }

@@ -57,11 +57,6 @@ public class Map : MonoBehaviour
         occupiedCells.Remove(cell);
     }
 
-    public Vector2 GetCellCenterWorld(Vector3Int threeDimenCell)
-    {
-        return grid.GetCellCenterWorld(threeDimenCell);
-    }
-
     //Test Functions
     public MonoBehaviour getOccupuiedCell(Vector2Int cell)
     {
