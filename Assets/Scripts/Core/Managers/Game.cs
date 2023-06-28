@@ -19,7 +19,7 @@ public class Game : MonoBehaviour
 
     //Seriazlied
     [SerializeField] private Map startingMap;
-    [SerializeField] private GameObject playerPrefab, DialogueManagerPrefab, MainMenuPrefab;
+    [SerializeField] private GameObject playerPrefab, uiPrefab, MainMenuPrefab;
     [SerializeField] private Vector2Int startingCell;
     [SerializeField] private MainMenu mainMenu;
     [SerializeField] private InputHandler inputHandler;
@@ -27,7 +27,9 @@ public class Game : MonoBehaviour
 
     //Private
     private GameState previousState = GameState.World;
-    private DialogueManager dialogueManager;
+
+    private UI uiManager;
+
     public Map Map { get; private set; }
     private Player player;
 
@@ -75,21 +77,23 @@ public class Game : MonoBehaviour
 
         inputHandler = new InputHandler(player, mainMenu, Map);
     }
-    private void initDialogue()
+
+    private void initUI()
     {
-        if (dialogueManager == null)
+        if (uiManager == null)
         {
-            GameObject dialogue = Instantiate(DialogueManagerPrefab, this.transform);
-            dialogueManager = dialogue.GetComponent<DialogueManager>();
-            dialogueManager.Init(inputHandler);
+            GameObject gameObject = Instantiate(uiPrefab, this.transform);
+
+            uiManager = gameObject.GetComponent<UI>();
+            DialogueManager.instance.Init(inputHandler);
         }
     }
-
-
 
     //Awake
     private void Awake()
     {
+
+
 
         //Singleton implementations (yes I know issues with these)
         if (manager != null && manager != this)
@@ -101,16 +105,31 @@ public class Game : MonoBehaviour
         initMap();
         initMenu();
         initPlayer(); //map
-        initSceneLoader(); // player, map 
-        initInput(); // player, menu, Map
-        initDialogue(); //input
-
-
 
         //Gamestate
         State = GameState.World;
-        DontDestroyOnLoad(this);
 
+
+    }
+
+    private void Start()
+    {
+        initSceneLoader(); // player, map 
+        initInput(); // player, menu, Map
+        initUI();
+        initEvents();
+        DontDestroyOnLoad(this);
+    }
+
+    private void initEvents()
+    {
+        DialogueManager.instance.openDialogue += openDialogue;
+
+    }
+
+    private void openDialogue(string name, Sprite sprite)
+    {
+        changeState(GameState.Dialogue);
     }
 
     //Game State Management

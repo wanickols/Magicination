@@ -396,7 +396,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7435950301315561966}
         m_TargetAssemblyTypeName: DialogueManager, Scripts
-        m_MethodName: MakeCHoice
+        m_MethodName: MakeChoice
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -595,16 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dedd154311fde98478113742956a558e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialoguePanel: {fileID: 4930552374520761693}
-  dialogueText: {fileID: 609520652414673276}
-  nameText: {fileID: 5339678728228153988}
-  Headshot: {fileID: 5965751208240142498}
   globalsInkFile: Assets/Misc/Dialogue/Global.ink
-  choices:
-  - {fileID: 3732968822848124865}
-  - {fileID: 8442327389669217903}
-  - {fileID: 5236587715836187257}
-  - {fileID: 224913305175169062}
 --- !u!1 &2446648439263648877
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +855,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7435950301315561966}
         m_TargetAssemblyTypeName: DialogueManager, Scripts
-        m_MethodName: MakeCHoice
+        m_MethodName: MakeChoice
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1169,7 +1160,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7435950301315561966}
         m_TargetAssemblyTypeName: DialogueManager, Scripts
-        m_MethodName: MakeCHoice
+        m_MethodName: MakeChoice
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1677,7 +1668,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7435950301315561966}
         m_TargetAssemblyTypeName: DialogueManager, Scripts
-        m_MethodName: MakeCHoice
+        m_MethodName: MakeChoice
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

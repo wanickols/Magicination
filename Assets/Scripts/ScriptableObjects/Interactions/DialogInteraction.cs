@@ -7,11 +7,13 @@ public class DialogInteraction : Interaction
     public string Name;
     public Story InkJSON;
     public Sprite Sprite;
+
     public override void StartInteraction()
     {
-        if (!DialogueManager.Instance.dialogueIsPlaying)
+        if (Game.manager.State != GameState.Dialogue)
         {
-            DialogueManager.Instance.EnableDialogueMode(InkJSON, Sprite, Name);
+
+            DialogueManager.instance.EnableDialogueMode(InkJSON, Sprite, Name);
 
             Debug.Log("Interaction Successful");
         }

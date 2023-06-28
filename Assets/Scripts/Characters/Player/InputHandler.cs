@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InputHandler
@@ -15,6 +16,10 @@ public class InputHandler
         ToggleMenu,
     }
 
+    //Events
+    public event Action Continue;
+
+
     Command command;
     public InputHandler(Player player, MainMenu menu, Map map)
     {
@@ -28,19 +33,16 @@ public class InputHandler
     {
         command = Command.None;
 
-        if (Game.manager.State == GameState.Cutscene || Game.manager.State == GameState.Dialogue)
+        if (Game.manager.State == GameState.Cutscene)
             return;
 
+        else if (Game.manager.State == GameState.Dialogue)
+            command = ContinueDialogueCheck();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+        else if (Input.GetKeyDown(KeyCode.Escape))
             command = Command.ToggleMenu;
-            HandleCommand();
-            return;
-        }
 
-
-        if (Game.manager.State == GameState.World)
+        else if (Game.manager.State == GameState.World)
         {
 
 
@@ -70,15 +72,15 @@ public class InputHandler
         HandleCommand();
     }
 
-    public bool ContinueDialogueCheck()
+    private Command ContinueDialogueCheck()
     {
         if (Game.manager.State == GameState.Dialogue)
         {
             if (Input.GetKeyUp(KeyCode.Space))
-                return true;
+                return Command.Continue;
         }
 
-        return false;
+        return Command.None;
     }
 
 
@@ -107,8 +109,13 @@ public class InputHandler
             case (Command.ToggleMenu):
                 ProcessToggleMenu();
                 break;
+            case (Command.Continue):
+                Continue?.Invoke();
+                break;
         }
     }
+
+
 
 
     //Currently it just moves it, but might add more later so abstracted it
@@ -136,5 +143,4 @@ public class InputHandler
     {
         mainMenu.toggle();
     }
-
 }
