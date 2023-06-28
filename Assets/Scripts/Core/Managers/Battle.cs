@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class Battle : MonoBehaviour
 {
+
+
     //Mange the turns, trigger the next turn when one is done
     //End battle when it's over
     public static EnemyPack enemyPack;
 
     private List<Actor> turnOrder = new List<Actor>();
+    private List<Ally> allies = new List<Ally>();
+    private List<Enemy> enemies = new List<Enemy>();
     private int turnNumber = 0;
     private bool setUpComplete = false;
+    private BattlePositions battlePositions = new BattlePositions();
 
     public IReadOnlyList<Actor> TurnOrder => turnOrder;
+    public IReadOnlyList<Ally> Allies => allies;
+    public IReadOnlyList<Enemy> Enemies => enemies;
 
     private void Awake()
     {
         SpawnPartyMembers();
         SpawnEnemies();
-
     }
 
 
@@ -49,16 +55,19 @@ public class Battle : MonoBehaviour
 
     private void SpawnPartyMembers()
     {
-        Vector2 spawnPostion = new Vector2(-3, -1.8f);
+        BattlePositions.SpawnCounts partyCount = (BattlePositions.SpawnCounts)Party.ActiveMembers.Count;
+
+        List<Vector2> positionList = battlePositions.getPositions(partyCount);
+
+        int i = 0;
         foreach (PartyMember member in Party.ActiveMembers)
         {
-            var temp = Instantiate(member.ActorPrefab, spawnPostion, Quaternion.identity);
+            var temp = Instantiate(member.ActorPrefab, positionList[i], Quaternion.identity);
             Ally ally = temp.GetComponent<Ally>();
             ally.Stats = member.Stats;
             turnOrder.Add(ally);
-
-            spawnPostion.y += 1.2f;
-
+            allies.Add(ally);
+            i++;
         }
 
     }
@@ -72,6 +81,7 @@ public class Battle : MonoBehaviour
             Enemy enemy = enemyActor.GetComponent<Enemy>();
             enemy.Stats = enemyPack.Enemies[i].Stats;
             turnOrder.Add(enemyActor.GetComponent<Enemy>());
+            enemies.Add(enemy);
 
         }
     }

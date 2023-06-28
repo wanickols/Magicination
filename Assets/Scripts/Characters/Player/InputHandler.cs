@@ -9,7 +9,7 @@ public class InputHandler
         MoveLeft, MoveRight, MoveUp, MoveDown,
         Interact,
         Continue, //For Dialogue
-        OpenMenu,
+        ToggleMenu,
     }
 
     Command command;
@@ -21,9 +21,23 @@ public class InputHandler
 
     public void CheckInput()
     {
+        command = Command.None;
+
+        if (Game.State == GameState.Cutscene || Game.State == GameState.Dialogue)
+            return;
+
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            command = Command.ToggleMenu;
+            HandleCommand();
+            return;
+        }
+
+
         if (Game.State == GameState.World)
         {
-            command = Command.None;
+
 
             if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
@@ -45,12 +59,8 @@ public class InputHandler
             {
                 command = Command.Interact;
             }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                command = Command.OpenMenu;
-            }
-        }
 
+        }
 
         HandleCommand();
     }
@@ -89,8 +99,8 @@ public class InputHandler
             case (Command.Interact):
                 ProccessInteract();
                 break;
-            case (Command.OpenMenu):
-                ProcessOpenMenu();
+            case (Command.ToggleMenu):
+                ProcessToggleMenu();
                 break;
         }
     }
@@ -116,10 +126,9 @@ public class InputHandler
             interactable.Interact();
         }
     }
-    private void ProcessOpenMenu()
+    private void ProcessToggleMenu()
     {
-        Game.OpenMenu();
-
+        Game.ToggleMenu();
     }
 
 }

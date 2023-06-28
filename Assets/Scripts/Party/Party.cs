@@ -15,8 +15,8 @@ public static class Party
 
         activeMembers.Add(Aaron);
         activeMembers.Add(Kaja);
-        activeMembers.Add(Seth);
-        activeMembers.Add(Zera);
+        //activeMembers.Add(Seth);
+        //activeMembers.Add(Zera);
 
     }
 

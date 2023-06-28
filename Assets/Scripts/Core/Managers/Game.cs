@@ -15,20 +15,46 @@ public class Game : MonoBehaviour
     public static GameState State { get; private set; }
 
     private static GameState previousState = GameState.World;
+
+    private static MainMenu mainMenu;
+    private static DialogueManager dialogueManager;
+
+
     public static Map Map { get; private set; }
     public static Player Player { get; private set; }
 
-    public static void OpenMenu() => State = GameState.Menu;
-    public static void CloseMenu() => State = GameState.World;
+    public static void ToggleMenu()
+    {
+        if (mainMenu.IsAnimating)
+            return;
+
+        if (mainMenu.isOpen)
+        {
+
+            State = previousState;
+            mainMenu.Close();
+
+        }
+        else
+        {
+            previousState = State;
+            State = GameState.Menu;
+            mainMenu.Open();
+        }
+
+    }
     public static void OpenDialogue() => State = GameState.Dialogue;
     public static void CloseDialogue() => State = previousState;
 
     [SerializeField] private Map startingMap;
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject DialogueManagerPrefab;
+    [SerializeField] private GameObject MainMenuPrefab;
     [SerializeField] private Vector2Int startingCell;
 
     private void Awake()
     {
+
         if (Map == null)
         {
             Map = Instantiate(startingMap);
@@ -40,16 +66,30 @@ public class Game : MonoBehaviour
             Player = gameObject.GetComponent<Player>();
         }
 
+        if (dialogueManager == null)
+        {
+            GameObject dialogue = Instantiate(DialogueManagerPrefab, this.transform);
+            dialogueManager = dialogue.GetComponent<DialogueManager>();
+        }
+
+        if (mainMenu == null)
+        {
+            GameObject menu = Instantiate(MainMenuPrefab, this.transform);
+            mainMenu = menu.GetComponentInChildren<MainMenu>();
+        }
+
+
         State = GameState.World;
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(Player);
+        DontDestroyOnLoad(Map);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Battle.enemyPack = ResourceLoader.Load<EnemyPack>(ResourceLoader.TwoEyes);
+
             StartCoroutine(Co_StartBattle());
         }
 
@@ -61,6 +101,9 @@ public class Game : MonoBehaviour
 
     private IEnumerator Co_StartBattle()
     {
+        Map.gameObject.SetActive(false);
+        Battle.enemyPack = ResourceLoader.Load<EnemyPack>(ResourceLoader.TwoEyes);
+
         previousState = State = GameState.Battle;
         Instantiate(ResourceLoader.Load<GameObject>(ResourceLoader.BattleTransition), Player.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(2f);
@@ -72,6 +115,7 @@ public class Game : MonoBehaviour
     {
         if (State == GameState.Battle)
         {
+            Map.gameObject.SetActive(true);
             SceneLoader.reloadSavedScene();
 
             previousState = State = GameState.World;

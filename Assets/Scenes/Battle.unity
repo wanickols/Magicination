@@ -276,14 +276,6 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4992099204900756, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.26324537
-      objectReference: {fileID: 0}
-    - target: {fileID: 4992099204900756, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.28140587
-      objectReference: {fileID: 0}
-    - target: {fileID: 4992099204900756, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0333
       objectReference: {fileID: 0}
@@ -322,30 +314,6 @@ PrefabInstance:
     - target: {fileID: 4992099204900756, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 212171912165731176, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212171912165731176, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -169608599
-      objectReference: {fileID: 0}
-    - target: {fileID: 212189109753466794, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212189109753466794, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -169608599
-      objectReference: {fileID: 0}
-    - target: {fileID: 212935079240827086, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212935079240827086, guid: afab09fb924971c47a28ee6a4b3e6c04, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -169608599
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

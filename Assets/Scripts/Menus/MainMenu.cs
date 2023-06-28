@@ -1,34 +1,30 @@
-using System.Collections;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
     private Animator animator;
-    private string menuOpenParamter = "menuOpen";
-    bool isMenuOpen => Game.State == GameState.Menu;
+    private string menuOpenAnimation = "MenuOpen";
+    private string menuCloseAnimation = "MenuClose";
+
+    public bool isOpen { get; private set; }
+
+    public bool IsAnimating => (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
 
     private void Awake()
     {
+        isOpen = false;
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    public void Open()
     {
-
-        animator.SetBool(menuOpenParamter, isMenuOpen);
-
-        if (Game.State == GameState.Menu)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                StartCoroutine(Co_CloseMenu());
-            }
-        }
+        isOpen = true;
+        animator.Play(menuOpenAnimation);
     }
 
-    private IEnumerator Co_CloseMenu()
+    public void Close()
     {
-        yield return null; //adds extra frame
-        Game.CloseMenu();
+        isOpen = false;
+        animator.Play(menuCloseAnimation);
     }
 }
