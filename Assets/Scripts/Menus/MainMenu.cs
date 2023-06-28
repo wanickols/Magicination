@@ -6,14 +6,32 @@ public class MainMenu : MonoBehaviour
     private string menuOpenAnimation = "MenuOpen";
     private string menuCloseAnimation = "MenuClose";
 
-    public bool isOpen { get; private set; }
+    private bool isOpen = false;
 
-    public bool IsAnimating => (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
+    private bool IsAnimating => (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
 
     private void Awake()
     {
         isOpen = false;
         animator = GetComponent<Animator>();
+    }
+
+    public void toggle()
+    {
+        if (IsAnimating)
+            return;
+
+        if (isOpen)
+        {
+            Game.manager.returnState();
+            Close();
+
+        }
+        else
+        {
+            Game.manager.changeState(GameState.Menu);
+            Open();
+        }
     }
 
     public void Open()

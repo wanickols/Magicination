@@ -12,81 +12,125 @@ public enum GameState
 
 public class Game : MonoBehaviour
 {
-    public static GameState State { get; private set; }
 
-    private static GameState previousState = GameState.World;
+    //Instance
+    public static Game manager { get; private set; }
 
-    private static MainMenu mainMenu;
-    private static DialogueManager dialogueManager;
-
-
-    public static Map Map { get; private set; }
-    public static Player Player { get; private set; }
-
-    public static void ToggleMenu()
-    {
-        if (mainMenu.IsAnimating)
-            return;
-
-        if (mainMenu.isOpen)
-        {
-
-            State = previousState;
-            mainMenu.Close();
-
-        }
-        else
-        {
-            previousState = State;
-            State = GameState.Menu;
-            mainMenu.Open();
-        }
-
-    }
-    public static void OpenDialogue() => State = GameState.Dialogue;
-    public static void CloseDialogue() => State = previousState;
-
+    //Seriazlied
     [SerializeField] private Map startingMap;
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private GameObject DialogueManagerPrefab;
-    [SerializeField] private GameObject MainMenuPrefab;
+    [SerializeField] private GameObject playerPrefab, DialogueManagerPrefab, MainMenuPrefab;
     [SerializeField] private Vector2Int startingCell;
+    [SerializeField] private MainMenu mainMenu;
+    [SerializeField] private InputHandler inputHandler;
+    [SerializeField] private SceneLoader sceneLoader;
 
-    private void Awake()
+    //Private
+    private GameState previousState = GameState.World;
+    private DialogueManager dialogueManager;
+
+
+
+    //Public
+    public GameState State { get; private set; }
+    private Map Map;
+    private Player player;
+
+    //Init Functions
+    private void initMap()
     {
-
         if (Map == null)
         {
             Map = Instantiate(startingMap);
         }
+        DontDestroyOnLoad(Map);
+    }
 
-        if (Player == null)
+    private void initPlayer()
+    {
+        if (player == null)
         {
             GameObject gameObject = Instantiate(playerPrefab, startingCell.Center2D(), Quaternion.identity);
-            Player = gameObject.GetComponent<Player>();
+            player = gameObject.GetComponent<Player>();
         }
+        DontDestroyOnLoad(player);
+    }
 
+    private void initDialogue()
+    {
         if (dialogueManager == null)
         {
             GameObject dialogue = Instantiate(DialogueManagerPrefab, this.transform);
             dialogueManager = dialogue.GetComponent<DialogueManager>();
         }
+    }
 
+    private void initMenu()
+    {
         if (mainMenu == null)
         {
             GameObject menu = Instantiate(MainMenuPrefab, this.transform);
             mainMenu = menu.GetComponentInChildren<MainMenu>();
         }
-
-
-        State = GameState.World;
-        DontDestroyOnLoad(this);
-        DontDestroyOnLoad(Player);
-        DontDestroyOnLoad(Map);
     }
 
+    private void initInput()
+    {
+        if (player != null)
+            initPlayer(); //Should never run
+
+        inputHandler = new InputHandler(player);
+    }
+
+    private void initSceneLoader()
+    {
+        sceneLoader = new SceneLoader();
+        SceneLoader.player = player;
+    }
+
+    //Awake
+    private void Awake()
+    {
+
+        //Singleton implementations (yes I know issues with these)
+        if (manager != null && manager != this)
+            Destroy(this);
+        else
+            manager = this;
+
+
+        initMap();
+        initPlayer();
+        initDialogue();
+        initMenu();
+
+        //Input
+        initInput();
+
+        //Scene
+        initSceneLoader();
+        //Battle
+
+        //Gamestate
+        State = GameState.World;
+        DontDestroyOnLoad(this);
+
+    }
+
+    //Game State Management
+    public void changeState(GameState state)
+    {
+        previousState = State;
+        State = state;
+    }
+    public void returnState() => State = previousState;
+
+
+    //Testing
     private void Update()
     {
+
+        inputHandler.CheckInput();
+
         if (Input.GetKeyDown(KeyCode.B))
         {
 
@@ -99,13 +143,47 @@ public class Game : MonoBehaviour
         }
     }
 
+
+    //--------Interaction between systems-----------//
+
+    //------------Menu------------//
+    public void ToggleMenu() => mainMenu.toggle();
+
+    //------------Map------------//
+    //Grid
+    public float CellSize => Map.cellsize;
+
+    //Cells
+    public Vector2Int MapGetCell2D(GameObject gameObject)
+    {
+        return Map.GetCell2D(gameObject);
+    }
+    public Vector2 MapGetCellCenter2D(Vector2Int cell)
+    {
+        return Map.GetCellCenter2D(cell);
+    }
+
+    //Occupied Cells
+    public void MapAddCell(Vector2Int cell, MonoBehaviour mono) => Map.addCell(cell, mono);
+    public void MapRemoveCell(Vector2Int cell) => Map.removeCell(cell);
+    public bool MapContainsKey(Vector2Int cell) => Map.containsKey(cell);
+
+    public IInteractable MapIsInteractable(Vector2Int cell) => Map.isInteractable(cell);
+
+
+    //Directions
+    public Vector2 GetCellCenterWorld(Vector3Int threeDimenCell) => Map.GetCellCenterWorld(threeDimenCell);
+
+    //------------Input------------//
+    public bool ContinueDialogueCheck() => inputHandler.ContinueDialogueCheck();
+
     private IEnumerator Co_StartBattle()
     {
         Map.gameObject.SetActive(false);
         Battle.enemyPack = ResourceLoader.Load<EnemyPack>(ResourceLoader.TwoEyes);
 
         previousState = State = GameState.Battle;
-        Instantiate(ResourceLoader.Load<GameObject>(ResourceLoader.BattleTransition), Player.transform.position, Quaternion.identity);
+        Instantiate(ResourceLoader.Load<GameObject>(ResourceLoader.BattleTransition), player.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(2f);
         SceneLoader.loadBattleScene();
 
@@ -122,4 +200,8 @@ public class Game : MonoBehaviour
 
         }
     }
+
+
+    //Test Functions
+    public MonoBehaviour getOccupuiedCell(Vector2Int cell) => Map.getOccupuiedCell(cell);
 }

@@ -9,21 +9,63 @@ public class Map : MonoBehaviour
 
     public Grid grid { get; private set; }
 
+    public float cellsize => grid.cellSize.x;
+
     private void Awake()
     {
         grid = GetComponent<Grid>();
     }
 
+    //Functions
 
-    // Start is called before the first frame update
-    void Start()
+    public IInteractable isInteractable(Vector2Int target)
     {
-
+        if (occupiedCells[target] is IInteractable interactable)
+            return interactable;
+        else
+            return null;
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool containsKey(Vector2Int cell)
     {
-
+        return occupiedCells.ContainsKey(cell);
     }
+
+    public Vector2Int GetCell2D(GameObject gameObject)
+    {
+        return grid.GetCell2D(gameObject);
+    }
+
+    public Vector2 GetCellCenter2D(Vector2Int cell)
+    {
+        return grid.GetCellCenter2D(cell);
+    }
+
+    public Vector2 GetCellCenter2D(GameObject gameObject)
+    {
+        return GetCellCenter2D(grid.GetCell2D(gameObject));
+    }
+
+
+    public void addCell(Vector2Int cell, MonoBehaviour mono)
+    {
+        occupiedCells.Add(cell, mono);
+    }
+
+    public void removeCell(Vector2Int cell)
+    {
+        occupiedCells.Remove(cell);
+    }
+
+    public Vector2 GetCellCenterWorld(Vector3Int threeDimenCell)
+    {
+        return grid.GetCellCenterWorld(threeDimenCell);
+    }
+
+    //Test Functions
+    public MonoBehaviour getOccupuiedCell(Vector2Int cell)
+    {
+        return occupiedCells[cell];
+    }
+
 }

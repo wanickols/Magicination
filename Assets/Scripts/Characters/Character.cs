@@ -30,9 +30,9 @@ public abstract class Character : MonoBehaviour
     protected virtual void Start()
     {
         //Puts characters in center of tile at spawn
-        Vector2Int currentCell = Game.Map.grid.GetCell2D(this.gameObject);
-        transform.position = Game.Map.grid.GetCellCenter2D(currentCell);
-        Game.Map.occupiedCells.Add(currentCell, this);
+        Vector2Int currentCell = Game.manager.MapGetCell2D(gameObject);
+        transform.position = Game.manager.MapGetCellCenter2D(currentCell);
+        Game.manager.MapAddCell(currentCell, this);
     }
 
     // Update is called once per frame

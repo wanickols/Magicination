@@ -63,7 +63,7 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueIsPlaying)
             return;
 
-        if (Game.Player.InputHandler.ContinueDialogueCheck())
+        if (Game.manager.ContinueDialogueCheck())
             ContinueStory();
     }
 
@@ -78,7 +78,7 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         DialoguePanel.SetActive(true);
 
-        Game.OpenDialogue();
+        Game.manager.changeState(GameState.Dialogue);
         ContinueStory();
     }
 
@@ -105,7 +105,7 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         DialoguePanel.SetActive(false);
         dialogueText.text = "";
-        Game.CloseDialogue();
+        Game.manager.returnState();
 
     }
 

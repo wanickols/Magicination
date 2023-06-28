@@ -7,7 +7,7 @@ public class CharacterMover
     private Character character;
     private Transform transform;
     public bool isMoving = false;
-    public Vector2Int currCell => Game.Map.grid.GetCell2D(character.gameObject);
+    public Vector2Int currCell => Game.manager.MapGetCell2D(character.gameObject);
     private const float TIME_TO_MOVE_ONE_CELL = .375f;
 
     public CharacterMover(Character character)
@@ -25,8 +25,8 @@ public class CharacterMover
 
         if (CanMove(direction))
         {
-            Game.Map.occupiedCells.Add((currCell + direction), character);
-            Game.Map.occupiedCells.Remove(currCell);
+            Game.manager.MapAddCell((currCell + direction), character);
+            Game.manager.MapRemoveCell(currCell);
             character.StartCoroutine(Co_Move(direction));
         };
 
@@ -48,7 +48,7 @@ public class CharacterMover
 
         foreach (RaycastHit2D hit in hits)
         {
-            if (hit.distance <= Game.Map.grid.cellSize.x)
+            if (hit.distance <= Game.manager.CellSize)
                 return false;
         }
 
@@ -58,7 +58,7 @@ public class CharacterMover
 
     }
 
-    private bool isOccupied(Vector2Int direction) => Game.Map.occupiedCells.ContainsKey(currCell + direction);
+    private bool isOccupied(Vector2Int direction) => Game.manager.MapContainsKey(currCell + direction);
 
     private IEnumerator Co_Move(Vector2Int direction)
     {

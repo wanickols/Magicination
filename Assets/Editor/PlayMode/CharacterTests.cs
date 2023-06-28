@@ -93,15 +93,15 @@ public class CharacterTests
 
         Vector2Int firstCell = sut.currCell;
 
-        Assert.IsTrue(Game.Map.occupiedCells.ContainsKey(firstCell));
-        Assert.AreEqual(sut, Game.Map.occupiedCells[firstCell]);
+        Assert.IsTrue(Game.manager.MapContainsKey(firstCell));
+        Assert.AreEqual(sut, Game.manager.getOccupuiedCell(firstCell));
 
         sut.mover.TryMove(Direction.Left);
         yield return new WaitForSeconds(.5f);
 
-        Assert.IsTrue(Game.Map.occupiedCells.ContainsKey(sut.currCell));
-        Assert.IsFalse(Game.Map.occupiedCells.ContainsKey(firstCell));
-        Assert.AreEqual(sut, Game.Map.occupiedCells[sut.currCell]);
+        Assert.IsTrue(Game.manager.MapContainsKey(sut.currCell));
+        Assert.IsFalse(Game.manager.MapContainsKey(firstCell));
+        Assert.AreEqual(sut, Game.manager.getOccupuiedCell(sut.currCell));
 
     }
 

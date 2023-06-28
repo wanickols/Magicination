@@ -23,7 +23,7 @@ public static class Direction
     {
         Vector3Int threeDimenCell = new Vector3Int(cell.x, cell.y, 0);
 
-        return (Vector2)Game.Map.grid.GetCellCenterWorld(threeDimenCell);
+        return (Vector2)Game.manager.GetCellCenterWorld(threeDimenCell);
     }
 
     //Four Main directions

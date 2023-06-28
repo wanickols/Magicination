@@ -16,8 +16,6 @@ public static class Extensions
         Vector3Int threeDimenCell = new Vector3Int(cell.x, cell.y, 0);
 
         return (Vector2)grid.GetCellCenterWorld(threeDimenCell);
-
-
     }
 
 

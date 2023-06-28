@@ -23,7 +23,7 @@ public class InputHandler
     {
         command = Command.None;
 
-        if (Game.State == GameState.Cutscene || Game.State == GameState.Dialogue)
+        if (Game.manager.State == GameState.Cutscene || Game.manager.State == GameState.Dialogue)
             return;
 
 
@@ -35,7 +35,7 @@ public class InputHandler
         }
 
 
-        if (Game.State == GameState.World)
+        if (Game.manager.State == GameState.World)
         {
 
 
@@ -67,7 +67,7 @@ public class InputHandler
 
     public bool ContinueDialogueCheck()
     {
-        if (Game.State == GameState.Dialogue)
+        if (Game.manager.State == GameState.Dialogue)
         {
             if (Input.GetKeyUp(KeyCode.Space))
                 return true;
@@ -115,20 +115,21 @@ public class InputHandler
     private void ProccessInteract()
     {
 
-        Vector2Int targetCell = player.facing + Game.Map.grid.GetCell2D(player.gameObject);
+        Vector2Int targetCell = player.facing + Game.manager.MapGetCell2D(player.gameObject);
 
 
-        if (!Game.Map.occupiedCells.ContainsKey(targetCell))
+        if (!Game.manager.MapContainsKey(targetCell))
             return;
 
-        if (Game.Map.occupiedCells[targetCell] is IInteractable interactable)
+        IInteractable interactable = Game.manager.MapIsInteractable(targetCell);
+        if (interactable != null)
         {
             interactable.Interact();
         }
     }
     private void ProcessToggleMenu()
     {
-        Game.ToggleMenu();
+        Game.manager.ToggleMenu();
     }
 
 }

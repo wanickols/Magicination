@@ -1,21 +1,23 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class SceneLoader
+public class SceneLoader
 {
 
     private static int battleSceneBuildIndex = 1;
     private static int savedSceneBuildIndex;
     private static Vector2 savedPlayerLocation;
+    public static Player player;
+
 
     public static void loadBattleScene()
     {
         //Save current
         savedSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        savedPlayerLocation = Game.Player.currCell.Center2D();
+        savedPlayerLocation = player.currCell.Center2D();
 
         // Player
-        Game.Player.gameObject.SetActive(false);
+        player.gameObject.SetActive(false);
 
         //Scene transition
         SceneManager.LoadScene(battleSceneBuildIndex);
@@ -30,8 +32,8 @@ public static class SceneLoader
     public static void restorePlayerPositonAndGameObject(Scene scene, LoadSceneMode mode)
     {
 
-        Game.Player.transform.position = savedPlayerLocation;
-        Game.Player.gameObject.SetActive(true);
+        player.transform.position = savedPlayerLocation;
+        player.gameObject.SetActive(true);
         SceneManager.sceneLoaded -= restorePlayerPositonAndGameObject;
     }
 }
