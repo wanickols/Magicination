@@ -6,7 +6,7 @@ namespace Core
     {
         private Player player;
         private MainMenu mainMenu;
-        private Map map;
+        private Map map => Game.manager.Map;
 
         private enum Command
         {
@@ -22,12 +22,10 @@ namespace Core
 
 
         Command command;
-        public InputHandler(Player player, MainMenu menu, Map map)
+        public InputHandler(Player player, MainMenu menu)
         {
             this.player = player;
             this.mainMenu = menu;
-            this.map = map;
-
         }
 
         public void CheckInput()

@@ -3,9 +3,6 @@ namespace Core
     public class Player : Character
     {
 
-
-
-
         protected override void Awake()
         {
             base.Awake();
@@ -24,6 +21,14 @@ namespace Core
 
         }
 
+        public void CheckCurrentCell(Map map)
+        {
+            if (map.Exits.ContainsKey(currCell))
+            {
+                Exit exit = map.Exits[currCell];
+                exit.TeleportPlayer();
+            }
+        }
 
         public override void setCurrCell()
         {

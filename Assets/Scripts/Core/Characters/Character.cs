@@ -8,7 +8,6 @@ namespace Core
     public abstract class Character : MonoBehaviour
     {
         [SerializeField] protected MapLocation playerLocation;
-        private Map map;
         public CharacterMover mover { get; private set; }
         public CharacterAnimator animator { get; private set; }
         public bool isMoving => mover.isMoving;
@@ -28,13 +27,9 @@ namespace Core
         // Start is called before the first frame update
         protected virtual void Start()
         {
-            map = Game.manager.Map;
-            mover = new CharacterMover(this, map);
+            mover = new CharacterMover(this);
             turner = new CharacterTurner(mover, playerLocation);
-            //Puts characters in center of tile at spawn
-
-            transform.position = map.GetCellCenter2D(mover.currCell);
-            map.addCell(mover.currCell, this);
+            mover.setUpStartingCell();
         }
 
         // Update is called once per frame

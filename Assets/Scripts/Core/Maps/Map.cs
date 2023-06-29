@@ -1,12 +1,18 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace Core
 {
     public class Map : MonoBehaviour
     {
 
+        //Events
+        public event Action<Map, Vector2Int> TeleportPlayer;
 
-        public Dictionary<Vector2Int, MonoBehaviour> occupiedCells { get; private set; } = new Dictionary<Vector2Int, MonoBehaviour>();
+        public Dictionary<Vector2Int, MonoBehaviour> occupiedCells { get; private set; }
+
+        public Dictionary<Vector2Int, Exit> Exits { get; private set; }
 
         public Grid grid { get; private set; }
 
@@ -14,8 +20,12 @@ namespace Core
 
         private void Awake()
         {
+
+            occupiedCells = new Dictionary<Vector2Int, MonoBehaviour>();
+            Exits = new Dictionary<Vector2Int, Exit>();
             grid = GetComponent<Grid>();
         }
+
 
         //Functions
 
@@ -61,6 +71,11 @@ namespace Core
         public MonoBehaviour getOccupuiedCell(Vector2Int cell)
         {
             return occupiedCells[cell];
+        }
+
+        public void teleportPlayer(Map newMap, Vector2Int destinationCell)
+        {
+            TeleportPlayer?.Invoke(newMap, destinationCell);
         }
 
     }

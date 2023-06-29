@@ -74,10 +74,8 @@ namespace Core
         }
         private void initMenu() => mainMenu = GetComponentInChildren<MainMenu>();
         private void initSceneLoader() => sceneLoader = new SceneLoader(player, Map);
-        private void initInput() => inputHandler = new InputHandler(player, mainMenu, Map);
-
+        private void initInput() => inputHandler = new InputHandler(player, mainMenu);
         private void initDialogue() => DialogueManager.instance.Init(inputHandler);
-
 
         //Events
         private void initEvents()
@@ -90,6 +88,9 @@ namespace Core
             mainMenu.openMenu += openMenu;
             mainMenu.closeMenu += closeMenu;
 
+            //Map
+            Map.TeleportPlayer += LoadMap;
+
         }
         private void destroyEvents()
         {
@@ -101,6 +102,9 @@ namespace Core
             mainMenu.openMenu -= openMenu;
             mainMenu.closeMenu -= closeMenu;
 
+            //Map
+            Map.TeleportPlayer -= LoadMap;
+
         }
 
         //Event Listeners
@@ -109,6 +113,18 @@ namespace Core
 
         private void openMenu() => changeState(GameState.Menu);
         private void closeMenu() => returnState();
+
+        private void LoadMap(Map newMap, Vector2Int destinationCell)
+        {
+            Map oldMap = Map;
+            oldMap.TeleportPlayer -= LoadMap;
+
+            Map = Instantiate(newMap);
+            Map.TeleportPlayer += LoadMap;
+
+            Destroy(oldMap.gameObject);
+            player.transform.position = Map.grid.Center2D(destinationCell);
+        }
 
         //Game State Management
         private void changeState(GameState state)
@@ -146,7 +162,5 @@ namespace Core
         {
             destroyEvents();
         }
-
-
     }
 }
