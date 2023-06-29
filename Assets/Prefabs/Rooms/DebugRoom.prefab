@@ -723,7 +723,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5047450152281332292}
-  - component: {fileID: 4786566129414300072}
+  - component: {fileID: 9101314920258960447}
   m_Layer: 0
   m_Name: DungeonExit
   m_TagString: Untagged
@@ -746,7 +746,7 @@ Transform:
   m_Father: {fileID: 3690784823096961086}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4786566129414300072
+--- !u!114 &9101314920258960447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -755,11 +755,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5762591256692833184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69b0442749635094e82d850e9a42e0a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 164171bef42f74342b76bb010c735a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newMap: {fileID: 4170751599150295614}
-  destinationCell: {x: 5, y: 5}
+  id: 1
+  newMap: {fileID: 4170751599150295614, guid: f54e36624277dc240a12774b6e43b09f, type: 3}
+  destinationId: 1
 --- !u!1 &6223727894613371978
 GameObject:
   m_ObjectHideFlags: 0

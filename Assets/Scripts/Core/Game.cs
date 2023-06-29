@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Core
@@ -114,16 +115,23 @@ namespace Core
         private void openMenu() => changeState(GameState.Menu);
         private void closeMenu() => returnState();
 
-        private void LoadMap(Map newMap, Vector2Int destinationCell)
+        private void LoadMap(Map newMap, int destinationCell)
         {
             Map oldMap = Map;
-            oldMap.TeleportPlayer -= LoadMap;
+
 
             Map = Instantiate(newMap);
+            oldMap.TeleportPlayer -= LoadMap;
+            Destroy(oldMap.gameObject);
             Map.TeleportPlayer += LoadMap;
 
-            Destroy(oldMap.gameObject);
-            player.transform.position = Map.grid.Center2D(destinationCell);
+
+            Transfer[] transfers = FindObjectsOfType<Transfer>();
+
+            Transfer transfer = transfers.Where(transfer => transfer.Id == destinationCell).FirstOrDefault();
+
+
+            player.transform.position = Map.grid.Center2D(transfer.transferCell);
         }
 
         //Game State Management

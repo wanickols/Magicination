@@ -8,11 +8,11 @@ namespace Core
     {
 
         //Events
-        public event Action<Map, Vector2Int> TeleportPlayer;
+        public event Action<Map, int> TeleportPlayer;
 
         public Dictionary<Vector2Int, MonoBehaviour> occupiedCells { get; private set; }
 
-        public Dictionary<Vector2Int, Exit> Exits { get; private set; }
+        public Dictionary<Vector2Int, Transfer> transfers { get; private set; }
 
         public Grid grid { get; private set; }
 
@@ -22,7 +22,7 @@ namespace Core
         {
 
             occupiedCells = new Dictionary<Vector2Int, MonoBehaviour>();
-            Exits = new Dictionary<Vector2Int, Exit>();
+            transfers = new Dictionary<Vector2Int, Transfer>();
             grid = GetComponent<Grid>();
         }
 
@@ -73,9 +73,9 @@ namespace Core
             return occupiedCells[cell];
         }
 
-        public void teleportPlayer(Map newMap, Vector2Int destinationCell)
+        public void teleportPlayer(Map newMap, int destinationID)
         {
-            TeleportPlayer?.Invoke(newMap, destinationCell);
+            TeleportPlayer?.Invoke(newMap, destinationID);
         }
 
     }

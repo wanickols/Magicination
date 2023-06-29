@@ -23,9 +23,9 @@ namespace Core
 
         public void CheckCurrentCell(Map map)
         {
-            if (map.Exits.ContainsKey(currCell))
+            if (map.transfers.ContainsKey(currCell))
             {
-                Exit exit = map.Exits[currCell];
+                Transfer exit = map.transfers[currCell];
                 exit.TeleportPlayer();
             }
         }
