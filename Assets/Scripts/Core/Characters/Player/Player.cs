@@ -1,7 +1,12 @@
+using System;
+
 namespace Core
 {
     public class Player : Character
     {
+
+        //Events
+        public event Action<Transfer> TeleportPlayer;
 
         protected override void Awake()
         {
@@ -25,8 +30,8 @@ namespace Core
         {
             if (map.transfers.ContainsKey(currCell))
             {
-                Transfer exit = map.transfers[currCell];
-                exit.TeleportPlayer();
+                Transfer transfer = map.transfers[currCell];
+                TeleportPlayer?.Invoke(transfer);
             }
         }
 

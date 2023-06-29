@@ -89,8 +89,7 @@ namespace Core
             mainMenu.openMenu += openMenu;
             mainMenu.closeMenu += closeMenu;
 
-            //Map
-            Map.TeleportPlayer += LoadMap;
+            player.TeleportPlayer += LoadMap;
 
         }
         private void destroyEvents()
@@ -104,7 +103,7 @@ namespace Core
             mainMenu.closeMenu -= closeMenu;
 
             //Map
-            Map.TeleportPlayer -= LoadMap;
+            player.TeleportPlayer -= LoadMap;
 
         }
 
@@ -115,23 +114,21 @@ namespace Core
         private void openMenu() => changeState(GameState.Menu);
         private void closeMenu() => returnState();
 
-        private void LoadMap(Map newMap, int destinationCell)
+        private void LoadMap(Transfer transfer)
         {
             Map oldMap = Map;
 
+            Map = Instantiate(transfer.NewMap);
 
-            Map = Instantiate(newMap);
-            oldMap.TeleportPlayer -= LoadMap;
             Destroy(oldMap.gameObject);
-            Map.TeleportPlayer += LoadMap;
+
 
 
             Transfer[] transfers = FindObjectsOfType<Transfer>();
 
-            Transfer transfer = transfers.Where(transfer => transfer.Id == destinationCell).FirstOrDefault();
+            Transfer _transfer = transfers.Where(transfer => transfer.Id == transfer.DestinationId).FirstOrDefault();
 
-
-            player.transform.position = Map.grid.Center2D(transfer.transferCell);
+            player.transform.position = Map.grid.Center2D(Map.grid.GetCell2D(_transfer.gameObject));
         }
 
         //Game State Management

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +6,7 @@ namespace Core
     public class Map : MonoBehaviour
     {
 
-        //Events
-        public event Action<Map, int> TeleportPlayer;
+
 
         public Dictionary<Vector2Int, MonoBehaviour> occupiedCells { get; private set; }
 
@@ -24,6 +22,16 @@ namespace Core
             occupiedCells = new Dictionary<Vector2Int, MonoBehaviour>();
             transfers = new Dictionary<Vector2Int, Transfer>();
             grid = GetComponent<Grid>();
+
+            //Create Transfers
+            Transfer[] transferArray = FindObjectsOfType<Transfer>();
+
+            foreach (Transfer transfer in transferArray)
+            {
+                Vector2Int cellLocation = grid.GetCell2D(transfer.gameObject);
+                transfers.Add(cellLocation, transfer);
+            }
+
         }
 
 
@@ -73,9 +81,13 @@ namespace Core
             return occupiedCells[cell];
         }
 
-        public void teleportPlayer(Map newMap, int destinationID)
+        public void destroyTransfers()
         {
-            TeleportPlayer?.Invoke(newMap, destinationID);
+            foreach (KeyValuePair<Vector2Int, Transfer> t in transfers)
+            {
+                if (t.Value != null)
+                    Destroy(t.Value.gameObject);
+            }
         }
 
     }
