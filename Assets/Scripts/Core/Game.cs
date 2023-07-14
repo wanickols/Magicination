@@ -156,8 +156,7 @@ namespace Core
             previousState = State = GameState.Battle;
             Battle.Battle.currentRegion = Map.region;
 
-            //transitionPrefab
-            sceneLoader.loadScene(SceneLoader.scene.battle);
+            StartCoroutine(sceneLoader.Co_loadScene(SceneLoader.scene.battle, transitionPrefab));
             Map.gameObject.SetActive(false);
 
         }

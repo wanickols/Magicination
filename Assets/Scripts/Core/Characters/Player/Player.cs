@@ -32,7 +32,7 @@ namespace Core
 
         public void CheckCurrentCell(Map map)
         {
-            stepCount++;
+
             if (map.transfers.ContainsKey(currCell))
             {
                 Transfer transfer = map.transfers[currCell];
@@ -48,6 +48,8 @@ namespace Core
             Region region = Game.manager.Map.region;
             if (region == null)
                 return;
+
+            stepCount++;
 
             int danger = (int)region.dangerLevel * 4;
 

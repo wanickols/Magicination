@@ -22,7 +22,7 @@ namespace Core
             this.player = player;
         }
 
-        private IEnumerator loadScene(scene scene, GameObject transitionPrefab)
+        public IEnumerator Co_loadScene(scene scene, GameObject transitionPrefab)
         {
             print("Loading Scene");
             Animator animator = playAnimation(transitionPrefab);
@@ -38,8 +38,6 @@ namespace Core
 
         public void loadScene(scene scene)
         {
-
-
             switch (scene)
             {
                 case scene.main:
