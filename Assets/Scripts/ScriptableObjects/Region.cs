@@ -10,7 +10,7 @@ public class Region : ScriptableObject
     [SerializeField] public int maxWeight;
 
     [SerializeField] public List<EnemyData> possibleEnemies;
-    [SerializeField] DangerLevel level = DangerLevel.none;
+    [SerializeField] public DangerLevel dangerLevel = DangerLevel.none;
 
     [SerializeField] public List<RarityProbability> probabilities;
 

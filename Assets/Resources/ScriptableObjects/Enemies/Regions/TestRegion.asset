@@ -20,15 +20,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 30ff317f39068ff4083bb35cf341fa9f, type: 2}
   - {fileID: 11400000, guid: a1df6b963055c494c8b1ec7b0d415377, type: 2}
   - {fileID: 11400000, guid: 0f75ca32ddf2f054d956e0b2046a4464, type: 2}
-  level: 2
+  dangerLevel: 3
   probabilities:
   - rarity: 0
     probability: 50
   - rarity: 1
     probability: 25
-  - rarity: 3
+  - rarity: 2
     probability: 14
-  - rarity: 4
+  - rarity: 3
     probability: 8
-  - rarity: 0
+  - rarity: 4
     probability: 3

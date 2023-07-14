@@ -20,6 +20,9 @@ namespace Battle
         protected const int MAX_POSSIBLE_SPD = 99; //Speed 
         protected const int MAX_POSSIBLE_EVS = 99; //Evasion
 
+        protected const int MAX_POSSIBLE_ENC = 100; //Encounter Rate
+
+
 
         [SerializeField] protected int lv;
         [SerializeField] protected int exp;
@@ -34,7 +37,7 @@ namespace Battle
         [SerializeField] protected int mdef;
         [SerializeField] protected int spd;
         [SerializeField] protected int evs;
-
+        [SerializeField] protected int enc;
 
         public Stats(int lv, int exp, int hp, int maxHp, int mp, int maxMp, int atk, int matk, int def, int mdef, int spd, int evs)
         {
@@ -170,6 +173,15 @@ namespace Battle
             set
             {
                 evs = Mathf.Clamp(value, 0, MAX_POSSIBLE_EVS);
+            }
+        }
+
+        public int ENC
+        {
+            get => enc;
+            set
+            {
+                enc = Mathf.Clamp(value, 0, MAX_POSSIBLE_ENC);
             }
         }
 

@@ -10,14 +10,14 @@ namespace Core
         public static IReadOnlyList<PartyMember> ActiveMembers => activeMembers;
         public static IReadOnlyList<PartyMember> ReserveMembers => reserveMembers;
 
+        private static int encounterRate = 0;
+
+        private static bool canEncounter = true;
+
         static Party()
         {
             generateParty();
         }
-
-
-
-
         public static void AddActiveMember(PartyMember memberToAdd)
         {
             if (activeMembers.Contains(memberToAdd))
@@ -37,6 +37,21 @@ namespace Core
             reserveMembers.Add(memberToRemove);
         }
 
+        public static int getEncounterRate()
+        {
+
+            //Check Armor for canEncounter Possibly
+            if (!canEncounter)
+                return 0;
+
+            foreach (PartyMember member in activeMembers)
+            {
+                encounterRate += member.Stats.ENC;
+            }
+
+            return encounterRate;
+        }
+
         private static void generateParty()
         {
             PartyMember Aaron = Resources.Load<PartyMember>(Paths.Aaron);
@@ -46,7 +61,7 @@ namespace Core
 
             activeMembers.Add(Aaron);
             activeMembers.Add(Kaja);
-            //activeMembers.Add(Seth);
+            activeMembers.Add(Seth);
             //activeMembers.Add(Zera);
 
         }

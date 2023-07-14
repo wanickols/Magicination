@@ -25,6 +25,8 @@ namespace Core
         private SceneLoader sceneLoader;
         private MainMenu mainMenu;
 
+        private int battleChance = 50; //out of 100, chance to trigger a battle when character steps hit threshhold. 
+
         //Public
         public Map Map { get; private set; }
 
@@ -55,9 +57,6 @@ namespace Core
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.B))
-                StartBattle();
-
             inputHandler.CheckInput();
         }
 
@@ -98,8 +97,10 @@ namespace Core
             mainMenu.closeMenu += closeMenu;
 
             player.TeleportPlayer += LoadMap;
+            player.TriggerBattle += StartBattle;
 
         }
+
         private void destroyEvents()
         {
             //Dialogue
@@ -112,6 +113,7 @@ namespace Core
 
             //Map
             player.TeleportPlayer -= LoadMap;
+            player.TriggerBattle -= StartBattle;
 
         }
 
