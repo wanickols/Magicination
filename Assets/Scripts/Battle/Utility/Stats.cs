@@ -5,35 +5,36 @@ namespace Battle
     [System.Serializable]
     public class Stats
     {
-        private const int MAX_POSSIBLE_LEVEL = 99;
-        private const int MAX_POSSIBLE_EXP = 9999999;
+        protected const int MAX_POSSIBLE_LEVEL = 99;
+        protected const int MAX_POSSIBLE_EXP = 9999999;
 
-        private const int MAX_POSSIBLE_HP = 9999; //Health Points
-        private const int MAX_POSSIBLE_MP = 9999; //Magic Points
+        protected const int MAX_POSSIBLE_HP = 9999; //Health Points
+        protected const int MAX_POSSIBLE_MP = 9999; //Magic Points
 
-        private const int MAX_POSSIBLE_ATK = 999; //Physical Attack
-        private const int MAX_POSSIBLE_MATK = 999; //Magic Attack
+        protected const int MAX_POSSIBLE_ATK = 999; //Physical Attack
+        protected const int MAX_POSSIBLE_MATK = 999; //Magic Attack
 
-        private const int MAX_POSSIBLE_DEF = 999; //Physical Defense
-        private const int MAX_POSSIBLE_MDEF = 999; //Magic Defense
+        protected const int MAX_POSSIBLE_DEF = 999; //Physical Defense
+        protected const int MAX_POSSIBLE_MDEF = 999; //Magic Defense
 
-        private const int MAX_POSSIBLE_SPD = 99; //Speed 
-        private const int MAX_POSSIBLE_EVS = 99; //Evasion
+        protected const int MAX_POSSIBLE_SPD = 99; //Speed 
+        protected const int MAX_POSSIBLE_EVS = 99; //Evasion
 
 
-        [SerializeField] private int lv;
-        [SerializeField] private int exp;
-        [SerializeField] private int nxtExp;
-        [SerializeField] private int hp;
-        [SerializeField] private int maxHp;
-        [SerializeField] private int mp;
-        [SerializeField] private int maxMp;
-        [SerializeField] private int atk;
-        [SerializeField] private int matk;
-        [SerializeField] private int def;
-        [SerializeField] private int mdef;
-        [SerializeField] private int spd;
-        [SerializeField] private int evs;
+        [SerializeField] protected int lv;
+        [SerializeField] protected int exp;
+        [SerializeField] protected int nxtExp;
+        [SerializeField] protected int hp;
+        [SerializeField] protected int maxHp;
+        [SerializeField] protected int mp;
+        [SerializeField] protected int maxMp;
+        [SerializeField] protected int atk;
+        [SerializeField] protected int matk;
+        [SerializeField] protected int def;
+        [SerializeField] protected int mdef;
+        [SerializeField] protected int spd;
+        [SerializeField] protected int evs;
+
 
         public Stats(int lv, int exp, int hp, int maxHp, int mp, int maxMp, int atk, int matk, int def, int mdef, int spd, int evs)
         {
@@ -171,5 +172,7 @@ namespace Battle
                 evs = Mathf.Clamp(value, 0, MAX_POSSIBLE_EVS);
             }
         }
+
+
     }
 }

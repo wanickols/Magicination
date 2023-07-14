@@ -10,14 +10,17 @@ namespace Battle
 
         //Mange the turns, trigger the next turn when one is done
         //End battle when it's over
-        public static EnemyPack enemyPack;
+
+        private EnemyGenerator enemyGenerator;
+        private EnemyPack enemyPack;
+        public static Region currentRegion;
 
         private List<Actor> turnOrder = new List<Actor>();
         private List<Ally> allies = new List<Ally>();
         private List<Enemy> enemies = new List<Enemy>();
         private int turnNumber = 0;
         private bool setUpComplete = false;
-        private BattlePositions battlePositions = new BattlePositions();
+        private PlayerBattlePositions battlePositions = new PlayerBattlePositions();
 
         public IReadOnlyList<Actor> TurnOrder => turnOrder;
         public IReadOnlyList<Ally> Allies => allies;
@@ -25,6 +28,7 @@ namespace Battle
 
         private void Awake()
         {
+            enemyGenerator = new EnemyGenerator(currentRegion);
             SpawnPartyMembers();
             SpawnEnemies();
         }
@@ -57,7 +61,7 @@ namespace Battle
 
         private void SpawnPartyMembers()
         {
-            BattlePositions.SpawnCounts partyCount = (BattlePositions.SpawnCounts)Core.Party.ActiveMembers.Count;
+            SpawnCounts partyCount = (SpawnCounts)Core.Party.ActiveMembers.Count;
 
             List<Vector2> positionList = battlePositions.getPositions(partyCount);
 
@@ -76,9 +80,11 @@ namespace Battle
 
         private void SpawnEnemies()
         {
+            enemyPack = enemyGenerator.generateEnemies();
+
             for (int i = 0; i < enemyPack.Enemies.Count; i++)
             {
-                Vector2 spawnPos = new Vector2(enemyPack.XSpawnCoordinates[i], enemyPack.YSpawnCoordinates[i]);
+                Vector2 spawnPos = new Vector2(enemyPack.SpawnCoordinates[i].x, enemyPack.SpawnCoordinates[i].y);
                 GameObject enemyActor = Instantiate(enemyPack.Enemies[i].ActorPrefab, spawnPos, Quaternion.identity);
                 Enemy enemy = enemyActor.GetComponent<Enemy>();
                 enemy.Stats = enemyPack.Enemies[i].Stats;
@@ -86,15 +92,17 @@ namespace Battle
                 enemies.Add(enemy);
 
             }
+
         }
+
 
         private void DetermineTurnOrder()
         {
             turnOrder = turnOrder.OrderByDescending(actor => actor.Stats.Initative).ToList();
-            foreach (var actor in turnOrder)
+            /*foreach (var actor in turnOrder)
             {
                 Debug.Log($"{actor.name} {actor.Stats.EVS}");
-            }
+            }*/
             turnOrder[0].StartTurn();
             setUpComplete = true;
         }

@@ -1,7 +1,6 @@
 using Ink.Runtime;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 namespace Core
 {
     public class DialogueVariables
@@ -21,7 +20,7 @@ namespace Core
             {
                 Ink.Runtime.Object value = globalVariablesStory.variablesState.GetVariableWithName(name);
                 variables.Add(name, value);
-                Debug.Log($"Initialized global dialogue variable: {name} = value");
+                //Debug.Log($"Initialized global dialogue variable: {name} = value");
             }
         }
 

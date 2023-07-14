@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b508b3fc7704ca41a93142ce302aee1, type: 3}
+  m_Name: TestRegion
+  m_EditorClassIdentifier: 
+  maxWeight: 4
+  possibleEnemies:
+  - {fileID: 11400000, guid: e836ac1092e135e4c986b94d34c781f9, type: 2}
+  - {fileID: 11400000, guid: 4f370cb7520ff274b9ad3acc09d2dc48, type: 2}
+  - {fileID: 11400000, guid: f8724c46d0056304abd230844646febb, type: 2}
+  - {fileID: 11400000, guid: 30ff317f39068ff4083bb35cf341fa9f, type: 2}
+  - {fileID: 11400000, guid: a1df6b963055c494c8b1ec7b0d415377, type: 2}
+  - {fileID: 11400000, guid: 0f75ca32ddf2f054d956e0b2046a4464, type: 2}
+  level: 2
+  probabilities:
+  - rarity: 0
+    probability: 50
+  - rarity: 1
+    probability: 25
+  - rarity: 3
+    probability: 14
+  - rarity: 4
+    probability: 8
+  - rarity: 0
+    probability: 3

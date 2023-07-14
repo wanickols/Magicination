@@ -15,18 +15,16 @@ namespace Core
         public static scene savedScene;
         private static Vector2 savedPlayerLocation;
         private Player player;
-        private Map map;
         private int currIndex = 0;
 
-        public SceneLoader(Player player, Map map)
+        public void init(Player player)
         {
             this.player = player;
-            this.map = map;
         }
 
-        public IEnumerator loadScene(scene scene, GameObject transitionPrefab)
+        private IEnumerator loadScene(scene scene, GameObject transitionPrefab)
         {
-
+            print("Loading Scene");
             Animator animator = playAnimation(transitionPrefab);
             while (animator.IsAnimating()) yield return null;
             loadScene(scene);
@@ -40,6 +38,8 @@ namespace Core
 
         public void loadScene(scene scene)
         {
+
+
             switch (scene)
             {
                 case scene.main:
@@ -66,7 +66,7 @@ namespace Core
         {
             //Save current
             savedScene = (scene)SceneManager.GetActiveScene().buildIndex;
-            savedPlayerLocation = map.grid.Center2D(player.currCell);
+            savedPlayerLocation = Game.manager.Map.grid.Center2D(player.currCell);
 
             // Player
             player.gameObject.SetActive(false);

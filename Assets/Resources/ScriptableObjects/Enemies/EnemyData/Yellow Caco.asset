@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4c5948a48e50b468211f4fc9e1f7fc, type: 3}
+  m_Name: Yellow Caco
+  m_EditorClassIdentifier: 
+  actorPrefab: {fileID: 2832430299845234393, guid: 8cf13d7ddb8f0ec458b85c50af6896b8, type: 3}
+  stats:
+    lv: 0
+    exp: 0
+    nxtExp: 0
+    hp: 10
+    maxHp: 10
+    mp: 0
+    maxMp: 0
+    atk: 4
+    matk: 0
+    def: 2
+    mdef: 0
+    spd: 10
+    evs: 1
+    battleWeight: 2
+    enemyRarity: 0

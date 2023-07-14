@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7119268999815083993}
   - component: {fileID: -5128519423572305584}
   m_Layer: 0
-  m_Name: FloatingEye
+  m_Name: Purple Cacodaemon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 890429281
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 821193515, guid: f57f127c1608f4d4eac0d817cdf21ace, type: 3}
+  m_Sprite: {fileID: -1491595998, guid: ed4eb5efa2d9bd6468fb9e0036bb2ca4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0

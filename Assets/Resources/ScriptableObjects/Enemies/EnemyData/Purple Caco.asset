@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee4c5948a48e50b468211f4fc9e1f7fc, type: 3}
-  m_Name: FloatingEye
+  m_Name: Purple Caco
   m_EditorClassIdentifier: 
-  actorPrefab: {fileID: 2832430299845234393, guid: d051278af23c43447a9df80bb7d37c54, type: 3}
+  actorPrefab: {fileID: 2832430299845234393, guid: 674231a79c6d28d4eb95a5fc1266d325, type: 3}
   stats:
+    lv: 0
+    exp: 0
+    nxtExp: 0
     hp: 10
     maxHp: 10
     mp: 0
@@ -24,3 +27,5 @@ MonoBehaviour:
     mdef: 0
     spd: 10
     evs: 1
+    battleWeight: 3
+    enemyRarity: 3

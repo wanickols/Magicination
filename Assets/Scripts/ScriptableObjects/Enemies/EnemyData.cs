@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     [SerializeField] private GameObject actorPrefab;
-    [SerializeField] private Stats stats;
+    [SerializeField] private EnemyStats stats;
 
     public GameObject ActorPrefab => actorPrefab;
-    public Stats Stats => stats;
+    public EnemyStats Stats => stats;
 }

@@ -6,7 +6,8 @@ namespace Core
     public class Map : MonoBehaviour
     {
 
-
+        [SerializeField]
+        public Region region;
 
         public Dictionary<Vector2Int, MonoBehaviour> occupiedCells { get; private set; }
 

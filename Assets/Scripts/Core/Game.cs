@@ -12,16 +12,17 @@ namespace Core
 
         //Seriazlied
         [SerializeField] private Map startingMap;
-        [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab;
+        [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab, sceneLoaderPrefab;
         [SerializeField] private Vector2Int startingCell;
 
         [SerializeField] private InputHandler inputHandler;
-        [SerializeField] private SceneLoader sceneLoader;
+
 
         //Private
         private GameState previousState = GameState.World;
         private UI uiManager;
         private Player player;
+        private SceneLoader sceneLoader;
         private MainMenu mainMenu;
 
         //Public
@@ -54,6 +55,9 @@ namespace Core
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.B))
+                StartBattle();
+
             inputHandler.CheckInput();
         }
 
@@ -74,7 +78,11 @@ namespace Core
             DontDestroyOnLoad(player);
         }
         private void initMenu() => mainMenu = GetComponentInChildren<MainMenu>();
-        private void initSceneLoader() => sceneLoader = new SceneLoader(player, Map);
+        private void initSceneLoader()
+        {
+            sceneLoader = Instantiate(sceneLoaderPrefab, this.transform).GetComponent<SceneLoader>();
+            sceneLoader.init(player);
+        }
         private void initInput() => inputHandler = new InputHandler(player, mainMenu);
         private void initDialogue() => DialogueManager.instance.Init(inputHandler);
 
@@ -140,14 +148,15 @@ namespace Core
         private void returnState() => State = previousState;
 
         //TODO: move this to scene loader, can use event
-        private void StartBattle(EnemyPack pack)
+        private void StartBattle()
         {
 
             previousState = State = GameState.Battle;
-            Map.gameObject.SetActive(false);
-            Battle.Battle.enemyPack = pack;
+            Battle.Battle.currentRegion = Map.region;
 
-            sceneLoader.loadScene(SceneLoader.scene.battle, transitionPrefab);
+            //transitionPrefab
+            sceneLoader.loadScene(SceneLoader.scene.battle);
+            Map.gameObject.SetActive(false);
 
         }
 
