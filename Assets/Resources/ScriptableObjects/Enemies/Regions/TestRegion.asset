@@ -20,7 +20,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 30ff317f39068ff4083bb35cf341fa9f, type: 2}
   - {fileID: 11400000, guid: a1df6b963055c494c8b1ec7b0d415377, type: 2}
   - {fileID: 11400000, guid: 0f75ca32ddf2f054d956e0b2046a4464, type: 2}
-  dangerLevel: 3
+  dangerLevel: 4
   probabilities:
   - rarity: 0
     probability: 50

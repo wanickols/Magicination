@@ -12,7 +12,7 @@ namespace Core
 
         //Seriazlied
         [SerializeField] private Map startingMap;
-        [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab, sceneLoaderPrefab;
+        [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab;
         [SerializeField] private Vector2Int startingCell;
 
         [SerializeField] private InputHandler inputHandler;
@@ -57,6 +57,9 @@ namespace Core
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.E))
+                EndBattle();
+
             inputHandler.CheckInput();
         }
 
@@ -79,8 +82,7 @@ namespace Core
         private void initMenu() => mainMenu = GetComponentInChildren<MainMenu>();
         private void initSceneLoader()
         {
-            sceneLoader = Instantiate(sceneLoaderPrefab, this.transform).GetComponent<SceneLoader>();
-            sceneLoader.init(player);
+            sceneLoader = new SceneLoader(player);
         }
         private void initInput() => inputHandler = new InputHandler(player, mainMenu);
         private void initDialogue() => DialogueManager.instance.Init(inputHandler);
@@ -97,10 +99,6 @@ namespace Core
             mainMenu.closeMenu += closeMenu;
 
             player.TeleportPlayer += LoadMap;
-
-
-
-
         }
 
         private void destroyEvents()

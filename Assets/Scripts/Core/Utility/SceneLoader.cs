@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 namespace Core
 {
-    public class SceneLoader : MonoBehaviour
+    public class SceneLoader
     {
         public enum scene
         {
@@ -17,14 +17,14 @@ namespace Core
         private Player player;
         private int currIndex = 0;
 
-        public void init(Player player)
+        public SceneLoader(Player player)
         {
             this.player = player;
         }
 
         public IEnumerator Co_loadScene(scene scene, GameObject transitionPrefab)
         {
-            print("Loading Scene");
+            Debug.Log("Loading Scene");
             Animator animator = playAnimation(transitionPrefab);
             while (animator.IsAnimating()) yield return null;
             loadScene(scene);
@@ -32,7 +32,7 @@ namespace Core
 
         private Animator playAnimation(GameObject transitionPrefab)
         {
-            return Instantiate(transitionPrefab, player.transform.position, Quaternion.identity).GetComponent<Animator>();
+            return GameObject.Instantiate(transitionPrefab, player.transform.position, Quaternion.identity).GetComponent<Animator>();
         }
 
 
@@ -62,6 +62,8 @@ namespace Core
 
         private void loadBattleScene()
         {
+            GameObject.DontDestroyOnLoad(Game.manager.Map);
+
             //Save current
             savedScene = (scene)SceneManager.GetActiveScene().buildIndex;
             savedPlayerLocation = Game.manager.Map.grid.Center2D(player.currCell);
