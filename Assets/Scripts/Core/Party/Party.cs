@@ -10,8 +10,6 @@ namespace Core
         public static IReadOnlyList<PartyMember> ActiveMembers => activeMembers;
         public static IReadOnlyList<PartyMember> ReserveMembers => reserveMembers;
 
-        private static int encounterRate = 0;
-
         private static bool canEncounter = true;
 
         static Party()
@@ -39,14 +37,14 @@ namespace Core
 
         public static int getEncounterRate()
         {
-
+            int encounterRate = 0;
             //Check Armor for canEncounter Possibly
-            if (!canEncounter)
-                return 0;
-
-            foreach (PartyMember member in activeMembers)
+            if (canEncounter)
             {
-                encounterRate += member.Stats.ENC;
+                foreach (PartyMember member in activeMembers)
+                {
+                    encounterRate += member.Stats.ENC;
+                }
             }
 
             return encounterRate;

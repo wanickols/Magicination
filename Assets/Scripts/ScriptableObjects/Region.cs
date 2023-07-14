@@ -10,7 +10,7 @@ public class Region : ScriptableObject
     [SerializeField] public int maxWeight;
 
     [SerializeField] public List<EnemyData> possibleEnemies;
-    [SerializeField] public DangerLevel dangerLevel = DangerLevel.none;
+    [SerializeField] public DangerLevel dangerLevel = DangerLevel.low;
 
     [SerializeField] public List<RarityProbability> probabilities;
 
@@ -20,6 +20,8 @@ public class Region : ScriptableObject
         uncommonEnemies = new List<EnemyData>(), rareEnemies = new List<EnemyData>(),
         epicEnemies = new List<EnemyData>(), legendaryEnemies = new List<EnemyData>();
 
+
+    public event Action TriggerBattle;
 
     private void OnEnable()
     {
@@ -75,6 +77,16 @@ public class Region : ScriptableObject
         return lowestWeight;
     }
 
+    public void tryRandomEncounter()
+    {
+        int chance = UnityEngine.Random.Range(0, 100);
+        float enc = Party.getEncounterRate() * (float)((int)dangerLevel / 2); //Average party: Low = 1/20 medium 1/10 high 3/20 extreme 2/10
 
+        if (chance < enc)
+        {
+            TriggerBattle?.Invoke();
+        }
+
+    }
     //Climate
 }

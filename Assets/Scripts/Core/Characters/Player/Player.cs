@@ -7,8 +7,7 @@ namespace Core
 
         //Events
         public event Action<Transfer> TeleportPlayer;
-        public event Action TriggerBattle;
-        private int stepCount = 0;
+
 
 
         protected override void Awake()
@@ -37,34 +36,17 @@ namespace Core
             {
                 Transfer transfer = map.transfers[currCell];
                 TeleportPlayer?.Invoke(transfer);
-            }
-
-            checkBattle();
-
-        }
-
-        private void checkBattle()
-        {
-            Region region = Game.manager.Map.region;
-            if (region == null)
                 return;
-
-            stepCount++;
-
-            int danger = (int)region.dangerLevel * 4;
-
-            if (danger != 0 && stepCount > danger)
-            {
-                int chance = UnityEngine.Random.Range(0, 100);
-                int enc = Party.getEncounterRate();
-
-                if (chance < enc)
-                {
-                    TriggerBattle?.Invoke();
-                    stepCount = 0;
-                }
             }
+
+
+            Region region = Game.manager.Map.region;
+            if (region != null)
+                region.tryRandomEncounter();
+
         }
+
+
 
         public override void setCurrCell()
         {

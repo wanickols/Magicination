@@ -24,10 +24,10 @@ namespace Core
     //Danger Level of a Region
     public enum DangerLevel
     {
-        none = 0,
-        high,
-        medium,
-        low,
+        low = 1,
+        medium = 2,
+        high = 3,
+        extreme = 4,
     }
 
 }

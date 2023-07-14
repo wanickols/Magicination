@@ -97,7 +97,9 @@ namespace Core
             mainMenu.closeMenu += closeMenu;
 
             player.TeleportPlayer += LoadMap;
-            player.TriggerBattle += StartBattle;
+
+
+
 
         }
 
@@ -113,7 +115,9 @@ namespace Core
 
             //Map
             player.TeleportPlayer -= LoadMap;
-            player.TriggerBattle -= StartBattle;
+
+            if (Map.region != null)
+                Map.region.TriggerBattle -= StartBattle;
 
         }
 
@@ -128,6 +132,9 @@ namespace Core
         {
             Map oldMap = Map;
 
+            if (oldMap.region != null)
+                oldMap.region.TriggerBattle -= StartBattle;
+
             Map = Instantiate(transfer.NewMap);
 
             Destroy(oldMap.gameObject);
@@ -139,6 +146,9 @@ namespace Core
             Transfer _transfer = transfers.Where(transfer => transfer.Id == transfer.DestinationId).FirstOrDefault();
 
             player.transform.position = Map.grid.Center2D(Map.grid.GetCell2D(_transfer.gameObject));
+            if (Map.region != null)
+                Map.region.TriggerBattle += StartBattle;
+
         }
 
         //Game State Management
