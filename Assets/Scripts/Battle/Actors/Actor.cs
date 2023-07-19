@@ -10,10 +10,23 @@ namespace Battle
         protected Vector2 startingPosition;
         [SerializeField] protected Vector2 targetPosition;
         public Stats Stats { get; set; }
+        [SerializeField] public Sprite battlePortrait;
 
+        //Turn Related
+        public float baseTurnSpeed => Stats.turnSpeed;
+
+        public float turnTime = 0;
         public bool isTakingTurn { get; protected set; } = false;
+
+
+        protected virtual void Awake()
+        {
+
+        }
+
         protected virtual void Start()
         {
+            turnTime = baseTurnSpeed;
             startingPosition = transform.position;
 
         }
