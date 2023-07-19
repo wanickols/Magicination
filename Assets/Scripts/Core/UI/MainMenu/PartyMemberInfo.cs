@@ -29,7 +29,7 @@ namespace Core
         {
             Stats stats = partyMember.Stats;
             memberName.text = partyMember.Name;
-            partyMemberPortrait = partyMember.Portrait;
+            partyMemberPortrait = partyMember.MenuPortrait;
 
             memberLevel.text = stats.LV.ToString();
             memberHP.text = $"{stats.HP}/{stats.MAXHP}";
