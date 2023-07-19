@@ -98,3 +98,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 0}
+  battlePortrait: {fileID: 21300000, guid: 1a608c8f6eebe524484354a8b731d9d8, type: 3}

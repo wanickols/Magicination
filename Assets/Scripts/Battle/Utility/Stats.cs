@@ -56,7 +56,7 @@ namespace Battle
 
 
 
-        public int Initative => SPD + Random.Range(-1, 2); //Battle order determinant
+        public float turnSpeed => (MAX_POSSIBLE_SPD - SPD) / (float)MAX_POSSIBLE_SPD; //Battle order determinant
 
 
         public int LV

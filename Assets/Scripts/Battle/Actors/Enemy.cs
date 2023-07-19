@@ -4,6 +4,12 @@ namespace Battle
 {
     public class Enemy : Actor
     {
+
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
         protected override void Start()
         {
             base.Start();

@@ -8,11 +8,11 @@ public class PartyMember : ScriptableObject
     [SerializeField] private string _name;
     [SerializeField] private GameObject actorPrefab;
     [SerializeField] private Stats stats;
-    [SerializeField] private Sprite portrait;
+    [SerializeField] private Sprite menuPortrait;
 
     public string Name => _name;
     public GameObject ActorPrefab => actorPrefab;
     public Stats Stats => stats;
-    public Sprite Portrait => portrait;
+    public Sprite MenuPortrait => menuPortrait;
 
 }
