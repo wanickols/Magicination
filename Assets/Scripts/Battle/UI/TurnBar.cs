@@ -31,7 +31,5 @@ namespace Battle
             }
         }
 
-        //Cycle Turns
-
     }
 }
