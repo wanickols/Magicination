@@ -52,15 +52,15 @@ namespace Core
 
         private static void generateParty()
         {
-            PartyMember Aaron = Resources.Load<PartyMember>(Paths.Aaron);
-            PartyMember Kaja = Resources.Load<PartyMember>(Paths.Kaja);
+            PartyMember Zane = Resources.Load<PartyMember>(Paths.Zane);
+            PartyMember Leon = Resources.Load<PartyMember>(Paths.Leon);
             PartyMember Seth = Resources.Load<PartyMember>(Paths.Seth);
-            PartyMember Zera = Resources.Load<PartyMember>(Paths.Zera);
+            PartyMember Aurora = Resources.Load<PartyMember>(Paths.Aurora);
 
-            activeMembers.Add(Aaron);
-            activeMembers.Add(Kaja);
-            activeMembers.Add(Seth);
-            //activeMembers.Add(Zera);
+            activeMembers.Add(Zane);
+            activeMembers.Add(Leon);
+            //activeMembers.Add(Seth);
+            activeMembers.Add(Aurora);
 
         }
     }
