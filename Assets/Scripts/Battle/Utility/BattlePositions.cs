@@ -58,32 +58,34 @@ namespace Battle
         protected override void CreateLists()
         {
 
-            one = new Vector2(-4, 0);
-            two = new Vector2(-4, .6f);
-            three = new Vector2(-4, -.6f);
-            four = new Vector2(-4, .25f);
+            one = new Vector2(-3, -.85f);
+            two = new Vector2(-3.5f, -1f);
+            three = new Vector2(-3, -.7f);
+            four = new Vector2(-4f, -1.1f);
 
             //List of one player
-            oneSpawnPositions.Add(one); // -4, 0
+            oneSpawnPositions.Add(one); // -3, -.85f
 
             //List of two players
-            twoSpawnPositions.Add(two); // -4, .6
-            twoSpawnPositions.Add(three);  //-4, -.6
+            twoSpawnPositions.Add(three); // -3, -.7
+            twoSpawnPositions.Add(two);  //-3.5, -1f
 
             //List of three players
-            one.x = -3.25f;
+            one.y = -.5f;
+            two.y = -.8f;
 
-            threeSpawnPositions.Add(one); //-3.25 
-            threeSpawnPositions.Add(two); // -4, .6
-            threeSpawnPositions.Add(three); // -4, -.6
+            threeSpawnPositions.Add(one); //-3, -.5f 
+            threeSpawnPositions.Add(two); // -3.5, -.8f
+            threeSpawnPositions.Add(four); // -4, -1.1f
 
             //List of four players
-            one = new Vector2(-3.25f, -.25f);
-            two = new Vector2(-3.25f, .75f);
-            three = new Vector2(-4, -.75f);
 
-            fourSpawnPositions.Add(one);
-            fourSpawnPositions.Add(two);
+            two.y = -.7f;
+            three = new Vector2(-4, -.9f);
+            four.x = 4.5f;
+
+            fourSpawnPositions.Add(one); //-3, -.5f 
+            fourSpawnPositions.Add(two); // -3.5, -.8f
             fourSpawnPositions.Add(three);
             fourSpawnPositions.Add(four);
         }
@@ -99,32 +101,34 @@ namespace Battle
 
         protected override void CreateLists()
         {
-            one = new Vector2(3.65f, 0);
+            one = new Vector2(3f, -.85f);
 
             //List of one player
-            oneSpawnPositions.Add(one); // 3.65, 0
+            oneSpawnPositions.Add(one); // 3, -.85f
 
-            two = new Vector2(3.65f, .6f);
-            three = new Vector2(3.65f, -.6f);
+            three = new Vector2(3f, -.7f);
+            two = new Vector2(3.5f, -1f);
 
             //List of two players
-            twoSpawnPositions.Add(two); // 3.65, .6
-            twoSpawnPositions.Add(three);  //3.65, -.6
+            twoSpawnPositions.Add(three); // 3, .7
+            twoSpawnPositions.Add(two);  //3.5, -1
 
             //List of three players
-            one.x = 2.65f;
+            one.y = -.5f;
+            two.y = -.8f;
+            three = new Vector2(4f, -1.1f);
 
-            threeSpawnPositions.Add(one); // 2.65, 0
-            threeSpawnPositions.Add(two); // 3.65, .6
-            threeSpawnPositions.Add(three); // 3.65, -.6
+            threeSpawnPositions.Add(one); // 3, -.5
+            threeSpawnPositions.Add(two); // 3.5, -.8
+            threeSpawnPositions.Add(three); // 4, -1.1
 
             //List of four players
-            one = new Vector2(2.9f, -.25f);
-            two = new Vector2(2.9f, .75f);
-            three = new Vector2(3.65f, -.75f);
-            four = new Vector2(3.65f, .25f);
 
-            fourSpawnPositions.Add(one); // 2.9, -.25
+            two.y = -.7f;
+            three.y = -.9f;
+            four = new Vector2(4.5f, -1.1f);
+
+            fourSpawnPositions.Add(one); // 3, -.5
             fourSpawnPositions.Add(two); // 2.9, .75
             fourSpawnPositions.Add(three); // 3.65, -.75
             fourSpawnPositions.Add(four);  // 3.65, -.25 
