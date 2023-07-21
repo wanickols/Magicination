@@ -5,6 +5,8 @@ namespace Battle
     public class Ally : Actor
     {
 
+
+
         protected override void Awake()
         {
             base.Awake();
@@ -12,9 +14,8 @@ namespace Battle
 
         protected override void Start()
         {
+            offset = .4f;
             base.Start();
-            float offset = 2f;
-            targetPosition.x = startingPosition.x + offset;
         }
 
         public override void StartTurn()
@@ -26,15 +27,7 @@ namespace Battle
 
         protected override IEnumerator Co_MoveToAttack()
         {
-            float elapsedTime = 0;
-
-            while ((Vector2)transform.position != targetPosition)
-            {
-                transform.position = Vector2.Lerp(startingPosition, targetPosition, elapsedTime);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
+            yield return base.Co_MoveToAttack();
             StartCoroutine(Co_GetPlayerCommand());
         }
 

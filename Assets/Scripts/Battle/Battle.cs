@@ -139,8 +139,6 @@ namespace Battle
 
             // Spawn the portrait slots for the next six actors in the list
             turnBar.SpawnPortraitSlots(nextSix);
-
-            currentActor.StartTurn();
         }
 
         private float CalculateTurnTime(float speed)

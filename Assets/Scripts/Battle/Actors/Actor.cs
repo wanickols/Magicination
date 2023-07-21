@@ -8,7 +8,7 @@ namespace Battle
     {
         //Store actor's stats and methods for taking a turn
         protected Vector2 startingPosition;
-        [SerializeField] protected Vector2 targetPosition;
+        protected Vector2 targetPosition;
         public Stats Stats { get; set; }
         [SerializeField] public Sprite battlePortrait;
 
@@ -17,7 +17,8 @@ namespace Battle
 
         public float turnTime = 0;
         public bool isTakingTurn { get; protected set; } = false;
-
+        [SerializeField] protected float offset;
+        [SerializeField] protected float attackAnimationSpeed = 2f;
 
         protected virtual void Awake()
         {
@@ -27,7 +28,8 @@ namespace Battle
         protected virtual void Start()
         {
             turnTime = baseTurnSpeed;
-            startingPosition = transform.position;
+            targetPosition = startingPosition = transform.position;
+            targetPosition += new Vector2(offset, 0);
 
         }
         public abstract void StartTurn();
@@ -39,7 +41,7 @@ namespace Battle
             while ((Vector2)transform.position != targetPosition)
             {
                 transform.position = Vector2.Lerp(startingPosition, targetPosition, elapsedTime);
-                elapsedTime += Time.deltaTime;
+                elapsedTime += (Time.deltaTime * attackAnimationSpeed);
                 yield return null;
             }
         }
