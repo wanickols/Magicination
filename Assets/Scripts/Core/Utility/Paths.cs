@@ -14,10 +14,10 @@ namespace Core
         public static string TwoEyes = enemyPackPath + "TwoFloatingEye";
 
         //Party Members
-        public static string Aaron = partyMemberPath + "Aaron";
-        public static string Kaja = partyMemberPath + "Kaja";
+        public static string Zane = partyMemberPath + "Zane";
+        public static string Leon = partyMemberPath + "Leon";
         public static string Seth = partyMemberPath + "Seth";
-        public static string Zera = partyMemberPath + "Zera";
+        public static string Aurora = partyMemberPath + "Aurora";
 
 
         //other

@@ -97,5 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d4ceab58cf2cf4fa9f111c96e25cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {x: 0, y: 0}
   battlePortrait: {fileID: 21300000, guid: 5df3704d82bdd134e9747a216c4eff6a, type: 3}
+  turnTime: 0
+  offset: 0
+  attackAnimationSpeed: 2

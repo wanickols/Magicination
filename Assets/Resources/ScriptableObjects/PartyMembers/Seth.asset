@@ -29,4 +29,4 @@ MonoBehaviour:
     spd: 4
     evs: 1
     enc: 3
-  portrait: {fileID: 21300000, guid: 5df3704d82bdd134e9747a216c4eff6a, type: 3}
+  menuPortrait: {fileID: 21300000, guid: 5df3704d82bdd134e9747a216c4eff6a, type: 3}
