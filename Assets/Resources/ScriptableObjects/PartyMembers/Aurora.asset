@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef5072f5086c88d4fa623a650b4b1d5e, type: 3}
   m_Name: Aurora
   m_EditorClassIdentifier: 
-  _name: Zera
+  _name: Aurora
   actorPrefab: {fileID: 2832430299845234393, guid: 7e9c88459d0778e40be390b6391881c7, type: 3}
+  menuPortrait: {fileID: 21300000, guid: 7a2e5438683bc2f429303fb9dd5386b2, type: 3}
   stats:
     lv: 1
     exp: 1
@@ -29,4 +30,3 @@ MonoBehaviour:
     spd: 4
     evs: 1
     enc: 2
-  menuPortrait: {fileID: 0}

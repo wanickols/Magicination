@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1c1948482f51bf4ab0d60c1a9f87fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partyMemberPortrait: {fileID: 0}
+  partyMemberPortrait: {fileID: 3597711752836636964}
   memberName: {fileID: 1233859226965680466}
   memberLevel: {fileID: 6079703010688912999}
   memberHP: {fileID: 7245160398048252559}

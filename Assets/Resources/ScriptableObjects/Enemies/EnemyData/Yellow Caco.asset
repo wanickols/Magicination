@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4c5948a48e50b468211f4fc9e1f7fc, type: 3}
   m_Name: Yellow Caco
   m_EditorClassIdentifier: 
+  _name: 
   actorPrefab: {fileID: 2832430299845234393, guid: 8cf13d7ddb8f0ec458b85c50af6896b8, type: 3}
+  menuPortrait: {fileID: 21300000, guid: 90828d3767cb9f54287fec0d97f0b60d, type: 3}
   stats:
     lv: 0
     exp: 0

@@ -9,21 +9,20 @@ namespace Battle
         //Store actor's stats and methods for taking a turn
         protected Vector2 startingPosition;
         protected Vector2 targetPosition;
+
+        //Battle Data
         public Stats Stats { get; set; }
-        [SerializeField] public Sprite battlePortrait;
+        public Sprite battlePortrait { get; private set; }
 
         //Turn Related
         public float baseTurnSpeed => Stats.turnSpeed;
-
         public float turnTime = 0;
         public bool isTakingTurn { get; protected set; } = false;
+
+        //Animation and movement
         [SerializeField] protected float offset;
         [SerializeField] protected float attackAnimationSpeed = 2f;
 
-        protected virtual void Awake()
-        {
-
-        }
 
         protected virtual void Start()
         {
@@ -58,6 +57,12 @@ namespace Battle
             }
 
             isTakingTurn = false;
+        }
+
+        public void setBattleData(Stats stats, Sprite sprite)
+        {
+            this.Stats = stats;
+            this.battlePortrait = sprite;
         }
     }
 }
