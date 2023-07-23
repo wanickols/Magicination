@@ -6,10 +6,12 @@ namespace Core
     public class Game : MonoBehaviour
     {
 
-        //Instance
+        /// Public
         public static Game manager { get; private set; }
         public GameState State { get; private set; }
+        public Map Map { get; private set; }
 
+        ///Private
         //Seriazlied
         [SerializeField] private Map startingMap;
         [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab;
@@ -18,7 +20,6 @@ namespace Core
         [SerializeField] private InputHandler inputHandler;
 
 
-        //Private
         private GameState previousState = GameState.World;
         private UI uiManager;
         private Player player;
@@ -27,8 +28,10 @@ namespace Core
 
         private int battleChance = 50; //out of 100, chance to trigger a battle when character steps hit threshhold. 
 
-        //Public
-        public Map Map { get; private set; }
+        //Managers
+        private Battle.Battle battleManager;
+
+
 
         //Awake and Start
         private void Awake()
@@ -163,6 +166,7 @@ namespace Core
 
             previousState = State = GameState.Battle;
             Battle.Battle.currentRegion = Map.region;
+            Battle.Battle.endBattle += EndBattle;
 
             StartCoroutine(sceneLoader.Co_loadScene(SceneLoader.scene.battle, transitionPrefab));
             Map.gameObject.SetActive(false);
@@ -177,7 +181,7 @@ namespace Core
                 sceneLoader.loadScene(SceneLoader.savedScene);
 
                 previousState = State = GameState.World;
-
+                Battle.Battle.endBattle -= EndBattle;
             }
         }
 

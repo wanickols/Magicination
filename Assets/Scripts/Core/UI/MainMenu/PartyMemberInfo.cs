@@ -1,6 +1,7 @@
 using Battle;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Core
 {
@@ -8,7 +9,7 @@ namespace Core
     {
         private PartyMember partyMember;
 
-        [SerializeField] private Sprite partyMemberPortrait;
+        [SerializeField] private Image partyMemberPortrait;
         [SerializeField] private TextMeshProUGUI memberName;
         [SerializeField] private TextMeshProUGUI memberLevel;
         [SerializeField] private TextMeshProUGUI memberHP;
@@ -29,7 +30,7 @@ namespace Core
         {
             Stats stats = partyMember.Stats;
             memberName.text = partyMember.Name;
-            partyMemberPortrait = partyMember.MenuPortrait;
+            partyMemberPortrait.sprite = partyMember.MenuPortrait;
 
             memberLevel.text = stats.LV.ToString();
             memberHP.text = $"{stats.HP}/{stats.MAXHP}";

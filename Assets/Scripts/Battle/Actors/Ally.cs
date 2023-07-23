@@ -1,16 +1,9 @@
 using System.Collections;
-using UnityEngine;
+
 namespace Battle
 {
     public class Ally : Actor
     {
-
-
-
-        protected override void Awake()
-        {
-            base.Awake();
-        }
 
         protected override void Start()
         {
@@ -21,30 +14,26 @@ namespace Battle
         public override void StartTurn()
         {
             isTakingTurn = true;
-
+            Battle.Attack += attack;
             StartCoroutine(Co_MoveToAttack());
         }
 
         protected override IEnumerator Co_MoveToAttack()
         {
             yield return base.Co_MoveToAttack();
-            StartCoroutine(Co_GetPlayerCommand());
+
         }
 
-        private IEnumerator Co_GetPlayerCommand()
+
+
+        //Eventually will need more info, like which skill and such.
+        private void attack(Actor target)
         {
-            while (true)
-            {
-                if (Input.GetKeyDown(KeyCode.C))
-                {
-                    Debug.Log("Command Accepted");
-                    break;
-                }
-                yield return null;
-            }
+            Battle.Attack -= attack;
+            print(target.name + " Was Attacked");
+
 
             StartCoroutine(Co_MoveToStarting());
-
         }
     }
 }

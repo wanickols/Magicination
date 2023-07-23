@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Leon
   actorPrefab: {fileID: 2832430299845234393, guid: 7f5ab286dce35cc4d8f25b8873db2c83, type: 3}
+  menuPortrait: {fileID: 21300000, guid: 1651b7eede1e9734aa2aa8b05a6679e0, type: 3}
   stats:
     lv: 1
     exp: 1
@@ -29,4 +30,3 @@ MonoBehaviour:
     spd: 4
     evs: 1
     enc: 1
-  menuPortrait: {fileID: 0}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,41 +7,59 @@ namespace Battle
     public class Battle : MonoBehaviour
     {
 
+        /// Actions
+        public static Action endBattle;
+        public static Action<Actor> Attack;
 
-        //Mange the turns, trigger the next turn when one is done
-        //End battle when it's over
-
+        /// Private
+        // Other Battle Handler/Managers/Classes
         private EnemyGenerator enemyGenerator;
-        private TurnBar turnBar;
-        private EnemyPack enemyPack;
-        public static Region currentRegion;
+        private BattleUIManager battleUI;
+        private PlayerBattlePositions battlePositions = new PlayerBattlePositions();
 
 
+
+        //List of Actors
+        private Actor currentActor;
         private PriorityQueue<Actor, float> turnQueue = new PriorityQueue<Actor, float>(); // Use a priority queue to store the actors and their turn times
         private List<Actor> nextSix = new List<Actor>();
         private List<Ally> allies = new List<Ally>();
         private List<Enemy> enemies = new List<Enemy>();
-        private int turnNumber = 0;
+        private EnemyPack enemyPack;
+
+        //Flags
         private bool setUpComplete = false;
-        private PlayerBattlePositions battlePositions = new PlayerBattlePositions();
 
-        private Actor currentActor;
 
+        //Turn Stuff
         private const float baseTime = 25f;
         private const float randomFactor = .2f;
 
-        public IReadOnlyList<Ally> Allies => allies;
-        public IReadOnlyList<Enemy> Enemies => enemies;
+        /// Public
+          //Data from Core
+        public static Region currentRegion;
 
+        //Functions
+        public void tryRun()
+        {
+            endBattle?.Invoke();
+        }
+
+        public void tryAttack()
+        {
+            //Get Index from battle UI
+
+            Attack?.Invoke(enemies[0]);
+        }
+
+        /// Private
         private void Awake()
         {
-            turnBar = FindObjectOfType<TurnBar>();
+            battleUI = this.transform.GetComponent<BattleUIManager>();
             enemyGenerator = new EnemyGenerator(currentRegion);
             SpawnPartyMembers();
             SpawnEnemies();
-
         }
-
 
 
         private void Update()
@@ -56,6 +75,7 @@ namespace Battle
             GoToNextTurn();
         }
 
+        // Turns 
         private void CheckForEnd()
         {
             //TODO
@@ -66,49 +86,13 @@ namespace Battle
             currentActor = nextSix[0];
             nextSix.RemoveAt(0);
             nextSix.Add(turnQueue.Dequeue());
-            turnBar.SpawnPortraitSlots(nextSix);
+            battleUI.turnBar.SpawnPortraitSlots(nextSix);
             currentActor.StartTurn();
             currentActor.turnTime += CalculateTurnTime(currentActor.baseTurnSpeed);
             print(currentActor.name + "Time: " + currentActor.turnTime);
             turnQueue.Enqueue(currentActor, currentActor.turnTime);
         }
 
-        private void SpawnPartyMembers()
-        {
-            SpawnCounts partyCount = (SpawnCounts)Core.Party.ActiveMembers.Count;
-
-            List<Vector2> positionList = battlePositions.getPositions(partyCount);
-
-            int i = 0;
-            foreach (PartyMember member in Core.Party.ActiveMembers)
-            {
-                var temp = Instantiate(member.ActorPrefab, positionList[i], Quaternion.identity);
-                Ally ally = temp.GetComponent<Ally>();
-                ally.Stats = member.Stats;
-
-                turnQueue.Enqueue(ally, CalculateTurnTime(ally.baseTurnSpeed));
-                allies.Add(ally);
-                i++;
-            }
-
-        }
-
-        private void SpawnEnemies()
-        {
-            enemyPack = enemyGenerator.generateEnemies();
-
-            for (int i = 0; i < enemyPack.Enemies.Count; i++)
-            {
-                Vector2 spawnPos = new Vector2(enemyPack.SpawnCoordinates[i].x, enemyPack.SpawnCoordinates[i].y);
-                GameObject enemyActor = Instantiate(enemyPack.Enemies[i].ActorPrefab, spawnPos, Quaternion.identity);
-                Enemy enemy = enemyActor.GetComponent<Enemy>();
-                enemy.Stats = enemyPack.Enemies[i].Stats;
-                turnQueue.Enqueue(enemy, CalculateTurnTime(enemy.baseTurnSpeed));
-                enemies.Add(enemy);
-
-            }
-
-        }
         private void DetermineTurnOrder()
         {
             // TODO: Fix when less than 6 battle members are on screen
@@ -138,7 +122,7 @@ namespace Battle
             setUpComplete = true;
 
             // Spawn the portrait slots for the next six actors in the list
-            turnBar.SpawnPortraitSlots(nextSix);
+            battleUI.turnBar.SpawnPortraitSlots(nextSix);
         }
 
         private float CalculateTurnTime(float speed)
@@ -146,6 +130,47 @@ namespace Battle
             Debug.Log("Speed: " + speed);
             // Use the formula to calculate the turn time based on speed and other factors
             return baseTime * speed + UnityEngine.Random.Range(-randomFactor, randomFactor);
+        }
+
+        // Spawning
+        private void SpawnPartyMembers()
+        {
+            SpawnCounts partyCount = (SpawnCounts)Core.Party.ActiveMembers.Count;
+
+            List<Vector2> positionList = battlePositions.getPositions(partyCount);
+
+            int i = 0;
+            foreach (PartyMember member in Core.Party.ActiveMembers)
+            {
+                battleUI.AddPartyMemberUI(member);
+
+
+                var temp = Instantiate(member.ActorPrefab, positionList[i], Quaternion.identity);
+                Ally ally = temp.GetComponent<Ally>();
+                ally.setBattleData(member.Stats, member.MenuPortrait);
+
+                turnQueue.Enqueue(ally, CalculateTurnTime(ally.baseTurnSpeed));
+                allies.Add(ally);
+                i++;
+            }
+
+        }
+
+        private void SpawnEnemies()
+        {
+            enemyPack = enemyGenerator.generateEnemies();
+
+            for (int i = 0; i < enemyPack.Enemies.Count; i++)
+            {
+                Vector2 spawnPos = new Vector2(enemyPack.SpawnCoordinates[i].x, enemyPack.SpawnCoordinates[i].y);
+                GameObject enemyActor = Instantiate(enemyPack.Enemies[i].ActorPrefab, spawnPos, Quaternion.identity);
+                Enemy enemy = enemyActor.GetComponent<Enemy>();
+                enemy.setBattleData(enemyPack.Enemies[i].Stats, enemyPack.Enemies[i].MenuPortrait);
+                turnQueue.Enqueue(enemy, CalculateTurnTime(enemy.baseTurnSpeed));
+                enemies.Add(enemy);
+
+            }
+
         }
     }
 }
