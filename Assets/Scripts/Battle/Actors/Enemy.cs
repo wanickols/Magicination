@@ -10,12 +10,7 @@ namespace Battle
             base.Start();
         }
 
-        public override void StartTurn()
-        {
-            isTakingTurn = true;
 
-            StartCoroutine(Co_MoveToAttack());
-        }
 
         protected override IEnumerator Co_MoveToAttack()
         {

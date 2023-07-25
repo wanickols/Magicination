@@ -6,6 +6,9 @@ namespace Battle
 
     public abstract class Actor : MonoBehaviour
     {
+
+        private BattlerAI ai;
+
         //Store actor's stats and methods for taking a turn
         protected Vector2 startingPosition;
         protected Vector2 targetPosition;
@@ -23,6 +26,48 @@ namespace Battle
         [SerializeField] protected float offset;
         [SerializeField] protected float attackAnimationSpeed = 2f;
 
+        ///Publioc
+        public void setBattleData(Stats stats, Sprite sprite)
+        {
+            this.Stats = stats;
+            this.battlePortrait = sprite;
+        }
+
+        public virtual void StartTurn()
+        {
+            isTakingTurn = true;
+            Battle.Attack += attack;
+            StartCoroutine(Co_MoveToAttack());
+        }
+
+        //Battle
+
+        //Eventually will need more info, like which skill and such.
+        protected virtual void attack(Actor target)
+        {
+
+            Battle.Attack -= attack;
+            print(target.name + " Was Attacked");
+
+
+            StartCoroutine(Co_MoveToStarting());
+        }
+
+        public virtual void defense(Actor attacker)
+        {
+            print(attacker.name + " This bish attack me");
+        }
+
+        /// Protected
+
+        protected virtual void Awake()
+        {
+            try
+            {
+                ai = GetComponent<BattlerAI>();
+            }
+            catch (System.Exception) { }
+        }
 
         protected virtual void Start()
         {
@@ -31,7 +76,6 @@ namespace Battle
             targetPosition += new Vector2(offset, 0);
 
         }
-        public abstract void StartTurn();
 
         protected virtual IEnumerator Co_MoveToAttack()
         {
@@ -43,6 +87,26 @@ namespace Battle
                 elapsedTime += (Time.deltaTime * attackAnimationSpeed);
                 yield return null;
             }
+
+            StartCoroutine(checkAI());
+        }
+
+        protected IEnumerator checkAI()
+        {
+            if (ai)
+            {
+                ICommand command = ai.ChooseAction();
+                StartCoroutine(command.Co_Execute());
+
+                while (!command.isFinished)
+                {
+                    yield return null;
+                }
+                //Battle command here
+                StartCoroutine(Co_MoveToStarting());
+            }
+            else
+                yield return null;
         }
 
         protected virtual IEnumerator Co_MoveToStarting()
@@ -59,10 +123,9 @@ namespace Battle
             isTakingTurn = false;
         }
 
-        public void setBattleData(Stats stats, Sprite sprite)
-        {
-            this.Stats = stats;
-            this.battlePortrait = sprite;
-        }
+
+
+
+
     }
 }
