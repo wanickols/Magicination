@@ -27,13 +27,7 @@ namespace Battle
         private BattleStates battleState = BattleStates.battle;
         private EventSystem eventSystem;
 
-        //List of Actors
-        private Actor currentActor;
-        private PriorityQueue<Actor, float> turnQueue = new PriorityQueue<Actor, float>(); // Use a priority queue to store the actors and their turn times
-        private List<Actor> nextSix = new List<Actor>();
-        private List<Ally> allies = new List<Ally>();
-        private List<Enemy> enemies = new List<Enemy>();
-        private EnemyPack enemyPack;
+        [SerializeField] private BattleData data;
 
         //Flags
         private bool setUpComplete = false;
@@ -60,7 +54,7 @@ namespace Battle
             {
                 eventSystem.enabled = false;
                 battleState = BattleStates.select;
-                StartCoroutine(battleUI.CO_SelctSingleTarget(allies, enemies));
+                StartCoroutine(battleUI.CO_SelctSingleTarget(data.allies, data.enemies));
                 battleUI.setBattleMenu(false);
             }
         }
@@ -68,6 +62,7 @@ namespace Battle
         /// Private
         private void Awake()
         {
+            data = data;
             battleUI = this.transform.GetComponent<BattleUIManager>();
             enemyGenerator = new EnemyGenerator(currentRegion);
             eventSystem = FindAnyObjectByType<EventSystem>();
@@ -75,6 +70,30 @@ namespace Battle
             SpawnEnemies();
         }
 
+        private void Start()
+        {
+            InitTargets();
+        }
+
+        private void InitTargets()
+        {
+            foreach (Actor enemy in data.enemies)
+            {
+                data.updateAllies += enemy.ai.updateTargets;
+            }
+
+            foreach (Actor ally in data.allies)
+            {
+                if (ally.ai)
+                    data.updateEnemies += ally.ai.updateTargets;
+            }
+            SetTargets();
+        }
+
+        private void SetTargets()
+        {
+            data.setTargets();
+        }
 
         private void Update()
         {
@@ -89,7 +108,7 @@ namespace Battle
                 DetermineTurnOrder();
             };
 
-            if (currentActor.isTakingTurn) return;
+            if (data.currentActor.isTakingTurn) return;
 
             CheckForEnd();
             GoToNextTurn();
@@ -116,16 +135,16 @@ namespace Battle
 
         private void GoToNextTurn()
         {
-            currentActor = nextSix[0];
-            nextSix.RemoveAt(0);
-            nextSix.Add(turnQueue.Dequeue());
-            battleUI.turnBar.SpawnPortraitSlots(nextSix);
-            currentActor.StartTurn();
-            currentActor.turnTime += CalculateTurnTime(currentActor.baseTurnSpeed);
-            print(currentActor.name + "Time: " + currentActor.turnTime);
-            turnQueue.Enqueue(currentActor, currentActor.turnTime);
+            data.currentActor = data.nextSix[0];
+            data.nextSix.RemoveAt(0);
+            data.nextSix.Add(data.turnQueue.Dequeue());
+            battleUI.turnBar.SpawnPortraitSlots(data.nextSix);
+            data.currentActor.StartTurn();
+            data.currentActor.turnTime += CalculateTurnTime(data.currentActor.baseTurnSpeed);
 
-            if (currentActor.GetComponent<BattlerAI>())
+            data.turnQueue.Enqueue(data.currentActor, data.currentActor.turnTime);
+
+            if (data.currentActor.GetComponent<BattlerAI>())
             {
                 battleUI.setBattleMenu(false);
             }
@@ -137,14 +156,14 @@ namespace Battle
         {
             // TODO: Fix when less than 6 battle members are on screen
 
-            Actor nextActor = turnQueue.Dequeue();
-            currentActor = nextActor;
+            Actor nextActor = data.turnQueue.Dequeue();
+            data.currentActor = nextActor;
 
             // Create a loop to fill the list with the next six actors from the queue
             for (int i = 0; i < 6; i++)
             {
                 // Add them to the list
-                nextSix.Add(nextActor);
+                data.nextSix.Add(nextActor);
 
                 // Increase their turn time by the base time
 
@@ -152,17 +171,17 @@ namespace Battle
                 nextActor.turnTime += CalculateTurnTime(nextActor.baseTurnSpeed);
                 print(nextActor.name + "Time: " + nextActor.turnTime);
                 // Add them back to the queue with their updated turn time
-                turnQueue.Enqueue(nextActor, nextActor.turnTime);
+                data.turnQueue.Enqueue(nextActor, nextActor.turnTime);
 
                 // Get the next actor in the queue
-                nextActor = turnQueue.Dequeue();
+                nextActor = data.turnQueue.Dequeue();
             }
 
             // Set up complete flag to true
             setUpComplete = true;
 
             // Spawn the portrait slots for the next six actors in the list
-            battleUI.turnBar.SpawnPortraitSlots(nextSix);
+            battleUI.turnBar.SpawnPortraitSlots(data.nextSix);
         }
 
         private float CalculateTurnTime(float speed)
@@ -184,9 +203,9 @@ namespace Battle
             {
                 var temp = Instantiate(member.ActorPrefab, positionList[i], Quaternion.identity);
                 Ally ally = temp.GetComponent<Ally>();
-                ally.setBattleData(member.Stats, member.MenuPortrait);
-                turnQueue.Enqueue(ally, CalculateTurnTime(ally.baseTurnSpeed));
-                allies.Add(ally);
+                ally.setMemberBattleInfo(member.Stats, member.MenuPortrait);
+                data.turnQueue.Enqueue(ally, CalculateTurnTime(ally.baseTurnSpeed));
+                data.allies.Add(ally);
 
                 battleUI.AddPartyMemberUI(member);
                 battleUI.LinkListeners(ally);
@@ -198,19 +217,21 @@ namespace Battle
 
         private void SpawnEnemies()
         {
-            enemyPack = enemyGenerator.generateEnemies();
+            data.enemyPack = enemyGenerator.generateEnemies();
 
-            for (int i = 0; i < enemyPack.Enemies.Count; i++)
+            for (int i = 0; i < data.enemyPack.Enemies.Count; i++)
             {
-                Vector2 spawnPos = new Vector2(enemyPack.SpawnCoordinates[i].x, enemyPack.SpawnCoordinates[i].y);
-                GameObject enemyActor = Instantiate(enemyPack.Enemies[i].ActorPrefab, spawnPos, Quaternion.identity);
+                Vector2 spawnPos = new Vector2(data.enemyPack.SpawnCoordinates[i].x, data.enemyPack.SpawnCoordinates[i].y);
+                GameObject enemyActor = Instantiate(data.enemyPack.Enemies[i].ActorPrefab, spawnPos, Quaternion.identity);
                 Enemy enemy = enemyActor.GetComponent<Enemy>();
-                enemy.setBattleData(enemyPack.Enemies[i].Stats, enemyPack.Enemies[i].MenuPortrait);
-                turnQueue.Enqueue(enemy, CalculateTurnTime(enemy.baseTurnSpeed));
-                enemies.Add(enemy);
+                enemy.setMemberBattleInfo(data.enemyPack.Enemies[i].Stats, data.enemyPack.Enemies[i].MenuPortrait);
+                data.turnQueue.Enqueue(enemy, CalculateTurnTime(enemy.baseTurnSpeed));
+                data.enemies.Add(enemy);
 
             }
 
         }
+
+
     }
 }

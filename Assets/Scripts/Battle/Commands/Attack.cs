@@ -9,7 +9,6 @@ namespace Battle
 
         private Actor attacker;
         private List<Actor> targets;
-        private float moveSpeed = 2f;
 
         public bool isFinished { get; private set; } = false;
         public Attack(Actor actor, List<Actor> targets)
@@ -22,7 +21,7 @@ namespace Battle
 
         public IEnumerator Co_Execute()
         {
-
+            float moveSpeed = attacker.animationSpeed;
             Vector3 targetPos = targets[0].transform.position;
             Vector3 offset = new Vector3(.5f, 0, 0);
 

@@ -61,7 +61,7 @@ namespace Battle
         private bool handlingInput;
 
 
-        public IEnumerator CO_SelctSingleTarget(List<Ally> allies, List<Enemy> enemies)
+        public IEnumerator CO_SelctSingleTarget(List<Actor> allies, List<Actor> enemies)
         {
 
             currSelected = enemies.FirstOrDefault();
@@ -107,7 +107,7 @@ namespace Battle
             currSelected.selector.SetActive(false);
         }
 
-        private void VerticalMove(List<Ally> allies, List<Enemy> enemies, int change)
+        private void VerticalMove(List<Actor> allies, List<Actor> enemies, int change)
         {
             handlingInput = true;
             //Allies
@@ -122,7 +122,7 @@ namespace Battle
             ChangeCol(change, enemies.Count - 1);
             ToggleSelection(enemies[currCol]);
         }
-        private void HorizontalMove(List<Ally> allies, List<Enemy> enemies, int change)
+        private void HorizontalMove(List<Actor> allies, List<Actor> enemies, int change)
         {
 
             handlingInput = true;

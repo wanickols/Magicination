@@ -1,7 +1,7 @@
 using Battle;
 using UnityEngine;
 
-public class PartyMember : BattleData
+public class PartyMember : MemberBattleInfo
 {
     [SerializeField] private Stats stats;
 
