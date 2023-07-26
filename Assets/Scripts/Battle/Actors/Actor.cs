@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Battle
@@ -7,11 +9,22 @@ namespace Battle
     public abstract class Actor : MonoBehaviour
     {
 
+
+        //Events
+        public Action<int, int> updateHealth;
+        public Action<int, int> updateMP;
+        public Action Death;
+
         private BattlerAI ai;
 
         //Store actor's stats and methods for taking a turn
         protected Vector2 startingPosition;
         protected Vector2 targetPosition;
+
+
+        public Animator animator { get; private set; }
+
+
 
         //Battle Data
         public Stats Stats { get; set; }
@@ -20,13 +33,20 @@ namespace Battle
         //Turn Related
         public float baseTurnSpeed => Stats.turnSpeed;
         public float turnTime = 0;
+        public bool isDead { get; protected set; } = false;
         public bool isTakingTurn { get; protected set; } = false;
 
-        //Animation and movement
-        [SerializeField] protected float offset;
-        [SerializeField] protected float attackAnimationSpeed = 2f;
+        //Selector
+        [Header("Selector")]
+        [SerializeField] public GameObject selector;
+        [SerializeField] protected Vector2 selectorPosition;
 
-        ///Publioc
+        //Animation and movement
+        [Header("Animation")]
+        [SerializeField] protected float offset;
+        [SerializeField] protected float animationSpeed = 2f;
+
+        ///Public
         public void setBattleData(Stats stats, Sprite sprite)
         {
             this.Stats = stats;
@@ -35,22 +55,42 @@ namespace Battle
 
         public virtual void StartTurn()
         {
-            isTakingTurn = true;
-            Battle.Attack += attack;
-            StartCoroutine(Co_MoveToAttack());
+            if (!isDead)
+            {
+                isTakingTurn = true;
+                Battle.Attack += attack;
+                StartCoroutine(Co_MoveToAttack());
+            }
+        }
+
+        public IEnumerator CO_die()
+        {
+            Death.Invoke();
+            isDead = true;
+            if (animator)
+            {
+                animator.Play("Death");
+                do
+                {
+                    yield return null;
+                } while (animator.IsAnimating());
+            }
+
+            yield return null;
         }
 
         //Battle
 
         //Eventually will need more info, like which skill and such.
-        protected virtual void attack(Actor target)
+        protected virtual void attack(List<Actor> targets)
         {
 
             Battle.Attack -= attack;
-            print(target.name + " Was Attacked");
 
 
-            StartCoroutine(Co_MoveToStarting());
+            Attack command = new Attack(this, targets);
+
+            StartCoroutine(ExecuteCommand(command));
         }
 
         public virtual void defense(Actor attacker)
@@ -64,6 +104,7 @@ namespace Battle
         {
             try
             {
+                animator = GetComponent<Animator>();
                 ai = GetComponent<BattlerAI>();
             }
             catch (System.Exception) { }
@@ -71,22 +112,29 @@ namespace Battle
 
         protected virtual void Start()
         {
+            selector.transform.position = selectorPosition;
+            selector = Instantiate(selector, transform);
+            selector.SetActive(false);
             turnTime = baseTurnSpeed;
             targetPosition = startingPosition = transform.position;
             targetPosition += new Vector2(offset, 0);
-
         }
 
         protected virtual IEnumerator Co_MoveToAttack()
         {
-            float elapsedTime = 0;
+            if (animator)
+                animator.Play("Moving");
 
             while ((Vector2)transform.position != targetPosition)
             {
-                transform.position = Vector2.Lerp(startingPosition, targetPosition, elapsedTime);
-                elapsedTime += (Time.deltaTime * attackAnimationSpeed);
+                transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * animationSpeed);
+
                 yield return null;
             }
+            if (animator)
+                animator.Play("Idle");
+
+            yield return new WaitForSeconds(.5f);
 
             StartCoroutine(checkAI());
         }
@@ -95,36 +143,62 @@ namespace Battle
         {
             if (ai)
             {
+                Battle.Attack -= attack;
                 ICommand command = ai.ChooseAction();
-                StartCoroutine(command.Co_Execute());
 
-                while (!command.isFinished)
-                {
-                    yield return null;
-                }
-                //Battle command here
-                StartCoroutine(Co_MoveToStarting());
+                StartCoroutine(ExecuteCommand(command));
             }
             else
                 yield return null;
         }
 
-        protected virtual IEnumerator Co_MoveToStarting()
+        protected virtual IEnumerator EndTurn()
         {
-            float elapsedTime = 0;
+
+
+            if (animator)
+                animator.Play("Moving");
+
+
+
+            while ((Vector2)transform.position != targetPosition)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, targetPosition, Time.deltaTime * animationSpeed);
+
+                yield return null;
+            }
+            if (animator)
+                animator.Play("Idle");
+
+            yield return new WaitForSeconds(.5f);
+
+            if (animator)
+                animator.Play("Moving");
+
+
 
             while ((Vector2)transform.position != startingPosition)
             {
-                transform.position = Vector2.Lerp(transform.position, startingPosition, elapsedTime);
-                elapsedTime += Time.deltaTime;
+                transform.position = Vector2.MoveTowards(transform.position, startingPosition, Time.deltaTime * animationSpeed);
                 yield return null;
             }
-
+            if (animator)
+                animator.Play("Idle");
             isTakingTurn = false;
         }
 
 
+        private IEnumerator ExecuteCommand(ICommand command)
+        {
+            StartCoroutine(command.Co_Execute());
 
+            while (!command.isFinished)
+            {
+                yield return null;
+            }
+            //Battle command here
+            StartCoroutine(EndTurn());
+        }
 
 
     }

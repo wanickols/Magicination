@@ -48,6 +48,4 @@ MonoBehaviour:
   playerPrefab: {fileID: 8740641598906599593, guid: 6b0239a5417500e4f8b13b87e866d232, type: 3}
   uiPrefab: {fileID: 1174632973390869395, guid: a7d10abf8b949b947a7e73620213076a, type: 3}
   transitionPrefab: {fileID: 8105703448607726340, guid: 0d8ded4a2fccc1949acb8f5dc1468d1c, type: 3}
-  sceneLoaderPrefab: {fileID: 661546057362287656, guid: ff95f29692a7ea24eaac631d36b6e0b8, type: 3}
-  startingCell: {x: 0, y: 0}
-  sceneLoader: {fileID: 3986932166757850853, guid: ff95f29692a7ea24eaac631d36b6e0b8, type: 3}
+  startingCell: {x: -8, y: 5}

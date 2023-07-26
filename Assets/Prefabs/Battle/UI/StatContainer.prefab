@@ -232,6 +232,8 @@ MonoBehaviour:
   memberName: {fileID: 407061852648136072}
   memberHP: {fileID: 558143877375819292}
   memberMP: {fileID: 3384229306163900577}
+  HPText: {fileID: 637586482037544039}
+  MPText: {fileID: 5330163906836262111}
 --- !u!1 &3723756861709602542
 GameObject:
   m_ObjectHideFlags: 0

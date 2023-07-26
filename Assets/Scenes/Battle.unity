@@ -603,6 +603,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StatsContainer: {fileID: 520467610}
   PartymemberPrefab: {fileID: 3375889530061380091, guid: 8b81631c92663fb439c14b7e11a25647, type: 3}
+  BattleMenu: {fileID: 349797974}
+  hasTarget: 0
 --- !u!1 &349797974
 GameObject:
   m_ObjectHideFlags: 0
