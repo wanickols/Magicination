@@ -15,7 +15,7 @@ namespace Battle
         public Action<int, int> updateMP;
         public Action Death;
 
-        private BattlerAI ai;
+        public BattlerAI ai;
 
         //Store actor's stats and methods for taking a turn
         protected Vector2 startingPosition;
@@ -23,8 +23,6 @@ namespace Battle
 
 
         public Animator animator { get; private set; }
-
-
 
         //Battle Data
         public Stats Stats { get; set; }
@@ -44,10 +42,10 @@ namespace Battle
         //Animation and movement
         [Header("Animation")]
         [SerializeField] protected float offset;
-        [SerializeField] protected float animationSpeed = 2f;
+        [SerializeField] public float animationSpeed = 3f;
 
         ///Public
-        public void setBattleData(Stats stats, Sprite sprite)
+        public void setMemberBattleInfo(Stats stats, Sprite sprite)
         {
             this.Stats = stats;
             this.battlePortrait = sprite;
@@ -91,11 +89,6 @@ namespace Battle
             Attack command = new Attack(this, targets);
 
             StartCoroutine(ExecuteCommand(command));
-        }
-
-        public virtual void defense(Actor attacker)
-        {
-            print(attacker.name + " This bish attack me");
         }
 
         /// Protected

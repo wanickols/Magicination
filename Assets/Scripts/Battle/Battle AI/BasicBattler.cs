@@ -1,4 +1,6 @@
+
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Battle
 {
@@ -6,9 +8,16 @@ namespace Battle
     {
         public override ICommand ChooseAction()
         {
-            //TODO get actual target
+            return singleTargetAttack();
+        }
+
+        private ICommand singleTargetAttack()
+        {
             List<Actor> targets = new List<Actor>();
-            targets.Add(FindObjectOfType<Ally>());
+            //Single Target 
+            int randomTarget = Random.Range(0, possibleTargets.Count);
+            targets.Add(possibleTargets[randomTarget]);
+
             return new Attack(actor, targets);
         }
     }
