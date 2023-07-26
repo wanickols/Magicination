@@ -27,6 +27,6 @@ MonoBehaviour:
     matk: 3
     def: 1
     mdef: 1
-    spd: 4
+    spd: 8
     evs: 1
     enc: 1
