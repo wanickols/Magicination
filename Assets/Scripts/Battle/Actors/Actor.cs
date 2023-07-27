@@ -194,5 +194,10 @@ namespace Battle
         }
 
 
+        private void OnDestroy()
+        {
+            Battle.Attack -= attack;
+        }
+
     }
 }

@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Zane
   actorPrefab: {fileID: 2832430299845234393, guid: b0b68a9c24543714daf6601678877e39, type: 3}
+  menuPortrait: {fileID: 21300000, guid: 11d15ed98568fc54b9a15509f3e30d63, type: 3}
   stats:
     lv: 1
     exp: 1
     nxtExp: 100
-    hp: 10
-    maxHp: 10
+    hp: 100
+    maxHp: 100
     mp: 0
     maxMp: 0
     atk: 3
@@ -29,4 +30,3 @@ MonoBehaviour:
     spd: 4
     evs: 1
     enc: 3
-  menuPortrait: {fileID: 21300000, guid: 11d15ed98568fc54b9a15509f3e30d63, type: 3}
