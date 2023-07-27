@@ -8,12 +8,14 @@ namespace Battle
     {
 
         private Actor attacker;
+        private ActorGraphics attackerGFX;
         private List<Actor> targets;
 
         public bool isFinished { get; private set; } = false;
         public Attack(Actor actor, List<Actor> targets)
         {
             this.attacker = actor;
+            attackerGFX = actor.gfx;
             this.targets = targets;
         }
 
@@ -21,7 +23,7 @@ namespace Battle
 
         public IEnumerator Co_Execute()
         {
-            float moveSpeed = attacker.animationSpeed;
+            float moveSpeed = attackerGFX.animationSpeed;
             Vector3 targetPos = targets[0].transform.position;
             Vector3 offset = new Vector3(.5f, 0, 0);
 
@@ -32,12 +34,12 @@ namespace Battle
 
             targetPos = targetPos + offset;
 
-            if (attacker.animator)
-                attacker.animator.Play("Moving");
-            while (attacker.transform.position != targetPos)
+            if (attackerGFX.animator)
+                attackerGFX.animator.Play("Moving");
+            while (attackerGFX.currPosition != (Vector2)targetPos)
             {
                 attacker.transform.position
-                    = Vector2.MoveTowards(attacker.transform.position,
+                    = Vector2.MoveTowards(attackerGFX.currPosition,
                     targetPos, moveSpeed * Time.deltaTime);
 
                 yield return null;
@@ -45,16 +47,16 @@ namespace Battle
 
 
 
-            if (attacker.animator)
+            if (attackerGFX.animator)
             {
-                attacker.animator.Play("Attack");
+                attackerGFX.animator.Play("Attack");
                 do
                 {
                     yield return null;
                 }
-                while (attacker.animator.IsAnimating());
+                while (attackerGFX.animator.IsAnimating());
 
-                attacker.animator.Play("Idle");
+                attackerGFX.animator.Play("Idle");
             }
 
             foreach (Actor target in targets)

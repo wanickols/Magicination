@@ -97,7 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d4ceab58cf2cf4fa9f111c96e25cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ai: {fileID: 0}
+  gfx:
+    selectorPosition: {x: 0, y: 0}
+    selector: {fileID: 1045657364043076702, guid: c66c79e9c3dbb4b4b8c1806b9b88346c, type: 3}
+    offset: 0.4
+    animationSpeed: 3
   turnTime: 0
-  selector: {fileID: 1045657364043076702, guid: c66c79e9c3dbb4b4b8c1806b9b88346c, type: 3}
-  offset: 0
-  attackAnimationSpeed: 2
