@@ -53,5 +53,11 @@ namespace Battle
         legendary
     }
 
+    public enum BattleStates
+    {
+        battle,
+        select
+    };
+
 
 }

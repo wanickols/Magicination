@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Battle
 {
+
     public class TurnBar : MonoBehaviour
     {
         [SerializeField] private GameObject portraitSlotPrefab;

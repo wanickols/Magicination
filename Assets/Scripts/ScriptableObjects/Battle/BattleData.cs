@@ -17,14 +17,26 @@ public class BattleData : ScriptableObject
     [SerializeField] public List<Actor> enemies = new List<Actor>();
     [SerializeField] public List<Actor> nextSix = new List<Actor>();
 
-    public PriorityQueue<Actor, float> turnQueue = new PriorityQueue<Actor, float>(); // Use a priority queue to store the actors and their turn times
 
 
     [SerializeField] public EnemyPack enemyPack;
 
     public void setTargets()
     {
-        updateAllies.Invoke(allies);
-        updateEnemies.Invoke(enemies);
+        updateAllies?.Invoke(allies);
+        updateEnemies?.Invoke(enemies);
+    }
+
+    public void clearData()
+    {
+        allies.Clear();
+        enemies.Clear();
+        nextSix.Clear();
+    }
+
+    public void setEnemyData(KeyValuePair<EnemyPack, List<Actor>> enemyInfo)
+    {
+        this.enemyPack = enemyInfo.Key;
+        this.enemies = enemyInfo.Value;
     }
 }

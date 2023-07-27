@@ -59,7 +59,7 @@ namespace Battle
 
             foreach (Actor target in targets)
             {
-                Combat.Attack(attacker, target);// Change to foreach eventually
+                BattleCalculations.Attack(attacker, target);// Change to foreach eventually
             }
             isFinished = true;
         }

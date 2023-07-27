@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3793668728304704472}
   - component: {fileID: 5452005608548442366}
-  - component: {fileID: 551450266539685804}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -45,19 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63091bbbf420f9045b94a411fd4d20fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &551450266539685804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505609914596142494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 625a8c92c0fc4d34dbacaf869962b592, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StatsContainer: {fileID: 0}
-  PartymemberPrefab: {fileID: 3375889530061380091, guid: 8b81631c92663fb439c14b7e11a25647, type: 3}
-  BattleMenu: {fileID: 0}
-  hasTarget: 0
+  battleUI:
+    StatsContainer: {fileID: 0}
+    PartymemberPrefab: {fileID: 136128430756906842, guid: d262d2596ea0b924fa0a6d82e22870c3, type: 3}
+    BattleMenu: {fileID: 0}
+  data: {fileID: 11400000, guid: 62f5cc41b7ca13d48b07425cfda25c31, type: 2}
