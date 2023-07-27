@@ -1,6 +1,9 @@
 namespace Battle
 {
-    public static class Combat
+    /// <summary>
+    /// Where math and logic is done for combat 
+    /// </summary>
+    public static class BattleCalculations
     {
 
         public static int Attack(Actor attacker, Actor defender)
@@ -18,6 +21,5 @@ namespace Battle
 
             return damage;
         }
-
     }
 }
