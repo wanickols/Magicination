@@ -17,22 +17,30 @@ namespace Battle
 
 
         /// Private parameters
+
+        //Basic
+        private BattleStates battleState = BattleStates.battle;
+        private bool isEnding = false;
+
         // Other Battle Handler/Managers/Classes
         private EnemyGenerator enemyGenerator;
         private PartyGenerator partyGenerator;
-        [SerializeField] private BattleUIManager battleUI = new BattleUIManager();
         private Selection selection;
-
-        private BattleStates battleState = BattleStates.battle;
         private EventSystem eventSystem;
-        [SerializeField] private TurnBar turnBar;
 
+        [Header("Managers")]
+        [SerializeField] private BattleUIManager battleUI = new BattleUIManager();
+        [SerializeField] private TurnBar turnBar;
         [SerializeField] private BattleData data;
+
+
 
 
         private TurnSystem turnSystem;
 
         /// Public functions
+
+        //Listeners
         public void tryRun()
         {
             endBattle?.Invoke();
@@ -49,8 +57,24 @@ namespace Battle
             }
         }
 
+        public void tryEnd(bool win)
+        {
+            //battleUI.hideUI();
+            isEnding = true;
 
-        /// Private functions
+            if (!win)
+            {
+                //Show Game Over
+                //Temp Exit
+            }
+            else
+            {
+                //Show Victory Stuff
+                endBattle?.Invoke();
+            }
+        }
+
+        /// Unity Functions
         private void Awake()
         {
             eventSystem = FindAnyObjectByType<EventSystem>();
@@ -65,13 +89,29 @@ namespace Battle
             data.allies = partyGenerator.Spawn(turnSystem, battleUI);
             data.setEnemyData(enemyGenerator.generate(turnSystem));
         }
-
         private void Start()
         {
             InitActions();
             turnSystem.DetermineTurnOrder(turnBar);
         }
+        private void Update()
+        {
+            if (battleState == BattleStates.select)
+                return;
 
+            if (turnSystem.isTakingTurn)
+                return;
+
+            if (isEnding)
+                return;
+
+            turnSystem.NextTurn(turnBar);
+        }
+
+
+        /// Private Functions
+
+        //Actions
         private void InitActions()
         {
             selection.selectTarget += selectTarget;
@@ -95,19 +135,7 @@ namespace Battle
             data.setTargets();
         }
 
-        private void Update()
-        {
-            if (battleState == BattleStates.select)
-                return;
-
-            if (turnSystem.isTakingTurn)
-                return;
-
-            CheckForEnd();
-            turnSystem.NextTurn(turnBar);
-        }
-
-
+        //BattleState
         private void selectTarget()
         {
             if (!selection.hasTarget)
@@ -122,13 +150,7 @@ namespace Battle
             Battle.Attack?.Invoke(targets);
         }
 
-        // Turns 
-        private void CheckForEnd()
-        {
-            //TODO
-        }
-
-
+        //Deconstructor
         private void OnDestroy()
         {
             selection.selectTarget -= selectTarget;

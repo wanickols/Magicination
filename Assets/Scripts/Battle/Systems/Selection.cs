@@ -25,13 +25,14 @@ public class Selection
     private int currCol = 0;
     private bool handlingInput;
     private Actor currSelected = null;
+    private GameObject selector => currSelected.gfx.selector;
 
     ///Public Functions
     public IEnumerator CO_SelectSingleTarget(List<Actor> allies, List<Actor> enemies)
     {
 
         currSelected = enemies.FirstOrDefault();
-        currSelected.selector.SetActive(true);
+        selector.SetActive(true);
         yield return new WaitForSeconds(.1f);
 
         while (!hasTarget)
@@ -69,9 +70,10 @@ public class Selection
     ///Private Functions
     private void SelectSingleTarget()
     {
+        targets.Clear();
         hasTarget = true;
         targets.Add(currSelected);
-        currSelected.selector.SetActive(false);
+        selector.SetActive(false);
         selectTarget?.Invoke();
 
     }
@@ -116,8 +118,8 @@ public class Selection
     }
     private void ToggleSelection(Actor target)
     {
-        currSelected.selector.SetActive(false);
-        target.selector.SetActive(true);
+        selector.SetActive(false);
+        target.gfx.selector.SetActive(true);
         currSelected = target;
     }
     private void ChangeCol(int change, int maxCount)
