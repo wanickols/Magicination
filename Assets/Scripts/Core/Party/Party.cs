@@ -52,10 +52,10 @@ namespace Core
 
         private static void generateParty()
         {
-            PartyMember Zane = Resources.Load<PartyMember>(Paths.Zane);
-            PartyMember Leon = Resources.Load<PartyMember>(Paths.Leon);
-            PartyMember Seth = Resources.Load<PartyMember>(Paths.Seth);
-            PartyMember Aurora = Resources.Load<PartyMember>(Paths.Aurora);
+            PartyMember Zane = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Zane));
+            PartyMember Leon = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Leon));
+            PartyMember Seth = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Seth));
+            PartyMember Aurora = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Aurora));
 
             activeMembers.Add(Zane);
             activeMembers.Add(Leon);

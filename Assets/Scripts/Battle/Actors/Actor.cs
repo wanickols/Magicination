@@ -32,7 +32,7 @@ namespace Battle
         public bool isTakingTurn { get; protected set; } = false;
 
         // Dead
-        protected bool isDead = false;
+        public bool isDead = false;
 
         ///Public
         public void setMemberBattleInfo(Stats stats, Sprite sprite)
@@ -59,10 +59,14 @@ namespace Battle
 
         public void setDead(bool dead)
         {
-            isDead = dead;
+            if (!isDead)
+            {
 
-            if (dead)
-                Death?.Invoke();
+                isDead = dead;
+
+                if (dead)
+                    Death?.Invoke();
+            }
         }
         public void startCheckAI()
         {
