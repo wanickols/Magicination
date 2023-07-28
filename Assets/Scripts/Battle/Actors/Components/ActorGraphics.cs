@@ -114,6 +114,7 @@ namespace Battle
                 {
                     yield return null;
                 } while (animator.IsAnimating());
+                animator.StopPlayback();
             }
 
             actor.setDead(true);

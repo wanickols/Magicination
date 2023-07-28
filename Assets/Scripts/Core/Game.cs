@@ -167,6 +167,7 @@ namespace Core
             previousState = State = GameState.Battle;
             Battle.Battle.currentRegion = Map.region;
             Battle.Battle.endBattle += EndBattle;
+            Battle.Battle.quit += Quit;
 
             StartCoroutine(sceneLoader.Co_loadScene(SceneLoader.scene.battle, transitionPrefab));
             Map.gameObject.SetActive(false);
@@ -182,7 +183,13 @@ namespace Core
 
                 previousState = State = GameState.World;
                 Battle.Battle.endBattle -= EndBattle;
+                Battle.Battle.quit -= Quit;
             }
+        }
+
+        private void Quit()
+        {
+            Application.Quit();
         }
 
         private void OnDestroy()

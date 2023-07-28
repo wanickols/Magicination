@@ -19,7 +19,7 @@ MonoBehaviour:
     lv: 1
     exp: 1
     nxtExp: 100
-    hp: 100
+    hp: 1
     maxHp: 100
     mp: 0
     maxMp: 0

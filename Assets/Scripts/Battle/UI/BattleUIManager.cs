@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace Battle
         [SerializeField] private GameObject Stats;
         [SerializeField] private GameObject StatContainerPrefab;
         [SerializeField] private GameObject BattleMenu;
+        [SerializeField] private GameObject BattleUIContainer;
+        [SerializeField] private GameObject gameOverPrefab;
 
         private BattleData data;
         private List<StatContainer> statsContainerList = new List<StatContainer>();
@@ -52,6 +55,23 @@ namespace Battle
         {
             BattleMenu.SetActive(active);
         }
+
+
+        public void hideUI()
+        {
+            BattleUIContainer.SetActive(false);
+        }
+
+        public IEnumerator CO_GameOver()
+        {
+            Animator anim = GameObject.Instantiate(gameOverPrefab, BattleUIContainer.transform.parent).GetComponent<Animator>();
+            while (anim.IsAnimating()) yield return null;
+
+            Battle.quit?.Invoke();
+        }
+
+
+
     }
 
 }

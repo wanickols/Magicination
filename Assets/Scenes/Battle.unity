@@ -293,11 +293,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 613611466}
-  - {fileID: 349797975}
-  - {fileID: 1584512325}
-  - {fileID: 793053177}
-  - {fileID: 520467611}
+  - {fileID: 1015395143}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -582,7 +578,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 349797974}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -591,13 +587,13 @@ RectTransform:
   - {fileID: 1786921026}
   - {fileID: 302969311}
   - {fileID: 1075727762}
-  m_Father: {fileID: 217856757}
+  m_Father: {fileID: 1015395143}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -768, y: -404}
-  m_SizeDelta: {x: -1600, y: -840}
+  m_SizeDelta: {x: 320, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &349797976
 MonoBehaviour:
@@ -1021,18 +1017,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520467610}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 217856757}
+  m_Father: {fileID: 1015395143}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 594.5, y: -404}
-  m_SizeDelta: {x: -1417, y: -840}
+  m_SizeDelta: {x: 503, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &520467612
 MonoBehaviour:
@@ -1342,18 +1338,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 793053176}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 217856757}
+  m_Father: {fileID: 1015395143}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -484, y: -404}
-  m_SizeDelta: {x: -1032, y: -840}
+  m_SizeDelta: {x: 888, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &793053178
 MonoBehaviour:
@@ -1541,6 +1537,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948846875}
   m_CullTransparentMesh: 1
+--- !u!1 &1015395142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1015395143}
+  m_Layer: 0
+  m_Name: BattleUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1015395143
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015395142}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 613611466}
+  - {fileID: 349797975}
+  - {fileID: 1584512325}
+  - {fileID: 793053177}
+  - {fileID: 520467611}
+  m_Father: {fileID: 217856757}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1075727761
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,19 +2292,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584512324}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2083192874}
-  m_Father: {fileID: 217856757}
+  m_Father: {fileID: 1015395143}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -484, y: -404}
-  m_SizeDelta: {x: -1032, y: -840}
+  m_SizeDelta: {x: 888, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1584512326
 MonoBehaviour:
@@ -3180,7 +3212,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 217856757}
+    m_TransformParent: {fileID: 1015395143}
     m_Modifications:
     - target: {fileID: 460804859426724935, guid: e058f2d82823ce74ca817b7f6873c2ce, type: 3}
       propertyPath: m_Name
@@ -3240,19 +3272,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4870412618687112068, guid: e058f2d82823ce74ca817b7f6873c2ce, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4870412618687112068, guid: e058f2d82823ce74ca817b7f6873c2ce, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4870412618687112068, guid: e058f2d82823ce74ca817b7f6873c2ce, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4870412618687112068, guid: e058f2d82823ce74ca817b7f6873c2ce, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -64
+      value: 896
       objectReference: {fileID: 0}
     - target: {fileID: 4870412618687112068, guid: e058f2d82823ce74ca817b7f6873c2ce, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3362,6 +3394,14 @@ PrefabInstance:
       propertyPath: battleUI.StatsContainer
       value: 
       objectReference: {fileID: 520467610}
+    - target: {fileID: 5452005608548442366, guid: 3e505c20422c57343aef2f165938045e, type: 3}
+      propertyPath: battleUI.gameOverPrefab
+      value: 
+      objectReference: {fileID: 376562402894529360, guid: 36dcd6d7ba1fe1343b0c17371d0bb966, type: 3}
+    - target: {fileID: 5452005608548442366, guid: 3e505c20422c57343aef2f165938045e, type: 3}
+      propertyPath: battleUI.BattleUIContainer
+      value: 
+      objectReference: {fileID: 1015395142}
     - target: {fileID: 5452005608548442366, guid: 3e505c20422c57343aef2f165938045e, type: 3}
       propertyPath: battleUI.PartymemberPrefab
       value: 

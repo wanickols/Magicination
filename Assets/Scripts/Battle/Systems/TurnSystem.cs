@@ -43,8 +43,11 @@ namespace Battle
 
         public void DetermineTurnOrder(TurnBar turnBar)
         {
+            if (data.nextSix.Count > 0)
+                emptyNextSix();
+
             int loopCount = turnQueue.Count;
-            if (loopCount < 6)
+            if (loopCount > 6)
                 loopCount = 6;
 
             Actor nextActor = turnQueue.Dequeue();
@@ -52,6 +55,9 @@ namespace Battle
 
             for (int i = 0; i < loopCount; i++)
             {
+                if (nextActor.isDead)
+                    nextActor = turnQueue.Dequeue();
+
                 data.nextSix.Add(nextActor);
 
                 enqueue(nextActor);
@@ -67,6 +73,16 @@ namespace Battle
         {
             actor.turnTime += CalculateTurnTime(actor.baseTurnSpeed);
             turnQueue.Enqueue(actor, actor.turnTime);
+        }
+
+
+        private void emptyNextSix()
+        {
+            foreach (Actor actor in data.nextSix)
+            {
+                turnQueue.Enqueue(actor, actor.turnTime);
+            }
+            data.nextSix.Clear();
         }
 
         private float CalculateTurnTime(float speed)

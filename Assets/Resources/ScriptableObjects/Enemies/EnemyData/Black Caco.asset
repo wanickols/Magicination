@@ -19,8 +19,8 @@ MonoBehaviour:
     lv: 0
     exp: 0
     nxtExp: 0
-    hp: 100
-    maxHp: 100
+    hp: 0
+    maxHp: 10
     mp: 0
     maxMp: 0
     atk: 4

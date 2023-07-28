@@ -24,10 +24,12 @@ namespace Battle
 
             for (int i = 0; i < enemyPack.Enemies.Count; i++)
             {
+                EnemyData enemyData = GameObject.Instantiate(enemyPack.Enemies[i]); // Should keep fron saving between runs.
                 Vector2 spawnPos = new Vector2(enemyPack.SpawnCoordinates[i].x, enemyPack.SpawnCoordinates[i].y);
-                GameObject enemyActor = GameObject.Instantiate(enemyPack.Enemies[i].ActorPrefab, spawnPos, Quaternion.identity);
-                Enemy enemy = enemyActor.GetComponent<Enemy>();
-                enemy.setMemberBattleInfo(enemyPack.Enemies[i].Stats, enemyPack.Enemies[i].MenuPortrait);
+
+                Enemy enemy = GameObject.Instantiate(enemyData.ActorPrefab, spawnPos, Quaternion.identity).GetComponent<Enemy>(); ;
+
+                enemy.setMemberBattleInfo(enemyData.Stats, enemyData.MenuPortrait);
 
                 turnSystem.enqueue(enemy);
                 enemies.Add(enemy);

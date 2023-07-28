@@ -9,6 +9,7 @@ namespace Battle
     {
         /// Actions
         public static Action endBattle;
+        public static Action quit;
         public static Action<List<Actor>> Attack;
 
         /// Public parameters
@@ -33,9 +34,6 @@ namespace Battle
         [SerializeField] private TurnBar turnBar;
         [SerializeField] private BattleData data;
 
-
-
-
         private TurnSystem turnSystem;
 
         /// Public functions
@@ -57,15 +55,54 @@ namespace Battle
             }
         }
 
-        public void tryEnd(bool win)
+        public void death()
         {
-            //battleUI.hideUI();
+            bool alliesDead = true;
+            foreach (Actor ally in data.allies)
+            {
+                if (ally.isDead) continue;
+                else
+                {
+                    alliesDead = false;
+                    break;
+                }
+            }
+
+            if (alliesDead)
+            {
+                tryEnd(false);
+            }
+
+
+            bool enemiesDead = true;
+            foreach (Actor enemy in data.enemies)
+            {
+                if (enemy.isDead) continue;
+                else
+                {
+                    enemiesDead = false;
+                    break;
+                }
+            }
+
+            if (enemiesDead)
+            {
+                tryEnd(true);
+            }
+
+            turnSystem.DetermineTurnOrder(turnBar);
+
+        }
+        private void tryEnd(bool win)
+        {
+
+
+            battleUI.hideUI();
             isEnding = true;
 
             if (!win)
             {
-                //Show Game Over
-                //Temp Exit
+                StartCoroutine(battleUI.CO_GameOver());
             }
             else
             {
@@ -124,10 +161,12 @@ namespace Battle
             foreach (Actor enemy in data.enemies)
             {
                 data.updateAllies += enemy.ai.updateTargets;
+                enemy.Death += death;
             }
 
             foreach (Actor ally in data.allies)
             {
+                ally.Death += death;
                 if (ally.ai)
                     data.updateEnemies += ally.ai.updateTargets;
             }
