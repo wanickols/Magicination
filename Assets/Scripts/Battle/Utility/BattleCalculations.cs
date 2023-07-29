@@ -19,7 +19,7 @@ namespace Battle
 
             dStats.HP -= damage;
 
-            checkDeath(defender);
+            checkDeath(defender, false);
 
             defender.updateHealth?.Invoke(dStats.HP, dStats.MAXHP);
 
@@ -27,11 +27,15 @@ namespace Battle
         }
 
 
-        private static void checkDeath(Actor actor)
+        public static void checkDeath(Actor actor, bool instant)
         {
             if (actor.Stats.HP <= 0)
             {
                 actor.Stats.HP = 0;
+
+                if (instant)
+                    actor.setDead(true);
+
                 actor.Die();
             }
         }

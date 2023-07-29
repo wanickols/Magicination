@@ -58,6 +58,7 @@ namespace Battle
         public void death()
         {
             bool alliesDead = true;
+            data.setTargets();
             foreach (Actor ally in data.allies)
             {
                 if (ally.isDead) continue;
@@ -71,6 +72,7 @@ namespace Battle
             if (alliesDead)
             {
                 tryEnd(false);
+                return;
             }
 
 
@@ -88,7 +90,9 @@ namespace Battle
             if (enemiesDead)
             {
                 tryEnd(true);
+                return;
             }
+
 
             turnSystem.DetermineTurnOrder(turnBar);
 
@@ -124,6 +128,7 @@ namespace Battle
 
             //List Creation
             data.allies = partyGenerator.Spawn(turnSystem, battleUI);
+            data.setliveAllies();
             data.setEnemyData(enemyGenerator.generate(turnSystem));
         }
         private void Start()
