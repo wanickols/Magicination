@@ -46,16 +46,12 @@ namespace Battle
             if (data.nextSix.Count > 0)
                 emptyNextSix();
 
-            int loopCount = turnQueue.Count;
-            if (loopCount > 6)
-                loopCount = 6;
-
             Actor nextActor = turnQueue.Dequeue();
             data.currentActor = nextActor;
 
-            for (int i = 0; i < loopCount; i++)
+            for (int i = 0; i < 6; i++)
             {
-                if (nextActor.isDead)
+                while (nextActor.isDead)
                     nextActor = turnQueue.Dequeue();
 
                 data.nextSix.Add(nextActor);
@@ -78,9 +74,14 @@ namespace Battle
 
         private void emptyNextSix()
         {
+            for (int i = 0; i < turnQueue.Count; i++)
+            {
+                data.nextSix.Add(turnQueue.Dequeue());
+            }
+
             foreach (Actor actor in data.nextSix)
             {
-                turnQueue.Enqueue(actor, actor.turnTime);
+                enqueue(actor);
             }
             data.nextSix.Clear();
         }

@@ -82,11 +82,12 @@ namespace Battle
         protected virtual void Awake()
         {
             ai = GetComponent<BattlerAI>();
+            Animator animator = GetComponent<Animator>();
+            gfx.init(this, animator);
         }
         protected virtual void Start()
         {
-            Animator animator = GetComponent<Animator>();
-            gfx.init(this, animator);
+
             turnTime = baseTurnSpeed;
         }
 
