@@ -32,44 +32,65 @@ namespace Core
         {
             command = Command.None;
 
-            if (Game.manager.State == GameState.Cutscene)
-                return;
-
-            else if (Game.manager.State == GameState.Dialogue)
-                command = ContinueDialogueCheck();
-
-            else if (Input.GetKeyDown(KeyCode.Escape))
-                command = Command.ToggleMenu;
-
-            else if (Game.manager.State == GameState.World)
+            switch (Game.manager.State)
             {
-
-                if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-                    command = Command.MoveUp;
-
-                else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-                    command = Command.MoveDown;
-
-                else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-                    command = Command.MoveLeft;
-
-                else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-                    command = Command.MoveRight;
-
-                else if (Input.GetKeyDown(KeyCode.E))
-                    command = Command.Interact;
+                case GameState.Cutscene:
+                case GameState.Battle:
+                case GameState.Transition:
+                    break;
+                case GameState.Dialogue:
+                    command = ContinueDialogueCheck();
+                    break;
+                case GameState.Menu:
+                    command = getMenuCommand();
+                    break;
+                case GameState.World:
+                default:
+                    command = GetMovementCommand();
+                    break;
             }
 
             HandleCommand();
         }
 
+        private Command getMenuCommand()
+        {
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+                return Command.ToggleMenu;
+
+            return Command.None;
+        }
+
+        private Command GetMovementCommand()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                return Command.ToggleMenu;
+
+            else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+                return Command.MoveUp;
+
+            else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+                return Command.MoveDown;
+
+            else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+                return Command.MoveLeft;
+
+            else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                return Command.MoveRight;
+
+            else if (Input.GetKeyDown(KeyCode.E))
+                return Command.Interact;
+
+            return Command.None;
+        }
+
         private Command ContinueDialogueCheck()
         {
-            if (Game.manager.State == GameState.Dialogue)
-            {
-                if (Input.GetKeyUp(KeyCode.Space))
-                    return Command.Continue;
-            }
+
+            if (Input.GetKeyUp(KeyCode.Space))
+                return Command.Continue;
+
 
             return Command.None;
         }

@@ -18,6 +18,7 @@ namespace Core
         Cutscene,
         Dialogue,
         Battle,
+        Transition,
         Menu
     }
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Core
         ///Private
         //Seriazlied
         [SerializeField] private Map startingMap;
-        [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab;
+        [SerializeField] private GameObject playerPrefab, uiPrefab, battleTransitionPrefab, mapTransitionPrefab;
         [SerializeField] private Vector2Int startingCell;
 
         [SerializeField] private InputHandler inputHandler;
@@ -131,6 +132,20 @@ namespace Core
 
         private void LoadMap(Transfer transfer)
         {
+            StartCoroutine(CO_LoadMap(transfer));
+        }
+
+        private IEnumerator CO_LoadMap(Transfer transfer)
+        {
+            changeState(GameState.Transition);
+
+            Canvas canvas = FindAnyObjectByType<Canvas>();
+            if (canvas == null)
+                canvas = new Canvas();
+
+            Animator anim = GameObject.Instantiate(mapTransitionPrefab, canvas.transform).GetComponent<Animator>();
+            while (anim.IsAnimating()) yield return null;
+
             Map oldMap = Map;
 
             if (oldMap.region != null)
@@ -141,7 +156,6 @@ namespace Core
             Destroy(oldMap.gameObject);
 
 
-
             Transfer[] transfers = FindObjectsOfType<Transfer>();
 
             Transfer _transfer = transfers.Where(transfer => transfer.Id == transfer.DestinationId).FirstOrDefault();
@@ -150,7 +164,12 @@ namespace Core
             if (Map.region != null)
                 Map.region.TriggerBattle += StartBattle;
 
+            anim.Play("FadeIn");
+            while (anim.IsAnimating()) yield return null;
+
+            changeState(previousState);
         }
+
 
         //Game State Management
         private void changeState(GameState state)
@@ -169,7 +188,7 @@ namespace Core
             Battle.Battle.endBattle += EndBattle;
             Battle.Battle.quit += Quit;
 
-            StartCoroutine(sceneLoader.Co_loadScene(SceneLoader.scene.battle, transitionPrefab));
+            StartCoroutine(sceneLoader.Co_loadScene(SceneLoader.scene.battle, battleTransitionPrefab));
             Map.gameObject.SetActive(false);
 
         }
