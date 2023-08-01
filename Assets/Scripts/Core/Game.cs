@@ -14,9 +14,8 @@ namespace Core
         ///Private
         //Seriazlied
         [SerializeField] private Map startingMap;
-        [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab;
+        [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab, cutsceneManagerPrefab;
         [SerializeField] private Vector2Int startingCell;
-
         [SerializeField] private InputHandler inputHandler;
 
 
@@ -24,6 +23,7 @@ namespace Core
         private UI uiManager;
         private Player player;
         private SceneLoader sceneLoader;
+        public CutsceneManager cutsceneManager { get; private set; }
         private MainMenu mainMenu;
 
         private int battleChance = 50; //out of 100, chance to trigger a battle when character steps hit threshhold. 
@@ -32,6 +32,8 @@ namespace Core
         private Battle.Battle battleManager;
 
 
+
+        ///Private Functions
 
         //Awake and Start
         private void Awake()
@@ -47,7 +49,11 @@ namespace Core
             initMap();
             initUI();
             initPlayer(); //map
+            initCutscene();
         }
+
+
+
         private void Start()
         {
 
@@ -83,6 +89,10 @@ namespace Core
             DontDestroyOnLoad(player);
         }
         private void initMenu() => mainMenu = GetComponentInChildren<MainMenu>();
+        private void initCutscene()
+        {
+            cutsceneManager = Instantiate(cutsceneManagerPrefab, this.transform).GetComponent<CutsceneManager>();
+        }
         private void initSceneLoader()
         {
             sceneLoader = new SceneLoader(player);
@@ -153,12 +163,12 @@ namespace Core
         }
 
         //Game State Management
-        private void changeState(GameState state)
+        public void changeState(GameState state)
         {
             previousState = State;
             State = state;
         }
-        private void returnState() => State = previousState;
+        public void returnState() => State = previousState;
 
         //TODO: move this to scene loader, can use event
         private void StartBattle()
@@ -189,5 +199,7 @@ namespace Core
         {
             destroyEvents();
         }
+
+
     }
 }
