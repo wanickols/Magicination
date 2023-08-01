@@ -1,3 +1,4 @@
+using Core;
 using UnityEngine;
 
 
@@ -24,6 +25,21 @@ public static class Extensions
         Vector3Int threeDimenCell = new Vector3Int(cell.x, cell.y, 0);
 
         return grid.GetCellCenterWorld(threeDimenCell);
+    }
+
+    //Directions
+    public static Vector2Int getVector(this Dir dir)
+    {
+        Vector2Int direction = dir switch
+        {
+            Dir.Up => Direction.Up,
+            Dir.Down => Direction.Down,
+            Dir.Right => Direction.Right,
+            Dir.Left => Direction.Left,
+            _ => new Vector2Int(0, 0),
+        };
+
+        return direction;
     }
 
     //Animator

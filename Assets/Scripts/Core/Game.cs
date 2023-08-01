@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -15,9 +14,8 @@ namespace Core
         ///Private
         //Seriazlied
         [SerializeField] private Map startingMap;
-        [SerializeField] private GameObject playerPrefab, uiPrefab, battleTransitionPrefab, mapTransitionPrefab;
+        [SerializeField] private GameObject playerPrefab, uiPrefab, transitionPrefab, cutsceneManagerPrefab;
         [SerializeField] private Vector2Int startingCell;
-
         [SerializeField] private InputHandler inputHandler;
 
 
@@ -25,6 +23,7 @@ namespace Core
         private UI uiManager;
         private Player player;
         private SceneLoader sceneLoader;
+        public CutsceneManager cutsceneManager { get; private set; }
         private MainMenu mainMenu;
 
         private int battleChance = 50; //out of 100, chance to trigger a battle when character steps hit threshhold. 
@@ -33,6 +32,8 @@ namespace Core
         private Battle.Battle battleManager;
 
 
+
+        ///Private Functions
 
         //Awake and Start
         private void Awake()
@@ -48,7 +49,11 @@ namespace Core
             initMap();
             initUI();
             initPlayer(); //map
+            initCutscene();
         }
+
+
+
         private void Start()
         {
 
@@ -84,6 +89,10 @@ namespace Core
             DontDestroyOnLoad(player);
         }
         private void initMenu() => mainMenu = GetComponentInChildren<MainMenu>();
+        private void initCutscene()
+        {
+            cutsceneManager = Instantiate(cutsceneManagerPrefab, this.transform).GetComponent<CutsceneManager>();
+        }
         private void initSceneLoader()
         {
             sceneLoader = new SceneLoader(player);
@@ -132,20 +141,6 @@ namespace Core
 
         private void LoadMap(Transfer transfer)
         {
-            StartCoroutine(CO_LoadMap(transfer));
-        }
-
-        private IEnumerator CO_LoadMap(Transfer transfer)
-        {
-            changeState(GameState.Transition);
-
-            Canvas canvas = FindAnyObjectByType<Canvas>();
-            if (canvas == null)
-                canvas = new Canvas();
-
-            Animator anim = GameObject.Instantiate(mapTransitionPrefab, canvas.transform).GetComponent<Animator>();
-            while (anim.IsAnimating()) yield return null;
-
             Map oldMap = Map;
 
             if (oldMap.region != null)
@@ -156,6 +151,7 @@ namespace Core
             Destroy(oldMap.gameObject);
 
 
+
             Transfer[] transfers = FindObjectsOfType<Transfer>();
 
             Transfer _transfer = transfers.Where(transfer => transfer.Id == transfer.DestinationId).FirstOrDefault();
@@ -164,20 +160,15 @@ namespace Core
             if (Map.region != null)
                 Map.region.TriggerBattle += StartBattle;
 
-            anim.Play("FadeIn");
-            while (anim.IsAnimating()) yield return null;
-
-            changeState(previousState);
         }
 
-
         //Game State Management
-        private void changeState(GameState state)
+        public void changeState(GameState state)
         {
             previousState = State;
             State = state;
         }
-        private void returnState() => State = previousState;
+        public void returnState() => State = previousState;
 
         //TODO: move this to scene loader, can use event
         private void StartBattle()
@@ -186,9 +177,8 @@ namespace Core
             previousState = State = GameState.Battle;
             Battle.Battle.currentRegion = Map.region;
             Battle.Battle.endBattle += EndBattle;
-            Battle.Battle.quit += Quit;
 
-            StartCoroutine(sceneLoader.Co_loadScene(SceneLoader.scene.battle, battleTransitionPrefab));
+            StartCoroutine(sceneLoader.Co_loadScene(SceneLoader.scene.battle, transitionPrefab));
             Map.gameObject.SetActive(false);
 
         }
@@ -202,21 +192,14 @@ namespace Core
 
                 previousState = State = GameState.World;
                 Battle.Battle.endBattle -= EndBattle;
-                Battle.Battle.quit -= Quit;
             }
-        }
-
-        private void Quit()
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#endif
-            Application.Quit();
         }
 
         private void OnDestroy()
         {
             destroyEvents();
         }
+
+
     }
 }

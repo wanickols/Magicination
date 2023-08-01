@@ -47,6 +47,6 @@ MonoBehaviour:
   startingMap: {fileID: 4170751599150295614, guid: 26416334efc50944da7cdb57d687925e, type: 3}
   playerPrefab: {fileID: 8740641598906599593, guid: 6b0239a5417500e4f8b13b87e866d232, type: 3}
   uiPrefab: {fileID: 1174632973390869395, guid: a7d10abf8b949b947a7e73620213076a, type: 3}
-  battleTransitionPrefab: {fileID: 8105703448607726340, guid: 0d8ded4a2fccc1949acb8f5dc1468d1c, type: 3}
-  mapTransitionPrefab: {fileID: 4059238886201558878, guid: 25f0d9b92eaffe5419cad964357ad50e, type: 3}
+  transitionPrefab: {fileID: 8105703448607726340, guid: 0d8ded4a2fccc1949acb8f5dc1468d1c, type: 3}
+  cutsceneManagerPrefab: {fileID: 6685640259946145187, guid: bd984f3532e03294fae4769ccb35b4f8, type: 3}
   startingCell: {x: -8, y: 5}
