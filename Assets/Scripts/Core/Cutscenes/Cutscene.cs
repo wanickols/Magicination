@@ -10,12 +10,9 @@ namespace Core
         [SerializeField] private bool autoplay = false;
         private bool isStarted = false;
         private bool isFinished = false;
-        [SerializeReference]
-        private List<ICutCommand> commands = new List<ICutCommand>()
-        {
-            new MoveCharacter(),
 
-        };
+        [SerializeReference]
+        private List<ICutCommand> commands = new List<ICutCommand>();
         CutsceneManager manager;
 
         public IReadOnlyList<ICutCommand> Commands => commands;
@@ -49,5 +46,8 @@ namespace Core
         {
             isStarted = manager.tryPlayCutscene(this);
         }
+
+        public void InsertCommand(int index, ICutCommand command) => commands.Insert(index, command);
+
     }
 }

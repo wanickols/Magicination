@@ -21,7 +21,7 @@ namespace Core
 
         private GameState previousState = GameState.World;
         private UI uiManager;
-        private Player player;
+        public Player player { get; private set; }
         private SceneLoader sceneLoader;
         public CutsceneManager cutsceneManager { get; private set; }
         private MainMenu mainMenu;
