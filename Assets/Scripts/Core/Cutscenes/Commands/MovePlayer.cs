@@ -11,7 +11,7 @@ namespace Core
         [SerializeField] private float speed; //TODO make this effect the walkspeed
         [SerializeField] private List<Dir> route = new List<Dir>();
 
-        public bool isFinished { get; private set; }
+        public bool isFinished { get; private set; } = false;
 
         public IEnumerator CO_Execute()
         {
@@ -25,8 +25,10 @@ namespace Core
                 while (player.isMoving)
                     yield return null;
 
-                isFinished = true;
+
             }
+
+            isFinished = true;
         }
 
         public override string ToString() => "Move Player";

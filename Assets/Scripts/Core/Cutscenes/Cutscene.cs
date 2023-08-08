@@ -48,6 +48,8 @@ namespace Core
         }
 
         public void InsertCommand(int index, ICutCommand command) => commands.Insert(index, command);
+        public void RemoveAt(int i) => commands.RemoveAt(i);
+        public void SwapCommands(int i, int j) => (commands[i], commands[j]) = (commands[j], commands[i]);
 
     }
 }
