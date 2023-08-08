@@ -12,7 +12,7 @@ namespace Core
         [SerializeField] private bool neverMoves = false;
         [SerializeField] private bool movesRandomely = false;
         [SerializeField] private bool loopRoute = false;
-        [SerializeField] public NPCInfo NPCInfo { get; private set; }
+        [SerializeField] private NPCInfo NPCInfo;
 
         private int currRoutePos = 0;
         private float timeElapsed = 0f;

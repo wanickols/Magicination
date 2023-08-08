@@ -46,28 +46,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoplay: 1
   commands:
-  - rid: 5614634164809891857
-  - rid: 5614634164809891858
-  - rid: 5614634164809891859
+  - rid: 5614634225509335050
+  - rid: 5614634225509335053
+  - rid: 5614634225509335054
   references:
     version: 2
     RefIds:
-    - rid: 5614634164809891857
+    - rid: 5614634225509335050
       type: {class: MoveCharacter, ns: Core, asm: Scripts}
       data:
-        character: {fileID: 0}
+        character: {fileID: 6626849957034573037}
         speed: 0
-        route: 00000000
-    - rid: 5614634164809891858
+        route: 0200000002000000
+    - rid: 5614634225509335053
       type: {class: MovePlayer, ns: Core, asm: Scripts}
       data:
         speed: 0
-        route: 
-    - rid: 5614634164809891859
-      type: {class: MovePlayer, ns: Core, asm: Scripts}
+        route: 030000000300000003000000
+    - rid: 5614634225509335054
+      type: {class: StartDialogue, ns: Core, asm: Scripts}
       data:
-        speed: 0
-        route: 
+        speaker: {fileID: 6626849957034573037}
 --- !u!1 &521875618738647799
 GameObject:
   m_ObjectHideFlags: 0
@@ -4966,3 +4965,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5792972119700239855, guid: d9536f5fd49844341ac066d0e6ab82b5, type: 3}
   m_PrefabInstance: {fileID: 4906147816805722093}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6626849957034573037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2297240013233511168, guid: d9536f5fd49844341ac066d0e6ab82b5, type: 3}
+  m_PrefabInstance: {fileID: 4906147816805722093}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9345d35f06d55ba469367775d08a9020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

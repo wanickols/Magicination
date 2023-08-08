@@ -108,10 +108,6 @@ public class CutsceneEditor : EditorWindow
         commandList.Rebuild();
         commandBox.Add(commandList);
 
-
-        if (commandPosition == null)
-            Debug.Log("Hello");
-
         // Set the position = to the end of the cutscene.Commands list so that new commands go to the bottom by default
         // Add the IntegerField to the window
         commandPosition.value = cutscene.Commands.Count;
@@ -210,7 +206,7 @@ public class CutsceneEditor : EditorWindow
         deleteButton.AddToClassList("delete-button"); // used for styling
         deleteButton.clicked += () =>
         {
-            //cutscene.RemoveAt(i);
+            cutscene.RemoveAt(i);
             DisplaySceneContents();
         };
         container.Add(deleteButton);
@@ -224,7 +220,7 @@ public class CutsceneEditor : EditorWindow
             upButton.AddToClassList("position-button"); // used for styling
             upButton.clicked += () =>
             {
-                //cutscene.SwapCommands(i - 1, i);
+                cutscene.SwapCommands(i - 1, i);
                 DisplaySceneContents();
             };
             container.Add(upButton);
@@ -239,7 +235,7 @@ public class CutsceneEditor : EditorWindow
             downButton.AddToClassList("position-button"); // used for styling
             downButton.clicked += () =>
             {
-                //cutscene.SwapCommands(i, i + 1);
+                cutscene.SwapCommands(i, i + 1);
                 DisplaySceneContents();
             };
             container.Add(downButton);

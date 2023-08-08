@@ -9,15 +9,24 @@ namespace Core
     {
         [SerializeField] private NPC speaker;
 
-        public bool isFinished { get; private set; }
+
+        public bool isFinished { get; private set; } = false;
 
         public IEnumerator CO_Execute()
         {
-            speaker.NPCInfo.createInteraction();
+            speaker.Interact();
 
-            yield return null;
+            DialogueManager.instance.closeDialogue += listenForDialogue;
+
+            while (!isFinished)
+            {
+                yield return null;
+            }
         }
 
-
+        private void listenForDialogue()
+        {
+            isFinished = true;
+        }
     }
 }
