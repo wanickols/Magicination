@@ -22,12 +22,12 @@ namespace Core
             this.player = player;
         }
 
-        public IEnumerator Co_loadScene(scene scene, GameObject transitionPrefab)
+        public IEnumerator Co_loadScene(scene scene, GameObject transitionPrefab, Map map)
         {
             Debug.Log("Loading Scene");
             Animator animator = playAnimation(transitionPrefab);
             while (animator.IsAnimating()) yield return null;
-            loadScene(scene);
+            loadScene(scene, map);
         }
 
         private Animator playAnimation(GameObject transitionPrefab)
@@ -36,7 +36,7 @@ namespace Core
         }
 
 
-        public void loadScene(scene scene)
+        public void loadScene(scene scene, Map map)
         {
             switch (scene)
             {
@@ -46,7 +46,7 @@ namespace Core
                     break;
                 case scene.battle:
                     currIndex = 1;
-                    loadBattleScene();
+                    loadBattleScene(map);
                     break;
                 default:
                     Debug.Log("No Scene Found");
@@ -60,13 +60,13 @@ namespace Core
             SceneManager.sceneLoaded += restorePlayerPositonAndGameObject;
         }
 
-        private void loadBattleScene()
+        private void loadBattleScene(Map map)
         {
-            GameObject.DontDestroyOnLoad(Game.manager.Map);
+            GameObject.DontDestroyOnLoad(map);
 
             //Save current
             savedScene = (scene)SceneManager.GetActiveScene().buildIndex;
-            savedPlayerLocation = Game.manager.Map.grid.Center2D(player.currCell);
+            savedPlayerLocation = map.grid.Center2D(player.currCell);
 
             // Player
             player.gameObject.SetActive(false);

@@ -19,7 +19,7 @@ namespace Core
 
         public IReadOnlyList<ICutCommand> Commands => commands;
 
-        public Vector2Int Cell => Game.manager.Map.grid.GetCell2D(gameObject);
+        public Vector2Int Cell => manager.map.grid.GetCell2D(gameObject);
 
         public bool IsFinsihed
         {
@@ -37,7 +37,7 @@ namespace Core
         {
             manager = Game.manager.cutsceneManager;
             if (trigger == TriggerType.Touch)
-                Game.manager.Map.Triggers.Add(Cell, this); //adds to map
+                manager.map.Triggers.Add(Cell, this); //adds to map
         }
 
         private void Update()
@@ -58,7 +58,7 @@ namespace Core
 
         private void OnDestroy()
         {
-            Game.manager.Map.Triggers.Remove(Cell);
+            manager.map.Triggers.Remove(Cell);
         }
 
         public void InsertCommand(int index, ICutCommand command) => commands.Insert(index, command);

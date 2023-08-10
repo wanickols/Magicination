@@ -15,6 +15,8 @@ namespace Core
         [SerializeField] private int destinationId;
         [SerializeField] private Vector2Int offset;
 
+        private MapManager mapManager;
+
         //Accessors
         public Map NewMap => newMap;
         public int DestinationId => destinationId;
@@ -25,12 +27,14 @@ namespace Core
         //Unity Functions
         private void Start()
         {
-            Game.manager.Map.Triggers.Add(Cell, this); //adds to map
-            TeleportPlayer += Game.manager.LoadMap; //adds game as listener
+            mapManager = Game.manager.mapManager;
+
+            mapManager.map.Triggers.Add(Cell, this); //adds to map
+            TeleportPlayer += mapManager.LoadMap; //adds game as listener
         }
 
         //Interface
-        public Vector2Int Cell => Game.manager.Map.grid.GetCell2D(gameObject);
+        public Vector2Int Cell => mapManager.grid.GetCell2D(gameObject);
 
         public void Trigger() => TeleportPlayer?.Invoke(this);
 
@@ -44,7 +48,7 @@ namespace Core
 
         private void OnDestroy()
         {
-            TeleportPlayer -= Game.manager.LoadMap;
+            TeleportPlayer -= mapManager.LoadMap;
         }
 
     }
