@@ -31,6 +31,12 @@ namespace Core
         extreme = 4,
     }
 
+    public enum TriggerType
+    {
+        Auto,
+        Touch,
+        Call
+    }
 }
 
 namespace Battle

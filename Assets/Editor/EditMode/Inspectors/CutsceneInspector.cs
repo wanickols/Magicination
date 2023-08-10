@@ -20,8 +20,12 @@ public class CutsceneInspector : Editor
     {
         container = new VisualElement();
 
-        SerializedProperty property = serializedObject.FindProperty("autoplay");
+        SerializedProperty property = serializedObject.FindProperty("trigger");
         PropertyField field = new PropertyField(property);
+        container.Add(field);
+
+        property = serializedObject.FindProperty("callOnce");
+        field = new PropertyField(property);
         container.Add(field);
 
         Button button = new Button(openEditor) { text = "Open Editor" };

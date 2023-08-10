@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5480278516026351366}
-  - component: {fileID: 8901415773039296286}
+  - component: {fileID: 6198066244550335465}
   m_Layer: 0
   m_Name: Cutscene
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5480278516026351366
 Transform:
   m_ObjectHideFlags: 0
@@ -25,14 +25,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3635721430450292}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.69, y: 4.48, z: -0.16318941}
+  m_LocalPosition: {x: -6.49, y: 5.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3690784823096961086}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8901415773039296286
+--- !u!114 &6198066244550335465
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,29 +44,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3951e611d2f56488b014c9f67b9953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoplay: 1
+  trigger: 1
+  callOnce: 0
   commands:
-  - rid: 5614634225509335050
-  - rid: 5614634225509335053
-  - rid: 5614634225509335054
+  - rid: 5614634382767685632
+  - rid: 5614634382767685634
+  - rid: 5614634382767685633
   references:
     version: 2
     RefIds:
-    - rid: 5614634225509335050
+    - rid: 5614634382767685632
       type: {class: MoveCharacter, ns: Core, asm: Scripts}
       data:
         character: {fileID: 6626849957034573037}
         speed: 0
         route: 0200000002000000
-    - rid: 5614634225509335053
-      type: {class: MovePlayer, ns: Core, asm: Scripts}
-      data:
-        speed: 0
-        route: 030000000300000003000000
-    - rid: 5614634225509335054
+    - rid: 5614634382767685633
       type: {class: StartDialogue, ns: Core, asm: Scripts}
       data:
         speaker: {fileID: 6626849957034573037}
+    - rid: 5614634382767685634
+      type: {class: MovePlayer, ns: Core, asm: Scripts}
+      data:
+        speed: 0
+        route: 0300000003000000
 --- !u!1 &521875618738647799
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +797,7 @@ GameObject:
   m_Layer: 0
   m_Name: DungeonExit
   m_TagString: Untagged
-  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -808,7 +809,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5762591256692833184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.69, y: 4.48, z: -0.16318941}
+  m_LocalPosition: {x: -12.5, y: 4.5, z: -0.16318941}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -3,11 +3,13 @@ using UnityEngine;
 
 namespace Core
 {
-    public class Cutscene : MonoBehaviour
+    public class Cutscene : MonoBehaviour, ITriggerByTouch
     {
 
 
-        [SerializeField] private bool autoplay = false;
+        [SerializeField] private TriggerType trigger = TriggerType.Auto;
+        [SerializeField] private bool callOnce = false;
+
         private bool isStarted = false;
         private bool isFinished = false;
 
@@ -17,13 +19,15 @@ namespace Core
 
         public IReadOnlyList<ICutCommand> Commands => commands;
 
+        public Vector2Int Cell => Game.manager.Map.grid.GetCell2D(gameObject);
+
         public bool IsFinsihed
         {
             get => isFinished;
             set
             {
                 isFinished = value;
-                if (value == true)
+                if (value == true && callOnce)
                     Destroy(this.gameObject);
 
             }
@@ -32,19 +36,29 @@ namespace Core
         private void Start()
         {
             manager = Game.manager.cutsceneManager;
-
+            if (trigger == TriggerType.Touch)
+                Game.manager.Map.Triggers.Add(Cell, this); //adds to map
         }
 
         private void Update()
         {
-            if (autoplay && !isStarted)
+            if (trigger == TriggerType.Auto && !isStarted)
                 Play();
         }
 
+        public void Trigger()
+        {
+            Play();
+        }
 
         private void Play()
         {
             isStarted = manager.tryPlayCutscene(this);
+        }
+
+        private void OnDestroy()
+        {
+            Game.manager.Map.Triggers.Remove(Cell);
         }
 
         public void InsertCommand(int index, ICutCommand command) => commands.Insert(index, command);
