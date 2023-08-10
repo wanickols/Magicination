@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5480278516026351366
 Transform:
   m_ObjectHideFlags: 0
@@ -830,6 +830,7 @@ MonoBehaviour:
   id: 1
   newMap: {fileID: 4170751599150295614, guid: f54e36624277dc240a12774b6e43b09f, type: 3}
   destinationId: 1
+  offset: {x: -1, y: 0}
 --- !u!1 &6223727894613371978
 GameObject:
   m_ObjectHideFlags: 0

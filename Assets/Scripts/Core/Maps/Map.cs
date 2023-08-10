@@ -11,7 +11,7 @@ namespace Core
 
         public Dictionary<Vector2Int, MonoBehaviour> occupiedCells { get; private set; }
 
-        public Dictionary<Vector2Int, Transfer> transfers { get; private set; }
+        public Dictionary<Vector2Int, ITriggerByTouch> Triggers { get; private set; }
 
         public Grid grid { get; private set; }
 
@@ -21,17 +21,8 @@ namespace Core
         {
 
             occupiedCells = new Dictionary<Vector2Int, MonoBehaviour>();
-            transfers = new Dictionary<Vector2Int, Transfer>();
+            Triggers = new Dictionary<Vector2Int, ITriggerByTouch>();
             grid = GetComponent<Grid>();
-
-            //Create Transfers
-            Transfer[] transferArray = FindObjectsOfType<Transfer>();
-
-            foreach (Transfer transfer in transferArray)
-            {
-                Vector2Int cellLocation = grid.GetCell2D(transfer.gameObject);
-                transfers.Add(cellLocation, transfer);
-            }
 
         }
 
@@ -80,15 +71,6 @@ namespace Core
         public MonoBehaviour getOccupuiedCell(Vector2Int cell)
         {
             return occupiedCells[cell];
-        }
-
-        public void destroyTransfers()
-        {
-            foreach (KeyValuePair<Vector2Int, Transfer> t in transfers)
-            {
-                if (t.Value != null)
-                    Destroy(t.Value.gameObject);
-            }
         }
 
     }
