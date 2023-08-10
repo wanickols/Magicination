@@ -1,12 +1,9 @@
-using System;
-
 namespace Core
 {
     public class Player : Character
     {
 
-        //Events
-        public event Action<Transfer> TeleportPlayer;
+
 
 
 
@@ -32,10 +29,10 @@ namespace Core
         public void CheckCurrentCell(Map map)
         {
 
-            if (map.transfers.ContainsKey(currCell))
+            if (map.Triggers.ContainsKey(currCell))
             {
-                Transfer transfer = map.transfers[currCell];
-                TeleportPlayer?.Invoke(transfer);
+                ITriggerByTouch trigger = map.Triggers[currCell];
+                trigger.Trigger();
                 return;
             }
 

@@ -1052,6 +1052,7 @@ MonoBehaviour:
   id: 2
   newMap: {fileID: 4170751599150295614, guid: 26416334efc50944da7cdb57d687925e, type: 3}
   destinationId: 1
+  offset: {x: 1, y: 0}
 --- !u!1 &6223727894613371978
 GameObject:
   m_ObjectHideFlags: 0
@@ -4796,3 +4797,4 @@ MonoBehaviour:
   id: 1
   newMap: {fileID: 4170751599150295614, guid: 26416334efc50944da7cdb57d687925e, type: 3}
   destinationId: 1
+  offset: {x: 1, y: 0}

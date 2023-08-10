@@ -111,7 +111,7 @@ namespace Core
             mainMenu.openMenu += openMenu;
             mainMenu.closeMenu += closeMenu;
 
-            player.TeleportPlayer += LoadMap;
+
         }
 
         private void destroyEvents()
@@ -124,11 +124,10 @@ namespace Core
             mainMenu.openMenu -= openMenu;
             mainMenu.closeMenu -= closeMenu;
 
-            //Map
-            player.TeleportPlayer -= LoadMap;
 
             if (Map.region != null)
                 Map.region.TriggerBattle -= StartBattle;
+
 
         }
 
@@ -139,24 +138,25 @@ namespace Core
         private void openMenu() => changeState(GameState.Menu);
         private void closeMenu() => returnState();
 
-        private void LoadMap(Transfer transfer)
+        public void LoadMap(Transfer trnsfer)
         {
             Map oldMap = Map;
 
             if (oldMap.region != null)
                 oldMap.region.TriggerBattle -= StartBattle;
 
-            Map = Instantiate(transfer.NewMap);
+            Map = Instantiate(trnsfer.NewMap);
 
             Destroy(oldMap.gameObject);
 
 
 
+
             Transfer[] transfers = FindObjectsOfType<Transfer>();
 
-            Transfer _transfer = transfers.Where(transfer => transfer.Id == transfer.DestinationId).FirstOrDefault();
+            Transfer _transfer = transfers.Where(transfer => trnsfer.isDestination(transfer)).FirstOrDefault();
 
-            player.transform.position = Map.grid.Center2D(Map.grid.GetCell2D(_transfer.gameObject));
+            player.transform.position = Map.grid.Center2D(_transfer.Cell + trnsfer.Offset);
             if (Map.region != null)
                 Map.region.TriggerBattle += StartBattle;
 
