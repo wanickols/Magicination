@@ -6,7 +6,8 @@ namespace Core
     {
         private Player player;
         private MainMenu mainMenu;
-        private Map map => Game.manager.Map;
+        private Map map;
+        private StateManager stateManager;
 
         private enum Command
         {
@@ -22,17 +23,19 @@ namespace Core
 
 
         Command command;
-        public InputHandler(Player player, MainMenu menu)
+        public InputHandler(Player player, MainMenu menu, Map map, StateManager stateManager)
         {
             this.player = player;
             this.mainMenu = menu;
+            this.map = map;
+            this.stateManager = stateManager;
         }
 
         public void CheckInput()
         {
             command = Command.None;
 
-            switch (Game.manager.State)
+            switch (stateManager.State)
             {
                 case GameState.Cutscene:
                 case GameState.Battle:

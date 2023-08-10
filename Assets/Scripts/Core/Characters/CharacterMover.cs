@@ -11,7 +11,7 @@ namespace Core
         public bool isMoving = false;
         public Vector2Int currCell => map.GetCell2D(character.gameObject);
         private const float TIME_TO_MOVE_ONE_CELL = .375f;
-        private Map map => Game.manager.Map;
+        private Map map => Game.manager.mapManager.map;
 
 
 

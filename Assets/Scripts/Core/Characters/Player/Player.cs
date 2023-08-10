@@ -37,9 +37,8 @@ namespace Core
             }
 
 
-            Region region = Game.manager.Map.region;
-            if (region != null)
-                region.tryRandomEncounter();
+            if (map.region != null)
+                map.region.tryRandomEncounter();
 
         }
 
