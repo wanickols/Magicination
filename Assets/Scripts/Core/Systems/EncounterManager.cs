@@ -7,16 +7,19 @@ namespace Core
     public class EncounterManager
     {
         private StateManager stateManager;
-        private Map map;
+        private MapManager mapManager;
+        private Map map => mapManager.map;
         private SceneLoader sceneLoader;
 
         [SerializeField] private GameObject transitionPrefab;
 
 
-        public EncounterManager(StateManager stateManager, Map map, SceneLoader sceneLoader)
+        public EncounterManager() { }
+
+        public void init(StateManager stateManager, SceneLoader sceneLoader, MapManager mapManager)
         {
             this.stateManager = stateManager;
-            this.map = map;
+            this.mapManager = mapManager;
             this.sceneLoader = sceneLoader;
 
             if (map.region != null)

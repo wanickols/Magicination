@@ -8,7 +8,7 @@ namespace Core
     public class MapManager
     {
 
-        private EncounterManager encounters;
+        private EncounterManager encounters => Game.manager.encounterManager;
 
 
         public Map map { get; private set; }
@@ -16,15 +16,10 @@ namespace Core
         public Grid grid => map.grid;
 
         // Start is called before the first frame update
-        public MapManager(EncounterManager encounterManager, Map startingMap)
+        public MapManager(Map startingMap)
         {
-
-            this.encounters = encounterManager;
-
             //Init Map
             map = GameObject.Instantiate(startingMap);
-            GameObject.DontDestroyOnLoad(map);
-
         }
 
 
@@ -37,18 +32,20 @@ namespace Core
 
             map = GameObject.Instantiate(trnsfer.NewMap);
 
-            GameObject.Destroy(oldMap.gameObject);
-
 
 
 
             Transfer[] transfers = GameObject.FindObjectsOfType<Transfer>();
 
-            Transfer _transfer = transfers.Where(transfer => trnsfer.isDestination(transfer)).FirstOrDefault();
+            Transfer _transfer = transfers.Where(transfer => transfer.isDestination(trnsfer)).FirstOrDefault();
 
-            Game.manager.player.transform.position = grid.Center2D(_transfer.Cell + trnsfer.Offset);
+            a Game.manager.player.transform.position = grid.Center2D(grid.GetCell2D(_transfer.gameObject) + trnsfer.Offset);
             if (map.region != null)
                 map.region.TriggerBattle += encounters.StartBattle;
+
+
+            GameObject.Destroy(oldMap.gameObject);
+
 
         }
 
