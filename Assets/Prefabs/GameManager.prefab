@@ -48,7 +48,5 @@ MonoBehaviour:
   uiPrefab: {fileID: 1174632973390869395, guid: a7d10abf8b949b947a7e73620213076a, type: 3}
   startingCell: {x: -8, y: 5}
   startingMap: {fileID: 4170751599150295614, guid: 26416334efc50944da7cdb57d687925e, type: 3}
-  mapManager:
-    startingMap: {fileID: 521875618738647799, guid: 26416334efc50944da7cdb57d687925e, type: 3}
   encounterManager:
     transitionPrefab: {fileID: 8105703448607726340, guid: 0d8ded4a2fccc1949acb8f5dc1468d1c, type: 3}

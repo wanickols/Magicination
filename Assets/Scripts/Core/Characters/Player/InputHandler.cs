@@ -6,7 +6,8 @@ namespace Core
     {
         private Player player;
         private MainMenu mainMenu;
-        private Map map;
+        private MapManager mapManager;
+        private Map map => mapManager.map;
         private StateManager stateManager;
 
         private enum Command
@@ -23,11 +24,11 @@ namespace Core
 
 
         Command command;
-        public InputHandler(Player player, MainMenu menu, Map map, StateManager stateManager)
+        public InputHandler(Player player, MainMenu menu, MapManager mapManager, StateManager stateManager)
         {
             this.player = player;
             this.mainMenu = menu;
-            this.map = map;
+            this.mapManager = mapManager;
             this.stateManager = stateManager;
         }
 

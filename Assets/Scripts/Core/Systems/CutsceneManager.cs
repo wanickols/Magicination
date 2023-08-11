@@ -10,12 +10,11 @@ namespace Core
         private GameState prevState = GameState.World; //Use this instead of gamestate return so can go between cutscene and dialogue in both world and battles. 
 
         private StateManager stateManager;
-        public Map map;
+        public Map map => Game.manager.mapManager.map;
 
-        public CutsceneManager(StateManager stateManager, Map map)
+        public CutsceneManager(StateManager stateManager)
         {
             this.stateManager = stateManager;
-            this.map = map;
         }
 
 

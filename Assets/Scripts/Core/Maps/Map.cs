@@ -23,7 +23,7 @@ namespace Core
             occupiedCells = new Dictionary<Vector2Int, MonoBehaviour>();
             Triggers = new Dictionary<Vector2Int, ITriggerByTouch>();
             grid = GetComponent<Grid>();
-
+            DontDestroyOnLoad(this);
         }
 
 

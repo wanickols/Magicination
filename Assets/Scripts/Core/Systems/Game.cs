@@ -12,13 +12,14 @@ namespace Core
 
         ///Private
         //Seriazlied
-
+        private StateManager stateManager = new StateManager();
         [SerializeField] private GameObject playerPrefab, uiPrefab;
         [SerializeField] private Vector2Int startingCell;
-        [SerializeField] private InputHandler inputHandler;
         [SerializeField] private Map startingMap;
-        public MapManager mapManager;
-        [SerializeField] private EncounterManager encounterManager;
+        [Header("Managers")]
+        [SerializeField] private InputHandler inputHandler;
+        [SerializeField] public EncounterManager encounterManager = new EncounterManager();
+
 
 
         private UI uiManager;
@@ -29,10 +30,10 @@ namespace Core
 
         //Managers
         public CutsceneManager cutsceneManager { get; private set; }
+        public MapManager mapManager;
 
 
 
-        private StateManager stateManager;
 
 
         ///Private Functions
@@ -47,11 +48,10 @@ namespace Core
                 manager = this;
 
             //Gamestate
-            initState();
             initUI();
             initMap();
             initPlayer(); // map
-            initCutscene();
+            initCutscene(); // state map
 
         }
 
@@ -67,48 +67,32 @@ namespace Core
             DontDestroyOnLoad(this);
         }
 
-        private void initEncounterManager()
-        {
-            encounterManager = new EncounterManager(stateManager, mapManager.map, sceneLoader);
-        }
+        private void initEncounterManager() => encounterManager.init(stateManager, sceneLoader, mapManager);
 
-        private void Update()
-        {
 
-            inputHandler.CheckInput();
-        }
+        private void Update() => inputHandler.CheckInput();
 
-        //Init Functions
-        private void initState()
-        {
-            stateManager = new StateManager();
-        }
+
         private void initUI()
         {
             uiManager = Instantiate(uiPrefab, this.transform).GetComponent<UI>();
             initMenu();
         }
+
+        private void initMap() => mapManager = new MapManager(startingMap);
+
+
+
         private void initPlayer()
         {
             player = Instantiate(playerPrefab, mapManager.grid.Center2D(startingCell), Quaternion.identity).GetComponent<Player>();
             DontDestroyOnLoad(player);
         }
 
-        private void initMap()
-        {
-            mapManager = new MapManager(encounterManager, startingMap);
-        }
-
         private void initMenu() => mainMenu = GetComponentInChildren<MainMenu>();
-        private void initCutscene()
-        {
-            cutsceneManager = new CutsceneManager(stateManager, mapManager.map);
-        }
-        private void initSceneLoader()
-        {
-            sceneLoader = new SceneLoader(player);
-        }
-        private void initInput() => inputHandler = new InputHandler(player, mainMenu, mapManager.map, stateManager);
+        private void initCutscene() => cutsceneManager = new CutsceneManager(stateManager);
+        private void initSceneLoader() => sceneLoader = new SceneLoader(player);
+        private void initInput() => inputHandler = new InputHandler(player, mainMenu, mapManager, stateManager);
         private void initDialogue() => DialogueManager.instance.Init(inputHandler);
 
         //Events
