@@ -39,7 +39,7 @@ namespace Core
 
             Transfer _transfer = transfers.Where(transfer => transfer.isDestination(trnsfer)).FirstOrDefault();
 
-            a Game.manager.player.transform.position = grid.Center2D(grid.GetCell2D(_transfer.gameObject) + trnsfer.Offset);
+            Game.manager.player.transform.position = grid.Center2D(grid.GetCell2D(_transfer.gameObject) + trnsfer.Offset);
             if (map.region != null)
                 map.region.TriggerBattle += encounters.StartBattle;
 
