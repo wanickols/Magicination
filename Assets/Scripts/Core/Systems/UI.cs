@@ -26,7 +26,13 @@ namespace Core
         [Header("Menu UI")]
         [SerializeField] private GameObject MainMenuPrefab;
 
-        private MainMenu mainMenu;
+        public MainMenu mainMenu { get; private set; }
+        private StateManager stateManager;
+
+        public void init(StateManager stateManager)
+        {
+            this.stateManager = stateManager;
+        }
 
         private void Awake()
         {
@@ -69,6 +75,11 @@ namespace Core
             dialogueManager.setDialogueText += setDialogueText;
             dialogueManager.openDialogue += openDialogue;
             dialogueManager.closeDialogue += closeDialogue;
+
+            //Menu Events
+            mainMenu.openMenu += openMenu;
+            mainMenu.closeMenu += closeMenu;
+
         }
 
 
@@ -79,11 +90,14 @@ namespace Core
             DialoguePanel.SetActive(true);
             nameText.text = name;
             Headshot.sprite = sprite;
+            stateManager.changeState(GameState.Dialogue);
         }
 
         private void closeDialogue()
         {
+
             StartCoroutine(CO_closeDialogue());
+            stateManager.returnState();
         }
 
         private IEnumerator CO_closeDialogue()
@@ -127,6 +141,8 @@ namespace Core
 
         }
 
+        private void openMenu() => stateManager.changeState(GameState.Menu);
+        private void closeMenu() => stateManager.returnState();
 
         //Deconstructor
         ~UI()
@@ -134,6 +150,11 @@ namespace Core
             dialogueManager.setDialogueText -= setDialogueText;
             dialogueManager.openDialogue -= openDialogue;
             dialogueManager.closeDialogue -= closeDialogue;
+
+
+            //Menu
+            mainMenu.openMenu -= openMenu;
+            mainMenu.closeMenu -= closeMenu;
         }
     }
 }
