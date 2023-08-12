@@ -10,6 +10,8 @@ namespace Core
         public static IReadOnlyList<PartyMember> ActiveMembers => activeMembers;
         public static IReadOnlyList<PartyMember> ReserveMembers => reserveMembers;
 
+        public static Inventory inventory = new Inventory();
+
         private static bool canEncounter = true;
 
         static Party()
