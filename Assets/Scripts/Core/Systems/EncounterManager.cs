@@ -25,18 +25,18 @@ namespace Core
             if (map.region != null)
                 map.region.TriggerBattle += StartBattle;
         }
-
-        public void debugUpdate()
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-                EndBattle();
-        }
-
-        //TODO: move this to scene loader, can use event
+        /*
+                public void debugUpdate()
+                {
+                    if (Input.GetKeyDown(KeyCode.E))
+                        EndBattle();
+                }*/
         public void StartBattle()
         {
 
-            stateManager.changeState(GameState.Battle);
+            if (!stateManager.tryState(GameState.Battle))
+                return;
+
             Battle.Battle.currentRegion = map.region;
             Battle.Battle.endBattle += EndBattle;
 
@@ -47,14 +47,15 @@ namespace Core
 
         public void EndBattle()
         {
-            if (stateManager.State == GameState.Battle)
-            {
-                map.gameObject.SetActive(true);
-                sceneLoader.loadScene(SceneLoader.savedScene, map);
+            if (!stateManager.tryState(GameState.World))
+                return;
 
-                stateManager.changeState(GameState.World);
-                Battle.Battle.endBattle -= EndBattle;
-            }
+
+            map.gameObject.SetActive(true);
+            sceneLoader.loadScene(SceneLoader.savedScene, map);
+
+            Battle.Battle.endBattle -= EndBattle;
+
         }
 
         ~EncounterManager()

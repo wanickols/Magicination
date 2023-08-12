@@ -26,7 +26,7 @@ namespace Core
 
         ///Private
         //Managers
-        private StateManager stateManager = new StateManager();
+        public StateManager stateManager = new StateManager();
         private UI uiManager;
         private SceneLoader sceneLoader;
 

@@ -7,8 +7,6 @@ namespace Core
 
     public class CutsceneManager
     {
-        private GameState prevState = GameState.World; //Use this instead of gamestate return so can go between cutscene and dialogue in both world and battles. 
-
         private StateManager stateManager;
         public Map map => Game.manager.mapManager.map;
 
@@ -21,12 +19,9 @@ namespace Core
         public bool tryPlayCutscene(Cutscene scene)
         {
 
-            if (stateManager.State != GameState.World) // Or Battle someday
+            if (!stateManager.tryState(GameState.Cutscene))
                 return false;
 
-            prevState = stateManager.State;
-
-            stateManager.changeState(GameState.Cutscene);
             Game.manager.StartCoroutine(CO_PlayCutscene(scene));
 
             return true;
@@ -46,7 +41,7 @@ namespace Core
 
             scene.IsFinsihed = true;
 
-            stateManager.changeState(prevState);
+            stateManager.restorePreviousState();
             yield return null;
         }
     }
