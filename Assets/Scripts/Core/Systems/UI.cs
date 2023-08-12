@@ -86,18 +86,15 @@ namespace Core
         //Dialgoue
         private void openDialogue(string name, Sprite sprite)
         {
-
             DialoguePanel.SetActive(true);
             nameText.text = name;
             Headshot.sprite = sprite;
-            stateManager.changeState(GameState.Dialogue);
         }
 
         private void closeDialogue()
         {
-
             StartCoroutine(CO_closeDialogue());
-            stateManager.returnState();
+            stateManager.restorePreviousState();
         }
 
         private IEnumerator CO_closeDialogue()
@@ -141,8 +138,8 @@ namespace Core
 
         }
 
-        private void openMenu() => stateManager.changeState(GameState.Menu);
-        private void closeMenu() => stateManager.returnState();
+        private void openMenu() => stateManager.tryState(GameState.Menu);
+        private void closeMenu() => stateManager.restorePreviousState();
 
         //Deconstructor
         ~UI()

@@ -13,13 +13,12 @@ namespace Core
 
         public override void StartInteraction()
         {
-            if (Game.manager.State != GameState.Dialogue)
-            {
+            if (!Game.manager.stateManager.tryState(GameState.Dialogue))
+                return;
 
-                DialogueManager.instance.EnableDialogueMode(InkJSON, Sprite, Name);
+            DialogueManager.instance.EnableDialogueMode(InkJSON, Sprite, Name);
+            Debug.Log("Interaction Successful");
 
-                Debug.Log("Interaction Successful");
-            }
         }
     }
 }
