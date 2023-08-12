@@ -31,12 +31,60 @@ namespace Core
         extreme = 4,
     }
 
+    //Triggers types for cutscenes and other events
     public enum TriggerType
     {
         Auto,
         Touch,
         Call
     }
+
+    //Items
+    public enum ItemRarity
+    {
+        common,
+        uncommon,
+        rare,
+        epic,
+        legendary
+    }
+
+    public enum EquipmentType
+    {
+        Weapon,
+        Head,
+        Chest,
+        Arms,
+        Legs,
+        Accesesory,
+    }
+
+    public enum equipmentEffect
+    {
+        none,
+        loot,
+        encounter,
+    }
+
+    //Skills
+
+    //Classes
+    public enum baseClasses
+    {
+        //Physical
+        Warrior,
+        Rogue,
+        Ranger,
+
+        //Magic
+        Mage,
+        Cleric,
+        Bard,
+    }
+
+
+
+
 }
 
 namespace Battle
@@ -51,6 +99,7 @@ namespace Battle
         Four,
     }
 
+    //Rarity for Enemy spawns and stats
     public enum EnemyRarity
     {
         common,
@@ -60,6 +109,7 @@ namespace Battle
         legendary
     }
 
+    //States for Battle
     public enum BattleStates
     {
         battle,
