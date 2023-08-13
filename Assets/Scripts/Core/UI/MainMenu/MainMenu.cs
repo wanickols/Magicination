@@ -8,25 +8,33 @@ namespace Core
 
     public class MainMenu : MonoBehaviour
     {
-
-
+        /// Public Variables
         //Events
         public event Action openMenu;
         public event Action closeMenu;
 
 
+        /// Private Variables
+        //Serialized Objects
         [SerializeField] private Selector mainSelector;
         [SerializeField] private Selector memberSelector;
-        //[SerializeField] private MenuSelector equipmentSelector;
+        [SerializeField] private Selector equipmentSelector;
         [SerializeField] private AudioSource menuChangeSound;
 
+        //States
         private Dictionary<MenuState, Selector> stateSelector = new Dictionary<MenuState, Selector>();
+        private MenuState menuState;
+
+        //Components
         private MainWindow mainWindow;
+
+        //Animations
         private Animator animator;
         private string menuOpenAnimation = "MenuOpen";
         private string menuCloseAnimation = "MenuClose";
-        private MenuState menuState;
 
+
+        //Input
         private float pressThreshold = .005f; // The minimum time between key presses private float
         private float lastPressTime = 0f; // The time of the last key press
 
@@ -46,9 +54,11 @@ namespace Core
         {
             mainWindow = GetComponentInChildren<MainWindow>();
             animator = GetComponent<Animator>();
+
+            //Connecting selectors to states
             stateSelector.Add(MenuState.Main, mainSelector);
             stateSelector.Add(MenuState.EquipMemberSelection, memberSelector);
-            //stateSelector.Add(MenuState.EquipmentSelection, equipmentSelector);
+            stateSelector.Add(MenuState.EquipmentSelection, equipmentSelector);
 
         }
 
@@ -107,7 +117,7 @@ namespace Core
             openMenu?.Invoke();
         }
 
-        public void Close()
+        private void Close()
         {
             isOpen = false;
             animator.Play(menuCloseAnimation);
@@ -115,7 +125,7 @@ namespace Core
             mainSelector.setAnimation(false);
         }
 
-        public void Cancel()
+        private void Cancel()
         {
             switch (menuState)
             {
@@ -137,7 +147,7 @@ namespace Core
 
 
         }
-        public void Accept()
+        private void Accept()
         {
             switch (menuState)
             {
@@ -145,7 +155,6 @@ namespace Core
                     ProcessMainSelection();
                     break;
                 case (MenuState.EquipMemberSelection):
-
                     mainWindow.ShowEquipmentView(CurrentSelector.SelectedIndex);
                     SetMenuState(MenuState.EquipmentSelection, false);
                     break;
