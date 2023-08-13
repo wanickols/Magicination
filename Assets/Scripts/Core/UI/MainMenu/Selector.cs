@@ -4,11 +4,15 @@ using UnityEngine;
 
 namespace Core
 {
-    public class MenuSelector : MonoBehaviour
+    public class Selector : MonoBehaviour
     {
         private MainMenu mainMenu;
         private RectTransform rectTransform;
         private List<RectTransform> selectableOptions = new List<RectTransform>();
+        [SerializeField] private Vector3 mountingPosition;
+        [SerializeField] private GameObject imageHolder;
+        private Animator animator;
+
 
         public event Action SelectionChanged;
 
@@ -29,12 +33,18 @@ namespace Core
         {
             mainMenu = GetComponentInParent<MainMenu>();
             rectTransform = GetComponent<RectTransform>();
+            animator = GetComponent<Animator>();
 
             for (int i = 0; i < rectTransform.parent.childCount; i++)
             {
                 if (rectTransform.parent.GetChild(i).CompareTag("Selectable"))
                     selectableOptions.Add(rectTransform.parent.GetChild(i).GetComponent<RectTransform>());
             }
+
+            if (selectableOptions.Count > 0)
+                rectTransform.sizeDelta = new Vector2(selectableOptions[0].sizeDelta.x, rectTransform.sizeDelta.y + mountingPosition.y);
+
+            imageHolder.transform.position += mountingPosition;
         }
 
 
@@ -43,13 +53,18 @@ namespace Core
             if (mainMenu.CurrentSelector != this)
                 return;
 
-            if (rectTransform.anchoredPosition != selectableOptions[SelectedIndex].anchoredPosition)
+            if (rectTransform.anchoredPosition != selectableOptions[(int)SelectedIndex].anchoredPosition)
                 MoveToSelectedOption();
         }
 
         private void MoveToSelectedOption()
         {
-            rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, selectableOptions[SelectedIndex].anchoredPosition, 8f);
+            rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, selectableOptions[(int)SelectedIndex].anchoredPosition, 8f);
+
+
         }
+
+        public void setAnimation(bool animate) => animator.enabled = animate;
+
     }
 }

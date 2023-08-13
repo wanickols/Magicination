@@ -83,8 +83,17 @@ namespace Core
     }
 
 
-
-
+    //UI
+    public enum mainSelections
+    {
+        Items,
+        Skills,
+        Equip,
+        Status,
+        Order,
+        Save,
+        Quit
+    }
 }
 
 namespace Battle

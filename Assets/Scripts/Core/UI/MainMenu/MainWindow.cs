@@ -4,10 +4,6 @@ namespace Core
 {
     public class MainWindow : MonoBehaviour
     {
-
-        //Party Info
-        [SerializeField] private GameObject partMemberInfoPrefab;
-
         // Start is called before the first frame update
 
         void Start()
@@ -17,17 +13,19 @@ namespace Core
 
         public void ShowDefaultView()
         {
-            foreach (PartyMember member in Party.ActiveMembers)
+            foreach (Transform child in transform)
             {
-                if (this.gameObject.transform.childCount < 4)
-                {
-                    Instantiate(partMemberInfoPrefab, this.gameObject.transform);
-                }
+                if (child.GetComponent<PartyMemberInfo>() != null)
+                    child.gameObject.SetActive(true);
+                else
+                    child.gameObject.SetActive(false);
             }
         }
-        public void ShowEquipmentView(PartyMember member)
+        public void ShowEquipmentView(int selected)
         {
+            PartyMember selectedMember = Party.ActiveMembers[selected];
             //Show Equipment
+            Debug.Log(selectedMember.name);
         }
     }
 }

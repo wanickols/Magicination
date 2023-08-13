@@ -4,25 +4,28 @@ using UnityEngine;
 
 namespace Core
 {
+
+
     public class MainMenu : MonoBehaviour
     {
+
+
         //Events
         public event Action openMenu;
         public event Action closeMenu;
 
 
-        [SerializeField] private MenuSelector mainSelector;
-        //[SerializeField] private MenuSelector memberSelector;
+        [SerializeField] private Selector mainSelector;
+        [SerializeField] private Selector memberSelector;
         //[SerializeField] private MenuSelector equipmentSelector;
         [SerializeField] private AudioSource menuChangeSound;
 
-        private Dictionary<MenuState, MenuSelector> stateSelector = new Dictionary<MenuState, MenuSelector>();
+        private Dictionary<MenuState, Selector> stateSelector = new Dictionary<MenuState, Selector>();
         private MainWindow mainWindow;
         private Animator animator;
         private string menuOpenAnimation = "MenuOpen";
         private string menuCloseAnimation = "MenuClose";
         private MenuState menuState;
-        private bool isKeyPressed = false;
 
         private float pressThreshold = .005f; // The minimum time between key presses private float
         private float lastPressTime = 0f; // The time of the last key press
@@ -37,14 +40,14 @@ namespace Core
         public bool isOpen { get; private set; }
 
         private bool IsAnimating => animator.IsAnimating();
-        public MenuSelector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
+        public Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
 
         private void Awake()
         {
             mainWindow = GetComponentInChildren<MainWindow>();
             animator = GetComponent<Animator>();
             stateSelector.Add(MenuState.Main, mainSelector);
-            //stateSelector.Add(MenuState.EquipMemberSelection, memberSelector);
+            stateSelector.Add(MenuState.EquipMemberSelection, memberSelector);
             //stateSelector.Add(MenuState.EquipmentSelection, equipmentSelector);
 
         }
@@ -79,7 +82,7 @@ namespace Core
                     CurrentSelector.SelectedIndex--;
                 }
 
-                else if (Input.GetKeyDown(KeyCode.DownArrow) && (CurrentSelector.SelectedIndex < CurrentSelector.SelectableOptions.Count - 1))
+                else if (Input.GetKeyDown(KeyCode.DownArrow) && CurrentSelector.SelectedIndex != CurrentSelector.SelectableOptions.Count - 1)
                 {
                     menuChangeSound.Play();
                     CurrentSelector.SelectedIndex++;
@@ -97,7 +100,8 @@ namespace Core
         public void Open()
         {
             lastPressTime = Time.time;
-            SetMenuState(MenuState.Main);
+            mainSelector.SelectedIndex = 0;
+            SetMenuState(MenuState.Main, true); //cancel lets it animate
             isOpen = true;
             animator.Play(menuOpenAnimation);
             openMenu?.Invoke();
@@ -108,7 +112,7 @@ namespace Core
             isOpen = false;
             animator.Play(menuCloseAnimation);
             closeMenu?.Invoke();
-
+            mainSelector.setAnimation(false);
         }
 
         public void Cancel()
@@ -119,13 +123,19 @@ namespace Core
                     Close();
                     break;
                 case (MenuState.EquipMemberSelection):
-                    SetMenuState(MenuState.Main);
+                    SetMenuState(MenuState.Main, true);
+                    CurrentSelector.setAnimation(true);
                     break;
                 case (MenuState.EquipmentSelection):
                     mainWindow.ShowDefaultView();
-                    SetMenuState(MenuState.EquipMemberSelection);
+                    SetMenuState(MenuState.EquipMemberSelection, true);
+                    CurrentSelector.setAnimation(true);
                     break;
             }
+
+
+
+
         }
         public void Accept()
         {
@@ -135,18 +145,18 @@ namespace Core
                     ProcessMainSelection();
                     break;
                 case (MenuState.EquipMemberSelection):
-                    PartyMember selectedMember = Party.ActiveMembers[CurrentSelector.SelectedIndex];
-                    mainWindow.ShowEquipmentView(selectedMember);
-                    SetMenuState(MenuState.EquipmentSelection);
+
+                    mainWindow.ShowEquipmentView(CurrentSelector.SelectedIndex);
+                    SetMenuState(MenuState.EquipmentSelection, false);
                     break;
 
             }
         }
         private void ProcessMainSelection()
         {
-            switch (mainSelector.SelectedIndex)
+            switch ((mainSelections)mainSelector.SelectedIndex)
             {
-                case 1:
+                case mainSelections.Equip:
                     Equip();
                     break;
                 default:
@@ -157,21 +167,29 @@ namespace Core
 
         private void Equip()
         {
-            SetMenuState(MenuState.EquipMemberSelection);
+            SetMenuState(MenuState.EquipMemberSelection, false);
         }
 
-        private void SetMenuState(MenuState newState)
+        private void SetMenuState(MenuState newState, bool cancel)
         {
-            CurrentSelector.SelectedIndex = 0;
-            CurrentSelector.gameObject.SetActive(false);
+            if (!cancel)
+                CurrentSelector.setAnimation(false);
 
-            menuState = newState;
+
+            CurrentSelector.gameObject.SetActive(!cancel);
 
             if (stateSelector.ContainsKey(newState))
             {
-                CurrentSelector.SelectedIndex = 0;
+                menuState = newState;
+
+                if (!cancel)
+                    CurrentSelector.SelectedIndex = 0;
+
                 CurrentSelector.gameObject.SetActive(true);
+
             }
+
+
         }
     }
 }
