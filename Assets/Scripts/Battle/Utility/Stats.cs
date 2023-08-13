@@ -50,6 +50,7 @@ namespace Battle
             this.atk = atk;
             this.matk = matk;
             this.def = def;
+            this.mdef = mdef;
             this.spd = spd;
             this.evs = evs;
         }

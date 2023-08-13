@@ -9,7 +9,7 @@ public class Equippable : Item, IEquippable
     [SerializeField] private EquipmentType type;
     [SerializeField] private equipmentEffect effect;
     [SerializeField] private EquippableData data;
-    [SerializeField] protected EquipmentStats stats;
+    [SerializeField] protected EquippableStats stats;
 
     //Accessors
     public EquipmentType Type => type;

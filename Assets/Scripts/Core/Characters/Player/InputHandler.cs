@@ -16,7 +16,7 @@ namespace Core
             MoveLeft, MoveRight, MoveUp, MoveDown,
             Interact,
             Continue, //For Dialogue
-            ToggleMenu,
+            OpenMenu,
         }
 
         //Events
@@ -40,13 +40,11 @@ namespace Core
             {
                 case GameState.Cutscene:
                 case GameState.Battle:
+                case GameState.Menu:
                 case GameState.Transition:
                     break;
                 case GameState.Dialogue:
                     command = ContinueDialogueCheck();
-                    break;
-                case GameState.Menu:
-                    command = getMenuCommand();
                     break;
                 case GameState.World:
                 default:
@@ -57,19 +55,10 @@ namespace Core
             HandleCommand();
         }
 
-        private Command getMenuCommand()
-        {
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-                return Command.ToggleMenu;
-
-            return Command.None;
-        }
-
         private Command GetMovementCommand()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
-                return Command.ToggleMenu;
+                return Command.OpenMenu;
 
             else if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
                 return Command.MoveUp;
@@ -120,8 +109,8 @@ namespace Core
                 case (Command.Interact):
                     ProccessInteract();
                     break;
-                case (Command.ToggleMenu):
-                    ProcessToggleMenu();
+                case (Command.OpenMenu):
+                    ProccessOpenMenu();
                     break;
                 case (Command.Continue):
                     Continue?.Invoke();
@@ -149,9 +138,9 @@ namespace Core
             if (interactable != null)
                 interactable.Interact();
         }
-        private void ProcessToggleMenu()
+        private void ProccessOpenMenu()
         {
-            mainMenu.toggle();
+            mainMenu.Open();
         }
     }
 }

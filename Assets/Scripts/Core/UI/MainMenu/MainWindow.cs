@@ -1,19 +1,21 @@
-using Battle;
 using UnityEngine;
 
 namespace Core
 {
     public class MainWindow : MonoBehaviour
     {
+
+        //Party Info
         [SerializeField] private GameObject partMemberInfoPrefab;
 
         // Start is called before the first frame update
+
         void Start()
         {
-            GeneratePartyMemberInfo();
+            ShowDefaultView();
         }
 
-        private void GeneratePartyMemberInfo()
+        public void ShowDefaultView()
         {
             foreach (PartyMember member in Party.ActiveMembers)
             {
@@ -22,6 +24,10 @@ namespace Core
                     Instantiate(partMemberInfoPrefab, this.gameObject.transform);
                 }
             }
+        }
+        public void ShowEquipmentView(PartyMember member)
+        {
+            //Show Equipment
         }
     }
 }
