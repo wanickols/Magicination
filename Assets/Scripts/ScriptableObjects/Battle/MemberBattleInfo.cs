@@ -9,7 +9,7 @@ public class MemberBattleInfo : ScriptableObject
 
     [SerializeField] private Sprite menuPortrait;
 
-    public string Name => _name;
+    public string DisplayName => _name;
     public GameObject ActorPrefab => actorPrefab;
 
     public Sprite MenuPortrait => menuPortrait;

@@ -34,7 +34,7 @@ namespace Core
         private void DisplayInfo()
         {
             Stats stats = partyMember.Stats;
-            memberName.text = partyMember.Name;
+            memberName.text = partyMember.DisplayName;
             partyMemberPortrait.sprite = partyMember.MenuPortrait;
 
             memberLevel.text = stats.LV.ToString();

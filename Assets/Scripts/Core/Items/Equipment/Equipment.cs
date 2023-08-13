@@ -38,8 +38,28 @@ namespace Core
                 default:
                     break;
             };
+        }
 
-            //Recalculate Stats
+        public Equippable getEquipped(EquipmentType type)
+        {
+            Equippable equippable = type switch
+            {
+                EquipmentType.Weapon => weapon,
+                EquipmentType.Head => head,
+                EquipmentType.Arms => arms,
+                EquipmentType.Chest => chest,
+                EquipmentType.Legs => legs,
+                EquipmentType.Accesesory => accessoryOne,
+                _ => new Equippable()
+            };
+
+            if (equippable == null)
+            {
+                equippable = new Equippable();
+                equippable.name = "Empty";
+            }
+
+            return equippable;
         }
 
         private void exchangeWeapon(Equippable item)

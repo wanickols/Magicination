@@ -17,7 +17,7 @@ namespace Battle
         public void DisplayInfo(PartyMember partyMember)
         {
             Stats stats = partyMember.Stats;
-            memberName.text = partyMember.Name;
+            memberName.text = partyMember.DisplayName;
 
             //memberLevel.text = stats.LV.ToString();
             memberHP.text = $"{stats.HP}/{stats.MAXHP}";

@@ -7,9 +7,12 @@ namespace Core
         // Start is called before the first frame update
         [SerializeField] private GameObject EquipWindow;
 
+        private EquipmentMenu equipMenu;
+
         void Start()
         {
             ShowDefaultView();
+            equipMenu = EquipWindow.GetComponent<EquipmentMenu>();
         }
 
         public void ShowDefaultView()
@@ -32,10 +35,9 @@ namespace Core
             }
 
             EquipWindow.SetActive(true);
-
             PartyMember selectedMember = Party.ActiveMembers[selected];
             //Show Equipment
-            Debug.Log(selectedMember.name);
+            equipMenu.updateValues(selectedMember);
         }
     }
 }

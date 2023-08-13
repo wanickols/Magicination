@@ -2760,7 +2760,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 397b19278c1c64345a8124c622878752, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -4110,6 +4110,7 @@ GameObject:
   - component: {fileID: 6672315645252142183}
   - component: {fileID: 6535152665032733035}
   - component: {fileID: 8837817108702999258}
+  - component: {fileID: 3132427380361868206}
   m_Layer: 5
   m_Name: EquipWindow
   m_TagString: Untagged
@@ -4181,6 +4182,36 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.05
+--- !u!114 &3132427380361868206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3181181793915260442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 000a96ae572968344b227c45716321ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyMember: {fileID: 0}
+  partyMemberFace: {fileID: 224099353595650130}
+  name: {fileID: 2054995635615379119}
+  lvlVal: {fileID: 7040540232988578680}
+  HPVal: {fileID: 6172054491791604966}
+  MPVal: {fileID: 564462349425652757}
+  attackVal: {fileID: 4943195015325248208}
+  magicAtkVal: {fileID: 3719161504877774793}
+  defenseVal: {fileID: 3369016911771012636}
+  magicDefVal: {fileID: 767885707531357009}
+  speedVal: {fileID: 2504109998817486856}
+  evasionVal: {fileID: 2749827535877666043}
+  weaponName: {fileID: 5770508592305399974}
+  headName: {fileID: 2566747457109256793}
+  armsName: {fileID: 7270003516913107599}
+  chestName: {fileID: 1717175046725146023}
+  legsName: {fileID: 1951852501809544236}
+  accessoryName: {fileID: 8359582833343665053}
 --- !u!1 &3300394193353883169
 GameObject:
   m_ObjectHideFlags: 0
@@ -8117,7 +8148,7 @@ GameObject:
   - component: {fileID: 8562814545229563655}
   - component: {fileID: 224099353595650130}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
