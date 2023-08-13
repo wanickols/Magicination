@@ -18,15 +18,20 @@ namespace Core
         [SerializeField] private TextMeshProUGUI memberNextEXP;
 
         // Start is called before the first frame update
-        void Start()
+        void OnEnable()
         {
-            int siblingIndex = this.gameObject.transform.GetSiblingIndex();
-            partyMember = Party.ActiveMembers[siblingIndex];
 
-            DisplayInfo();
+            int siblingIndex = this.gameObject.transform.GetSiblingIndex();
+            if (siblingIndex < Party.ActiveMembers.Count)
+            {
+                partyMember = Party.ActiveMembers[siblingIndex];
+                DisplayInfo();
+            }
+            else
+                this.gameObject.SetActive(false);
         }
 
-        public void DisplayInfo()
+        private void DisplayInfo()
         {
             Stats stats = partyMember.Stats;
             memberName.text = partyMember.Name;
