@@ -6,13 +6,14 @@ public class Equippable : Item, IEquippable
 {
 
     //Serialized Fields
-    [SerializeField] private EquipmentType type;
+    [SerializeField] private EquippableType type;
     [SerializeField] private equipmentEffect effect;
-    [SerializeField] private EquippableData data;
-    [SerializeField] protected EquippableStats stats;
+    [SerializeField] private EquippableData data = new EquippableData();
+    [SerializeField] protected EquippableStats stats = new EquippableStats();
 
     //Accessors
-    public EquipmentType Type => type;
+    public EquippableType Type => type;
+    public string DisplayName => data.displayName;
     public override ItemData Data
     {
         get { return data as EquippableData; }
@@ -26,4 +27,6 @@ public class Equippable : Item, IEquippable
 
     public void Equip() { }
     public void Unequip() { }
+
+    public void setType(EquippableType type) => this.type = type;
 }

@@ -7,9 +7,12 @@ namespace Core
 {
     public class EquipmentMenu : MonoBehaviour
     {
+
+        public PartyMember partyMember { get; private set; }
+
         [Header("Party Member")]
         [SerializeField] private Image partyMemberFace;
-        [SerializeField] private TextMeshProUGUI name;
+        [SerializeField] private TextMeshProUGUI displayName;
         [SerializeField] private TextMeshProUGUI lvlVal;
         [SerializeField] private TextMeshProUGUI HPVal;
         [SerializeField] private TextMeshProUGUI MPVal;
@@ -28,19 +31,26 @@ namespace Core
         [SerializeField] private TextMeshProUGUI legsName;
         [SerializeField] private TextMeshProUGUI accessoryName;
 
-        public void updateValues(PartyMember partyMember)
+
+        public void initValues(PartyMember member)
         {
-            updateEquipmentInfo(partyMember);
-            updatePartyMember(partyMember);
+            partyMember = member;
+            updateValues();
         }
 
-        public void updatePartyMember(PartyMember member)
+        public void updateValues()
+        {
+            updateEquipmentInfo();
+            updatePartyMember();
+        }
+
+        public void updatePartyMember()
         {
 
             //Top Values
-            partyMemberFace.sprite = member.MenuPortrait; //TODO FIX ME 
-            name.text = member.DisplayName;
-            Stats sts = member.Stats;
+            partyMemberFace.sprite = partyMember.MenuPortrait; //TODO FIX ME 
+            displayName.text = partyMember.DisplayName;
+            Stats sts = partyMember.Stats;
             lvlVal.text = sts.LV.ToString();
             HPVal.text = $"{sts.HP}/{sts.MAXHP}";
             MPVal.text = $"{sts.MP}/{sts.MAXMP}";
@@ -54,16 +64,16 @@ namespace Core
             evasionVal.text = sts.EVS.ToString();
         }
 
-        public void updateEquipmentInfo(PartyMember member)
+        public void updateEquipmentInfo()
         {
-            Equipment eqpmt = member.equipment;
+            Equipment eqpmt = partyMember.equipment;
 
-            weaponName.text = eqpmt.getEquipped(EquipmentType.Weapon).name;
-            headName.text = eqpmt.getEquipped(EquipmentType.Head).name;
-            armsName.text = eqpmt.getEquipped(EquipmentType.Arms).name;
-            chestName.text = eqpmt.getEquipped(EquipmentType.Chest).name;
-            legsName.text = eqpmt.getEquipped(EquipmentType.Legs).name;
-            accessoryName.text = eqpmt.getEquipped(EquipmentType.Accesesory).name;
+            weaponName.text = eqpmt.getEquipped(EquippableType.Weapon).DisplayName;
+            headName.text = eqpmt.getEquipped(EquippableType.Head).DisplayName;
+            armsName.text = eqpmt.getEquipped(EquippableType.Arms).DisplayName;
+            chestName.text = eqpmt.getEquipped(EquippableType.Chest).DisplayName;
+            legsName.text = eqpmt.getEquipped(EquippableType.Legs).DisplayName;
+            accessoryName.text = eqpmt.getEquipped(EquippableType.Accesesory).DisplayName;
         }
     }
 }

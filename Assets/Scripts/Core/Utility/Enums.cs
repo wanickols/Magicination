@@ -49,7 +49,7 @@ namespace Core
         legendary
     }
 
-    public enum EquipmentType
+    public enum EquippableType
     {
         Weapon,
         Head,

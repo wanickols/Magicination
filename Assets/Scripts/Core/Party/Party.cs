@@ -10,7 +10,7 @@ namespace Core
         public static IReadOnlyList<PartyMember> ActiveMembers => activeMembers;
         public static IReadOnlyList<PartyMember> ReserveMembers => reserveMembers;
 
-        public static Inventory inventory = new Inventory();
+        public static Arsenal arsenal = new Arsenal();
 
         private static bool canEncounter = true;
 
@@ -64,6 +64,11 @@ namespace Core
             //activeMembers.Add(Seth);
             activeMembers.Add(Aurora);
 
+            Equippable rustySword = Resources.Load<Equippable>("items/equipment/weapons/RustySword");
+            Equippable testChest = Resources.Load<Equippable>("items/equipment/armor/TestChest");
+
+            arsenal.Add(rustySword);
+            arsenal.Add(testChest);
         }
     }
 }
