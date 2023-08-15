@@ -5,6 +5,9 @@ namespace Battle
     [System.Serializable]
     public class Stats
     {
+        /// Protected Parameters
+
+        //Const Max Values
         protected const int MAX_POSSIBLE_LEVEL = 99;
         protected const int MAX_POSSIBLE_EXP = 9999999;
 
@@ -23,7 +26,7 @@ namespace Battle
         protected const int MAX_POSSIBLE_ENC = 100; //Encounter Rate
 
 
-
+        //Actual stats
         [SerializeField] protected int lv;
         [SerializeField] protected int exp;
         [SerializeField] protected int nxtExp;
@@ -38,6 +41,10 @@ namespace Battle
         [SerializeField] protected int spd;
         [SerializeField] protected int evs;
         [SerializeField] protected int enc;
+
+
+        /// Public Functions
+        public Stats() => lv = exp = hp = maxHp = mp = maxMp = atk = matk = def = mdef = spd = evs = 0;
 
         public Stats(int lv, int exp, int hp, int maxHp, int mp, int maxMp, int atk, int matk, int def, int mdef, int spd, int evs)
         {
@@ -186,6 +193,29 @@ namespace Battle
             }
         }
 
+
+        /// Operators
+        public static Stats operator +(Stats a, Stats b)
+        {
+            Stats result = new Stats();
+            result.lv = a.lv + b.lv;
+            result.exp = a.exp + b.exp;
+            result.nxtExp = a.nxtExp + b.nxtExp;
+            result.hp = a.hp + b.hp;
+            result.maxHp = a.maxHp + b.maxHp;
+            result.mp = a.mp + b.mp;
+            result.maxMp = a.maxMp + b.maxMp;
+            result.atk = a.atk + b.atk;
+            result.matk = a.matk + b.matk;
+            result.def = a.def + b.def;
+            result.mdef = a.mdef + b.mdef;
+            result.spd = a.spd + b.spd;
+            result.evs = a.evs + b.evs;
+            result.enc = a.enc + b.enc;
+
+            // Return the new Stats object
+            return result;
+        }
 
     }
 }

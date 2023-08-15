@@ -13,12 +13,11 @@ namespace Core
         public event Action openMenu;
         public event Action closeMenu;
 
-
         /// Private Variables
         //Serialized Objects
         [SerializeField] private Selector mainSelector;
         [SerializeField] private Selector memberSelector;
-        [SerializeField] private Selector equipmentSelector;
+        [SerializeField] private Selector equipmentSelector, equippableSelector;
         [SerializeField] private AudioSource menuChangeSound;
 
         //States
@@ -41,8 +40,11 @@ namespace Core
         private enum MenuState
         {
             Main,
-            EquipMemberSelection,
+            MemberSelection,
+
+            //Equip
             EquipmentSelection,
+            EquippableSelection,
         }
 
         public bool isOpen { get; private set; }
@@ -57,8 +59,9 @@ namespace Core
 
             //Connecting selectors to states
             stateSelector.Add(MenuState.Main, mainSelector);
-            stateSelector.Add(MenuState.EquipMemberSelection, memberSelector);
+            stateSelector.Add(MenuState.MemberSelection, memberSelector);
             stateSelector.Add(MenuState.EquipmentSelection, equipmentSelector);
+            stateSelector.Add(MenuState.EquippableSelection, equippableSelector);
 
         }
 
@@ -132,14 +135,19 @@ namespace Core
                 case (MenuState.Main):
                     Close();
                     break;
-                case (MenuState.EquipMemberSelection):
+                case (MenuState.MemberSelection):
                     SetMenuState(MenuState.Main, true);
                     CurrentSelector.setAnimation(true);
                     break;
                 case (MenuState.EquipmentSelection):
                     mainWindow.ShowDefaultView();
-                    SetMenuState(MenuState.EquipMemberSelection, true);
+                    SetMenuState(MenuState.MemberSelection, true);
                     CurrentSelector.setAnimation(true);
+                    break;
+                case (MenuState.EquippableSelection):
+                    mainWindow.clearEquippables(CurrentSelector);
+                    mainWindow.hideEquippableSection();
+                    SetMenuState(MenuState.EquipmentSelection, true);
                     break;
             }
 
@@ -154,9 +162,18 @@ namespace Core
                 case (MenuState.Main):
                     ProcessMainSelection();
                     break;
-                case (MenuState.EquipMemberSelection):
+                case (MenuState.MemberSelection):
                     mainWindow.ShowEquipmentView(CurrentSelector.SelectedIndex);
                     SetMenuState(MenuState.EquipmentSelection, false);
+                    break;
+                case (MenuState.EquipmentSelection):
+                    int selected = CurrentSelector.SelectedIndex;
+                    SetMenuState(MenuState.EquippableSelection, false);
+                    mainWindow.ShowEquippableSelection(CurrentSelector, selected);
+                    break;
+                case (MenuState.EquippableSelection):
+                    mainWindow.swapEquippable(CurrentSelector);
+                    Cancel();
                     break;
 
             }
@@ -176,7 +193,7 @@ namespace Core
 
         private void Equip()
         {
-            SetMenuState(MenuState.EquipMemberSelection, false);
+            SetMenuState(MenuState.MemberSelection, false);
         }
 
         private void SetMenuState(MenuState newState, bool cancel)

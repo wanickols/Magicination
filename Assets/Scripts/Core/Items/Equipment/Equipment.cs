@@ -1,9 +1,14 @@
 ﻿
+using Battle;
+using System;
+
 namespace Core
 {
     //Hold all equipables for a character
     public class Equipment
     {
+
+        public Action changedEquipment;
 
         private Equippable weapon;
         private Equippable head;
@@ -17,80 +22,103 @@ namespace Core
         {
             switch (item.Type)
             {
-                case EquipmentType.Weapon:
+                case EquippableType.Weapon:
                     exchangeWeapon(item);
                     break;
-                case EquipmentType.Head:
+                case EquippableType.Head:
                     exchangeHead(item);
                     break;
-                case EquipmentType.Arms:
+                case EquippableType.Arms:
                     exchangeArms(item);
                     break;
-                case EquipmentType.Chest:
+                case EquippableType.Chest:
                     exchangeChest(item);
                     break;
-                case EquipmentType.Legs:
+                case EquippableType.Legs:
                     exchangeLegs(item);
                     break;
-                case EquipmentType.Accesesory:
+                case EquippableType.Accesesory:
                     exchangeAccessory(item);
                     break;
                 default:
                     break;
             };
+
+            changedEquipment?.Invoke();
         }
 
-        public Equippable getEquipped(EquipmentType type)
+        public Equippable getEquipped(EquippableType type)
         {
             Equippable equippable = type switch
             {
-                EquipmentType.Weapon => weapon,
-                EquipmentType.Head => head,
-                EquipmentType.Arms => arms,
-                EquipmentType.Chest => chest,
-                EquipmentType.Legs => legs,
-                EquipmentType.Accesesory => accessoryOne,
+                EquippableType.Weapon => weapon,
+                EquippableType.Head => head,
+                EquippableType.Arms => arms,
+                EquippableType.Chest => chest,
+                EquippableType.Legs => legs,
+                EquippableType.Accesesory => accessoryOne,
                 _ => new Equippable()
             };
 
             if (equippable == null)
             {
                 equippable = new Equippable();
-                equippable.name = "Empty";
+                equippable.setType(type);
+                equippable.Data.displayName = "Empty";
             }
 
             return equippable;
         }
 
+        public Stats getEquipmentTotalStats()
+        {
+            Stats totalStats = new Stats();
+
+
+
+            return totalStats;
+        }
+
+        ///Private
+
         private void exchangeWeapon(Equippable item)
         {
-            //Remove item from inventory
-            //Readd current weapon to inventory
-
+            Party.arsenal.Add(weapon);
             weapon = item;
+            Party.arsenal.Remove(item);
         }
 
         private void exchangeHead(Equippable item)
         {
+            Party.arsenal.Add(head);
             head = item;
+            Party.arsenal.Remove(item);
         }
         private void exchangeArms(Equippable item)
         {
+            Party.arsenal.Add(arms);
             arms = item;
+            Party.arsenal.Remove(item);
         }
 
         private void exchangeChest(Equippable item)
         {
+            Party.arsenal.Add(chest);
             chest = item;
+            Party.arsenal.Remove(item);
         }
         private void exchangeLegs(Equippable item)
         {
+            Party.arsenal.Add(legs);
             legs = item;
+            Party.arsenal.Remove(item);
         }
 
         private void exchangeAccessory(Equippable item)
         {
+            Party.arsenal.Add(accessoryOne);
             accessoryOne = item;
+            Party.arsenal.Remove(item);
         }
     }
 

@@ -6,11 +6,10 @@ public class ItemData
 {
     [SerializeField] public int id;
     [SerializeField] public int price;
-    [SerializeField] protected string displayName;
+    [SerializeField] public string displayName;
     [SerializeField] protected string description;
     [SerializeField] protected int quantity;
 
-    public string DisplayName => displayName;
 
     [SerializeField] protected int requiredLevel;
 
