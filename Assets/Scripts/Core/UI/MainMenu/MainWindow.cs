@@ -8,9 +8,11 @@ namespace Core
 
         /// Private Paremeters
         [SerializeField] private GameObject EquipWindow, arsenalWindow;
+        [SerializeField] private GameObject ItemWindow;
 
         private EquipMenu equipMenu;
         private ArsenalMenu arsenalMenu;
+        private ItemMenu itemMenu;
 
 
 
@@ -22,6 +24,7 @@ namespace Core
             equipMenu = EquipWindow.GetComponent<EquipMenu>();
             arsenalMenu = arsenalWindow.GetComponent<ArsenalMenu>();
             arsenalMenu.init(equipMenu);
+            itemMenu = ItemWindow.GetComponent<ItemMenu>();
         }
 
 
