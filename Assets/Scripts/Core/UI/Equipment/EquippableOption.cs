@@ -5,18 +5,17 @@ namespace Core
 {
     public class EquippableOption : MonoBehaviour
     {
-        private TextMeshProUGUI textBox;
+        [SerializeField] private TextMeshProUGUI textBox;
         public Equippable equippable { get; private set; }
-
-        // Start is called before the first frame update
-        void Awake() => textBox = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
         public void changeOption(Equippable _equippable)
         {
             equippable = _equippable;
-            upadateText();
+            if (_equippable != null)
+                upadateText();
+            else
+                textBox.text = string.Empty;
         }
-
         public void clear()
         {
             equippable = null;

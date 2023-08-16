@@ -20,6 +20,8 @@ public class Equippable : Item, IEquippable
         set { data = value as EquippableData; }
     }
 
+    public EquippableStats Stats => stats;
+
 
     //Interface
     protected bool isEquipped = false;

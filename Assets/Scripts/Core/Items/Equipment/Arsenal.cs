@@ -29,7 +29,7 @@ namespace Core
             equippableList.Add(equippable);
 
 
-            UnityEngine.Debug.Log(equippableList.Count);
+            UnityEngine.Debug.Log("Arsenal Count: " + equippableList.Count);
             return true;
 
         }
