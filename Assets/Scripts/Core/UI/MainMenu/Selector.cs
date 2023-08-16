@@ -12,7 +12,7 @@ namespace Core
         [SerializeField] private Vector3 mountingPosition;
         [SerializeField] private GameObject imageHolder;
         private Animator animator;
-
+        public Transform selectedTransform => getChild(SelectedIndex);
 
         public event Action SelectionChanged;
 
@@ -28,6 +28,11 @@ namespace Core
         }
 
         public IReadOnlyList<RectTransform> SelectableOptions => selectableOptions;
+
+
+        public Transform getChild(int i) => transform.parent.GetChild(i);
+
+
 
         private void Awake()
         {

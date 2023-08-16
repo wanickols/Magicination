@@ -24,17 +24,18 @@ namespace Core
         [SerializeField] private TextMeshProUGUI evasionVal;
 
         [Header("Equipment")]
-        [SerializeField] private TextMeshProUGUI weaponName;
-        [SerializeField] private TextMeshProUGUI headName;
-        [SerializeField] private TextMeshProUGUI armsName;
-        [SerializeField] private TextMeshProUGUI chestName;
-        [SerializeField] private TextMeshProUGUI legsName;
-        [SerializeField] private TextMeshProUGUI accessoryName;
+        [SerializeField] private EquippableOption weaponName;
+        [SerializeField] private EquippableOption headName;
+        [SerializeField] private EquippableOption armsName;
+        [SerializeField] private EquippableOption chestName;
+        [SerializeField] private EquippableOption legsName;
+        [SerializeField] private EquippableOption accessoryName;
 
 
         public void initValues(PartyMember member)
         {
             partyMember = member;
+            partyMember.equipment.changedEquipment += updateValues;
             updateValues();
         }
 
@@ -44,7 +45,7 @@ namespace Core
             updatePartyMember();
         }
 
-        public void updatePartyMember()
+        private void updatePartyMember()
         {
 
             //Top Values
@@ -64,16 +65,22 @@ namespace Core
             evasionVal.text = sts.EVS.ToString();
         }
 
-        public void updateEquipmentInfo()
+        private void updateEquipmentInfo()
         {
             Equipment eqpmt = partyMember.equipment;
 
-            weaponName.text = eqpmt.getEquipped(EquippableType.Weapon).DisplayName;
-            headName.text = eqpmt.getEquipped(EquippableType.Head).DisplayName;
-            armsName.text = eqpmt.getEquipped(EquippableType.Arms).DisplayName;
-            chestName.text = eqpmt.getEquipped(EquippableType.Chest).DisplayName;
-            legsName.text = eqpmt.getEquipped(EquippableType.Legs).DisplayName;
-            accessoryName.text = eqpmt.getEquipped(EquippableType.Accesesory).DisplayName;
+            weaponName.changeOption(eqpmt.getEquipped(EquippableType.Weapon));
+            headName.changeOption(eqpmt.getEquipped(EquippableType.Head));
+            armsName.changeOption(eqpmt.getEquipped(EquippableType.Arms));
+            chestName.changeOption(eqpmt.getEquipped(EquippableType.Chest));
+            legsName.changeOption(eqpmt.getEquipped(EquippableType.Legs));
+            accessoryName.changeOption(eqpmt.getEquipped(EquippableType.Accesesory));
+        }
+
+        private void OnDestroy()
+        {
+            if (partyMember != null)
+                partyMember.equipment.changedEquipment -= updateValues;
         }
     }
 }

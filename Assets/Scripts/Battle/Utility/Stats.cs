@@ -198,6 +198,16 @@ namespace Battle
         public static Stats operator +(Stats a, Stats b)
         {
             Stats result = new Stats();
+
+            //Null Check
+            if (a == null && b == null)
+                return result;
+            else if (a == null)
+                return b;
+            else if (b == null)
+                return a;
+
+
             result.lv = a.lv + b.lv;
             result.exp = a.exp + b.exp;
             result.nxtExp = a.nxtExp + b.nxtExp;

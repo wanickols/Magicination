@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7fd7ac6f50de640a04042829f7a393, type: 3}
   m_Name: TestChest
   m_EditorClassIdentifier: 
-  type: 0
+  type: 2
   effect: 0
   data:
     id: 2
     price: 0
-    displayName: Test Cgest
+    displayName: Test Chest
     description: A practical and durable chestplate that offers decent protection
       against physical attacks. It is not very flashy or fancy, but it gets the job
       done. It is easy to wear and adjust, making it suitable for various body types.

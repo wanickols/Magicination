@@ -47,6 +47,35 @@ namespace Core
             changedEquipment?.Invoke();
         }
 
+        private void Equip(EquippableType type)
+        {
+            switch (type)
+            {
+                case EquippableType.Weapon:
+                    exchangeWeapon(null);
+                    break;
+                case EquippableType.Head:
+                    exchangeHead(null);
+                    break;
+                case EquippableType.Arms:
+                    exchangeArms(null);
+                    break;
+                case EquippableType.Chest:
+                    exchangeChest(null);
+                    break;
+                case EquippableType.Legs:
+                    exchangeLegs(null);
+                    break;
+                case EquippableType.Accesesory:
+                    exchangeAccessory(null);
+                    break;
+                default:
+                    break;
+            };
+
+            changedEquipment?.Invoke();
+        }
+
         public Equippable getEquipped(EquippableType type)
         {
             Equippable equippable = type switch
@@ -57,28 +86,27 @@ namespace Core
                 EquippableType.Chest => chest,
                 EquippableType.Legs => legs,
                 EquippableType.Accesesory => accessoryOne,
-                _ => new Equippable()
+                _ => null
             };
-
-            if (equippable == null)
-            {
-                equippable = new Equippable();
-                equippable.setType(type);
-                equippable.Data.displayName = "Empty";
-            }
 
             return equippable;
         }
 
         public Stats getEquipmentTotalStats()
         {
-            Stats totalStats = new Stats();
-
-
-
-            return totalStats;
+            // Initialize an empty Stats object
+            Stats total = new Stats();
+            // Add each equipment's Stats to the total, if not null
+            total += weapon?.Stats;
+            total += head?.Stats;
+            total += chest?.Stats;
+            total += legs?.Stats;
+            total += arms?.Stats;
+            total += accessoryOne?.Stats;
+            // Return the total Stats
+            return total;
         }
-
+        public void Remove(EquippableType type) => Equip(type);
         ///Private
 
         private void exchangeWeapon(Equippable item)

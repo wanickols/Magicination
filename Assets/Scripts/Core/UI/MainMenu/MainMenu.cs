@@ -93,12 +93,14 @@ namespace Core
                 {
                     menuChangeSound.Play();
                     CurrentSelector.SelectedIndex--;
+                    checkHover();
                 }
 
                 else if (Input.GetKeyDown(KeyCode.DownArrow) && CurrentSelector.SelectedIndex != CurrentSelector.SelectableOptions.Count - 1)
                 {
                     menuChangeSound.Play();
                     CurrentSelector.SelectedIndex++;
+                    checkHover();
                 }
 
                 else if (Input.GetKeyDown(KeyCode.Return))
@@ -109,6 +111,18 @@ namespace Core
             }
         }
 
+        private void checkHover()
+        {
+            switch (menuState)
+            {
+                case MenuState.EquippableSelection:
+                    mainWindow.updateStats(CurrentSelector);
+                    break;
+                default:
+                    break;
+            }
+
+        }
 
         public void Open()
         {

@@ -66,9 +66,11 @@ namespace Core
 
             Equippable rustySword = Resources.Load<Equippable>("items/equipment/weapons/RustySword");
             Equippable testChest = Resources.Load<Equippable>("items/equipment/armor/TestChest");
+            Equippable jadeRing = Resources.Load<Equippable>("items/equipment/accessories/Jade Ring");
 
             arsenal.Add(rustySword);
             arsenal.Add(testChest);
+            arsenal.Add(jadeRing);
         }
     }
 }
