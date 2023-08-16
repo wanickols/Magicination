@@ -6,7 +6,7 @@ namespace Core
 {
 
 
-    public class MainMenu : MonoBehaviour
+    public class PauseMenu : MonoBehaviour
     {
         /// Public Variables
         //Events
@@ -36,16 +36,6 @@ namespace Core
         //Input
         private float pressThreshold = .005f; // The minimum time between key presses private float
         private float lastPressTime = 0f; // The time of the last key press
-
-        private enum MenuState
-        {
-            Main,
-            MemberSelection,
-
-            //Equip
-            EquipmentSelection,
-            EquippableSelection,
-        }
 
         public bool isOpen { get; private set; }
 
@@ -115,8 +105,9 @@ namespace Core
         {
             switch (menuState)
             {
+                case MenuState.EquipmentSelection:
                 case MenuState.EquippableSelection:
-                    mainWindow.updateStats(CurrentSelector);
+                    mainWindow.onHover(menuState, CurrentSelector);
                     break;
                 default:
                     break;
@@ -159,8 +150,7 @@ namespace Core
                     CurrentSelector.setAnimation(true);
                     break;
                 case (MenuState.EquippableSelection):
-                    mainWindow.clearEquippables(CurrentSelector);
-                    mainWindow.hideEquippableSection();
+                    mainWindow.hideEquippableSelection(CurrentSelector);
                     SetMenuState(MenuState.EquipmentSelection, true);
                     break;
             }
@@ -183,7 +173,7 @@ namespace Core
                 case (MenuState.EquipmentSelection):
                     int selected = CurrentSelector.SelectedIndex;
                     SetMenuState(MenuState.EquippableSelection, false);
-                    mainWindow.ShowEquippableSelection(CurrentSelector, selected);
+                    mainWindow.ShowArsenalView(CurrentSelector, selected);
                     break;
                 case (MenuState.EquippableSelection):
                     mainWindow.swapEquippable(CurrentSelector);

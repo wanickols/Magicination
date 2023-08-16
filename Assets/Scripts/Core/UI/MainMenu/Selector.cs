@@ -6,7 +6,7 @@ namespace Core
 {
     public class Selector : MonoBehaviour
     {
-        private MainMenu mainMenu;
+        private PauseMenu mainMenu;
         private RectTransform rectTransform;
         private List<RectTransform> selectableOptions = new List<RectTransform>();
         [SerializeField] private Vector3 mountingPosition;
@@ -36,7 +36,7 @@ namespace Core
 
         private void Awake()
         {
-            mainMenu = GetComponentInParent<MainMenu>();
+            mainMenu = GetComponentInParent<PauseMenu>();
             rectTransform = GetComponent<RectTransform>();
             animator = GetComponent<Animator>();
 
