@@ -53,8 +53,8 @@ namespace Core
     {
         Weapon,
         Head,
-        Chest,
         Arms,
+        Chest,
         Legs,
         Accesesory,
     }
@@ -94,6 +94,18 @@ namespace Core
         Save,
         Quit
     }
+
+
+    public enum MenuState
+    {
+        Main,
+        MemberSelection,
+
+        //Equip
+        EquipmentSelection,
+        EquippableSelection,
+    }
+
 }
 
 namespace Battle

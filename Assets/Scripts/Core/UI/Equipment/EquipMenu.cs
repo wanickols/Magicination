@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 namespace Core
 {
-    public class EquipmentMenu : MonoBehaviour
+    public class EquipMenu : MonoBehaviour
     {
-
+        /// Public Parameters
         public PartyMember partyMember { get; private set; }
 
+
+        /// Private Paremeters
         [Header("Party Member")]
         [SerializeField] private Image partyMemberFace;
         [SerializeField] private TextMeshProUGUI displayName;
@@ -31,7 +33,8 @@ namespace Core
         [SerializeField] private EquippableOption legsName;
         [SerializeField] private EquippableOption accessoryName;
 
-
+        /// Public
+        //Init
         public void initValues(PartyMember member)
         {
             partyMember = member;
@@ -45,6 +48,9 @@ namespace Core
             updatePartyMember();
         }
 
+        /// Private
+
+        //Stats
         private void updatePartyMember()
         {
 
@@ -65,6 +71,7 @@ namespace Core
             evasionVal.text = sts.EVS.ToString();
         }
 
+        //Equipment List
         private void updateEquipmentInfo()
         {
             Equipment eqpmt = partyMember.equipment;
@@ -77,6 +84,7 @@ namespace Core
             accessoryName.changeOption(eqpmt.getEquipped(EquippableType.Accesesory));
         }
 
+        //Destroy
         private void OnDestroy()
         {
             if (partyMember != null)

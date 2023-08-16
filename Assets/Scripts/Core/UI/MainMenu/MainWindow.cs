@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace Core
@@ -8,22 +7,41 @@ namespace Core
     {
 
         /// Private Paremeters
-        [SerializeField] private GameObject EquipWindow, arsenalWindow, addableStatsList;
+        [SerializeField] private GameObject EquipWindow, arsenalWindow;
 
-        private EquipmentMenu equipMenu;
+        private EquipMenu equipMenu;
+        private ArsenalMenu arsenalMenu;
 
-        private EquippableType lastSelectedEquippableType = EquippableType.Weapon;
+
 
 
         /// Unity Functions
         void Start()
         {
             ShowDefaultView();
-            equipMenu = EquipWindow.GetComponent<EquipmentMenu>();
+            equipMenu = EquipWindow.GetComponent<EquipMenu>();
+            arsenalMenu = arsenalWindow.GetComponent<ArsenalMenu>();
+            arsenalMenu.init(equipMenu);
         }
 
 
         /// Public
+
+        //General
+
+        public void onHover(MenuState menuState, Selector selector)
+        {
+            switch (menuState)
+            {
+                case MenuState.EquippableSelection:
+                    arsenalMenu.updateStats(selector);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //Main
         public void ShowDefaultView()
         {
             foreach (Transform child in transform)
@@ -35,7 +53,7 @@ namespace Core
             }
         }
 
-        //Equip
+        //Equip Menu
         public void ShowEquipmentView(int selected)
         {
 
@@ -48,133 +66,41 @@ namespace Core
 
             EquipWindow.SetActive(true);
 
-            PartyMember selectedMember = new PartyMember();
 
-
-            selectedMember = Party.ActiveMembers[selected];
+            PartyMember selectedMember = Party.ActiveMembers[selected];
 
             //Show Equipment
             equipMenu.initValues(selectedMember);
         }
 
-        public void ShowEquippableSelection(Selector equippableSelector, int selected)
+        // Arsenal Menu
+        public void ShowArsenalView(Selector arsenalSelector, int selected)
         {
-
             arsenalWindow.SetActive(true);
-
-            lastSelectedEquippableType = (EquippableType)selected;
+            arsenalMenu.lastSelectedEquippableType = (EquippableType)selected;
 
             //Get list from arsenal
-            List<Equippable> equippables = Party.arsenal.getEquippables(lastSelectedEquippableType);
+            List<Equippable> equippables = Party.arsenal.getEquippables((EquippableType)selected);
 
             int count = equippables.Count;
 
             for (int i = 0; i < 16; i++)
             {
-                EquippableOption option = equippableSelector.getChild(i).GetComponent<EquippableOption>();
+                EquippableOption option = arsenalSelector.getChild(i).GetComponent<EquippableOption>();
 
                 if (i < count)
                     option.changeOption(equippables[i]);
             }
 
-            updateStats(equippableSelector);
+            arsenalMenu.updateStats(arsenalSelector);
         }
 
-        public void hideEquippableSection()
+        public void hideEquippableSelection(Selector selector)
         {
+            arsenalMenu.clearEquippables(selector);
             arsenalWindow.SetActive(false);
         }
+        public void swapEquippable(Selector selector) => arsenalMenu.swapEquippable(selector);
 
-        public void swapEquippable(Selector equippableSelector)
-        {
-
-
-            Equipment equipment = equipMenu.partyMember.equipment;
-
-            EquippableOption option = equippableSelector.selectedTransform.GetComponent<EquippableOption>();
-            Equippable equippable = null;
-
-            if (option.equippable != null)
-                equippable = option.equippable;
-
-            option.changeOption(equipment.getEquipped(lastSelectedEquippableType));
-            clearEquippables(equippableSelector);
-
-            if (equippable != null)
-                equipment.Equip(equippable);
-            else
-            {
-                equipment.Remove(lastSelectedEquippableType);
-            }
-
-            updateEquipMenu();
-        }
-
-        public void updateStats(Selector selector)
-        {
-            // Get Stuff
-            EquippableOption option = selector.selectedTransform.GetComponent<EquippableOption>();
-            Equippable equipped = equipMenu.partyMember.equipment.getEquipped(lastSelectedEquippableType);
-
-            //Init Stat Comparison Lists
-            List<int> displayStats, equippedStats;
-            displayStats = equippedStats = new List<int> { 0, 0, 0, 0, 0, 0 };
-
-            //Null Cheks
-            //Selected
-            if (option.equippable != null)
-                displayStats = option.equippable.Stats.getDisplayStatValues();
-
-            //Equipped
-            if (equipped != null)
-                equippedStats = equipped.Stats.getDisplayStatValues();
-
-            //Set Stats
-            loopStats(displayStats, equippedStats);
-        }
-
-        private void loopStats(List<int> displayStats, List<int> equippedStats)
-        {
-            int i = 0;
-            foreach (Transform stat in addableStatsList.transform)
-            {
-                stat.gameObject.SetActive(true);
-                TextMeshProUGUI textBox = stat.GetComponent<TextMeshProUGUI>();
-                setTextFromStat(textBox, displayStats[i], equippedStats[i]);
-                i++;
-            }
-        }
-
-        private void setTextFromStat(TextMeshProUGUI textBox, int value, int currValue)
-        {
-            //Change Stats
-            if (value == currValue)
-                textBox.text = string.Empty;
-            else
-            {
-                if (value < currValue)
-                {
-                    textBox.text = $"- {currValue - value}";
-                    textBox.color = Color.red;
-                }
-                else
-                {
-                    textBox.text = $"+ {currValue + value}";
-                    textBox.color = Color.cyan;
-                }
-            }
-        }
-
-        public void clearEquippables(Selector selector)
-        {
-            for (int i = 0; i < 16; i++)
-            {
-                EquippableOption option = selector.getChild(i).GetComponent<EquippableOption>();
-                option.clear();
-            }
-        }
-
-        /// Private
-        private void updateEquipMenu() => equipMenu.updateValues();
     }
 }

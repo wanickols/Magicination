@@ -5,7 +5,7 @@ namespace Core
     public class InputHandler
     {
         private Player player;
-        private MainMenu mainMenu;
+        private PauseMenu mainMenu;
         private MapManager mapManager;
         private Map map => mapManager.map;
         private StateManager stateManager;
@@ -24,7 +24,7 @@ namespace Core
 
 
         Command command;
-        public InputHandler(Player player, MainMenu menu, MapManager mapManager, StateManager stateManager)
+        public InputHandler(Player player, PauseMenu menu, MapManager mapManager, StateManager stateManager)
         {
             this.player = player;
             this.mainMenu = menu;

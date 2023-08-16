@@ -26,7 +26,7 @@ namespace Core
         [Header("Menu UI")]
         [SerializeField] private GameObject MainMenuPrefab;
 
-        public MainMenu mainMenu { get; private set; }
+        public PauseMenu mainMenu { get; private set; }
         private StateManager stateManager;
 
         public void init(StateManager stateManager)
@@ -49,7 +49,7 @@ namespace Core
         private void initMenu()
         {
             GameObject menu = Instantiate(MainMenuPrefab, this.transform);
-            mainMenu = menu.GetComponentInChildren<MainMenu>();
+            mainMenu = menu.GetComponentInChildren<PauseMenu>();
         }
 
         private void initDialogue()
