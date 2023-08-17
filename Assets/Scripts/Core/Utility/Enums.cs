@@ -104,6 +104,9 @@ namespace Core
         //Equip
         EquipmentSelection,
         EquippableSelection,
+
+        //Item
+        ItemSelection
     }
 
 }
