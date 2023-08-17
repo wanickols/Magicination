@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public class ItemData
@@ -8,6 +9,7 @@ public class ItemData
     public string displayName;
     public string description;
     public int quantity;
+    public Sprite sprite;
 
     public int requiredLevel;
 

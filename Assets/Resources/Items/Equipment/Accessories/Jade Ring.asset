@@ -22,6 +22,7 @@ MonoBehaviour:
       and benefits. Wearing this ring can increase your prosperity, wisdom, healing,
       and longevity.
     quantity: 1
+    sprite: {fileID: -1068892641, guid: 0a93def93241cb04a94250d7103e1818, type: 3}
     requiredLevel: 5
   stats:
     lv: 5
