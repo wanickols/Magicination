@@ -15,8 +15,11 @@ namespace Core
         /// Private Variables
         //Serialized Objects
         [SerializeField] private Selector mainSelector;
-        [SerializeField] private Selector memberSelector;
-        [SerializeField] private Selector equipmentSelector, equippableSelector;
+        private Selector memberSelector => mainWindow.memberSelector;
+        private Selector equipmentSelector => mainWindow.equipmentSelector;
+        private Selector equippableSelector => mainWindow.equippableSelector;
+
+        [SerializeField] private GameObject MainWindowPrefab;
         public AudioSource menuChangeSound;
 
         //States
@@ -49,7 +52,7 @@ namespace Core
         /// Unity Functions
         private void Awake()
         {
-            mainWindow = GetComponentInChildren<MainWindow>();
+            mainWindow = Instantiate(MainWindowPrefab, transform).GetComponentInChildren<MainWindow>();
             animator = GetComponent<Animator>();
 
             //Connecting selectors to states

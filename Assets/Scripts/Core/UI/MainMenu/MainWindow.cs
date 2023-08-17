@@ -6,9 +6,15 @@ namespace Core
     public class MainWindow : MonoBehaviour
     {
 
+
+        /// Public Parameters
+        public Selector memberSelector;
+        public Selector equipmentSelector, equippableSelector;
+
         /// Private Paremeters
         [SerializeField] private GameObject EquipWindow, arsenalWindow;
-        [SerializeField] private GameObject ItemWindow;
+        [SerializeField] private GameObject ItemsWindow;
+
 
         private EquipMenu equipMenu;
         private ArsenalMenu arsenalMenu;
@@ -21,7 +27,7 @@ namespace Core
             equipMenu = EquipWindow.GetComponent<EquipMenu>();
             arsenalMenu = arsenalWindow.GetComponent<ArsenalMenu>();
             arsenalMenu.init(equipMenu);
-            itemMenu = ItemWindow.GetComponent<ItemMenu>();
+            itemMenu = ItemsWindow.GetComponent<ItemMenu>();
         }
 
         /// Public Functions
@@ -95,7 +101,7 @@ namespace Core
         public void ShowItemView(PauseMenu pauseMenu)
         {
             hidePartyMembers();
-            ItemWindow.SetActive(true);
+            ItemsWindow.SetActive(true);
 
 
             pauseMenu.addItemSelector(itemMenu.initItems());
@@ -104,7 +110,7 @@ namespace Core
 
         public void closeItemView(PauseMenu pauseMenu)
         {
-            ItemWindow.SetActive(false);
+            ItemsWindow.SetActive(false);
             itemMenu.clearItems();
             pauseMenu.removeItemSelector();
         }
