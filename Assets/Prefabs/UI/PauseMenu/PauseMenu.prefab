@@ -348,9 +348,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainSelector: {fileID: 5617012871853358122}
   MainWindowPrefab: {fileID: 9115682391604826038, guid: d3daa90062d769e44b2d00bbadcc2826, type: 3}
-  menuChangeSound: {fileID: 6073812482927030854}
-  pressThreshold: 0.005
-  lastPressTime: 0
+  inputHandler:
+    menuChangeSound: {fileID: 6073812482927030854}
 --- !u!222 &715786113202294914
 CanvasRenderer:
   m_ObjectHideFlags: 0

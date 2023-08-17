@@ -7,9 +7,8 @@ public class ItemMenu : MonoBehaviour
 
     [SerializeField] private GameObject items;
     [SerializeField] private GameObject ConsumableOptionPrefab, DropDownGridSelectorPrefab;
-    [SerializeField] private GameObject itemWindow;
 
-    public GridSelector initItems()
+    public Selector initItems()
     {
         foreach (KeyValuePair<Consumable, int> nom in Party.bag.consumables)
         {
@@ -17,7 +16,8 @@ public class ItemMenu : MonoBehaviour
             option.changeOption(nom.Key, nom.Value);
         }
 
-        GridSelector selector = Instantiate(DropDownGridSelectorPrefab, items.transform).GetComponent<GridSelector>();
+        Selector selector = Instantiate(DropDownGridSelectorPrefab, items.transform).GetComponent<Selector>();
+        selector.type = SelectorType.Grid;
 
         return selector;
     }
@@ -30,15 +30,5 @@ public class ItemMenu : MonoBehaviour
             option?.clear();
             Destroy(t.gameObject);
         }
-    }
-
-    public void openItemWindow()
-    {
-        itemWindow.SetActive(true);
-    }
-
-    public void closeItemWindow()
-    {
-        itemWindow.SetActive(false);
     }
 }

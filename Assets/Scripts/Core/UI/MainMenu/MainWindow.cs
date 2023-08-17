@@ -98,21 +98,20 @@ namespace Core
         public void swapEquippable(Selector selector) => arsenalMenu.swapEquippable(selector);
 
         //Item Menu
-        public void ShowItemView(PauseMenu pauseMenu)
+        public void ShowItemView(SelectorManager manager)
         {
             hidePartyMembers();
             ItemsWindow.SetActive(true);
 
-
-            pauseMenu.addItemSelector(itemMenu.initItems());
+            manager.addItemSelector(itemMenu.initItems());
 
         }
 
-        public void closeItemView(PauseMenu pauseMenu)
+        public void closeItemView(SelectorManager manager)
         {
             ItemsWindow.SetActive(false);
             itemMenu.clearItems();
-            pauseMenu.removeItemSelector();
+            manager.removeItemSelector();
         }
 
         /// Private Functions
