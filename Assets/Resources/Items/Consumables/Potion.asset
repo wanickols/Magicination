@@ -17,6 +17,6 @@ MonoBehaviour:
     price: 10
     displayName: Potion
     description: Restores a small amount of health
-    quantity: 0
+    quantity: 1
     sprite: {fileID: -1792369166, guid: 00dbbd8f5c36ba343add51bde370bc51, type: 3}
     requiredLevel: 0

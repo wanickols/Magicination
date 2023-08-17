@@ -109,6 +109,13 @@ namespace Core
         ItemSelection
     }
 
+    public enum SelectorType
+    {
+        Vertical,
+        Horizontal,
+        Grid,
+    }
+
 }
 
 namespace Battle

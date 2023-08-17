@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Core
 {
@@ -9,9 +10,20 @@ namespace Core
         /// Events
         public event Action SelectionChanged;
 
+        public SelectorType type;
+
+        //Grid
+        public int columnCount = 1;
+
+        //Scroll
+        public bool scrollable;
+        public ScrollRect scrollRect;
+        public int scrollMovementTrigger;
+
         /// Private Parameters
         [SerializeField] private Vector3 mountingPosition;
         [SerializeField] private GameObject imageHolder;
+
 
         //Input
         protected PauseMenu pauseMenu;
@@ -64,48 +76,6 @@ namespace Core
         {
             if (rectTransform.anchoredPosition != selectableOptions[SelectedIndex].anchoredPosition)
                 MoveToSelectedOption();
-        }
-
-        /// Public Functions
-
-        //Input
-        public virtual void HandleInput()
-        {
-            Selector CurrentSelector = pauseMenu.CurrentSelector;
-
-            // Get the current time
-            float currentTime = Time.time;
-
-            // Calculate the time difference between the current and last press
-            float timeDifference = currentTime - pauseMenu.lastPressTime;
-
-            // Check if the time difference is greater than or equal to the threshold
-            if (timeDifference >= pauseMenu.pressThreshold)
-            {
-                // Update the last press time
-                pauseMenu.lastPressTime = currentTime;
-
-                // Check which key is pressed and handle it accordingly
-                if (Input.GetKeyDown(KeyCode.UpArrow) && CurrentSelector.SelectedIndex > 0)
-                {
-                    pauseMenu.menuChangeSound.Play();
-                    CurrentSelector.SelectedIndex--;
-                    pauseMenu.checkHover();
-                }
-
-                else if (Input.GetKeyDown(KeyCode.DownArrow) && CurrentSelector.SelectedIndex != CurrentSelector.SelectableOptions.Count - 1)
-                {
-                    pauseMenu.menuChangeSound.Play();
-                    CurrentSelector.SelectedIndex++;
-                    pauseMenu.checkHover();
-                }
-
-                else if (Input.GetKeyDown(KeyCode.Return))
-                    pauseMenu.Accept();
-
-                else if (Input.GetKeyDown(KeyCode.Escape))
-                    pauseMenu.Cancel();
-            }
         }
 
         /// Private Functions
