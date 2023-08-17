@@ -14,9 +14,6 @@ namespace Core
         private ArsenalMenu arsenalMenu;
         private ItemMenu itemMenu;
 
-
-
-
         /// Unity Functions
         void Start()
         {
@@ -27,11 +24,8 @@ namespace Core
             itemMenu = ItemWindow.GetComponent<ItemMenu>();
         }
 
-
-        /// Public
-
+        /// Public Functions
         //General
-
         public void onHover(MenuState menuState, Selector selector)
         {
             switch (menuState)
@@ -60,15 +54,8 @@ namespace Core
         public void ShowEquipmentView(int selected)
         {
 
-
-            foreach (Transform child in transform)
-            {
-                if (child.GetComponent<PartyMemberInfo>() != null)
-                    child.gameObject.SetActive(false);
-            }
-
+            hidePartyMembers();
             EquipWindow.SetActive(true);
-
 
             PartyMember selectedMember = Party.ActiveMembers[selected];
 
@@ -97,7 +84,6 @@ namespace Core
 
             arsenalMenu.updateStats(arsenalSelector);
         }
-
         public void hideEquippableSelection(Selector selector)
         {
             arsenalMenu.clearEquippables(selector);
@@ -105,5 +91,32 @@ namespace Core
         }
         public void swapEquippable(Selector selector) => arsenalMenu.swapEquippable(selector);
 
+        //Item Menu
+        public void ShowItemView(PauseMenu pauseMenu)
+        {
+            hidePartyMembers();
+            ItemWindow.SetActive(true);
+
+
+            pauseMenu.addItemSelector(itemMenu.initItems());
+
+        }
+
+        public void closeItemView(PauseMenu pauseMenu)
+        {
+            ItemWindow.SetActive(false);
+            itemMenu.clearItems();
+            pauseMenu.removeItemSelector();
+        }
+
+        /// Private Functions
+        private void hidePartyMembers()
+        {
+            foreach (Transform child in transform)
+            {
+                if (child.GetComponent<PartyMemberInfo>() != null)
+                    child.gameObject.SetActive(false);
+            }
+        }
     }
 }

@@ -1,17 +1,15 @@
 using System;
-using UnityEngine;
 
 [Serializable]
 public class ItemData
 {
-    [SerializeField] public int id;
-    [SerializeField] public int price;
-    [SerializeField] public string displayName;
-    [SerializeField] protected string description;
-    [SerializeField] protected int quantity;
+    public int id;
+    public int price;
+    public string displayName;
+    public string description;
+    public int quantity;
 
-
-    [SerializeField] protected int requiredLevel;
+    public int requiredLevel;
 
     public static int nextID = 0;
 
@@ -20,6 +18,4 @@ public class ItemData
         nextID++;
         id = nextID;
     }
-
-    //UI related stuff needs to be added
 }

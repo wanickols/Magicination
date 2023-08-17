@@ -11,6 +11,7 @@ namespace Core
         public static IReadOnlyList<PartyMember> ReserveMembers => reserveMembers;
 
         public static Arsenal arsenal = new Arsenal();
+        public static ItemBag bag = new ItemBag();
 
         private static bool canEncounter = true;
 
@@ -71,6 +72,12 @@ namespace Core
             arsenal.Add(rustySword);
             arsenal.Add(testChest);
             arsenal.Add(jadeRing);
+
+            Consumable potion = Resources.Load<Consumable>("items/consumables/potion");
+            Consumable revive = Resources.Load<Consumable>("items/consumables/revive");
+
+            bag.Add(potion);
+            bag.Add(revive);
         }
     }
 }

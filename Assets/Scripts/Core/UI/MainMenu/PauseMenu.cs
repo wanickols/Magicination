@@ -8,8 +8,7 @@ namespace Core
 
     public class PauseMenu : MonoBehaviour
     {
-        /// Public Variables
-        //Events
+        /// Events
         public event Action openMenu;
         public event Action closeMenu;
 
@@ -18,7 +17,7 @@ namespace Core
         [SerializeField] private Selector mainSelector;
         [SerializeField] private Selector memberSelector;
         [SerializeField] private Selector equipmentSelector, equippableSelector;
-        [SerializeField] private AudioSource menuChangeSound;
+        public AudioSource menuChangeSound;
 
         //States
         private Dictionary<MenuState, Selector> stateSelector = new Dictionary<MenuState, Selector>();
@@ -32,16 +31,22 @@ namespace Core
         private string menuOpenAnimation = "MenuOpen";
         private string menuCloseAnimation = "MenuClose";
 
-
+        /// Public Parameters
         //Input
-        private float pressThreshold = .005f; // The minimum time between key presses private float
-        private float lastPressTime = 0f; // The time of the last key press
+        public float pressThreshold = .005f; // The minimum time between key presses private float
+        public float lastPressTime = 0f; // The time of the last key press
 
+        //Menu Opened
         public bool isOpen { get; private set; }
 
+        //Accessors
         private bool IsAnimating => animator.IsAnimating();
         public Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
 
+        public void addItemSelector(Selector itemSelector) => stateSelector.Add(MenuState.ItemSelection, itemSelector);
+        public void removeItemSelector() => stateSelector.Remove(MenuState.ItemSelection);
+
+        /// Unity Functions
         private void Awake()
         {
             mainWindow = GetComponentInChildren<MainWindow>();
@@ -54,54 +59,18 @@ namespace Core
             stateSelector.Add(MenuState.EquippableSelection, equippableSelector);
 
         }
-
         private void Update()
         {
             if (Game.manager.State != GameState.Menu || IsAnimating)
                 return;
 
             // Call the input function
-            HandleInput();
+            CurrentSelector.HandleInput();
         }
 
-        private void HandleInput()
-        {
-            // Get the current time
-            float currentTime = Time.time;
 
-            // Calculate the time difference between the current and last press
-            float timeDifference = currentTime - lastPressTime;
-
-            // Check if the time difference is greater than or equal to the threshold
-            if (timeDifference >= pressThreshold)
-            {
-                // Update the last press time
-                lastPressTime = currentTime;
-
-                // Check which key is pressed and handle it accordingly
-                if (Input.GetKeyDown(KeyCode.UpArrow) && CurrentSelector.SelectedIndex > 0)
-                {
-                    menuChangeSound.Play();
-                    CurrentSelector.SelectedIndex--;
-                    checkHover();
-                }
-
-                else if (Input.GetKeyDown(KeyCode.DownArrow) && CurrentSelector.SelectedIndex != CurrentSelector.SelectableOptions.Count - 1)
-                {
-                    menuChangeSound.Play();
-                    CurrentSelector.SelectedIndex++;
-                    checkHover();
-                }
-
-                else if (Input.GetKeyDown(KeyCode.Return))
-                    Accept();
-
-                else if (Input.GetKeyDown(KeyCode.Escape))
-                    Cancel();
-            }
-        }
-
-        private void checkHover()
+        /// Public Functions
+        public void checkHover()
         {
             switch (menuState)
             {
@@ -114,7 +83,6 @@ namespace Core
             }
 
         }
-
         public void Open()
         {
             lastPressTime = Time.time;
@@ -124,16 +92,7 @@ namespace Core
             animator.Play(menuOpenAnimation);
             openMenu?.Invoke();
         }
-
-        private void Close()
-        {
-            isOpen = false;
-            animator.Play(menuCloseAnimation);
-            closeMenu?.Invoke();
-            mainSelector.setAnimation(false);
-        }
-
-        private void Cancel()
+        public void Cancel()
         {
             switch (menuState)
             {
@@ -141,25 +100,24 @@ namespace Core
                     Close();
                     break;
                 case (MenuState.MemberSelection):
-                    SetMenuState(MenuState.Main, true);
-                    CurrentSelector.setAnimation(true);
+                    returnToMain();
+                    break;
+                case (MenuState.ItemSelection):
+                    returnToMain();
+                    mainWindow.closeItemView(this);
+                    mainWindow.ShowDefaultView();
                     break;
                 case (MenuState.EquipmentSelection):
-                    mainWindow.ShowDefaultView();
-                    SetMenuState(MenuState.MemberSelection, true);
-                    CurrentSelector.setAnimation(true);
+                    returnToMembers();
                     break;
                 case (MenuState.EquippableSelection):
                     mainWindow.hideEquippableSelection(CurrentSelector);
                     SetMenuState(MenuState.EquipmentSelection, true);
                     break;
+
             }
-
-
-
-
         }
-        private void Accept()
+        public void Accept()
         {
             switch (menuState)
             {
@@ -167,8 +125,7 @@ namespace Core
                     ProcessMainSelection();
                     break;
                 case (MenuState.MemberSelection):
-                    mainWindow.ShowEquipmentView(CurrentSelector.SelectedIndex);
-                    SetMenuState(MenuState.EquipmentSelection, false);
+                    ProcessMemberSelection();
                     break;
                 case (MenuState.EquipmentSelection):
                     int selected = CurrentSelector.SelectedIndex;
@@ -179,27 +136,71 @@ namespace Core
                     mainWindow.swapEquippable(CurrentSelector);
                     Cancel();
                     break;
+                case (MenuState.ItemSelection):
+                    Debug.Log("Show Item Page");
+                    break;
 
             }
+        }
+
+        /// Private Functions
+        private void Close()
+        {
+            isOpen = false;
+            animator.Play(menuCloseAnimation);
+            closeMenu?.Invoke();
+            mainSelector.setAnimation(false);
+        }
+        private void returnToMain()
+        {
+            SetMenuState(MenuState.Main, true);
+            CurrentSelector.setAnimation(true);
+        }
+        private void returnToMembers()
+        {
+            mainWindow.ShowDefaultView();
+            SetMenuState(MenuState.MemberSelection, true);
+            CurrentSelector.setAnimation(true);
         }
         private void ProcessMainSelection()
         {
             switch ((mainSelections)mainSelector.SelectedIndex)
             {
-                case mainSelections.Equip:
-                    Equip();
+                case mainSelections.Items:
+                    mainWindow.ShowItemView(this);
+                    SetMenuState(MenuState.ItemSelection, false);
                     break;
+                case mainSelections.Skills:
+                case mainSelections.Equip:
+                case mainSelections.Status:
+                case mainSelections.Order:
+                    SetMenuState(MenuState.MemberSelection, false);
+                    break;
+                case mainSelections.Save:
+                case mainSelections.Quit:
                 default:
                     Debug.LogWarning("Not implemented!");
                     break;
             }
         }
-
-        private void Equip()
+        private void ProcessMemberSelection()
         {
-            SetMenuState(MenuState.MemberSelection, false);
+            switch ((mainSelections)mainSelector.SelectedIndex)
+            {
+                case mainSelections.Skills:
+                    Debug.LogWarning("Not implemented!");
+                    break;
+                case mainSelections.Equip:
+                    mainWindow.ShowEquipmentView(CurrentSelector.SelectedIndex);
+                    SetMenuState(MenuState.EquipmentSelection, false);
+                    break;
+                case mainSelections.Status:
+                case mainSelections.Order:
+                default:
+                    Debug.LogWarning("Not implemented!");
+                    break;
+            }
         }
-
         private void SetMenuState(MenuState newState, bool cancel)
         {
             if (!cancel)
@@ -221,5 +222,7 @@ namespace Core
 
 
         }
+
+
     }
 }
