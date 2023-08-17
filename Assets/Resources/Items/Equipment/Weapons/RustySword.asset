@@ -23,6 +23,7 @@ MonoBehaviour:
       in combat. It might have been a formidable weapon once, but now it is only
       good for scrap metal.
     quantity: 1
+    sprite: {fileID: -1369628794, guid: 61767115782950945b8269e35fcfb4ec, type: 3}
     requiredLevel: 1
   stats:
     lv: 1

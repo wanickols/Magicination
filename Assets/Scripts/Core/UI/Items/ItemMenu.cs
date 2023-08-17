@@ -7,6 +7,7 @@ public class ItemMenu : MonoBehaviour
 
     [SerializeField] private GameObject items;
     [SerializeField] private GameObject ConsumableOptionPrefab, DropDownGridSelectorPrefab;
+    [SerializeField] private GameObject itemWindow;
 
     public GridSelector initItems()
     {
@@ -29,5 +30,15 @@ public class ItemMenu : MonoBehaviour
             option?.clear();
             Destroy(t.gameObject);
         }
+    }
+
+    public void openItemWindow()
+    {
+        itemWindow.SetActive(true);
+    }
+
+    public void closeItemWindow()
+    {
+        itemWindow.SetActive(false);
     }
 }

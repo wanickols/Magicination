@@ -22,6 +22,7 @@ MonoBehaviour:
       against physical attacks. It is not very flashy or fancy, but it gets the job
       done. It is easy to wear and adjust, making it suitable for various body types.
     quantity: 1
+    sprite: {fileID: 686599819, guid: 0a93def93241cb04a94250d7103e1818, type: 3}
     requiredLevel: 1
   stats:
     lv: 1

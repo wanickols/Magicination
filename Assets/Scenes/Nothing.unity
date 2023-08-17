@@ -246,3 +246,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 7226307739329316752, guid: c869e103c583a8b4888689ad14683be4, type: 3}
+  game: {fileID: 0}

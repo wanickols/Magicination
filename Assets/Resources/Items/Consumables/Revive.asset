@@ -18,4 +18,5 @@ MonoBehaviour:
     displayName: Revive
     description: Saves a fallen from the depths
     quantity: 1
+    sprite: {fileID: 335424580, guid: 00dbbd8f5c36ba343add51bde370bc51, type: 3}
     requiredLevel: 0
