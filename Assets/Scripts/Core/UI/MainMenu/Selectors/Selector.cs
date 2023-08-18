@@ -19,11 +19,19 @@ namespace Core
         public bool scrollable;
         public ScrollRect scrollRect;
         public int scrollMovementTrigger;
+        private float itemsPerView = 0;
+        int half = 0;
+        float scrollableCount;
+        private float itemHeight;
+
 
         /// Private Parameters
         [SerializeField] private Vector3 mountingPosition;
         [SerializeField] private GameObject imageHolder;
 
+        [SerializeField] private float SelectorSpeed = 8f;
+
+        private float selectorSpeed = 8f;
 
         //Input
         protected PauseMenu pauseMenu;
@@ -60,6 +68,8 @@ namespace Core
             rectTransform = GetComponent<RectTransform>();
             animator = GetComponent<Animator>();
 
+
+
             for (int i = 0; i < transform.parent.childCount; i++)
                 if (getChild(i).CompareTag("Selectable"))
                     selectableOptions.Add(getChild(i).GetComponent<RectTransform>());
@@ -69,6 +79,15 @@ namespace Core
                 rectTransform.sizeDelta = new Vector2(selectableOptions[0].sizeDelta.x, rectTransform.sizeDelta.y + mountingPosition.y);
 
             imageHolder.transform.position += mountingPosition;
+
+            itemHeight = selectableOptions[0].rect.size.y;
+
+            if (scrollable)
+            {
+                itemsPerView = scrollRect.viewport.rect.height / itemHeight;
+                half = (int)itemsPerView / 2;
+                scrollableCount = selectableOptions.Count - itemsPerView;
+            }
         }
 
 
@@ -76,15 +95,32 @@ namespace Core
         {
             if (rectTransform.anchoredPosition != selectableOptions[SelectedIndex].anchoredPosition)
                 MoveToSelectedOption();
+
+            if (scrollable)
+                UpdateScrollPosition();
         }
+
 
         /// Private Functions
         //Movement
+        void UpdateScrollPosition()
+        {
+
+            selectorSpeed = SelectorSpeed;
+            if (SelectedIndex >= half && SelectedIndex < (selectableOptions.Count - half))
+            {
+                // Calculate the normalized position of the selector relative to the content size
+                float normalizedVerticalPosition = (SelectedIndex - half) / scrollableCount;
+
+                // Set the normalized position of the scroll view
+                scrollRect.verticalNormalizedPosition = 1 - normalizedVerticalPosition;
+                selectorSpeed = SelectorSpeed * 8;
+            }
+        }
+
         private void MoveToSelectedOption()
         {
-            rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, selectableOptions[(int)SelectedIndex].anchoredPosition, 8f);
-
-
+            rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, selectableOptions[(int)SelectedIndex].anchoredPosition, selectorSpeed);
         }
         public void setAnimation(bool animate) => animator.enabled = animate;
 

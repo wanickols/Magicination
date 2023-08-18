@@ -27,9 +27,9 @@ public class MenuInputHandler
         get
         {
             if (currSelector.type != SelectorType.Grid)
-                return currSelector.SelectableOptions.Count - 1;
+                return (currSelector.SelectableOptions.Count - (currSelector.scrollMovementTrigger * 2)) / 2;
             else
-                return (currSelector.SelectableOptions.Count - 1) / currSelector.columnCount;
+                return (currSelector.SelectableOptions.Count) / currSelector.columnCount;
         }
     }
 
@@ -62,6 +62,7 @@ public class MenuInputHandler
             SelectorType.Vertical => verticalInput(),
             SelectorType.Horizontal => horizontalInput(),
             SelectorType.Grid => gridInput(),
+            SelectorType.ScrollerVertical => scrollerInput(true),
             _ => false,
         };
 
@@ -103,6 +104,18 @@ public class MenuInputHandler
         return true;
     }
 
+    private bool scrollerInput(bool vertical, int increment = 1)
+    {
+        if (vertical)
+            verticalInput(increment);
+        else
+            horizontalInput(increment);
+
+
+
+        return true;
+    }
+
     private void checkSelectedInput()
     {
         if (Input.GetKeyDown(KeyCode.Return))
@@ -112,29 +125,11 @@ public class MenuInputHandler
             selectorManager.Cancel();
     }
 
-    private void move(int increment, bool vertical = true)
+    private void move(int increment)
     {
         menuChangeSound.Play();
         currSelector.SelectedIndex += increment;
         selectorManager.checkHover();
-
-        if (isScrolling)
-            return;
-
-        if (!currSelector.scrollable)
-            return;
-
-        if (currSelector.scrollRect == null)
-        {
-            Debug.LogError("Selector set to scrollable but has no ScrollView attached");
-            return;
-        }
-
-        scrollIndex += increment;
-
-        tryScroll(increment, vertical);
-
-
     }
 
     private void tryScroll(int increment, bool vertical = true)
@@ -150,28 +145,26 @@ public class MenuInputHandler
         Debug.Log("Trying to Scroll");
         int trigger = currSelector.scrollMovementTrigger;
 
-        if (increment < 0)
+        if (scrollIndex < currSelector.SelectableOptions.Count - trigger && scrollIndex > trigger)
         {
-            if (scrollIndex < currSelector.SelectableOptions.Count - trigger)
-            {
-                Vector2 targetPosition = currSelector.scrollRect.normalizedPosition + (-dir / height);
-                Game.manager.StartCoroutine(CO_Scroll(targetPosition));
-            }
-
-        }
-        else if (scrollIndex >= trigger)
-        {
-            Vector2 targetPosition = currSelector.scrollRect.normalizedPosition + (-dir / height);
+            Vector2 targetPosition = clamp((Vector2)currSelector.transform.position + (-dir / height), 0, 1);
             Game.manager.StartCoroutine(CO_Scroll(targetPosition));
         }
+    }
 
+    private Vector2 clamp(Vector2 vector, float min, float max)
+    {
+        vector.x = Math.Clamp(vector.x, min, max);
+        vector.y = Math.Clamp(vector.y, min, max);
+
+        return vector;
     }
 
     private IEnumerator CO_Scroll(Vector2 targetPosition)
     {
 
         isScrolling = true;
-        Debug.Log("Scrollin");
+        Debug.Log("Scrollin to " + targetPosition);
 
         while (isScrolling)
         {
@@ -181,7 +174,6 @@ public class MenuInputHandler
 
             float val = Mathf.Abs((currSelector.scrollRect.normalizedPosition - targetPosition).magnitude);
             // Check if current position is close enough to target position
-            Debug.Log(val);
             if (val < 0.01f)
             {
                 currSelector.scrollRect.normalizedPosition = targetPosition;
