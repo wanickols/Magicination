@@ -114,6 +114,8 @@ namespace Core
         Vertical,
         Horizontal,
         Grid,
+        ScrollerVertical,
+        ScrollerHorizontal,
     }
 
 }
