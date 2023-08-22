@@ -10,15 +10,18 @@ namespace Core
         /// Public Parameters
         public Selector memberSelector;
         public Selector equipmentSelector, equippableSelector;
+        public Selector itemActionBar => itemMenu.actionSelector;
 
         /// Private Paremeters
         [SerializeField] private GameObject EquipWindow, arsenalWindow;
         [SerializeField] private GameObject ItemsWindow;
+        [SerializeField] private GameObject PartyTargetWindow;
 
 
         private EquipMenu equipMenu;
         private ArsenalMenu arsenalMenu;
         private ItemMenu itemMenu;
+        private PartyTargetMenu partyTargetMenu;
 
         /// Unity Functions
         void Start()
@@ -28,6 +31,7 @@ namespace Core
             arsenalMenu = arsenalWindow.GetComponent<ArsenalMenu>();
             arsenalMenu.init(equipMenu);
             itemMenu = ItemsWindow.GetComponent<ItemMenu>();
+            partyTargetMenu = PartyTargetWindow.GetComponent<PartyTargetMenu>();
         }
 
         /// Public Functions
@@ -40,6 +44,33 @@ namespace Core
                     arsenalMenu.updateStats(selector);
                     break;
                 default:
+                    break;
+            }
+        }
+
+        //Party Targets
+
+        public void openPartyTargetWindow(SelectorManager manager, PartyTargetSelections selection, Consumable item = null)
+        {
+            PartyTargetWindow.SetActive(true);
+            manager.addPartyTargetSelector(partyTargetMenu.initTargets(selection, item));
+        }
+
+        public void closePartyTargetWindow(SelectorManager manager)
+        {
+            PartyTargetWindow.SetActive(false);
+            manager.removePartyTargetSelector();
+        }
+
+        public void partyTargetSelected(int selected)
+        {
+            partyTargetMenu.Select(selected);
+
+            switch (partyTargetMenu.selectionType)
+            {
+                case PartyTargetSelections.item:
+                    break;
+                case PartyTargetSelections.skill:
                     break;
             }
         }
@@ -112,6 +143,17 @@ namespace Core
             ItemsWindow.SetActive(false);
             itemMenu.clearItems();
             manager.removeItemSelector();
+        }
+
+        public bool itemActionSelected(int selected) => itemMenu.setFlag(selected);
+        public void itemSelected(int selected, SelectorManager manager)
+        {
+
+
+            Consumable item = itemMenu.selectItem(selected);
+
+            openPartyTargetWindow(manager, PartyTargetSelections.item, item);
+
         }
 
         /// Private Functions

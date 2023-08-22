@@ -83,6 +83,33 @@ namespace Core
     }
 
 
+    //Items
+    public enum itemMenuAction
+    {
+        use,
+        sort,
+        key,
+        //discard?
+    }
+
+    //Augemenations
+    public enum AugType
+    {
+        LVL,
+        HP,
+        EXP,
+        MP,
+        ATK,
+        DEF,
+        MATK,
+        MDEF,
+        EVS,
+        SPD,
+        ENC,
+        ACC,
+    }
+
+
     //UI
     public enum mainSelections
     {
@@ -100,12 +127,14 @@ namespace Core
     {
         Main,
         MemberSelection,
+        PartyTargetSelection,
 
         //Equip
         EquipmentSelection,
         EquippableSelection,
 
         //Item
+        ItemActionSelection,
         ItemSelection
     }
 
@@ -116,6 +145,12 @@ namespace Core
         Grid,
         ScrollerVertical,
         ScrollerHorizontal,
+    }
+
+    public enum PartyTargetSelections
+    {
+        item,
+        skill,
     }
 
 }

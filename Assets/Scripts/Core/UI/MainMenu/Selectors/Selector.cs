@@ -15,7 +15,15 @@ namespace Core
         //Grid
         public int columnCount = 1;
 
-        //Scroll
+        /// Private Parameters
+        [SerializeField] private Vector3 mountingOffset;
+        [SerializeField] private GameObject imageHolder;
+
+        [SerializeField] private float SelectorSpeed = 8f;
+
+
+        //Scrollable Stuff
+        [Header("Scrollable")]
         public bool scrollable;
         public ScrollRect scrollRect;
         public int scrollMovementTrigger;
@@ -24,13 +32,7 @@ namespace Core
         float scrollableCount;
         private float itemHeight;
 
-
-        /// Private Parameters
-        [SerializeField] private Vector3 mountingPosition;
-        [SerializeField] private GameObject imageHolder;
-
-        [SerializeField] private float SelectorSpeed = 8f;
-
+        /// Private
         private float selectorSpeed = 8f;
 
         //Input
@@ -76,9 +78,9 @@ namespace Core
 
 
             if (selectableOptions.Count > 0)
-                rectTransform.sizeDelta = new Vector2(selectableOptions[0].sizeDelta.x, rectTransform.sizeDelta.y + mountingPosition.y);
+                rectTransform.sizeDelta = new Vector2(selectableOptions[0].sizeDelta.x, rectTransform.sizeDelta.y + mountingOffset.y);
 
-            imageHolder.transform.position += mountingPosition;
+            imageHolder.transform.position += mountingOffset;
 
             itemHeight = selectableOptions[0].rect.size.y;
 
