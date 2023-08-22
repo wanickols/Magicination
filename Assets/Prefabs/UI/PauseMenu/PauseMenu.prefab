@@ -1918,6 +1918,10 @@ PrefabInstance:
       value: Selector
       objectReference: {fileID: 0}
     - target: {fileID: 4985436888673848652, guid: 8b4d8de31b1a01b49a10719230807db7, type: 3}
+      propertyPath: mountingOffset.x
+      value: -32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985436888673848652, guid: 8b4d8de31b1a01b49a10719230807db7, type: 3}
       propertyPath: mountingPosition.x
       value: -92
       objectReference: {fileID: 0}

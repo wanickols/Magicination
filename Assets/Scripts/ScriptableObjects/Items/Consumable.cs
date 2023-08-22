@@ -15,6 +15,11 @@ namespace Core
 
         public void Consume()
         {
+            if (data.augData != null)
+            {
+                Augmentation aug = data.augData.CreateAugmentation();
+                aug.ApplyEffect();
+            }
             Debug.Log("Consumed");
             Party.bag.Remove(this);
             Destroy(this);

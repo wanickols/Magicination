@@ -14,6 +14,8 @@ public class ItemData
     public int requiredLevel;
 
     public static int nextID = 0;
+    public AugmentationData augData;
+
 
     public ItemData()
     {

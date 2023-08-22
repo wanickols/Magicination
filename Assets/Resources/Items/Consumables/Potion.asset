@@ -20,3 +20,4 @@ MonoBehaviour:
     quantity: 1
     sprite: {fileID: -1792369166, guid: 00dbbd8f5c36ba343add51bde370bc51, type: 3}
     requiredLevel: 0
+    augData: {fileID: 11400000, guid: e812f9191c94e1d40b03a80c4b0b3011, type: 2}
