@@ -19,7 +19,6 @@ namespace Core
         /// Public Functions
         public void initTargets(PartyTargetSelections selectionType, Consumable item)
         {
-            targets.Clear();
             this.selectionType = selectionType;
 
             if (item != null)
@@ -52,6 +51,7 @@ namespace Core
         public void Select(int selected)
         {
             currItem.Consume(targets[selected].member);
+            targets[selected].updateValues();
         }
 
         public void updateData()

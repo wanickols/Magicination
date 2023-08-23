@@ -102,16 +102,16 @@ namespace Core
         }
 
 
-        private void augmentLVL(int val) => target.Stats.LV += val;
-        private void augmentHP(int val) => target.Stats.HP += val;
-        private void augmentEXP(int val) => target.Stats.EXP += val;
-        private void augmentMP(int val) => target.Stats.MP += val;
-        private void augmentATK(int val) => target.Stats.ATK += val;
-        private void augmentDEF(int val) => target.Stats.DEF += val;
-        private void augmentMATK(int val) => target.Stats.MATK += val;
-        private void augmentMDEF(int val) => target.Stats.MDEF += val;
-        private void augmentSPD(int val) => target.Stats.SPD += val;
-        private void augmentEVS(int val) => target.Stats.EVS += val;
+        private void augmentLVL(int val) => target.stats.LV += val;
+        private void augmentHP(int val) => target.stats.HP += val;
+        private void augmentEXP(int val) => target.stats.EXP += val;
+        private void augmentMP(int val) => target.stats.MP += val;
+        private void augmentATK(int val) => target.stats.ATK += val;
+        private void augmentDEF(int val) => target.stats.DEF += val;
+        private void augmentMATK(int val) => target.stats.MATK += val;
+        private void augmentMDEF(int val) => target.stats.MDEF += val;
+        private void augmentSPD(int val) => target.stats.SPD += val;
+        private void augmentEVS(int val) => target.stats.EVS += val;
         private void augmentACC(int val) => Debug.Log("Accuracy Not implemented)");
 
 

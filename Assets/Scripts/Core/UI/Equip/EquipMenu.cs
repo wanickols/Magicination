@@ -55,7 +55,7 @@ namespace Core
         {
 
             //Top Values
-            partyMemberFace.sprite = partyMember.MenuPortrait; //TODO FIX ME 
+            partyMemberFace.sprite = partyMember.MenuPortrait; /// TODO FIX ME 
             displayName.text = partyMember.DisplayName;
             Stats sts = partyMember.Stats;
             lvlVal.text = sts.LV.ToString();
