@@ -15,7 +15,7 @@ public class AugmentationData : ScriptableObject
     [SerializeField] private List<int> values;
 
     // The method that creates an augmentation instance from the data
-    public Augmentation CreateAugmentation()
+    public Augmentation CreateAugmentation(PartyMember member)
     {
         if (types.Count != values.Count)
         {
@@ -32,7 +32,7 @@ public class AugmentationData : ScriptableObject
             i++;
         }
 
-        return new Augmentation(displayName, description, cost, duration, target, augs);
+        return new Augmentation(displayName, description, cost, duration, member, augs);
     }
 }
 

@@ -13,16 +13,14 @@ namespace Core
             set => data = value;
         }
 
-        public void Consume()
+        public void Consume(PartyMember consumer)
         {
             if (data.augData != null)
             {
-                Augmentation aug = data.augData.CreateAugmentation();
+                Augmentation aug = data.augData.CreateAugmentation(consumer);
                 aug.ApplyEffect();
             }
-            Debug.Log("Consumed");
             Party.bag.Remove(this);
-            Destroy(this);
         }
     }
 }

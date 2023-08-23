@@ -48,6 +48,14 @@ namespace Core
             initPlayer(); // map
             initCutscene(); // state map
 
+
+            Consumable potion = Resources.Load<Consumable>("items/consumables/potion");
+            Consumable revive = Resources.Load<Consumable>("items/consumables/revive");
+
+            Party.bag.clear();
+            Party.bag.Add(potion);
+            Party.bag.Add(revive);
+
         }
 
         private void Start()

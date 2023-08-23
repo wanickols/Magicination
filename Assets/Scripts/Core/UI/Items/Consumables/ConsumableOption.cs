@@ -22,7 +22,7 @@ namespace Core
         }
         public void clear()
         {
-            icon = null;
+            icon.sprite = null;
             consumable = null;
             textBox.text = string.Empty;
         }

@@ -15,6 +15,10 @@ namespace Core
         private Selector equipmentSelector => mainWindow.equipmentSelector;
         private Selector equippableSelector => mainWindow.equippableSelector;
         private Selector itemActionSelector => mainWindow.itemActionBar;
+        private Selector itemSelector => mainWindow.itemSelector;
+        private Selector partyMemberSelector => mainWindow.partyMemberSelector;
+
+
 
         //States
         private Dictionary<MenuState, Selector> stateSelector = new Dictionary<MenuState, Selector>();
@@ -34,24 +38,13 @@ namespace Core
             //Connecting selectors to states
             stateSelector.Add(MenuState.Main, mainSelector);
             stateSelector.Add(MenuState.MemberSelection, memberSelector);
-            stateSelector.Add(MenuState.EquipmentSelection, equipmentSelector);
-            stateSelector.Add(MenuState.EquippableSelection, equippableSelector);
-
-        }
-
-        public void addItemSelector(Selector itemSelector)
-        {
             stateSelector.Add(MenuState.ItemSelection, itemSelector);
             stateSelector.Add(MenuState.ItemActionSelection, itemActionSelector);
-        }
-        public void removeItemSelector()
-        {
-            stateSelector.Remove(MenuState.ItemSelection);
-            stateSelector.Remove(MenuState.ItemActionSelection);
-        }
+            stateSelector.Add(MenuState.EquipmentSelection, equipmentSelector);
+            stateSelector.Add(MenuState.EquippableSelection, equippableSelector);
+            stateSelector.Add(MenuState.PartyTargetSelection, partyMemberSelector);
 
-        public void addPartyTargetSelector(Selector targetSelector) => stateSelector.Add(MenuState.PartyTargetSelection, targetSelector);
-        public void removePartyTargetSelector() => stateSelector.Remove(MenuState.PartyTargetSelection);
+        }
 
         public void Cancel()
         {
@@ -64,12 +57,12 @@ namespace Core
                     returnToMain();
                     break;
                 case (MenuState.PartyTargetSelection):
-                    mainWindow.closePartyTargetWindow(this);
                     SetMenuState(prevState, true);
+                    mainWindow.closePartyTargetWindow();
                     break;
                 case (MenuState.ItemActionSelection):
                     returnToMain();
-                    mainWindow.closeItemView(this);
+                    mainWindow.closeItemView();
                     mainWindow.ShowDefaultView();
                     break;
                 case (MenuState.ItemSelection):
@@ -105,7 +98,7 @@ namespace Core
                         SetMenuState(MenuState.ItemSelection, true);
                     break;
                 case (MenuState.ItemSelection):
-                    mainWindow.itemSelected(CurrentSelector.SelectedIndex, this);
+                    mainWindow.itemSelected(CurrentSelector.SelectedIndex);
                     SetMenuState(MenuState.PartyTargetSelection, false);
                     break;
                 case (MenuState.EquipmentSelection):
@@ -173,7 +166,7 @@ namespace Core
             switch ((mainSelections)mainSelector.SelectedIndex)
             {
                 case mainSelections.Items:
-                    mainWindow.ShowItemView(this);
+                    mainWindow.ShowItemView();
                     SetMenuState(MenuState.ItemActionSelection, false);
                     break;
                 case mainSelections.Skills:
