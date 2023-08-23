@@ -9,7 +9,7 @@ namespace Core
         public PartyTargetSelections selectionType { get; private set; }
 
         /// Private Parametres
-        [SerializeField] private GameObject partyMemberTargetPrefab;
+
         [SerializeField] private GameObject selectorPrefab;
         [SerializeField] private GameObject content;
 
@@ -17,62 +17,41 @@ namespace Core
         private Consumable currItem;
 
         /// Public Functions
-        public Selector initTargets(PartyTargetSelections selectionType, Consumable item)
+        public void initTargets(PartyTargetSelections selectionType, Consumable item)
         {
+            targets.Clear();
             this.selectionType = selectionType;
 
             if (item != null)
                 currItem = item;
 
-            foreach (PartyMember partyMember in Party.ActiveMembers)
-            {
-                PartyMemberTarget target = Instantiate(partyMemberTargetPrefab, content.transform).GetComponent<PartyMemberTarget>();
-                target.setMember(partyMember);
-                targets.Add(target);
-            }
+            int activeCount = Party.ActiveMembers.Count;
 
-            foreach (PartyMember partyMember in Party.ReserveMembers)
+            int i = 0;
+            foreach (Transform t in content.transform)
             {
-                PartyMemberTarget target = Instantiate(partyMemberTargetPrefab, content.transform).GetComponent<PartyMemberTarget>();
-                target.setMember(partyMember);
-                targets.Add(target);
-            }
+                PartyMemberTarget target = t.GetComponent<PartyMemberTarget>();
+                if (i < activeCount)
+                {
+                    t.gameObject.SetActive(true);
+                    target.setMember(Party.ActiveMembers[i]);
+                    targets.Add(target);
+                }
+                else if (i < (activeCount + Party.ReserveMembers.Count))
+                {
+                    t.gameObject.SetActive(true);
+                    target.setMember(Party.ActiveMembers[i - activeCount]);
+                    targets.Add(target);
+                }
+                else
+                    t.gameObject.SetActive(false);
 
-            Selector selector = Instantiate(selectorPrefab, content.transform).GetComponent<Selector>();
-            selector.type = SelectorType.ScrollerVertical;
-            return selector;
+                i++;
+            }
         }
-
         public void Select(int selected)
         {
-            currItem.Consume();
-        }
-
-        public void addTarget(PartyMember member)
-        {
-
-            PartyMemberTarget target = Instantiate(partyMemberTargetPrefab, content.transform).GetComponent<PartyMemberTarget>();
-            target.setMember(member);
-            targets.Add(target);
-        }
-
-        public void refreshTargets()
-        {
-            if (targets.Count > 0)
-            {
-                int i = 0;
-                foreach (PartyMember partyMember in Party.ActiveMembers)
-                {
-                    targets[i].setMember(partyMember);
-                    i++;
-                }
-
-                foreach (PartyMember partyMember in Party.ReserveMembers)
-                {
-                    targets[i].setMember(partyMember);
-                    i++;
-                }
-            }
+            currItem.Consume(targets[selected].member);
         }
 
         public void updateData()

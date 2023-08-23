@@ -8,12 +8,17 @@ namespace Core
 
 
         /// Public Parameters
+        [Header("Selectors")]
         public Selector memberSelector;
         public Selector equipmentSelector, equippableSelector;
-        public Selector itemActionBar => itemMenu.actionSelector;
+        public Selector itemActionBar;
+        public Selector itemSelector;
+        public Selector partyMemberSelector;
 
+        [Header("Windows")]
         /// Private Paremeters
-        [SerializeField] private GameObject EquipWindow, arsenalWindow;
+        [SerializeField] private GameObject EquipWindow;
+        [SerializeField] private GameObject arsenalWindow;
         [SerializeField] private GameObject ItemsWindow;
         [SerializeField] private GameObject PartyTargetWindow;
 
@@ -50,18 +55,13 @@ namespace Core
 
         //Party Targets
 
-        public void openPartyTargetWindow(SelectorManager manager, PartyTargetSelections selection, Consumable item = null)
+        public void openPartyTargetWindow(PartyTargetSelections selection, Consumable item = null)
         {
             PartyTargetWindow.SetActive(true);
-            manager.addPartyTargetSelector(partyTargetMenu.initTargets(selection, item));
+            partyTargetMenu.initTargets(selection, item);
         }
 
-        public void closePartyTargetWindow(SelectorManager manager)
-        {
-            PartyTargetWindow.SetActive(false);
-            manager.removePartyTargetSelector();
-        }
-
+        public void closePartyTargetWindow() => PartyTargetWindow.SetActive(false);
         public void partyTargetSelected(int selected)
         {
             partyTargetMenu.Select(selected);
@@ -69,6 +69,7 @@ namespace Core
             switch (partyTargetMenu.selectionType)
             {
                 case PartyTargetSelections.item:
+                    itemMenu.initItems();
                     break;
                 case PartyTargetSelections.skill:
                     break;
@@ -129,30 +130,28 @@ namespace Core
         public void swapEquippable(Selector selector) => arsenalMenu.swapEquippable(selector);
 
         //Item Menu
-        public void ShowItemView(SelectorManager manager)
+        public void ShowItemView()
         {
             hidePartyMembers();
             ItemsWindow.SetActive(true);
-
-            manager.addItemSelector(itemMenu.initItems());
+            itemMenu.initItems();
 
         }
 
-        public void closeItemView(SelectorManager manager)
+        public void closeItemView()
         {
             ItemsWindow.SetActive(false);
             itemMenu.clearItems();
-            manager.removeItemSelector();
         }
 
         public bool itemActionSelected(int selected) => itemMenu.setFlag(selected);
-        public void itemSelected(int selected, SelectorManager manager)
+        public void itemSelected(int selected)
         {
 
 
             Consumable item = itemMenu.selectItem(selected);
 
-            openPartyTargetWindow(manager, PartyTargetSelections.item, item);
+            openPartyTargetWindow(PartyTargetSelections.item, item);
 
         }
 

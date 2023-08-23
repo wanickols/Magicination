@@ -20,7 +20,7 @@ namespace Core
         [SerializeField] private GameObject imageHolder;
 
         [SerializeField] private float SelectorSpeed = 8f;
-
+        [SerializeField] private bool allowEmpty = false;
 
         //Scrollable Stuff
         [Header("Scrollable")]
@@ -54,8 +54,11 @@ namespace Core
             get => _selectedIndex;
             set
             {
-                _selectedIndex = value;
-                SelectionChanged?.Invoke();
+                if (allowEmpty || selectableOptions[value].gameObject.activeInHierarchy)
+                {
+                    _selectedIndex = value;
+                    SelectionChanged?.Invoke();
+                }
             }
         }
         public IReadOnlyList<RectTransform> SelectableOptions => selectableOptions;
@@ -73,9 +76,11 @@ namespace Core
 
 
             for (int i = 0; i < transform.parent.childCount; i++)
-                if (getChild(i).CompareTag("Selectable"))
-                    selectableOptions.Add(getChild(i).GetComponent<RectTransform>());
-
+            {
+                Transform child = getChild(i);
+                if (child.CompareTag("Selectable"))
+                    selectableOptions.Add(child.GetComponent<RectTransform>());
+            }
 
             if (selectableOptions.Count > 0)
                 rectTransform.sizeDelta = new Vector2(selectableOptions[0].sizeDelta.x, rectTransform.sizeDelta.y + mountingOffset.y);

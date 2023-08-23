@@ -10,7 +10,7 @@ namespace Core
         [SerializeField] private TextMeshProUGUI Name, HP, MP;
 
 
-        private PartyMember member;
+        public PartyMember member { get; private set; }
 
         public void setMember(PartyMember member)
         {

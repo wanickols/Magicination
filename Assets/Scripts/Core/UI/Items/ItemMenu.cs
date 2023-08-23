@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Core
@@ -6,40 +7,43 @@ namespace Core
     public class ItemMenu : MonoBehaviour
     {
 
-        /// Public Parameters
-        public Selector actionSelector;
 
         /// Private Parameters
-        [SerializeField] private GameObject items;
-        [SerializeField] private GameObject ConsumableOptionPrefab;
+        [SerializeField] private GameObject content;
         [SerializeField] private GameObject ScrollingGridSelectorPrefab;
 
         //Selection
         private itemMenuAction onSelectAction = itemMenuAction.use;
         private List<ConsumableOption> options = new List<ConsumableOption>();
 
-        public Selector initItems()
-        {
-            foreach (KeyValuePair<Consumable, int> nom in Party.bag.consumables)
-            {
-                ConsumableOption option = Instantiate(ConsumableOptionPrefab, items.transform).GetComponent<ConsumableOption>();
-                option.changeOption(nom.Key, nom.Value);
-                options.Add(option);
-            }
 
-            Selector selector = Instantiate(ScrollingGridSelectorPrefab, items.transform).GetComponent<Selector>();
-            selector.type = SelectorType.Grid;
-            selector.gameObject.SetActive(false);
-            return selector;
+        public void initItems()
+        {
+            int i = 0;
+            foreach (Transform t in content.transform)
+            {
+                ConsumableOption option = t.GetComponent<ConsumableOption>();
+
+                if (option != null && i < Party.bag.consumables.Count)
+                {
+                    t.gameObject.SetActive(true);
+                    option.changeOption(Party.bag.consumables.Keys.ElementAt(i), Party.bag.consumables.Values.ElementAt(i));
+                    options.Add(option);
+                }
+                else
+                    t.gameObject.SetActive(false);
+
+                i++;
+            }
         }
 
         public void clearItems()
         {
-            foreach (Transform t in items.transform)
+            foreach (Transform t in content.transform)
             {
                 ConsumableOption option = t.GetComponent<ConsumableOption>();
                 option?.clear();
-                Destroy(t.gameObject);
+                t.gameObject.SetActive(false);
             }
         }
 

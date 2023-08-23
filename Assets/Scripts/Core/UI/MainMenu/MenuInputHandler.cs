@@ -109,13 +109,16 @@ namespace Core
         private bool scrollerInput(bool vertical, int increment = 1)
         {
             if (vertical)
-                verticalInput(increment);
-            else
-                horizontalInput(increment);
+            {
+                if (verticalInput(increment))
+                    return true;
+            }
+            else if (horizontalInput(increment))
+                return true;
 
 
 
-            return true;
+            return false;
         }
 
         private void checkSelectedInput()

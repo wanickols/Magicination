@@ -31,5 +31,7 @@ namespace Core
                 consumables.Remove(consumable);
 
         }
+
+        public void clear() => consumables.Clear();
     }
 }

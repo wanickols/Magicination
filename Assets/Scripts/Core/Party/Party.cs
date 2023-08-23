@@ -73,11 +73,6 @@ namespace Core
             arsenal.Add(testChest);
             arsenal.Add(jadeRing);
 
-            Consumable potion = Resources.Load<Consumable>("items/consumables/potion");
-            Consumable revive = Resources.Load<Consumable>("items/consumables/revive");
-
-            bag.Add(potion);
-            bag.Add(revive);
         }
     }
 }
