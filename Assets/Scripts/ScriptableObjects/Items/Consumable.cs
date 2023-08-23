@@ -19,6 +19,7 @@ namespace Core
             {
                 Augmentation aug = data.augData.CreateAugmentation(consumer);
                 aug.ApplyEffect();
+
             }
             Party.bag.Remove(this);
         }
