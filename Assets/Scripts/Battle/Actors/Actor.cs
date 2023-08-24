@@ -47,6 +47,7 @@ namespace Battle
             {
                 isTakingTurn = true;
                 Battle.Attack += attack;
+                Battle.UseItem += useItem;
                 StartCoroutine(gfx.Co_MoveToAttack());
             }
 
@@ -95,14 +96,19 @@ namespace Battle
 
         protected virtual void attack(List<Actor> targets)
         {
-
             Battle.Attack -= attack;
-
-
             Attack command = new Attack(this, targets);
+            StartCoroutine(ExecuteCommand(command));
+        }
+        protected virtual void useItem(List<Actor> targets, IConsumable item)
+        {
+
+            Battle.UseItem -= useItem;
+            UseItem command = new UseItem(targets, item);
 
             StartCoroutine(ExecuteCommand(command));
         }
+
 
         //Battle Choice
         protected IEnumerator checkAI()

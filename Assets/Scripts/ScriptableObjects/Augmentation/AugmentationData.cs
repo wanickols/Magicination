@@ -1,3 +1,4 @@
+using Battle;
 using Core;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,12 @@ public class AugmentationData : ScriptableObject
     [SerializeField] private string description; // The description of the augmentation
     [SerializeField] private int cost; // The cost of using the augmentation (in MP or item quantity)
     [SerializeField] private float duration; // The duration of the augmentation (in seconds or turns)
-    private PartyMember target; // The target of the augmentation (self, ally, enemy, all)
+    private Stats target; // The target of the augmentation (self, ally, enemy, all)
     [SerializeField] private List<AugType> types;
     [SerializeField] private List<int> values;
 
     // The method that creates an augmentation instance from the data
-    public Augmentation CreateAugmentation(PartyMember member)
+    public Augmentation CreateAugmentation(Stats stats)
     {
         if (types.Count != values.Count)
         {
@@ -32,7 +33,7 @@ public class AugmentationData : ScriptableObject
             i++;
         }
 
-        return new Augmentation(displayName, description, cost, duration, member, augs);
+        return new Augmentation(displayName, description, cost, duration, stats, augs);
     }
 }
 

@@ -25,6 +25,16 @@ namespace Battle
 
             return damage;
         }
+        public static void useItem(Actor defender, IConsumable data)
+        {
+            Stats dStats = defender.Stats;
+            data.Consume(dStats);
+
+            checkDeath(defender, false);
+
+            defender.updateHealth?.Invoke(dStats.HP, dStats.MAXHP);
+            defender.updateMP?.Invoke(dStats.MP, dStats.MAXMP);
+        }
 
 
         public static void checkDeath(Actor actor, bool instant)

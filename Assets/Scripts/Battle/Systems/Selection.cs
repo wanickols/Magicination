@@ -18,6 +18,7 @@ public class Selection
 
     ///Public Parameters
     public bool hasTarget = false;
+    public BattleMainSelections currSelectionType;
     public List<Actor> targets { get; private set; } = new List<Actor>();
 
     ///Private Paramaters
@@ -27,10 +28,11 @@ public class Selection
     private Actor currSelected = null;
     private GameObject selector => currSelected.gfx.selector;
 
-    ///Public Functions
-    public IEnumerator CO_SelectSingleTarget(List<Actor> allies, List<Actor> enemies)
-    {
 
+    ///Public Functions
+    public IEnumerator CO_SelectSingleTarget(List<Actor> allies, List<Actor> enemies, BattleMainSelections type)
+    {
+        currSelectionType = type;
         currSelected = enemies.FirstOrDefault();
         selector.SetActive(true);
         yield return new WaitForSeconds(.1f);

@@ -9,21 +9,26 @@ namespace Battle
     [Serializable]
     public class BattleSelection : SelectionManager
     {
+        /// Public Parameter
+        public override Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
+        public Consumable currItem;
+
+
+        /// Private Parameters
+        [Header("Selectors")]
         [SerializeField] private Selector mainSelector;
         [SerializeField] private Selector itemSelector;
         //[SerializeField] private Selector skillSelector;
 
-
         //States
+        private BattleMenuStates menuState = BattleMenuStates.mainSelection;
         private Dictionary<BattleMenuStates, Selector> stateSelector = new Dictionary<BattleMenuStates, Selector>();
 
-        BattleMenuStates menuState = BattleMenuStates.mainSelection;
-
-        public override Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
-
+        //Managers
         private BattleWindow battleWindow;
         private Battle battle;
 
+        /// Public Functions
         public void init(BattleWindow battleWindow, Battle manager)
         {
             battle = manager;
@@ -34,6 +39,7 @@ namespace Battle
             //stateSelector.Add(BattleMenuStates.skillSelection, skillSelector);
         }
 
+        //Overrides
         public override void Accept()
         {
             switch (menuState)
@@ -42,12 +48,14 @@ namespace Battle
                     ProcessMainSelection();
                     break;
                 case BattleMenuStates.itemSelection:
+                    currItem = battleWindow.getItem(CurrentSelector.SelectedIndex);
+                    battle.trySelect(BattleMainSelections.Items);
+                    Cancel();
                     break;
                 case BattleMenuStates.skillSelection:
                     break;
             }
         }
-
         public override void Cancel()
         {
             switch (menuState)
@@ -63,23 +71,15 @@ namespace Battle
                     break;
             }
         }
+        public override void checkHover() { }
 
-        public override void checkHover()
-        {
-        }
-
-        private void returnToMain()
-        {
-            SetMenuState(BattleMenuStates.mainSelection, true);
-        }
-
-
+        /// Private Functions
         private void ProcessMainSelection()
         {
             switch ((BattleMainSelections)mainSelector.SelectedIndex)
             {
                 case BattleMainSelections.Attack:
-                    battle.trySelect();
+                    battle.trySelect(BattleMainSelections.Attack);
                     break;
                 case BattleMainSelections.Items:
                     battleWindow.ShowItemWindow();
@@ -95,7 +95,6 @@ namespace Battle
                     break;
             }
         }
-
         private void SetMenuState(BattleMenuStates newState, bool cancel)
         {
             if (!cancel)
@@ -117,5 +116,10 @@ namespace Battle
 
 
         }
+        private void returnToMain()
+        {
+            SetMenuState(BattleMenuStates.mainSelection, true);
+        }
+
     }
 }

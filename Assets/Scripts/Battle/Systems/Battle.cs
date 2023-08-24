@@ -1,7 +1,7 @@
+using Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Battle
 {
@@ -11,6 +11,8 @@ namespace Battle
         public static Action endBattle;
         public static Action quit;
         public static Action<List<Actor>> Attack;
+        public static Action<List<Actor>, IConsumable> UseItem;
+
 
         /// Public parameters
         //Data from Core
@@ -27,7 +29,6 @@ namespace Battle
         private EnemyGenerator enemyGenerator;
         private PartyGenerator partyGenerator;
         private Selection selection;
-        private EventSystem eventSystem;
 
         [Header("Managers")]
         [SerializeField] private BattleUIManager battleUI = new BattleUIManager();
@@ -39,19 +40,30 @@ namespace Battle
         /// Public functions
 
         //Listeners
-        public void tryRun()
-        {
-            endBattle?.Invoke();
-        }
+        public void tryRun() { endBattle?.Invoke(); }
 
-        public void trySelect()
+        public void trySelect(BattleMainSelections type)
         {
             if (battleState == BattleStates.battle)
             {
-                eventSystem.enabled = false;
                 battleState = BattleStates.select;
-                StartCoroutine(selection.CO_SelectSingleTarget(data.allies, data.enemies));
+                StartCoroutine(selection.CO_SelectSingleTarget(data.allies, data.enemies, type));
                 battleUI.setBattleMenu(false);
+            }
+        }
+        private void tryEnd(bool win)
+        {
+            battleUI.hideUI();
+            isEnding = true;
+
+            if (!win)
+            {
+                StartCoroutine(battleUI.CO_GameOver());
+            }
+            else
+            {
+                //Show Victory Stuff
+                endBattle?.Invoke();
             }
         }
 
@@ -75,7 +87,6 @@ namespace Battle
                 return;
             }
 
-
             bool enemiesDead = true;
             foreach (Actor enemy in data.enemies)
             {
@@ -93,33 +104,12 @@ namespace Battle
                 return;
             }
 
-
             turnSystem.DetermineTurnOrder(turnBar);
-
-        }
-        private void tryEnd(bool win)
-        {
-
-
-            battleUI.hideUI();
-            isEnding = true;
-
-            if (!win)
-            {
-                StartCoroutine(battleUI.CO_GameOver());
-            }
-            else
-            {
-                //Show Victory Stuff
-                endBattle?.Invoke();
-            }
         }
 
         /// Unity Functions
         private void Awake()
         {
-            eventSystem = FindAnyObjectByType<EventSystem>();
-
             battleUI.init(data, this);
             selection = new Selection();
             enemyGenerator = new EnemyGenerator(currentRegion);
@@ -187,13 +177,22 @@ namespace Battle
             if (!selection.hasTarget)
                 return;
 
-            battleState = BattleStates.battle;
-
-
             List<Actor> targets = selection.targets;
-            eventSystem.enabled = true;
 
-            Battle.Attack?.Invoke(targets);
+            switch (selection.currSelectionType)
+            {
+                case BattleMainSelections.Attack:
+                    Attack?.Invoke(targets);
+                    break;
+                case BattleMainSelections.Items:
+                    Consumable item = battleUI.getItem();
+                    UseItem?.Invoke(targets, item);
+                    break;
+                default:
+                    Debug.Log("Battle Selection Type Not Implemented in Battle Manager");
+                    break;
+            }
+            battleState = BattleStates.battle;
         }
 
         //Deconstructor

@@ -10,6 +10,7 @@ namespace Battle
     [Serializable]
     public class BattleUIManager
     {
+        /// Private Parameters
         [Header("UI")]
         [SerializeField] private GameObject Stats;
         [SerializeField] private GameObject StatContainerPrefab;
@@ -28,7 +29,7 @@ namespace Battle
         private Selection selection = new Selection();
 
 
-        /// Public
+        /// Public Functions
         public void init(BattleData data, Battle battle)
         {
             this.data = data;
@@ -88,6 +89,8 @@ namespace Battle
 
             Battle.quit?.Invoke();
         }
+
+        public Consumable getItem() => selectorManager.currItem;
 
     }
 
