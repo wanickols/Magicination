@@ -44,7 +44,7 @@ namespace Battle
             endBattle?.Invoke();
         }
 
-        public void tryAttack()
+        public void trySelect()
         {
             if (battleState == BattleStates.battle)
             {
@@ -120,7 +120,7 @@ namespace Battle
         {
             eventSystem = FindAnyObjectByType<EventSystem>();
 
-            battleUI.initData(data);
+            battleUI.init(data, this);
             selection = new Selection();
             enemyGenerator = new EnemyGenerator(currentRegion);
             partyGenerator = new PartyGenerator();
@@ -138,8 +138,10 @@ namespace Battle
         }
         private void Update()
         {
-            if (battleState == BattleStates.select)
+            if (battleState != BattleStates.battle)
                 return;
+
+            battleUI.update();
 
             if (turnSystem.isTakingTurn)
                 return;

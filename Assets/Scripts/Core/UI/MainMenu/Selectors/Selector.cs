@@ -35,8 +35,6 @@ namespace Core
         /// Private
         private float selectorSpeed = 8f;
 
-        //Input
-        protected PauseMenu pauseMenu;
 
         //Components
         private Animator animator;
@@ -69,7 +67,6 @@ namespace Core
 
         protected virtual void Awake()
         {
-            pauseMenu = GetComponentInParent<PauseMenu>();
             rectTransform = GetComponent<RectTransform>();
             animator = GetComponent<Animator>();
 

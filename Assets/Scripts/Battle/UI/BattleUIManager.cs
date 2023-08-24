@@ -1,3 +1,4 @@
+using Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,11 +17,24 @@ namespace Battle
         [SerializeField] private GameObject BattleUIContainer;
         [SerializeField] private GameObject gameOverPrefab;
 
+        [Header("Selector Manager")]
+        [SerializeField] private BattleSelection selectorManager = new BattleSelection();
+        [SerializeField] private MenuInputHandler menuInputHandler = new MenuInputHandler();
+        [SerializeField] private BattleWindow battleWindow;
+
+
         private BattleData data;
         private List<StatContainer> statsContainerList = new List<StatContainer>();
+        private Selection selection = new Selection();
+
 
         /// Public
-        public void initData(BattleData data) => this.data = data;
+        public void init(BattleData data, Battle battle)
+        {
+            this.data = data;
+            selectorManager.init(battleWindow, battle); ;
+            menuInputHandler.Init(selectorManager);
+        }
 
         public StatContainer AddPartyMemberUI(PartyMember member)
         {
@@ -33,6 +47,11 @@ namespace Battle
 
             return stat;
 
+        }
+
+        public void update()
+        {
+            menuInputHandler.HandleInput();
         }
 
         public void LinkListeners(Actor actor)
@@ -69,8 +88,6 @@ namespace Battle
 
             Battle.quit?.Invoke();
         }
-
-
 
     }
 

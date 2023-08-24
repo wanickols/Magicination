@@ -24,7 +24,7 @@ namespace Core
 
         //Components
         private MainWindow mainWindow;
-        private SelectorManager selectorManager;
+        private PauseMenuSelection selectorManager;
 
         //Animations
         private Animator animator;
@@ -50,7 +50,7 @@ namespace Core
             mainWindow = Instantiate(MainWindowPrefab, transform).GetComponentInChildren<MainWindow>();
             animator = GetComponent<Animator>();
 
-            selectorManager = new SelectorManager(mainWindow, this);
+            selectorManager = new PauseMenuSelection(mainWindow, this);
             inputHandler.Init(selectorManager);
 
 
