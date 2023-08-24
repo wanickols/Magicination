@@ -10,7 +10,6 @@ namespace Core
 
         /// Private Parameters
         [SerializeField] private GameObject content;
-        [SerializeField] private GameObject ScrollingGridSelectorPrefab;
 
         //Selection
         private itemMenuAction onSelectAction = itemMenuAction.use;
@@ -24,7 +23,10 @@ namespace Core
             {
                 ConsumableOption option = t.GetComponent<ConsumableOption>();
 
-                if (option != null && i < Party.bag.consumables.Count)
+                if (option == null)
+                    continue;
+
+                if (i < Party.bag.consumables.Count)
                 {
                     t.gameObject.SetActive(true);
                     option.changeOption(Party.bag.consumables.Keys.ElementAt(i), Party.bag.consumables.Values.ElementAt(i));

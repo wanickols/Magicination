@@ -16,7 +16,7 @@ namespace Core
         //Input
         private float pressThreshold = .005f; // The minimum time between key presses private float
         private float lastPressTime = 0f; // The time of the last key press
-        private SelectorManager selectorManager;
+        private SelectionManager selectorManager;
         private Selector currSelector => selectorManager.CurrentSelector;
 
         private int scrollIndex = 0;
@@ -37,7 +37,7 @@ namespace Core
         /// Public Functions
         //Accessors
         public void resetLastPressedTime() => lastPressTime = Time.time;
-        public void Init(SelectorManager manager)
+        public void Init(SelectionManager manager)
         {
             selectorManager = manager;
         }

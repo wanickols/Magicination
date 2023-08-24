@@ -14,13 +14,8 @@ namespace Core
 
         public static scene savedScene;
         private static Vector2 savedPlayerLocation;
-        private Player player;
+        private Player player => Game.manager.player;
         private int currIndex = 0;
-
-        public SceneLoader(Player player)
-        {
-            this.player = player;
-        }
 
         public IEnumerator Co_loadScene(scene scene, GameObject transitionPrefab, Map map)
         {

@@ -83,7 +83,7 @@ namespace Core
             DontDestroyOnLoad(player);
         }
         private void initCutscene() => cutsceneManager = new CutsceneManager(stateManager);
-        private void initSceneLoader() => sceneLoader = new SceneLoader(player);
+        private void initSceneLoader() => sceneLoader = new SceneLoader();
         private void initInput() => inputHandler = new InputHandler(player, uiManager.mainMenu, mapManager, stateManager);
         private void initDialogue() => DialogueManager.instance.Init(inputHandler);
     }

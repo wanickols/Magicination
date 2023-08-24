@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core
 {
-    public class SelectorManager
+    public class PauseMenuSelection : SelectionManager
     {
         //Variables
         private MainWindow mainWindow;
@@ -26,11 +26,11 @@ namespace Core
 
 
         /// Public Parameters
-        public Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
+        public override Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
         private MenuState menuState;
         private MenuState prevState;
 
-        public SelectorManager(MainWindow mainWindow, PauseMenu pauseMenu)
+        public PauseMenuSelection(MainWindow mainWindow, PauseMenu pauseMenu)
         {
             this.mainWindow = mainWindow;
             this.pauseMenu = pauseMenu;
@@ -46,7 +46,7 @@ namespace Core
 
         }
 
-        public void Cancel()
+        public override void Cancel()
         {
             switch (menuState)
             {
@@ -79,7 +79,7 @@ namespace Core
 
             }
         }
-        public void Accept()
+        public override void Accept()
         {
             switch (menuState)
             {
@@ -114,7 +114,7 @@ namespace Core
         }
 
         /// Public Functions
-        public void checkHover()
+        public override void checkHover()
         {
             switch (menuState)
             {
@@ -200,8 +200,5 @@ namespace Core
                     break;
             }
         }
-
-
-
     }
 }

@@ -184,5 +184,20 @@ namespace Battle
         select
     };
 
+    public enum BattleMenuStates
+    {
+        mainSelection,
+        itemSelection,
+        skillSelection
+    }
+
+    public enum BattleMainSelections
+    {
+        Attack,
+        Skills,
+        Items,
+        Run
+    }
+
 
 }
