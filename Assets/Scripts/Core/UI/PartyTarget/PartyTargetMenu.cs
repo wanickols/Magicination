@@ -50,7 +50,7 @@ namespace Core
         }
         public void Select(int selected)
         {
-            currItem.Consume(targets[selected].member);
+            currItem.Consume(targets[selected].member.stats);
             targets[selected].updateValues();
         }
 

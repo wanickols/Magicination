@@ -1,3 +1,4 @@
+using Battle;
 using UnityEngine;
 
 namespace Core
@@ -13,11 +14,11 @@ namespace Core
             set => data = value;
         }
 
-        public void Consume(PartyMember consumer)
+        public void Consume(Stats stats)
         {
             if (data.augData != null)
             {
-                Augmentation aug = data.augData.CreateAugmentation(consumer);
+                Augmentation aug = data.augData.CreateAugmentation(stats);
                 aug.ApplyEffect();
 
             }

@@ -1,4 +1,6 @@
+using Battle;
+
 public interface IConsumable
 {
-    public void Consume(PartyMember member);
+    public void Consume(Stats member);
 }

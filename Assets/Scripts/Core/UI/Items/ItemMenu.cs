@@ -6,8 +6,6 @@ namespace Core
 {
     public class ItemMenu : MonoBehaviour
     {
-
-
         /// Private Parameters
         [SerializeField] private GameObject content;
 
@@ -15,7 +13,7 @@ namespace Core
         private itemMenuAction onSelectAction = itemMenuAction.use;
         private List<ConsumableOption> options = new List<ConsumableOption>();
 
-
+        /// Public Functions
         public void initItems()
         {
             int i = 0;
@@ -38,7 +36,6 @@ namespace Core
                 i++;
             }
         }
-
         public void clearItems()
         {
             foreach (Transform t in content.transform)
@@ -48,7 +45,6 @@ namespace Core
                 t.gameObject.SetActive(false);
             }
         }
-
         public bool setFlag(int selected)
         {
             onSelectAction = (itemMenuAction)selected;
@@ -61,7 +57,6 @@ namespace Core
 
             return true;
         }
-
         public Consumable selectItem(int index)
         {
             switch (onSelectAction)
@@ -76,6 +71,7 @@ namespace Core
             return null;
         }
 
+        ///Private Functions
         private void sort()
         {
             Debug.Log("Sorted");

@@ -10,43 +10,43 @@ namespace Core
         /// Events
         public event Action SelectionChanged;
 
+        //All
         public SelectorType type;
 
         //Grid
         public int columnCount = 1;
 
-        /// Private Parameters
-        [SerializeField] private Vector3 mountingOffset;
-        [SerializeField] private GameObject imageHolder;
-
-        [SerializeField] private float SelectorSpeed = 8f;
-        [SerializeField] private bool allowEmpty = false;
-
-        //Scrollable Stuff
         [Header("Scrollable")]
         public bool scrollable;
         public ScrollRect scrollRect;
         public int scrollMovementTrigger;
+
+        /// Private Parameters
+        [SerializeField] private Vector3 mountingOffset;
+        [SerializeField] private GameObject imageHolder;
+        [SerializeField] private float SelectorSpeed = 8f;
+        [SerializeField] private bool allowEmpty = false;
+
+        /// Private Parameters
+        //Scrollable
+        private int half = 0;
         private float itemsPerView = 0;
-        int half = 0;
-        float scrollableCount;
+        private float scrollableCount;
         private float itemHeight;
 
-        /// Private
+        //Local
         private float selectorSpeed = 8f;
-
+        private int _selectedIndex = 0;
 
         //Components
         private Animator animator;
         private RectTransform rectTransform;
         private List<RectTransform> selectableOptions = new List<RectTransform>();
 
-        //Variables
-        private int _selectedIndex = 0;
-        /// Public Paremeters
-        //Acceessors
+        /// Public Functions
+        //Accessors
         public Transform selectedTransform => getChild(SelectedIndex);
-
+        public Transform getChild(int i) => transform.parent.GetChild(i);
         public int SelectedIndex
         {
             get => _selectedIndex;
@@ -60,8 +60,7 @@ namespace Core
             }
         }
         public IReadOnlyList<RectTransform> SelectableOptions => selectableOptions;
-        public Transform getChild(int i) => transform.parent.GetChild(i);
-
+        public void setAnimation(bool animate) => animator.enabled = animate;
 
         /// Unity Functions
 
@@ -95,7 +94,7 @@ namespace Core
         }
 
 
-        void Update()
+        protected void Update()
         {
             if (rectTransform.anchoredPosition != selectableOptions[SelectedIndex].anchoredPosition)
                 MoveToSelectedOption();
@@ -107,7 +106,7 @@ namespace Core
 
         /// Private Functions
         //Movement
-        void UpdateScrollPosition()
+        private void UpdateScrollPosition()
         {
 
             selectorSpeed = SelectorSpeed;
@@ -126,7 +125,7 @@ namespace Core
         {
             rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, selectableOptions[(int)SelectedIndex].anchoredPosition, selectorSpeed);
         }
-        public void setAnimation(bool animate) => animator.enabled = animate;
+
 
     }
 }

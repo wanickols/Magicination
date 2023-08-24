@@ -1,3 +1,4 @@
+using Battle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,11 @@ namespace Core
         public bool costMP = false;
         public int cost; //for mp
         public float duration;
-        public PartyMember target;
+        public Stats target;
         public Dictionary<AugType, int> values;
 
 
-        public Augmentation(string displayName, string description, int cost, float duration, PartyMember target, Dictionary<AugType, int> values)
+        public Augmentation(string displayName, string description, int cost, float duration, Stats target, Dictionary<AugType, int> values)
         {
             this.displayName = displayName;
             this.description = description;
@@ -29,7 +30,7 @@ namespace Core
         {
             if (costMP)
             {
-                if (target.Stats.MP < cost)
+                if (target.MP < cost)
                     return;
             }
 
@@ -102,16 +103,16 @@ namespace Core
         }
 
 
-        private void augmentLVL(int val) => target.stats.LV += val;
-        private void augmentHP(int val) => target.stats.HP += val;
-        private void augmentEXP(int val) => target.stats.EXP += val;
-        private void augmentMP(int val) => target.stats.MP += val;
-        private void augmentATK(int val) => target.stats.ATK += val;
-        private void augmentDEF(int val) => target.stats.DEF += val;
-        private void augmentMATK(int val) => target.stats.MATK += val;
-        private void augmentMDEF(int val) => target.stats.MDEF += val;
-        private void augmentSPD(int val) => target.stats.SPD += val;
-        private void augmentEVS(int val) => target.stats.EVS += val;
+        private void augmentLVL(int val) => target.LV += val;
+        private void augmentHP(int val) => target.HP += val;
+        private void augmentEXP(int val) => target.EXP += val;
+        private void augmentMP(int val) => target.MP += val;
+        private void augmentATK(int val) => target.ATK += val;
+        private void augmentDEF(int val) => target.DEF += val;
+        private void augmentMATK(int val) => target.MATK += val;
+        private void augmentMDEF(int val) => target.MDEF += val;
+        private void augmentSPD(int val) => target.SPD += val;
+        private void augmentEVS(int val) => target.EVS += val;
         private void augmentACC(int val) => Debug.Log("Accuracy Not implemented)");
 
 
