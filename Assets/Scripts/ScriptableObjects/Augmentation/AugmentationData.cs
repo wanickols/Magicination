@@ -11,12 +11,11 @@ namespace MGCNTN
         [SerializeField] private string description; // The description of the augmentation
         [SerializeField] private int cost; // The cost of using the augmentation (in MP or item quantity)
         [SerializeField] private float duration; // The duration of the augmentation (in seconds or turns)
-        private Stats target; // The target of the augmentation (self, ally, enemy, all)
         [SerializeField] private List<AugType> types;
         [SerializeField] private List<int> values;
 
         // The method that creates an augmentation instance from the data
-        public Augmentation CreateAugmentation(Stats stats)
+        public Augmentation CreateAugmentation(Stats target)
         {
             if (types.Count != values.Count)
             {
@@ -33,7 +32,7 @@ namespace MGCNTN
                 i++;
             }
 
-            return new Augmentation(displayName, description, cost, duration, stats, augs);
+            return new Augmentation(displayName, description, cost, duration, target, augs);
         }
     }
 }

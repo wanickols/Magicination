@@ -16,13 +16,15 @@ namespace MGCNTN
         //Grid
         public int columnCount = 1;
 
+        //Offseet
+        [SerializeField] private Vector3 mountingOffset;
+
         [Header("Scrollable")]
         public bool scrollable;
         public ScrollRect scrollRect;
         public int scrollMovementTrigger;
 
-        /// Private Parameters
-        [SerializeField] private Vector3 mountingOffset;
+        //Private scrollable
         [SerializeField] private GameObject imageHolder;
         [SerializeField] private float SelectorSpeed = 8f;
         [SerializeField] private bool allowEmpty = false;
@@ -63,7 +65,6 @@ namespace MGCNTN
         public void setAnimation(bool animate) => animator.enabled = animate;
 
         /// Unity Functions
-
         protected virtual void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
@@ -125,7 +126,5 @@ namespace MGCNTN
         {
             rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, selectableOptions[(int)SelectedIndex].anchoredPosition, selectorSpeed);
         }
-
-
     }
 }

@@ -6,32 +6,46 @@ namespace MGCNTN
 {
     public class ConsumableOption : MonoBehaviour
     {
+
+        ///Public Parameters
+        public Consumable consumable { get; private set; }
+
+        ///Private Parameters
         [SerializeField] private TextMeshProUGUI textBox;
         [SerializeField] private TextMeshProUGUI qauntityText;
         [SerializeField] private Image icon;
-        public Consumable consumable { get; private set; }
 
+
+        /// Unity Function
+        private void OnDisable() => clear();
+
+        ///Public Functions
         public void changeOption(Consumable _consumable, int quantity)
         {
             consumable = _consumable;
             icon.sprite = consumable.Data.sprite;
-            if (_consumable != null)
-                upadateText(quantity);
-            else
-                textBox.text = string.Empty;
+            upadateText(quantity);
         }
-        public void clear()
+
+
+        ///Private Functions
+        private void upadateText(int quantity)
+        {
+            if (consumable == null)
+            {
+                clear();
+                return;
+            }
+
+            textBox.text = consumable.Data.displayName;
+            qauntityText.text = quantity.ToString();
+        }
+
+        private void clear()
         {
             icon.sprite = null;
             consumable = null;
             textBox.text = string.Empty;
         }
-        /// Private
-        private void upadateText(int quantity)
-        {
-            textBox.text = consumable.Data.displayName;
-            qauntityText.text = quantity.ToString();
-        }
-
     }
 }

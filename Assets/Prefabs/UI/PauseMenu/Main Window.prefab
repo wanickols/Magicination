@@ -74393,6 +74393,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Selector
       objectReference: {fileID: 0}
+    - target: {fileID: 3384077568649415795, guid: 8b4d8de31b1a01b49a10719230807db7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4985436888673848652, guid: 8b4d8de31b1a01b49a10719230807db7, type: 3}
       propertyPath: type
       value: 2
