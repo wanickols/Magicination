@@ -2,7 +2,7 @@ using Ink.Runtime;
 using System;
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN.Core
 {
     //All Story and Info related to a given NPC
     [Serializable]

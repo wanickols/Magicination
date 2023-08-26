@@ -1,7 +1,6 @@
-using Battle;
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN
 {
     [CreateAssetMenu(fileName = "Consumable", menuName = ("Items/Consumable"))]
     public class Consumable : Item, IConsumable

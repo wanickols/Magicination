@@ -1,5 +1,5 @@
 using UnityEngine;
-namespace Core
+namespace MGCNTN.Core
 {
 
     [RequireComponent(typeof(SpriteRenderer))]

@@ -1,14 +1,12 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN.Core
 {
-    [Serializable]
+    [System.Serializable]
     public class StartDialogue : ICutCommand
     {
         [SerializeField] private NPC speaker;
-
 
         public bool isFinished { get; private set; } = false;
 

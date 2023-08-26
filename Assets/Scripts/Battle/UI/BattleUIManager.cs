@@ -1,11 +1,10 @@
-using Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
     [Serializable]
     public class BattleUIManager

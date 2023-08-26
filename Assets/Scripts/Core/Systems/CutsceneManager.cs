@@ -2,7 +2,7 @@
 
 using System.Collections;
 
-namespace Core
+namespace MGCNTN.Core
 {
 
     public class CutsceneManager

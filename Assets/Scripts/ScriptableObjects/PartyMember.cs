@@ -1,5 +1,4 @@
-using Battle;
-using Core;
+using MGCNTN;
 
 public class PartyMember : MemberBattleInfo
 {

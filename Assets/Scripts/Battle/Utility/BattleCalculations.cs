@@ -1,4 +1,4 @@
-namespace Battle
+namespace MGCNTN.Battle
 {
     /// <summary>
     /// Where math and logic is done for combat 

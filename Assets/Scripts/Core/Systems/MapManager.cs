@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN.Core
 {
     [Serializable]
     public class MapManager

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN.Core
 {
     [Serializable]
     public class EncounterManager

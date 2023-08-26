@@ -1,4 +1,4 @@
-using Battle;
+using MGCNTN.Battle;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

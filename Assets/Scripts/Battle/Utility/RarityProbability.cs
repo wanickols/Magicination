@@ -2,7 +2,7 @@ using System;
 using Unity.Collections;
 using UnityEngine;
 
-namespace Battle
+namespace MGCNTN.Core
 {
     [Serializable]
     public struct RarityProbability

@@ -1,7 +1,7 @@
 using Ink.Runtime;
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN.Core
 {
     [CreateAssetMenu(fileName = "Interactions", menuName = "Dialog Interaction")]
     public class DialogInteraction : Interaction

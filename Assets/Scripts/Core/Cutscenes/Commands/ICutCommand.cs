@@ -1,7 +1,7 @@
 
 using System.Collections;
 
-namespace Core
+namespace MGCNTN
 {
     public interface ICutCommand
     {

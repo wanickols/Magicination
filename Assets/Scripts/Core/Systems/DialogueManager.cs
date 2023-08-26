@@ -2,7 +2,7 @@ using Ink.Runtime;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-namespace Core
+namespace MGCNTN.Core
 {
     public class DialogueManager : MonoBehaviour
     {

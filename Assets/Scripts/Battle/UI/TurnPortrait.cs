@@ -1,13 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TurnPortrait : MonoBehaviour
+namespace MGCNTN.Battle
 {
-    [SerializeField] private Image turnPortrait;
-
-    public void setSprite(Sprite sprite)
+    public class TurnPortrait : MonoBehaviour
     {
-        turnPortrait.sprite = sprite;
+        [SerializeField] private Image turnPortrait;
 
+        public void setSprite(Sprite sprite)
+        {
+            turnPortrait.sprite = sprite;
+
+        }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN.Core
 {
     public class ArsenalMenu : MonoBehaviour
     {

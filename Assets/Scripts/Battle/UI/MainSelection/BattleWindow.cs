@@ -1,7 +1,6 @@
-using Core;
 using UnityEngine;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
     public class BattleWindow : MonoBehaviour
     {

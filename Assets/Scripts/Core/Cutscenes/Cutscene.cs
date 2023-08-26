@@ -1,7 +1,8 @@
+using MGCNTN.Core;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN
 {
     public class Cutscene : MonoBehaviour, ITriggerByTouch
     {

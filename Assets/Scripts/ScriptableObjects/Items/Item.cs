@@ -1,8 +1,9 @@
 using UnityEngine;
 
-
-public abstract class Item : ScriptableObject
+namespace MGCNTN
 {
-    public abstract ItemData Data { get; set; }
-
+    public abstract class Item : ScriptableObject
+    {
+        public abstract ItemData Data { get; set; }
+    }
 }

@@ -1,4 +1,4 @@
-namespace Battle
+namespace MGCNTN.Battle
 {
     public class Ally : Actor
     {

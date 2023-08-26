@@ -1,7 +1,7 @@
 using Ink.Runtime;
 using System.Collections.Generic;
 using System.IO;
-namespace Core
+namespace MGCNTN.Core
 {
     public class DialogueVariables
     {

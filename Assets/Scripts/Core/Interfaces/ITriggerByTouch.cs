@@ -1,8 +1,7 @@
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN.Core
 {
-
     public interface ITriggerByTouch
     {
         Vector2Int Cell { get; }

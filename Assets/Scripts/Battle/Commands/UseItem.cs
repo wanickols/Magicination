@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
     public class UseItem : ICommand
     {

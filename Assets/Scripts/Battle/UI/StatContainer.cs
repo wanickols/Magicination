@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
     public class StatContainer : MonoBehaviour
     {

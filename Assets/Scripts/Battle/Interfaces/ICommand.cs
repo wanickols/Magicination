@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
     public interface ICommand
     {
