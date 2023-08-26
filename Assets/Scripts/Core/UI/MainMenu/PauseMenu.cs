@@ -11,7 +11,7 @@ namespace MGCNTN.Core
         public event Action openMenu;
         public event Action closeMenu;
 
-
+        ///Public Parameters
         public Selector mainSelector;
         /// Private Variables
         //Serialized Objects
@@ -20,7 +20,6 @@ namespace MGCNTN.Core
 
         [Header("Managers")]
         [SerializeField] private MenuInputHandler inputHandler = new MenuInputHandler();
-
 
         //Components
         private MainWindow mainWindow;
@@ -31,29 +30,19 @@ namespace MGCNTN.Core
         private string menuOpenAnimation = "MenuOpen";
         private string menuCloseAnimation = "MenuClose";
 
-        /// Public Parameters
-
-
-
-        //Menu Opened
-        public bool isOpen { get; private set; }
-
-        //Accessors
+        //Accessor
         private bool IsAnimating => animator.IsAnimating();
-        public Selector CurrentSelector => selectorManager.CurrentSelector;
-
-
 
         /// Unity Functions
         private void Awake()
         {
+            //Systems
             mainWindow = Instantiate(MainWindowPrefab, transform).GetComponentInChildren<MainWindow>();
-            animator = GetComponent<Animator>();
-
             selectorManager = new PauseMenuSelection(mainWindow, this);
             inputHandler.Init(selectorManager);
 
-
+            //Components
+            animator = GetComponent<Animator>();
         }
         private void Update()
         {
@@ -64,29 +53,18 @@ namespace MGCNTN.Core
             inputHandler.HandleInput();
         }
 
-
+        ///Public Functions
         public void Open()
         {
             inputHandler.resetLastPressedTime();
             mainSelector.SelectedIndex = 0;
-            selectorManager.SetMenuState(MenuState.Main, true); //cancel lets it animate
-            isOpen = true;
             animator.Play(menuOpenAnimation);
             openMenu?.Invoke();
         }
-
-
-        /// Private Functions
         public void Close()
         {
-            isOpen = false;
             animator.Play(menuCloseAnimation);
             closeMenu?.Invoke();
-            mainSelector.setAnimation(false);
         }
-
-
-
-
     }
 }

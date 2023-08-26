@@ -6,13 +6,15 @@ namespace MGCNTN.Core
 {
     public class ArsenalMenu : MonoBehaviour
     {
-
+        ///Public Parameters
         [HideInInspector] public EquippableType lastSelectedEquippableType = EquippableType.Weapon;
+
+        ///Private Parameters
         [SerializeField] private GameObject addableStatsList;
 
         private EquipMenu equipMenu;
 
-
+        ///Public Functions
         public void init(EquipMenu equipMenu) => this.equipMenu = equipMenu;
 
         public void swapEquippable(Selector equippableSelector)
@@ -60,6 +62,17 @@ namespace MGCNTN.Core
             loopStats(displayStats, equippedStats);
         }
 
+
+        public void clearEquippables(Selector selector)
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                EquippableOption option = selector.getChild(i).GetComponent<EquippableOption>();
+                option.clear();
+            }
+        }
+
+        ///Private Functions
         private void loopStats(List<int> displayStats, List<int> equippedStats)
         {
             int i = 0;
@@ -89,15 +102,6 @@ namespace MGCNTN.Core
                     textBox.text = $"+ {currValue + value}";
                     textBox.color = Color.cyan;
                 }
-            }
-        }
-
-        public void clearEquippables(Selector selector)
-        {
-            for (int i = 0; i < 16; i++)
-            {
-                EquippableOption option = selector.getChild(i).GetComponent<EquippableOption>();
-                option.clear();
             }
         }
     }

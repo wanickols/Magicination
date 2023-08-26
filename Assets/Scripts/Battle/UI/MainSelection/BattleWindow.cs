@@ -20,14 +20,12 @@ namespace MGCNTN.Battle
         /// Public Functions
         public void ShowItemWindow()
         {
-            itemMenu.initItems();
             mainSelectionWindow.SetActive(false);
             ItemWindow.SetActive(true);
         }
 
         public void closeItemWindow()
         {
-            itemMenu.clearItems();
             mainSelectionWindow.SetActive(true);
             ItemWindow.SetActive(false);
         }

@@ -93,8 +93,6 @@ namespace MGCNTN
         Vertical,
         Horizontal,
         Grid,
-        ScrollerVertical,
-        ScrollerHorizontal,
     }
 
     //Triggers types for cutscenes and other events

@@ -18,6 +18,7 @@ namespace MGCNTN
         /// Public Parameters
         //Audio
         public AudioSource menuChangeSound;
+        public AudioSource menuSelectSound;
 
         /// Public Functions
         //Accessors
@@ -48,18 +49,16 @@ namespace MGCNTN
                 SelectorType.Vertical => verticalInput(),
                 SelectorType.Horizontal => horizontalInput(),
                 SelectorType.Grid => gridInput(),
-                SelectorType.ScrollerVertical => scrollerInput(true),
                 _ => false,
             };
 
             //Selcted Input (Enter Or Back)
             if (!hasInput)
                 checkSelectedInput();
-
-
         }
 
         ///Private Functions
+        //Inputs
         private bool verticalInput(int increment = 1)
         {
             // Check which key is pressed and handle it accordingly
@@ -91,28 +90,19 @@ namespace MGCNTN
 
             return false;
         }
-        private bool scrollerInput(bool vertical, int increment = 1)
-        {
-            if (vertical)
-            {
-                if (verticalInput(increment))
-                    return true;
-            }
-            else if (horizontalInput(increment))
-                return true;
-
-
-
-            return false;
-        }
         private void checkSelectedInput()
         {
             if (Input.GetKeyDown(KeyCode.Return))
+            {
+                menuSelectSound.Play();
                 selectorManager.Accept();
+            }
 
             else if (Input.GetKeyDown(KeyCode.Escape))
                 selectorManager.Cancel();
         }
+
+        //Moving
         private void move(int increment)
         {
             menuChangeSound.Play();

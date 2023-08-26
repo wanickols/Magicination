@@ -7,11 +7,16 @@ namespace MGCNTN
     public class ItemMenu : MonoBehaviour
     {
         /// Private Parameters
-        [SerializeField] private GameObject content;
+        [SerializeField] private GameObject content; //content window
 
         //Selection
         private itemMenuAction onSelectAction = itemMenuAction.use;
         private List<ConsumableOption> options = new List<ConsumableOption>();
+
+
+        ///Unity Functions
+        private void OnEnable() => initItems();
+        private void OnDisable() => clearItems();
 
         /// Public Functions
         public void initItems()
@@ -36,20 +41,10 @@ namespace MGCNTN
                 i++;
             }
         }
-        public void clearItems()
-        {
-            foreach (Transform t in content.transform)
-            {
-                ConsumableOption option = t.GetComponent<ConsumableOption>();
-                option?.clear();
-                t.gameObject.SetActive(false);
-            }
-        }
+
         public bool setFlag(int selected)
         {
-            onSelectAction = (itemMenuAction)selected;
-
-            if (onSelectAction == itemMenuAction.sort)
+            if ((itemMenuAction)selected == itemMenuAction.sort)
             {
                 sort();
                 return false;
@@ -65,10 +60,8 @@ namespace MGCNTN
                 case itemMenuAction.key: return key(index);
                 default:
                     Debug.Log("Incorect Item Action Value");
-                    break;
+                    return null;
             }
-
-            return null;
         }
 
         ///Private Functions
@@ -83,6 +76,11 @@ namespace MGCNTN
         private Consumable key(int index)
         {
             return options[index].consumable;
+        }
+        private void clearItems()
+        {
+            foreach (Transform t in content.transform)
+                t.gameObject.SetActive(false);
         }
     }
 }

@@ -29,32 +29,40 @@ namespace MGCNTN.Core
         private PartyTargetMenu partyTargetMenu;
 
         /// Unity Functions
-        void Start()
+        private void Start()
         {
             ShowDefaultView();
+
+            //Equip
             equipMenu = EquipWindow.GetComponent<EquipMenu>();
+
+            //Arsenal
             arsenalMenu = arsenalWindow.GetComponent<ArsenalMenu>();
             arsenalMenu.init(equipMenu);
+
+            //Item
             itemMenu = ItemsWindow.GetComponent<ItemMenu>();
+
+            //Party Targeting
             partyTargetMenu = PartyTargetWindow.GetComponent<PartyTargetMenu>();
+
+            //Skills
         }
 
         /// Public Functions
-        //General
-        public void onHover(MenuState menuState, Selector selector)
+        //Main
+        public void ShowDefaultView()
         {
-            switch (menuState)
+            foreach (Transform child in transform)
             {
-                case MenuState.EquippableSelection:
-                    arsenalMenu.updateStats(selector);
-                    break;
-                default:
-                    break;
+                if (child.GetComponent<PartyMemberInfo>() != null)
+                    child.gameObject.SetActive(true);
+                else
+                    child.gameObject.SetActive(false);
             }
         }
 
         //Party Targets
-
         public void openPartyTargetWindow(PartyTargetSelections selection, Consumable item = null)
         {
             PartyTargetWindow.SetActive(true);
@@ -73,18 +81,6 @@ namespace MGCNTN.Core
                     break;
                 case PartyTargetSelections.skill:
                     break;
-            }
-        }
-
-        //Main
-        public void ShowDefaultView()
-        {
-            foreach (Transform child in transform)
-            {
-                if (child.GetComponent<PartyMemberInfo>() != null)
-                    child.gameObject.SetActive(true);
-                else
-                    child.gameObject.SetActive(false);
             }
         }
 
@@ -128,34 +124,20 @@ namespace MGCNTN.Core
             arsenalWindow.SetActive(false);
         }
         public void swapEquippable(Selector selector) => arsenalMenu.swapEquippable(selector);
+        public void updateEquipmentStats(Selector selector) => arsenalMenu.updateStats(selector);
 
         //Item Menu
         public void ShowItemView()
         {
             hidePartyMembers();
             ItemsWindow.SetActive(true);
-            itemMenu.initItems();
-
         }
-
-        public void closeItemView()
-        {
-            ItemsWindow.SetActive(false);
-            itemMenu.clearItems();
-        }
-
+        public void closeItemView() => ItemsWindow.SetActive(false);
         public bool itemActionSelected(int selected) => itemMenu.setFlag(selected);
-        public void itemSelected(int selected)
-        {
-
-
-            Consumable item = itemMenu.selectItem(selected);
-
-            openPartyTargetWindow(PartyTargetSelections.item, item);
-
-        }
+        public void itemSelected(int selected) => openPartyTargetWindow(PartyTargetSelections.item, itemMenu.selectItem(selected));
 
         /// Private Functions
+        //Party Targeting
         private void hidePartyMembers()
         {
             foreach (Transform child in transform)

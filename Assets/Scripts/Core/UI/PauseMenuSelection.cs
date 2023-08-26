@@ -18,18 +18,16 @@ namespace MGCNTN.Core
         private Selector itemSelector => mainWindow.itemSelector;
         private Selector partyMemberSelector => mainWindow.partyMemberSelector;
 
-
-
         //States
         private Dictionary<MenuState, Selector> stateSelector = new Dictionary<MenuState, Selector>();
-
-
+        private MenuState menuState = MenuState.Main;
+        private MenuState prevState;
 
         /// Public Parameters
         public override Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
-        private MenuState menuState;
-        private MenuState prevState;
 
+        /// Public Functions
+        //Constructor
         public PauseMenuSelection(MainWindow mainWindow, PauseMenu pauseMenu)
         {
             this.mainWindow = mainWindow;
@@ -46,6 +44,7 @@ namespace MGCNTN.Core
 
         }
 
+        ///Abstract Implmentations
         public override void Cancel()
         {
             switch (menuState)
@@ -112,55 +111,22 @@ namespace MGCNTN.Core
                     break;
             }
         }
-
-        /// Public Functions
         public override void checkHover()
         {
             switch (menuState)
             {
                 case MenuState.EquipmentSelection:
                 case MenuState.EquippableSelection:
-                    mainWindow.onHover(menuState, CurrentSelector);
+                    mainWindow.updateEquipmentStats(CurrentSelector);
                     break;
                 default:
                     break;
             }
 
         }
-        private void returnToMain()
-        {
-            SetMenuState(MenuState.Main, true);
-            CurrentSelector.setAnimation(true);
-        }
-        private void returnToMembers()
-        {
-            mainWindow.ShowDefaultView();
-            SetMenuState(MenuState.MemberSelection, true);
-            CurrentSelector.setAnimation(true);
-        }
 
-        public void SetMenuState(MenuState newState, bool cancel)
-        {
-            if (!cancel)
-                CurrentSelector.setAnimation(false);
-
-
-            CurrentSelector.gameObject.SetActive(!cancel);
-
-            if (stateSelector.ContainsKey(newState))
-            {
-                prevState = menuState;
-                menuState = newState;
-
-                if (!cancel)
-                    CurrentSelector.SelectedIndex = 0;
-
-                CurrentSelector.gameObject.SetActive(true);
-
-            }
-
-
-        }
+        /// Private Functions
+        //Selections
         private void ProcessMainSelection()
         {
             switch ((mainSelections)mainSelector.SelectedIndex)
@@ -200,5 +166,41 @@ namespace MGCNTN.Core
                     break;
             }
         }
+
+        //Cancels
+        private void returnToMain()
+        {
+            SetMenuState(MenuState.Main, true);
+            CurrentSelector.setAnimation(true);
+        }
+        private void returnToMembers()
+        {
+            mainWindow.ShowDefaultView();
+            SetMenuState(MenuState.MemberSelection, true);
+            CurrentSelector.setAnimation(true);
+        }
+
+        //General
+        private void SetMenuState(MenuState newState, bool cancel)
+        {
+            if (!cancel)
+                CurrentSelector.setAnimation(false);
+
+
+            CurrentSelector.gameObject.SetActive(!cancel);
+
+            if (stateSelector.ContainsKey(newState))
+            {
+                prevState = menuState;
+                menuState = newState;
+
+                if (!cancel)
+                    CurrentSelector.SelectedIndex = 0;
+
+                CurrentSelector.gameObject.SetActive(true);
+
+            }
+        }
+
     }
 }
