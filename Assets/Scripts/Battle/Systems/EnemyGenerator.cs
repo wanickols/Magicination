@@ -27,8 +27,7 @@ namespace MGCNTN.Battle
                 EnemyData enemyData = GameObject.Instantiate(enemyPack.Enemies[i]); // Should keep fron saving between runs.
                 Vector2 spawnPos = new Vector2(enemyPack.SpawnCoordinates[i].x, enemyPack.SpawnCoordinates[i].y);
 
-                Enemy enemy = GameObject.Instantiate(enemyData.ActorPrefab, spawnPos, Quaternion.identity).GetComponent<Enemy>(); ;
-
+                Actor enemy = GameObject.Instantiate(enemyData.ActorPrefab, spawnPos, Quaternion.identity).GetComponent<Actor>();
                 enemy.setMemberBattleInfo(enemyData.Stats, enemyData.MenuPortrait);
 
                 turnSystem.enqueue(enemy);

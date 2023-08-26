@@ -46,7 +46,7 @@ public class BattleData : ScriptableObject
     {
         foreach (Actor actor in allies)
         {
-            if (actor.isDead) continue;
+            if (actor.IsDead) continue;
 
             liveAllies.Add(actor);
         }

@@ -6,10 +6,7 @@ namespace MGCNTN.Battle
 {
     public class BasicBattler : BattlerAI
     {
-        public override ICommand ChooseAction()
-        {
-            return singleTargetAttack();
-        }
+        public override ICommand ChooseAction() => singleTargetAttack();
 
         private ICommand singleTargetAttack()
         {
