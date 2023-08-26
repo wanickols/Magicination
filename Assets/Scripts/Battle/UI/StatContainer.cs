@@ -34,7 +34,7 @@ namespace Battle
 
         public void updateMP(int mp, int maxMp)
         {
-            memberHP.text = $"{mp}/{maxMp}";
+            memberMP.text = $"{mp}/{maxMp}";
         }
 
 
