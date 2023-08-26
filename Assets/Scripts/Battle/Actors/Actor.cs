@@ -88,7 +88,6 @@ namespace Battle
         }
         protected virtual void Start()
         {
-
             turnTime = baseTurnSpeed;
         }
 
@@ -96,26 +95,25 @@ namespace Battle
 
         protected virtual void attack(List<Actor> targets)
         {
-            Battle.Attack -= attack;
+            unlinkBattle();
             Attack command = new Attack(this, targets);
             StartCoroutine(ExecuteCommand(command));
         }
         protected virtual void useItem(List<Actor> targets, IConsumable item)
         {
 
-            Battle.UseItem -= useItem;
+            unlinkBattle();
             UseItem command = new UseItem(targets, item);
 
             StartCoroutine(ExecuteCommand(command));
         }
-
 
         //Battle Choice
         protected IEnumerator checkAI()
         {
             if (ai)
             {
-                Battle.Attack -= attack;
+                unlinkBattle();
                 ICommand command = ai.ChooseAction();
 
                 StartCoroutine(ExecuteCommand(command));
@@ -139,7 +137,13 @@ namespace Battle
         //Deconstructor
         protected void OnDestroy()
         {
+            unlinkBattle();
+        }
+
+        private void unlinkBattle()
+        {
             Battle.Attack -= attack;
+            Battle.UseItem -= useItem;
         }
 
     }

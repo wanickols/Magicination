@@ -28,6 +28,8 @@ namespace Battle
         private List<StatContainer> statsContainerList = new List<StatContainer>();
         private Selection selection = new Selection();
 
+        private List<Actor> actors = new List<Actor>();
+
 
         /// Public Functions
         public void init(BattleData data, Battle battle)
@@ -57,6 +59,7 @@ namespace Battle
 
         public void LinkListeners(Actor actor)
         {
+            actors.Add(actor);
             StatContainer stat = statsContainerList.Last();
             actor.updateHealth += stat.updateHealth;
             actor.updateMP += stat.updateMP;
@@ -92,6 +95,23 @@ namespace Battle
 
         public Consumable getItem() => selectorManager.currItem;
 
+
+
+        ~BattleUIManager()
+        {
+            UnLinkListeners();
+        }
+
+        private void UnLinkListeners()
+        {
+            int i = 0;
+            foreach (Actor actor in actors)
+            {
+                StatContainer stat = statsContainerList[i];
+                actor.updateHealth -= stat.updateHealth;
+                actor.updateMP -= stat.updateMP;
+            }
+        }
     }
 
 }

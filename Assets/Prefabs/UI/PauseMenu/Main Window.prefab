@@ -1148,7 +1148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 3963160236166479156}
-  ScrollingGridSelectorPrefab: {fileID: 3384077568649415795, guid: 8b4d8de31b1a01b49a10719230807db7, type: 3}
 --- !u!1 &252926611116615220
 GameObject:
   m_ObjectHideFlags: 0
@@ -72964,7 +72963,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4985436888673848652, guid: 8b4d8de31b1a01b49a10719230807db7, type: 3}
       propertyPath: mountingOffset.x
-      value: 0
+      value: 224
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985436888673848652, guid: 8b4d8de31b1a01b49a10719230807db7, type: 3}
+      propertyPath: mountingOffset.y
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 4985436888673848652, guid: 8b4d8de31b1a01b49a10719230807db7, type: 3}
       propertyPath: mountingPosition.x
