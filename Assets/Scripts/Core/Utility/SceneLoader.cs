@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-namespace Core
+namespace MGCNTN.Core
 {
     public class SceneLoader
     {

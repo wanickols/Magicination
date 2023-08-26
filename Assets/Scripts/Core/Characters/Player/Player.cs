@@ -1,4 +1,4 @@
-namespace Core
+namespace MGCNTN.Core
 {
     public class Player : Character
     {

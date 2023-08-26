@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core
+namespace MGCNTN.Core
 {
     public class Game : MonoBehaviour
     {

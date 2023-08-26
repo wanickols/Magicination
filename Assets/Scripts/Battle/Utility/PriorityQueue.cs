@@ -1,7 +1,7 @@
 #nullable enable
 
 // namespace System.Collections.Generic {
-namespace Battle
+namespace MGCNTN.Battle
 {
 
     // Licensed to the .NET Foundation under one or more agreements.

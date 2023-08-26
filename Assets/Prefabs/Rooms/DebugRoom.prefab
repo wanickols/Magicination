@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5480278516026351366}
-  - component: {fileID: 6198066244550335465}
+  - component: {fileID: 8766231970060397466}
   m_Layer: 0
   m_Name: Cutscene
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 3690784823096961086}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6198066244550335465
+--- !u!114 &8766231970060397466
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,27 +47,32 @@ MonoBehaviour:
   trigger: 1
   callOnce: 0
   commands:
-  - rid: 5614634382767685632
-  - rid: 5614634382767685634
-  - rid: 5614634382767685633
+  - rid: 5614634731236229121
+  - rid: 5614634731236229120
+  - rid: 5614634731236229126
+  - rid: 5614634731236229127
   references:
     version: 2
     RefIds:
-    - rid: 5614634382767685632
-      type: {class: MoveCharacter, ns: Core, asm: Scripts}
+    - rid: 5614634731236229120
+      type: {class: MoveCharacter, ns: MGCNTN.Core, asm: Scripts}
       data:
         character: {fileID: 6626849957034573037}
         speed: 0
         route: 0200000002000000
-    - rid: 5614634382767685633
-      type: {class: StartDialogue, ns: Core, asm: Scripts}
-      data:
-        speaker: {fileID: 6626849957034573037}
-    - rid: 5614634382767685634
-      type: {class: MovePlayer, ns: Core, asm: Scripts}
+    - rid: 5614634731236229121
+      type: {class: MovePlayer, ns: MGCNTN.Core, asm: Scripts}
       data:
         speed: 0
         route: 0300000003000000
+    - rid: 5614634731236229126
+      type: {class: Wait, ns: MGCNTN.Core, asm: Scripts}
+      data:
+        seconds: 1
+    - rid: 5614634731236229127
+      type: {class: StartDialogue, ns: MGCNTN.Core, asm: Scripts}
+      data:
+        speaker: {fileID: 6626849957034573037}
 --- !u!1 &521875618738647799
 GameObject:
   m_ObjectHideFlags: 0

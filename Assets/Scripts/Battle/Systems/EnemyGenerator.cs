@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
     public class EnemyGenerator
     {

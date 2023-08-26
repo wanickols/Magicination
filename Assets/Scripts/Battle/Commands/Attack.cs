@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
     public class Attack : ICommand
     {

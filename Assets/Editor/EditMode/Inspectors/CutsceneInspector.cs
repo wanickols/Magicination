@@ -1,47 +1,50 @@
-using Core;
+
 using System;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
-[CustomEditor(typeof(Cutscene))]
-public class CutsceneInspector : Editor
+namespace MGCNTN
 {
-    private VisualElement container;
-
-    private Action openEditor;
-
-    public void OnEnable()
+    [CustomEditor(typeof(Cutscene))]
+    public class CutsceneInspector : Editor
     {
-        openEditor = () => CutsceneEditor.ShowWindow(target as Cutscene);
-    }
+        private VisualElement container;
 
-    public override VisualElement CreateInspectorGUI()
-    {
-        container = new VisualElement();
+        private Action openEditor;
 
-        SerializedProperty property = serializedObject.FindProperty("trigger");
-        PropertyField field = new PropertyField(property);
-        container.Add(field);
-
-        property = serializedObject.FindProperty("callOnce");
-        field = new PropertyField(property);
-        container.Add(field);
-
-        Button button = new Button(openEditor) { text = "Open Editor" };
-        container.Add(button);
-
-        DisplaySceneCommands();
-
-        return container;
-
-    }
-
-    private void DisplaySceneCommands()
-    {
-        foreach (ICutCommand command in (target as Cutscene).Commands)
+        public void OnEnable()
         {
-            container.Add(new Label() { text = command.ToString() });
+            openEditor = () => CutsceneEditor.ShowWindow(target as Cutscene);
+        }
+
+        public override VisualElement CreateInspectorGUI()
+        {
+            container = new VisualElement();
+
+            SerializedProperty property = serializedObject.FindProperty("trigger");
+            PropertyField field = new PropertyField(property);
+            container.Add(field);
+
+            property = serializedObject.FindProperty("callOnce");
+            field = new PropertyField(property);
+            container.Add(field);
+
+            Button button = new Button(openEditor) { text = "Open Editor" };
+            container.Add(button);
+
+            DisplaySceneCommands();
+
+            return container;
+
+        }
+
+        private void DisplaySceneCommands()
+        {
+            foreach (ICutCommand command in (target as Cutscene).Commands)
+            {
+                container.Add(new Label() { text = command.ToString() });
+            }
         }
     }
 }

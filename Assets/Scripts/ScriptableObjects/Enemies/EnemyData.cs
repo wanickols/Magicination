@@ -1,4 +1,4 @@
-using Battle;
+using MGCNTN.Battle;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Enemy Data", menuName = "New Enemy Data")]

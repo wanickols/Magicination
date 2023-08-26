@@ -5,7 +5,7 @@ using System;
 /// <remarks>
 /// Initted in Battle Manager and works with battleUI and Battle manager
 /// </remarks>
-namespace Battle
+namespace MGCNTN.Battle
 {
     public class TurnSystem
     {

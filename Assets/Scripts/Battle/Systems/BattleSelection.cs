@@ -1,9 +1,8 @@
-using Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
 
     [Serializable]

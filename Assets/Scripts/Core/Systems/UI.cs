@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core
+namespace MGCNTN.Core
 {
     public class UI : MonoBehaviour
     {

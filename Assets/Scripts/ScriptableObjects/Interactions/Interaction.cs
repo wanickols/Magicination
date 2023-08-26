@@ -1,4 +1,7 @@
-public abstract class Interaction
+namespace MGCNTN
 {
-    public abstract void StartInteraction();
+    public abstract class Interaction
+    {
+        public abstract void StartInteraction();
+    }
 }

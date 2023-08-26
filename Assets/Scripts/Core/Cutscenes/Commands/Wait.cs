@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-
-namespace Core
+namespace MGCNTN.Core
 {
     [System.Serializable]
     public class Wait : ICutCommand
@@ -15,6 +14,7 @@ namespace Core
         public IEnumerator CO_Execute()
         {
             yield return new WaitForSeconds(seconds);
+            isFinished = true;
         }
 
         public override string ToString() => "Wait For Seconds";

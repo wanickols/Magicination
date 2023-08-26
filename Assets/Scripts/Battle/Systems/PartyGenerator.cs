@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
     public class PartyGenerator
     {
@@ -10,14 +10,14 @@ namespace Battle
 
         public List<Actor> Spawn(TurnSystem turnSystem, BattleUIManager battleUI)
         {
-            SpawnCounts partyCount = (SpawnCounts)Core.Party.ActiveMembers.Count;
+            SpawnCounts partyCount = (SpawnCounts)Party.ActiveMembers.Count;
 
             List<Vector2> positionList = battlePositions.getPositions(partyCount);
 
             List<Actor> allies = new List<Actor>();
 
             int i = 0;
-            foreach (PartyMember member in Core.Party.ActiveMembers)
+            foreach (PartyMember member in Party.ActiveMembers)
             {
                 var temp = GameObject.Instantiate(member.ActorPrefab, positionList[i], Quaternion.identity);
                 Ally ally = temp.GetComponent<Ally>();

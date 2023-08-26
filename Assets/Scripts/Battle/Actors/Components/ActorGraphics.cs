@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Battle
+namespace MGCNTN.Battle
 {
     [System.Serializable]
     public class ActorGraphics
