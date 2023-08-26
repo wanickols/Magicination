@@ -170,6 +170,12 @@ namespace MGCNTN
 
     namespace Battle
     {
+
+        public enum ActorType
+        {
+            Ally,
+            Enemy
+        }
         //Spawn Counts for Players and Enemy Spawning
         public enum SpawnCounts
         {

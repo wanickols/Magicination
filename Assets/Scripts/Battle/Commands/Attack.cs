@@ -23,19 +23,22 @@ namespace MGCNTN.Battle
 
         public IEnumerator Co_Execute()
         {
+            //Init
+            Animator anim = attackerGFX.anim;
             float moveSpeed = attackerGFX.animationSpeed;
             Vector3 targetPos = targets[0].transform.position;
             Vector3 offset = new Vector3(.5f, 0, 0);
 
-            if (targets[0].GetType() == typeof(Enemy))
-            {
+            if (targets[0].type == ActorType.Enemy)
                 offset.x = -.5f;
-            }
 
             targetPos = targetPos + offset;
 
-            if (attackerGFX.animator)
-                attackerGFX.animator.Play("Moving");
+            //Start
+            if (anim)
+                anim.Play("Moving");
+
+            //Move
             while (attackerGFX.currPosition != (Vector2)targetPos)
             {
                 attacker.transform.position
@@ -46,23 +49,22 @@ namespace MGCNTN.Battle
             }
 
 
-
-            if (attackerGFX.animator)
+            //Atack
+            if (anim)
             {
-                attackerGFX.animator.Play("Attack");
-                do
-                {
-                    yield return null;
-                }
-                while (attackerGFX.animator.IsAnimating());
+                anim.Play("Attack");
 
-                attackerGFX.animator.Play("Idle");
+                do yield return null;
+                while (anim.IsAnimating());
+
+                anim.Play("Idle");
             }
 
+            //Calculate Damage
             foreach (Actor target in targets)
-            {
                 BattleCalculations.Attack(attacker, target);// Change to foreach eventually
-            }
+
+            //Finish
             isFinished = true;
         }
     }

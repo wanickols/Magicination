@@ -19,7 +19,7 @@ namespace MGCNTN.Battle
 
         public PriorityQueue<Actor, float> turnQueue { get; private set; } = new PriorityQueue<Actor, float>(); // Use a priority queue to store the actors and their turn times
 
-        public bool isTakingTurn => data.currentActor.isTakingTurn;
+        public bool isTakingTurn => data.currentActor.turner.isTakingTurn;
 
         public TurnSystem(BattleUIManager battleUIManager, BattleData data)
         {
@@ -33,10 +33,10 @@ namespace MGCNTN.Battle
             data.nextSix.RemoveAt(0);
             data.nextSix.Add(turnQueue.Dequeue());
             turnBar.SpawnPortraitSlots(data.nextSix);
-            data.currentActor.StartTurn();
-            data.currentActor.turnTime += CalculateTurnTime(data.currentActor.baseTurnSpeed);
+            data.currentActor.turner.StartTurn();
+            data.currentActor.turner.turnTime += CalculateTurnTime(data.currentActor.baseTurnSpeed);
 
-            turnQueue.Enqueue(data.currentActor, data.currentActor.turnTime);
+            turnQueue.Enqueue(data.currentActor, data.currentActor.turner.turnTime);
 
             nextTurn?.Invoke();
         }
@@ -51,7 +51,7 @@ namespace MGCNTN.Battle
 
             for (int i = 0; i < 6; i++)
             {
-                while (nextActor.isDead)
+                while (nextActor.IsDead)
                     nextActor = turnQueue.Dequeue();
 
                 data.nextSix.Add(nextActor);
@@ -67,8 +67,8 @@ namespace MGCNTN.Battle
 
         public void enqueue(Actor actor)
         {
-            actor.turnTime += CalculateTurnTime(actor.baseTurnSpeed);
-            turnQueue.Enqueue(actor, actor.turnTime);
+            actor.turner.turnTime += CalculateTurnTime(actor.baseTurnSpeed);
+            turnQueue.Enqueue(actor, actor.turner.turnTime);
         }
 
 

@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6477070701482994652}
   - component: {fileID: 7119268999815083993}
-  - component: {fileID: -5128519423572305584}
   - component: {fileID: -8430226284885466769}
   - component: {fileID: 326284859749539665}
+  - component: {fileID: 884911406550138617}
+  - component: {fileID: -5221181137420450020}
   m_Layer: 0
   m_Name: Green Cacodaemon
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7119268999815083993
 SpriteRenderer:
@@ -87,25 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-5128519423572305584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2832430299845234393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 510f7479c48483e48b9cea8ee38f1ab3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ai: {fileID: 0}
-  gfx:
-    selectorPosition: {x: -0.1, y: 0.4}
-    selector: {fileID: 1045657364043076702, guid: c66c79e9c3dbb4b4b8c1806b9b88346c, type: 3}
-    offset: -0.4
-    animationSpeed: 3
-  turnTime: 0
 --- !u!114 &-8430226284885466769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,3 +121,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &884911406550138617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832430299845234393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca24306bfa19b747a8b6fa162751ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ai: {fileID: 0}
+  gfx:
+    selector: {fileID: 1045657364043076702, guid: c66c79e9c3dbb4b4b8c1806b9b88346c, type: 3}
+    offset: 0.5
+    animationSpeed: 2
+    attackSetupComplete: 0
+    selectorPosition: {x: 0, y: 0}
+--- !u!114 &-5221181137420450020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832430299845234393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415ea71ce86697a4c9ce538c38eab766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnTime: 0
+  isTakingTurn: 0

@@ -10,8 +10,8 @@ namespace MGCNTN.Battle
         public static int Attack(Actor attacker, Actor defender)
         {
 
-            Stats dStats = defender.Stats;
-            int damage = attacker.Stats.ATK - dStats.DEF;
+            Stats dStats = defender.data.Stats;
+            int damage = attacker.data.Stats.ATK - dStats.DEF;
 
             if (damage < 1)
                 damage = 1;
@@ -27,7 +27,7 @@ namespace MGCNTN.Battle
         }
         public static void useItem(Actor defender, IConsumable data)
         {
-            Stats dStats = defender.Stats;
+            Stats dStats = defender.data.Stats;
             data.Consume(dStats);
 
             checkDeath(defender, false);
@@ -39,12 +39,12 @@ namespace MGCNTN.Battle
 
         public static void checkDeath(Actor actor, bool instant)
         {
-            if (actor.Stats.HP <= 0)
+            if (actor.data.Stats.HP <= 0)
             {
-                actor.Stats.HP = 0;
+                actor.data.Stats.HP = 0;
 
                 if (instant)
-                    actor.setDead(true);
+                    actor.IsDead = true;
 
                 actor.Die();
             }

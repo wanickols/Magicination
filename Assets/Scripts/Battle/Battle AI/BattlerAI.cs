@@ -8,15 +8,9 @@ namespace MGCNTN.Battle
         protected Actor actor;
         protected List<Actor> possibleTargets = new List<Actor>();
 
-        protected void Awake()
-        {
-            actor = GetComponent<Actor>();
-        }
+        protected void Awake() => actor = GetComponent<Actor>();
 
-        public void updateTargets(List<Actor> targets)
-        {
-            possibleTargets = targets;
-        }
+        public void updateTargets(List<Actor> targets) => possibleTargets = targets;
 
         public abstract ICommand ChooseAction();
     }

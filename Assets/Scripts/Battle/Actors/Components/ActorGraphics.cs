@@ -6,33 +6,33 @@ namespace MGCNTN.Battle
     [System.Serializable]
     public class ActorGraphics
     {
-        //Selector
-        [SerializeField] protected Vector2 selectorPosition;
 
+        ///Public Parameters
         //Animation and movement
         [Header("Animation")]
-        [SerializeField] public GameObject selector;
-        [SerializeField] public float offset;
-        [SerializeField] public float animationSpeed;
+        public GameObject selector;
+        public float offset;
+        public float animationSpeed;
 
         //Positions
         public Vector2 currPosition => actor.transform.position;
+        public Animator anim { get; private set; }
 
-        protected Vector2 startingPosition;
-        protected Vector2 targetPosition;
+        public bool attackSetupComplete = false;
 
-
-
-        public Animator animator { get; private set; }
+        //Selector
+        [Header("Selector")]
+        [SerializeField] private Vector2 selectorPosition;
+        private Vector2 startingPosition;
+        private Vector2 targetPosition;
         private Actor actor;
 
+        ///Public Functions
         //Constructor
         public void init(Actor actor, Animator animator)
         {
             this.actor = actor;
-
-            if (animator)
-                this.animator = animator;
+            anim = animator;
 
             if (animationSpeed == 0)
                 animationSpeed = 3f;
@@ -48,10 +48,12 @@ namespace MGCNTN.Battle
 
         ///Animations
         // Moves to middle
-        public virtual IEnumerator Co_MoveToAttack()
+        public IEnumerator Co_MoveToAttack()
         {
-            if (animator)
-                animator.Play("Moving");
+            attackSetupComplete = false;
+
+            if (anim)
+                anim.Play("Moving");
 
             while ((Vector2)currPosition != targetPosition)
             {
@@ -59,65 +61,59 @@ namespace MGCNTN.Battle
 
                 yield return null;
             }
-            if (animator)
-                animator.Play("Idle");
+
+            if (anim)
+                anim.Play("Idle");
 
             yield return new WaitForSeconds(.5f);
 
-            actor.startCheckAI();
+            attackSetupComplete = true;
         }
 
         //Moving back to middle waiting then back to starting
-        public virtual IEnumerator EndTurn()
+        public IEnumerator EndTurn()
         {
 
+            if (anim)
+                anim.Play("Moving");
 
-            if (animator)
-                animator.Play("Moving");
-
-
-
-            while ((Vector2)currPosition != targetPosition)
+            while (currPosition != targetPosition)
             {
                 actor.transform.position = Vector2.MoveTowards(currPosition, targetPosition, Time.deltaTime * animationSpeed);
-
                 yield return null;
             }
-            if (animator)
-                animator.Play("Idle");
 
-            yield return new WaitForSeconds(.5f);
+            if (anim)
+            {
+                anim.Play("Idle");
+                yield return new WaitForSeconds(.5f);
+                anim.Play("Moving");
+            }
 
-            if (animator)
-                animator.Play("Moving");
-
-
-
-            while ((Vector2)currPosition != startingPosition)
+            while (currPosition != startingPosition)
             {
                 actor.transform.position = Vector2.MoveTowards(currPosition, startingPosition, Time.deltaTime * animationSpeed);
                 yield return null;
             }
-            if (animator)
-                animator.Play("Idle");
 
-            actor.setIsTakingTurn(false);
+
+            if (anim)
+                anim.Play("Idle");
+            actor.turner.isTakingTurn = false;
         }
 
         //Death Anim
         public IEnumerator CO_die()
         {
-            if (animator)
+            if (anim != null)
             {
-                animator.Play("Death");
-                do
-                {
-                    yield return null;
-                } while (animator.IsAnimating());
-                animator.StopPlayback();
+                anim.Play("Death");
+                do yield return null;
+                while (anim.IsAnimating());
+                anim.StopPlayback();
             }
 
-            actor.setDead(true);
+            actor.IsDead = true;
             yield return null;
         }
     }

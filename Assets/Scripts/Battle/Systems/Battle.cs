@@ -72,7 +72,7 @@ namespace MGCNTN.Battle
             data.setTargets();
             foreach (Actor ally in data.allies)
             {
-                if (ally.isDead) continue;
+                if (ally.IsDead) continue;
                 else
                 {
                     alliesDead = false;
@@ -89,7 +89,7 @@ namespace MGCNTN.Battle
             bool enemiesDead = true;
             foreach (Actor enemy in data.enemies)
             {
-                if (enemy.isDead) continue;
+                if (enemy.IsDead) continue;
                 else
                 {
                     enemiesDead = false;
@@ -115,13 +115,15 @@ namespace MGCNTN.Battle
             partyGenerator = new PartyGenerator();
             turnSystem = new TurnSystem(battleUI, data);
 
+
+        }
+        private void Start()
+        {
             //List Creation
             data.allies = partyGenerator.Spawn(turnSystem, battleUI);
             data.setliveAllies();
             data.setEnemyData(enemyGenerator.generate(turnSystem));
-        }
-        private void Start()
-        {
+
             InitActions();
             turnSystem.DetermineTurnOrder(turnBar);
         }

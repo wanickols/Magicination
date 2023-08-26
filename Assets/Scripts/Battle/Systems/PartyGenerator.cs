@@ -20,14 +20,13 @@ namespace MGCNTN.Battle
             foreach (PartyMember member in Party.ActiveMembers)
             {
                 var temp = GameObject.Instantiate(member.ActorPrefab, positionList[i], Quaternion.identity);
-                Ally ally = temp.GetComponent<Ally>();
+                Actor ally = temp.GetComponent<Actor>();
                 ally.setMemberBattleInfo(member.Stats, member.MenuPortrait);
                 turnSystem.enqueue(ally);
                 allies.Add(ally);
                 BattleCalculations.checkDeath(ally, true); //Kills
                 battleUI.AddPartyMemberUI(member);
                 battleUI.LinkListeners(ally);
-
                 i++;
             }
 
