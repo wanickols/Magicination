@@ -48,7 +48,7 @@ namespace MGCNTN.Battle
 
         ///Animations
         // Moves to middle
-        public IEnumerator Co_MoveToAttack()
+        public IEnumerator Co_MoveToAttackAnim()
         {
             attackSetupComplete = false;
 
@@ -71,7 +71,7 @@ namespace MGCNTN.Battle
         }
 
         //Moving back to middle waiting then back to starting
-        public IEnumerator EndTurn()
+        public IEnumerator EndTurnAnim()
         {
 
             if (anim)
@@ -99,11 +99,12 @@ namespace MGCNTN.Battle
 
             if (anim)
                 anim.Play("Idle");
-            actor.turner.isTakingTurn = false;
+
+            actor.isTakingTurn = false;
         }
 
         //Death Anim
-        public IEnumerator CO_die()
+        public IEnumerator CO_DeathAnim()
         {
             if (anim != null)
             {
@@ -114,6 +115,51 @@ namespace MGCNTN.Battle
             }
 
             actor.IsDead = true;
+        }
+
+        //Attack Anim
+        public IEnumerator CO_AttackAnim(Actor target)
+        {
+            //Init
+            Vector3 targetPos = target.transform.position;
+            Vector3 offset = new Vector3(.5f, 0, 0);
+
+            if (target.type == ActorType.Enemy)
+                offset.x = -.6f;
+
+            targetPos = targetPos + offset;
+
+            //Start
+            if (anim)
+                anim.Play("Moving");
+
+            //Move
+            while (currPosition != (Vector2)targetPos)
+            {
+                actor.transform.position
+                    = Vector2.MoveTowards(currPosition,
+                    targetPos, animationSpeed * Time.deltaTime);
+
+                yield return null;
+            }
+
+
+            //Atack
+            if (anim)
+            {
+                anim.Play("Attack");
+
+                do yield return null;
+                while (anim.IsAnimating());
+
+                anim.Play("Idle");
+            }
+        }
+
+        //Item Use
+        public IEnumerator CO_ItemAnim(Actor target)
+        {
+            Debug.Log("Implement Item Animation");
             yield return null;
         }
     }

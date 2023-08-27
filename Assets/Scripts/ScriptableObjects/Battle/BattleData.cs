@@ -1,3 +1,4 @@
+using MGCNTN;
 using MGCNTN.Battle;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,6 @@ public class BattleData : ScriptableObject
     [SerializeField] public Actor currentActor;
 
     [SerializeField] public List<Actor> allies = new List<Actor>();
-    [SerializeField] public List<Actor> liveAllies = new List<Actor>();
     [SerializeField] public List<Actor> enemies = new List<Actor>();
     [SerializeField] public List<Actor> nextSix = new List<Actor>();
 
@@ -24,14 +24,13 @@ public class BattleData : ScriptableObject
 
     public void setTargets()
     {
-        updateAllies?.Invoke(liveAllies);
+        updateAllies?.Invoke(allies.getLive());
         updateEnemies?.Invoke(enemies);
     }
 
     public void clearData()
     {
         allies.Clear();
-        liveAllies.Clear();
         enemies.Clear();
         nextSix.Clear();
     }
@@ -42,13 +41,4 @@ public class BattleData : ScriptableObject
         this.enemies = enemyInfo.Value;
     }
 
-    public void setliveAllies()
-    {
-        foreach (Actor actor in allies)
-        {
-            if (actor.IsDead) continue;
-
-            liveAllies.Add(actor);
-        }
-    }
 }

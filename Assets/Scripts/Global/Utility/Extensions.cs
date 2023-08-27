@@ -1,3 +1,5 @@
+using MGCNTN.Battle;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -45,5 +47,33 @@ namespace MGCNTN
 
         //Animator
         public static bool IsAnimating(this Animator animator, int layer = 0) => animator.GetCurrentAnimatorStateInfo(layer).normalizedTime < 1;
+
+        //Actor List
+
+        public static List<Actor> getLive(this List<Actor> actors)
+        {
+            List<Actor> list = new List<Actor>();
+
+            foreach (Actor actor in actors)
+            {
+                if (actor.IsDead)
+                    continue;
+
+                list.Add(actor);
+            }
+
+            return list;
+        }
+
+        public static List<Actor> getDead(this List<Actor> actors)
+        {
+            List<Actor> list = new List<Actor>();
+
+            foreach (Actor actor in actors)
+                if (actor.IsDead)
+                    list.Add(actor);
+
+            return list;
+        }
     }
 }

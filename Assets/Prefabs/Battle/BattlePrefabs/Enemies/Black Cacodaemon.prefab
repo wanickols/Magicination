@@ -134,12 +134,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ai: {fileID: 0}
+  type: 1
   gfx:
     selector: {fileID: 1045657364043076702, guid: c66c79e9c3dbb4b4b8c1806b9b88346c, type: 3}
-    offset: 0.5
+    offset: -0.5
     animationSpeed: 2
     attackSetupComplete: 0
-    selectorPosition: {x: 0, y: 0}
+    selectorPosition: {x: -0.1, y: 0.5}
 --- !u!114 &7087356467793755650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,5 +153,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415ea71ce86697a4c9ce538c38eab766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnTime: 0
-  isTakingTurn: 0

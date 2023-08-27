@@ -16,10 +16,10 @@ namespace MGCNTN.Battle
     {
         ///Actions
         public Action selectTarget;
+        public Action cancelTarget;
 
         ///Public Parameters
         public bool hasTarget = false;
-        public BattleMainSelections currSelectionType;
         public List<Actor> targets { get; private set; } = new List<Actor>();
 
         ///Private Paramaters
@@ -29,16 +29,26 @@ namespace MGCNTN.Battle
         private Actor currSelected = null;
         private GameObject selector => currSelected.gfx.selector;
 
+        private bool cancel = false;
 
         ///Public Functions
-        public IEnumerator CO_SelectSingleTarget(List<Actor> allies, List<Actor> enemies, BattleMainSelections type)
+        public IEnumerator CO_SelectSingleTarget(BattleData data)
         {
-            currSelectionType = type;
+            bool live = true;
+            List<Actor> allies;
+            List<Actor> enemies;
+            if (live)
+                allies = data.allies.getLive();
+            else
+                allies = data.allies.getDead();
+
+            enemies = data.enemies;
+
             currSelected = enemies.FirstOrDefault();
             selector.SetActive(true);
             yield return new WaitForSeconds(.1f);
 
-            while (!hasTarget)
+            while (!hasTarget && !cancel)
             {
 
                 if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -54,6 +64,9 @@ namespace MGCNTN.Battle
                 else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
                     SelectSingleTarget();
 
+                else if (Input.GetKeyDown(KeyCode.Escape))
+                    revertSelection();
+
                 if (handlingInput)
                 {
                     yield return new WaitForSeconds(.1f);
@@ -63,6 +76,7 @@ namespace MGCNTN.Battle
                     yield return null;
             }
 
+            cancel = false;
             hasTarget = false;
             yield return null;
 
@@ -76,7 +90,6 @@ namespace MGCNTN.Battle
             targets.Add(currSelected);
             selector.SetActive(false);
             selectTarget?.Invoke();
-
         }
         private void VerticalMove(List<Actor> allies, List<Actor> enemies, int change)
         {
@@ -131,6 +144,13 @@ namespace MGCNTN.Battle
                 currCol = 0;
             else if (currCol > maxCount)
                 currCol = maxCount;
+        }
+
+        private void revertSelection()
+        {
+            cancel = true;
+            selector.SetActive(false);
+            cancelTarget?.Invoke();
         }
     }
 }

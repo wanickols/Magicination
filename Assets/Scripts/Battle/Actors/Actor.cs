@@ -16,21 +16,26 @@ namespace MGCNTN.Battle
 
         ///Public Parameters
         //Components
-        public ActorTurner turner { get; private set; }
+        public CommandHandler commander { get; private set; }
         public BattlerAI ai;
 
         //Data Accessors
-        public float baseTurnSpeed => data.Stats.turnSpeed;
+        public float baseTurnSpeed => Stats.turnSpeed;
+        ///Public Paramaeters
+        [NonSerialized] public float turnTime = 0;
+
+        [NonSerialized] public bool isTakingTurn = false;
+        //Battle Data
+        public Stats Stats { get; private set; }
+        public Sprite battlePortrait { get; private set; }
 
         //Type
-        public ActorType type { get; private set; }
-
+        public ActorType type;
         [Header("Graphics")]
         public ActorGraphics gfx = new ActorGraphics();
 
         ///Private Parameters
         //Components
-        public ActorData data { get; private set; } = new ActorData();
 
         //Variables
         private bool isDead = false;
@@ -51,7 +56,7 @@ namespace MGCNTN.Battle
         private void Awake()
         {
             ai = GetComponent<BattlerAI>();
-            turner = GetComponent<ActorTurner>();
+            commander = GetComponent<CommandHandler>();
             Animator animator = GetComponent<Animator>();
             gfx.init(this, animator);
         }
@@ -59,11 +64,24 @@ namespace MGCNTN.Battle
         ///Public Functions
         public void setMemberBattleInfo(Stats stats, Sprite sprite)
         {
-            data.Stats = stats;
-            data.battlePortrait = sprite;
-            turner.turnTime = baseTurnSpeed;
+            Stats = stats;
+            battlePortrait = sprite;
+            turnTime = baseTurnSpeed;
         }
-        public void Die() => StartCoroutine(gfx.CO_die());
+        public void Die() => StartCoroutine(gfx.CO_DeathAnim());
+
+        public void checkDeath(bool instant)
+        {
+            if (Stats.HP <= 0)
+            {
+                Stats.HP = 0;
+
+                if (instant)
+                    IsDead = true;
+
+                Die();
+            }
+        }
 
     }
 }
