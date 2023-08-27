@@ -24,7 +24,7 @@ namespace MGCNTN.Battle
                 ally.setMemberBattleInfo(member.Stats, member.MenuPortrait);
                 turnSystem.enqueue(ally);
                 allies.Add(ally);
-                BattleCalculations.checkDeath(ally, true); //Kills
+                ally.checkDeath(true); //Kills
                 battleUI.AddPartyMemberUI(member);
                 battleUI.LinkListeners(ally);
                 i++;

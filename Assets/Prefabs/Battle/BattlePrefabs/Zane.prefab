@@ -104,7 +104,7 @@ MonoBehaviour:
     offset: 0.5
     animationSpeed: 2
     attackSetupComplete: 0
-    selectorPosition: {x: 0, y: 2}
+    selectorPosition: {x: 0, y: 0.5}
 --- !u!114 &4646400564096762695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,5 +117,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415ea71ce86697a4c9ce538c38eab766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnTime: 0
-  isTakingTurn: 0

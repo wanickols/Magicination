@@ -1,17 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MGCNTN.Battle
 {
-    public class ActorTurner : MonoBehaviour
+    public class CommandHandler : MonoBehaviour
     {
-
-        ///Public Paramaeters
-        [NonSerialized] public float turnTime = 0;
-        [NonSerialized] public bool isTakingTurn = false;
-
         ///Private Parameters
         //Components
         private BattlerAI ai => actor.ai;
@@ -23,35 +17,33 @@ namespace MGCNTN.Battle
 
         ///Public functions
         public void startCheckAI() => StartCoroutine(checkAI());
+
+        //Start Turn Logic
         public virtual void StartTurn()
         {
             if (actor.IsDead)
                 return;
 
-            isTakingTurn = true;
-            linkBattle();
-            StartCoroutine(gfx.Co_MoveToAttack());
+            actor.isTakingTurn = true;
+            StartCoroutine(gfx.Co_MoveToAttackAnim());
             StartCoroutine(checkAI());
         }
 
-        /// Private Functions
+
         //Battle Choices
-        private void attack(List<Actor> targets)
+        public void attack(List<Actor> targets)
         {
             Attack command = new Attack(actor, targets);
-            ExecuteCommand(command);
+            executeCommand(command);
         }
-        private void useItem(List<Actor> targets, IConsumable item)
+        public void useItem(List<Actor> targets, IConsumable item)
         {
             UseItem command = new UseItem(targets, item);
-            ExecuteCommand(command);
+            executeCommand(command);
         }
 
-        private void ExecuteCommand(ICommand command)
-        {
-            unlinkBattle();
-            StartCoroutine(CO_ExecuteCommand(command));
-        }
+        /// Private Functions
+        private void executeCommand(ICommand command) => StartCoroutine(CO_ExecuteCommand(command));
 
         private IEnumerator CO_ExecuteCommand(ICommand command)
         {
@@ -61,7 +53,7 @@ namespace MGCNTN.Battle
                 yield return null;
 
             //Battle command here
-            StartCoroutine(gfx.EndTurn());
+            StartCoroutine(gfx.EndTurnAnim());
         }
 
         //AI Logic
@@ -71,21 +63,7 @@ namespace MGCNTN.Battle
                 yield return null;
 
             if (ai)
-                ExecuteCommand(ai.ChooseAction());
+                executeCommand(ai.ChooseAction());
         }
-
-        //Events
-        private void linkBattle()
-        {
-            Battle.Attack += attack;
-            Battle.UseItem += useItem;
-        }
-        private void unlinkBattle()
-        {
-            Battle.Attack -= attack;
-            Battle.UseItem -= useItem;
-        }
-
-        ~ActorTurner() => unlinkBattle();
     }
 }

@@ -106,9 +106,6 @@ namespace MGCNTN
     ///Core Enums
     namespace Core
     {
-
-
-
         //States of the game
         public enum GameState
         {
@@ -129,10 +126,6 @@ namespace MGCNTN
             extreme = 4,
         }
 
-
-
-
-
         //UI
         public enum mainSelections
         {
@@ -144,7 +137,6 @@ namespace MGCNTN
             Save,
             Quit
         }
-
 
         public enum MenuState
         {
@@ -171,11 +163,13 @@ namespace MGCNTN
     namespace Battle
     {
 
+        //Actors
         public enum ActorType
         {
             Ally,
             Enemy
         }
+
         //Spawn Counts for Players and Enemy Spawning
         public enum SpawnCounts
         {

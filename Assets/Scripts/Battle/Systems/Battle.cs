@@ -9,25 +9,21 @@ namespace MGCNTN.Battle
         /// Actions
         public static Action endBattle;
         public static Action quit;
-        public static Action<List<Actor>> Attack;
-        public static Action<List<Actor>, IConsumable> UseItem;
-
 
         /// Public parameters
         //Data from Core
         public static Region currentRegion;
+        public static BattleStates battleState = BattleStates.battle;
 
-
+        public bool inputAllowed = false;
         /// Private parameters
-
         //Basic
-        private BattleStates battleState = BattleStates.battle;
+
         private bool isEnding = false;
 
         // Other Battle Handler/Managers/Classes
         private EnemyGenerator enemyGenerator;
         private PartyGenerator partyGenerator;
-        private Selection selection;
 
         [Header("Managers")]
         [SerializeField] private BattleUIManager battleUI = new BattleUIManager();
@@ -36,20 +32,11 @@ namespace MGCNTN.Battle
 
         private TurnSystem turnSystem;
 
+
         /// Public functions
 
         //Listeners
         public void tryRun() { endBattle?.Invoke(); }
-
-        public void trySelect(BattleMainSelections type)
-        {
-            if (battleState == BattleStates.battle)
-            {
-                battleState = BattleStates.select;
-                StartCoroutine(selection.CO_SelectSingleTarget(data.allies, data.enemies, type));
-                battleUI.setBattleMenu(false);
-            }
-        }
         private void tryEnd(bool win)
         {
             battleUI.hideUI();
@@ -109,8 +96,8 @@ namespace MGCNTN.Battle
         /// Unity Functions
         private void Awake()
         {
+            battleState = BattleStates.battle;
             battleUI.init(data, this);
-            selection = new Selection();
             enemyGenerator = new EnemyGenerator(currentRegion);
             partyGenerator = new PartyGenerator();
             turnSystem = new TurnSystem(battleUI, data);
@@ -121,7 +108,6 @@ namespace MGCNTN.Battle
         {
             //List Creation
             data.allies = partyGenerator.Spawn(turnSystem, battleUI);
-            data.setliveAllies();
             data.setEnemyData(enemyGenerator.generate(turnSystem));
 
             InitActions();
@@ -130,12 +116,22 @@ namespace MGCNTN.Battle
         private void Update()
         {
             if (battleState != BattleStates.battle)
+            {
+                inputAllowed = false;
                 return;
+            }
 
-            battleUI.update();
+
 
             if (turnSystem.isTakingTurn)
+            {
+                if (data.currentActor.type == ActorType.Ally && inputAllowed)
+                    battleUI.update();
+
                 return;
+            }
+            inputAllowed = true;
+
 
             if (isEnding)
                 return;
@@ -149,7 +145,8 @@ namespace MGCNTN.Battle
         //Actions
         private void InitActions()
         {
-            selection.selectTarget += selectTarget;
+            battleUI.selection.selectTarget += selectTarget;
+            battleUI.run += tryRun;
 
             turnSystem.nextTurn += battleUI.toggleBattleMenu;
             InitTargets();
@@ -175,37 +172,36 @@ namespace MGCNTN.Battle
         //BattleState
         private void selectTarget()
         {
-            if (!selection.hasTarget)
-                return;
+            //Select Target
+            List<Actor> targets = battleUI.selection.targets;
 
-            List<Actor> targets = selection.targets;
-
-            switch (selection.currSelectionType)
+            switch (battleUI.currBattleSelection)
             {
                 case BattleMainSelections.Attack:
-                    Attack?.Invoke(targets);
+                    data.currentActor.commander.attack(targets);
                     break;
                 case BattleMainSelections.Items:
+                    battleUI.revertToMain();
                     Consumable item = battleUI.getItem();
-                    UseItem?.Invoke(targets, item);
+                    data.currentActor.commander.useItem(targets, item);
                     break;
                 default:
                     Debug.Log("Battle Selection Type Not Implemented in Battle Manager");
                     break;
             }
+
             battleState = BattleStates.battle;
         }
 
         //Deconstructor
         private void OnDestroy()
         {
-            selection.selectTarget -= selectTarget;
+            battleUI.selection.selectTarget -= selectTarget;
+            battleUI.run -= tryRun;
             turnSystem.nextTurn -= battleUI.toggleBattleMenu;
 
             foreach (Actor enemy in data.enemies)
-            {
                 data.updateAllies -= enemy.ai.updateTargets;
-            }
 
             foreach (Actor ally in data.allies)
             {

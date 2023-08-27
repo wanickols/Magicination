@@ -9,6 +9,13 @@ namespace MGCNTN.Battle
     [Serializable]
     public class BattleUIManager
     {
+        ///Events
+        public Action run;
+
+        ///Public Parameters
+        public BattleMainSelections currBattleSelection => selectorManager.currBattleSelection;
+        public Selection selection { get; private set; } = new Selection();
+
         /// Private Parameters
         [Header("UI")]
         [SerializeField] private GameObject Stats;
@@ -24,20 +31,63 @@ namespace MGCNTN.Battle
 
 
         private BattleData data;
+        private Battle battle;
         private List<StatContainer> statsContainerList = new List<StatContainer>();
-        private Selection selection = new Selection();
-
         private List<Actor> actors = new List<Actor>();
 
 
+        ///Unity Functions (sort of)
+        public void update() => menuInputHandler.HandleInput();
+
         /// Public Functions
+        //Init
         public void init(BattleData data, Battle battle)
         {
             this.data = data;
-            selectorManager.init(battleWindow, battle); ;
+            this.battle = battle;
+            selectorManager.init(battleWindow, this); ;
             menuInputHandler.Init(selectorManager);
+            selection.cancelTarget += selectorManager.revertSelection;
         }
 
+        //Battle Menu Functions
+        public void setBattleMenu(bool active) => BattleMenu.SetActive(active);
+
+        public void toggleBattleMenu() => setBattleMenu(data.currentActor.GetComponent<BattlerAI>() == null);
+
+        public void hideUI() => BattleUIContainer.SetActive(false);
+
+        public void revertToMain() => selectorManager.returnToMain(false);
+
+        public void inputAllowed() => battle.inputAllowed = true;
+
+        //Selection
+        public void trySelect()
+        {
+            if (Battle.battleState == BattleStates.battle)
+            {
+                Battle.battleState = BattleStates.select;
+                CO.startCO(selection.CO_SelectSingleTarget(data));
+                setBattleMenu(false);
+            }
+        }
+
+        //Battle Back and Forth
+        public IEnumerator CO_GameOver()
+        {
+            Animator anim = GameObject.Instantiate(gameOverPrefab, BattleUIContainer.transform.parent).GetComponent<Animator>();
+            while (anim.IsAnimating()) yield return null;
+            Battle.quit?.Invoke();
+        }
+
+        public void tryRun() => run?.Invoke();
+
+        //Items
+        public Consumable getItem() => selectorManager.currItem;
+
+
+
+        //Party Member Generation
         public StatContainer AddPartyMemberUI(PartyMember member)
         {
             GameObject partyMem = GameObject.Instantiate(StatContainerPrefab, Stats.transform);
@@ -50,56 +100,17 @@ namespace MGCNTN.Battle
             return stat;
 
         }
-
-        public void update()
-        {
-            menuInputHandler.HandleInput();
-        }
-
         public void LinkListeners(Actor actor)
         {
             actors.Add(actor);
             StatContainer stat = statsContainerList.Last();
             actor.updateHealth += stat.updateHealth;
             actor.updateMP += stat.updateMP;
+
+
         }
-
-        public void toggleBattleMenu()
-        {
-            if (data.currentActor.GetComponent<BattlerAI>())
-            {
-                setBattleMenu(false);
-            }
-            else
-                setBattleMenu(true);
-        }
-        public void setBattleMenu(bool active)
-        {
-            BattleMenu.SetActive(active);
-        }
-
-
-        public void hideUI()
-        {
-            BattleUIContainer.SetActive(false);
-        }
-
-        public IEnumerator CO_GameOver()
-        {
-            Animator anim = GameObject.Instantiate(gameOverPrefab, BattleUIContainer.transform.parent).GetComponent<Animator>();
-            while (anim.IsAnimating()) yield return null;
-
-            Battle.quit?.Invoke();
-        }
-
-        public Consumable getItem() => selectorManager.currItem;
-
-
-
-        ~BattleUIManager()
-        {
-            UnLinkListeners();
-        }
+        ///Private Functions
+        ~BattleUIManager() => UnLinkListeners();
 
         private void UnLinkListeners()
         {
@@ -110,7 +121,11 @@ namespace MGCNTN.Battle
                 actor.updateHealth -= stat.updateHealth;
                 actor.updateMP -= stat.updateMP;
             }
+            selection.cancelTarget -= selectorManager.revertSelection;
         }
+
+
+
     }
 
 }

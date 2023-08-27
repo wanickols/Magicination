@@ -11,7 +11,7 @@ namespace MGCNTN.Battle
         /// Public Parameter
         public override Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
         public Consumable currItem;
-
+        public BattleMainSelections currBattleSelection;
 
         /// Private Parameters
         [Header("Selectors")]
@@ -25,12 +25,12 @@ namespace MGCNTN.Battle
 
         //Managers
         private BattleWindow battleWindow;
-        private Battle battle;
+        private BattleUIManager manager;
 
         /// Public Functions
-        public void init(BattleWindow battleWindow, Battle manager)
+        public void init(BattleWindow battleWindow, BattleUIManager manager)
         {
-            battle = manager;
+            this.manager = manager;
             this.battleWindow = battleWindow;
             //Connecting selectors to states
             stateSelector.Add(BattleMenuStates.mainSelection, mainSelector);
@@ -48,8 +48,9 @@ namespace MGCNTN.Battle
                     break;
                 case BattleMenuStates.itemSelection:
                     currItem = battleWindow.getItem(CurrentSelector.SelectedIndex);
-                    battle.trySelect(BattleMainSelections.Items);
-                    Cancel();
+                    currBattleSelection = BattleMainSelections.Items;
+                    battleWindow.closeItemWindow();
+                    manager.trySelect();
                     break;
                 case BattleMenuStates.skillSelection:
                     break;
@@ -72,13 +73,32 @@ namespace MGCNTN.Battle
         }
         public override void checkHover() { }
 
+        public void revertSelection()
+        {
+            Battle.battleState = BattleStates.battle;
+            manager.inputAllowed();
+            manager.setBattleMenu(true);
+
+            switch (menuState)
+            {
+                case BattleMenuStates.mainSelection:
+                    break;
+                case BattleMenuStates.itemSelection:
+                    battleWindow.ShowItemWindow();
+                    break;
+            }
+        }
+
+        public void returnToMain(bool cancel = true) => SetMenuState(BattleMenuStates.mainSelection, cancel);
+
         /// Private Functions
         private void ProcessMainSelection()
         {
             switch ((BattleMainSelections)mainSelector.SelectedIndex)
             {
                 case BattleMainSelections.Attack:
-                    battle.trySelect(BattleMainSelections.Attack);
+                    currBattleSelection = BattleMainSelections.Attack;
+                    manager.trySelect();
                     break;
                 case BattleMainSelections.Items:
                     battleWindow.ShowItemWindow();
@@ -87,7 +107,7 @@ namespace MGCNTN.Battle
                 case BattleMainSelections.Skills:
                 //SetMenuState(BattleMenuStates.skillSelection, false);
                 case BattleMainSelections.Run:
-                    battle.tryRun();
+                    manager.tryRun();
                     break;
                 default:
                     Debug.LogWarning("Not implemented!");
@@ -106,19 +126,19 @@ namespace MGCNTN.Battle
             {
                 menuState = newState;
 
+                CurrentSelector.gameObject.SetActive(true);
                 if (!cancel)
                     CurrentSelector.SelectedIndex = 0;
 
-                CurrentSelector.gameObject.SetActive(true);
+
 
             }
 
 
         }
-        private void returnToMain()
-        {
-            SetMenuState(BattleMenuStates.mainSelection, true);
-        }
+
+
+
 
     }
 }

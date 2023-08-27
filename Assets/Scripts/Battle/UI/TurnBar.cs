@@ -27,7 +27,7 @@ namespace MGCNTN.Battle
             int i = 0;
             foreach (Actor actor in actors)
             {
-                slots[i].setSprite(actor.data.battlePortrait);
+                slots[i].setSprite(actor.battlePortrait);
                 i++;
             }
         }
