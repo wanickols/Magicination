@@ -4,25 +4,16 @@ using UnityEngine;
 namespace MGCNTN
 {
     [Serializable]
-    public class ItemData
+    public class ObjectData
     {
+        [Header("Basics")]
         public int id;
-        public int price;
         public string displayName;
         public string description;
-        public int quantity;
+        public int requiredLevel;
         public Sprite sprite;
 
-        public int requiredLevel;
-
-        public static int nextID = 0;
+        [Header("Augmentation")]
         public AugmentationData augData;
-
-
-        public ItemData()
-        {
-            nextID++;
-            id = nextID;
-        }
     }
 }

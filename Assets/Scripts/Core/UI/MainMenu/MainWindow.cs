@@ -13,13 +13,14 @@ namespace MGCNTN.Core
         public Selector equipmentSelector, equippableSelector;
         public Selector itemActionBar;
         public Selector itemSelector;
+        public Selector skillActionBar;
+        public Selector skillSelector;
         public Selector partyMemberSelector;
 
         [Header("Windows")]
         /// Private Paremeters
-        [SerializeField] private GameObject EquipWindow;
-        [SerializeField] private GameObject arsenalWindow;
-        [SerializeField] private GameObject ItemsWindow;
+        [SerializeField] private GameObject EquipWindow, arsenalWindow;
+        [SerializeField] private GameObject ItemsWindow, SkillsWindow;
         [SerializeField] private GameObject PartyTargetWindow;
 
 
@@ -135,6 +136,15 @@ namespace MGCNTN.Core
         public void closeItemView() => ItemsWindow.SetActive(false);
         public bool itemActionSelected(int selected) => itemMenu.setFlag(selected);
         public void itemSelected(int selected) => openPartyTargetWindow(PartyTargetSelections.item, itemMenu.selectItem(selected));
+
+        //Skill Menu
+        public void ShowSkillView()
+        {
+            hidePartyMembers();
+            SkillsWindow.SetActive(true);
+        }
+
+        public void closeSkillView() => SkillsWindow.SetActive(false);
 
         /// Private Functions
         //Party Targeting
