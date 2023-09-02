@@ -150,7 +150,11 @@ namespace MGCNTN
 
             //Item
             ItemActionSelection,
-            ItemSelection
+            ItemSelection,
+
+            //Skill
+            SkillActionSelection,
+            SkillSelection
         }
 
         public enum PartyTargetSelections

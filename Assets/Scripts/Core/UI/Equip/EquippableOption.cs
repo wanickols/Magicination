@@ -1,28 +1,24 @@
-using TMPro;
-using UnityEngine;
-
 namespace MGCNTN.Core
 {
-    public class EquippableOption : MonoBehaviour
+    public class EquippableOption : Option
     {
-        [SerializeField] private TextMeshProUGUI textBox;
         public Equippable equippable { get; private set; }
 
         public void changeOption(Equippable _equippable)
         {
             equippable = _equippable;
             if (_equippable != null)
-                upadateText();
+                updateText();
             else
                 textBox.text = string.Empty;
         }
-        public void clear()
+
+        public override void clear()
         {
+            base.clear();
             equippable = null;
-            textBox.text = string.Empty;
         }
         /// Private
-
-        private void upadateText() => textBox.text = equippable.Data.displayName;
+        protected override void updateText(string text = null) => textBox.text = equippable.Data.displayName;
     }
 }
