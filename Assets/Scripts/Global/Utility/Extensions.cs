@@ -75,5 +75,10 @@ namespace MGCNTN
 
             return list;
         }
+
+        //Skills
+        public static void unlock(this Skill skill) => skill.Data.skillStatus = SkillStatus.unlocked;
+        public static void discover(this Skill skill) => skill.Data.skillStatus = SkillStatus.locked;
+        public static void hide(this Skill skill) => skill.Data.skillStatus = SkillStatus.hidden;
     }
 }
