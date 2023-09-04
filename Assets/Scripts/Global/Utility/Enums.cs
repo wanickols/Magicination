@@ -54,7 +54,7 @@ namespace MGCNTN
         encounter,
     }
 
-    public enum itemMenuAction
+    public enum ItemMenuAction
     {
         use,
         sort,
@@ -62,9 +62,16 @@ namespace MGCNTN
         //discard?
     }
     //Skills
+    public enum SkillStatus
+    {
+        unlocked,
+        locked,
+        hidden
+    }
+
 
     //Classes
-    public enum baseClasses
+    public enum BaseClasses
     {
         //Physical
         Warrior,

@@ -7,7 +7,7 @@ namespace MGCNTN
     public class EquippableStats : Stats
     {
 
-        [SerializeField] private baseClasses[] requiredClass;
+        [SerializeField] private BaseClasses[] requiredClass;
         [SerializeField] private ItemRarity rarity;
 
         public EquippableStats() : base() { }

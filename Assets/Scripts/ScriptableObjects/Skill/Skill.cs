@@ -12,12 +12,12 @@ namespace MGCNTN
             set => data = value;
         }
 
-        public void Activate(Stats stats)
+        public void Activate(Stats target)
         {
             if (data.augData == null)
                 return;
 
-            data.augData.CreateAugmentation(stats).ApplyEffect();
+            data.augData.CreateAugmentation(target).ApplyEffect();
         }
 
     }

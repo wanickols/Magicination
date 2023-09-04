@@ -10,7 +10,7 @@ namespace MGCNTN
         [SerializeField] private GameObject content; //content window
 
         //Selection
-        private itemMenuAction onSelectAction = itemMenuAction.use;
+        private ItemMenuAction onSelectAction = ItemMenuAction.use;
         private List<ConsumableOption> options = new List<ConsumableOption>();
 
 
@@ -44,7 +44,7 @@ namespace MGCNTN
 
         public bool setFlag(int selected)
         {
-            if ((itemMenuAction)selected == itemMenuAction.sort)
+            if ((ItemMenuAction)selected == ItemMenuAction.sort)
             {
                 sort();
                 return false;
@@ -56,8 +56,8 @@ namespace MGCNTN
         {
             switch (onSelectAction)
             {
-                case itemMenuAction.use: return use(index);
-                case itemMenuAction.key: return key(index);
+                case ItemMenuAction.use: return use(index);
+                case ItemMenuAction.key: return key(index);
                 default:
                     Debug.Log("Incorect Item Action Value");
                     return null;

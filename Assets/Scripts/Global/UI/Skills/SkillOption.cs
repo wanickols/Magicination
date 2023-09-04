@@ -14,7 +14,7 @@ namespace MGCNTN
             this.skill = skill;
 
             if (skill != null)
-                updateText();
+                updateOption();
         }
 
         public override void clear()
@@ -22,6 +22,12 @@ namespace MGCNTN
             base.clear();
             icon.sprite = null;
             skill = null;
+        }
+
+        private void updateOption()
+        {
+            updateText();
+            icon.sprite = skill.Data.sprite;
         }
     }
 }
