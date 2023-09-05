@@ -49,6 +49,7 @@ namespace MGCNTN
                 SelectorType.Vertical => verticalInput(),
                 SelectorType.Horizontal => horizontalInput(),
                 SelectorType.Grid => gridInput(),
+                SelectorType.Tree => treeInput(),
                 _ => false,
             };
 
@@ -90,6 +91,43 @@ namespace MGCNTN
 
             return false;
         }
+
+        private bool treeInput()
+        {
+            Dir increment;
+            // Check which key is pressed and handle it accordingly
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+                increment = Dir.Up;
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+                increment = Dir.Down;
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                increment = Dir.Left;
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+                increment = Dir.Right;
+            else
+                return false;
+
+            moveTree(increment);
+            return false;
+        }
+
+        private void moveTree(Dir dir)
+        {
+            TreeSelector tree = (currSelector as TreeSelector);
+
+            if (!tree)
+                return;
+
+            SkillNode node = tree.currNode.getNeighbor(dir);
+
+            if (!node)
+                return;
+
+            tree.currNode = node;
+            menuChangeSound.Play();
+            selectorManager.checkHover();
+        }
+
         private void checkSelectedInput()
         {
             if (Input.GetKeyDown(KeyCode.Return))

@@ -16,8 +16,8 @@ namespace MGCNTN.Core
         private Selector equippableSelector => mainWindow.equippableSelector;
         private Selector itemActionSelector => mainWindow.itemActionBar;
         private Selector itemSelector => mainWindow.itemSelector;
-        private Selector skillActionSelector => mainWindow.skillActionBar;
-        private Selector skillTreeSelector => mainWindow.skillTreeSelector;
+        private Selector skillCategorySelector => mainWindow.skillCategoryBar;
+        private TreeSelector skillSelector => mainWindow.skillSelector;
         private Selector partyMemberSelector => mainWindow.partyMemberSelector;
 
         //States
@@ -40,15 +40,15 @@ namespace MGCNTN.Core
             stateSelector.Add(MenuState.MemberSelection, memberSelector);
             stateSelector.Add(MenuState.ItemSelection, itemSelector);
             stateSelector.Add(MenuState.ItemActionSelection, itemActionSelector);
-            stateSelector.Add(MenuState.SkillTreeSelector, skillTreeSelector);
-            stateSelector.Add(MenuState.SkillActionSelection, skillActionSelector);
+            stateSelector.Add(MenuState.SkillCateogrySelection, skillCategorySelector);
+            stateSelector.Add(MenuState.SkillSelection, skillSelector);
             stateSelector.Add(MenuState.EquipmentSelection, equipmentSelector);
             stateSelector.Add(MenuState.EquippableSelection, equippableSelector);
             stateSelector.Add(MenuState.PartyTargetSelection, partyMemberSelector);
 
         }
 
-        
+
         ///Abstract Implmentations
         public override void Cancel()
         {
@@ -72,17 +72,13 @@ namespace MGCNTN.Core
                 case (MenuState.ItemSelection):
                     SetMenuState(MenuState.ItemActionSelection, true);
                     break;
-                case (MenuState.SkillActionSelection):
+                case (MenuState.SkillCateogrySelection):
                     returnToMain();
                     mainWindow.closeSkillView();
                     mainWindow.ShowDefaultView();
                     break;
-                case (MenuState.SkillTreeSelector):
-                    SetMenuState(MenuState.SkillActionSelection, true);
-                    break;
                 case (MenuState.SkillSelection):
-                    removeSkillSelector();
-                    SetMenuState(MenuState.SkillTreeSelector, true);
+                    SetMenuState(MenuState.SkillCateogrySelection, true);
                     break;
                 case (MenuState.EquipmentSelection):
                     returnToMembers();
@@ -117,17 +113,12 @@ namespace MGCNTN.Core
                     mainWindow.itemSelected(CurrentSelector.SelectedIndex);
                     SetMenuState(MenuState.PartyTargetSelection, false);
                     break;
-                case (MenuState.SkillActionSelection):
+                case (MenuState.SkillCateogrySelection):
                     //if (mainWindow.itemActionSelected(CurrentSelector.SelectedIndex)) //accounts for sorting
-                    SetMenuState(MenuState.SkillTreeSelector, true);
-                    break;
-                case (MenuState.SkillTreeSelector):
-                    //mainWindow.skillSelected(CurrentSelector.SelectedIndex);
-                    addSkillSelector();
-                    SetMenuState(MenuState.SkillSelection, false);
+                    SetMenuState(MenuState.SkillSelection, true);
                     break;
                 case (MenuState.SkillSelection):
-                    //mainWindow.skillSelected(CurrentSelector.SelectedIndex);
+                    mainWindow.skillSelected((CurrentSelector as TreeSelector).currNode);
                     SetMenuState(MenuState.PartyTargetSelection, false);
                     break;
                 case (MenuState.EquipmentSelection):
@@ -186,8 +177,8 @@ namespace MGCNTN.Core
             switch ((mainSelections)mainSelector.SelectedIndex)
             {
                 case mainSelections.Skills:
-                    mainWindow.ShowSkillView();
-                    SetMenuState(MenuState.SkillActionSelection, false);
+                    mainWindow.ShowSkillView(CurrentSelector.SelectedIndex);
+                    SetMenuState(MenuState.SkillCateogrySelection, false);
                     break;
                 case mainSelections.Equip:
                     mainWindow.ShowEquipmentView(CurrentSelector.SelectedIndex);
@@ -235,12 +226,6 @@ namespace MGCNTN.Core
 
             }
         }
-
-        //Skill Selector Logic
-        private void addSkillSelector() => stateSelector.Add(MenuState.SkillSelection, mainWindow.skillSelector);
-        private void removeSkillSelector() => stateSelector.Remove(MenuState.SkillSelection);
-
-
     }
 
 }

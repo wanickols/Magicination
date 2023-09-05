@@ -100,6 +100,7 @@ namespace MGCNTN
         Vertical,
         Horizontal,
         Grid,
+        Tree,
     }
 
     //Triggers types for cutscenes and other events
@@ -160,8 +161,7 @@ namespace MGCNTN
             ItemSelection,
 
             //Skill
-            SkillActionSelection,
-            SkillTreeSelector,
+            SkillCateogrySelection,
             SkillSelection
         }
 

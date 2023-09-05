@@ -13,9 +13,8 @@ namespace MGCNTN.Core
         public Selector equipmentSelector, equippableSelector;
         public Selector itemActionBar;
         public Selector itemSelector;
-        public Selector skillActionBar;
-        public Selector skillTreeSelector;
-        public Selector skillSelector => skillMenu.getSkillSelector();
+        public Selector skillCategoryBar;
+        public TreeSelector skillSelector;
         public Selector partyMemberSelector;
 
         [Header("Windows")]
@@ -141,13 +140,20 @@ namespace MGCNTN.Core
         public void itemSelected(int selected) => openPartyTargetWindow(PartyTargetSelections.item, itemMenu.selectItem(selected));
 
         //Skill Menu
-        public void ShowSkillView()
+        public void ShowSkillView(int selected)
         {
             hidePartyMembers();
             SkillsWindow.SetActive(true);
-        }
 
+            PartyMember selectedMember = Party.ActiveMembers[selected];
+        }
         public void closeSkillView() => SkillsWindow.SetActive(false);
+
+        public void skillSelected(SkillNode node)
+        {
+            Debug.Log(node.name);
+            //Need To make window that either gives the option to move, or combine this skill;
+        }
 
         /// Private Functions
         //Party Targeting
