@@ -22,7 +22,6 @@ namespace MGCNTN
         [Header("Scrollable")]
         public bool scrollable;
         public ScrollRect scrollRect;
-        public int scrollMovementTrigger;
 
         //Private scrollable
         [SerializeField] private GameObject imageHolder;
@@ -37,12 +36,12 @@ namespace MGCNTN
         private float itemHeight;
 
         //Local
-        private float selectorSpeed = 8f;
+        protected float selectorSpeed = 8f;
         private int _selectedIndex = 0;
 
         //Components
         private Animator animator;
-        private RectTransform rectTransform;
+        protected RectTransform rectTransform;
         private List<RectTransform> selectableOptions = new List<RectTransform>();
 
         /// Public Functions
@@ -95,7 +94,7 @@ namespace MGCNTN
         }
 
 
-        protected void Update()
+        protected virtual void Update()
         {
             if (rectTransform.anchoredPosition != selectableOptions[SelectedIndex].anchoredPosition)
                 MoveToSelectedOption();
@@ -107,7 +106,7 @@ namespace MGCNTN
 
         /// Private Functions
         //Movement
-        private void UpdateScrollPosition()
+        protected virtual void UpdateScrollPosition()
         {
 
             selectorSpeed = SelectorSpeed;
@@ -122,7 +121,7 @@ namespace MGCNTN
             }
         }
 
-        private void MoveToSelectedOption()
+        protected virtual void MoveToSelectedOption()
         {
             rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, selectableOptions[(int)SelectedIndex].anchoredPosition, selectorSpeed);
         }
