@@ -1,6 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillMenu : MonoBehaviour
+namespace MGCNTN
 {
-    [SerializeField] private GameObject LevelsContainer;
+
+    public class SkillMenu : MonoBehaviour
+    {
+        [SerializeField] private GameObject LevelsContainer;
+
+        public Selector mainSelector;
+        [SerializeField] private List<Selector> skillSelectors;
+
+        public Selector getSkillSelector() => skillSelectors[mainSelector.SelectedIndex];
+
+
+    }
 }

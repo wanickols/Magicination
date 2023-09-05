@@ -161,6 +161,7 @@ namespace MGCNTN
 
             //Skill
             SkillActionSelection,
+            SkillTreeSelector,
             SkillSelection
         }
 

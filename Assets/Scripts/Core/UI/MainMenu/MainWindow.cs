@@ -14,7 +14,8 @@ namespace MGCNTN.Core
         public Selector itemActionBar;
         public Selector itemSelector;
         public Selector skillActionBar;
-        public Selector skillSelector;
+        public Selector skillTreeSelector;
+        public Selector skillSelector => skillMenu.getSkillSelector();
         public Selector partyMemberSelector;
 
         [Header("Windows")]
@@ -27,6 +28,7 @@ namespace MGCNTN.Core
         private EquipMenu equipMenu;
         private ArsenalMenu arsenalMenu;
         private ItemMenu itemMenu;
+        private SkillMenu skillMenu;
         private PartyTargetMenu partyTargetMenu;
 
         /// Unity Functions
@@ -48,6 +50,7 @@ namespace MGCNTN.Core
             partyTargetMenu = PartyTargetWindow.GetComponent<PartyTargetMenu>();
 
             //Skills
+            skillMenu = SkillsWindow.GetComponent<SkillMenu>();
         }
 
         /// Public Functions

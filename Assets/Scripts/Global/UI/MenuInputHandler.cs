@@ -8,7 +8,7 @@ namespace MGCNTN
     {
         /// Private Parameters
         //Input
-        private float pressThreshold = .005f; // The minimum time between key presses private float
+        private float pressThreshold = .001f; // The minimum time between key presses private float
         private float lastPressTime = 0f; // The time of the last key press
 
         //Components
