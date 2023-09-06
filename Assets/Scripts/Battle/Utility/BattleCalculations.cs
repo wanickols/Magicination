@@ -25,10 +25,12 @@ namespace MGCNTN.Battle
 
             return damage;
         }
-        public static void useItem(Actor defender, IConsumable data)
+        public static void useItem(Actor attacker, Actor defender, ObjectData data)
         {
             Stats dStats = defender.Stats;
-            data.Consume(dStats);
+
+
+            data.use(dStats, attacker.Stats);
 
             defender.checkDeath(false);
 

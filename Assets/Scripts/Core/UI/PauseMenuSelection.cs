@@ -11,15 +11,6 @@ namespace MGCNTN.Core
 
         //Selectors
         private Selector mainSelector => pauseMenu.mainSelector;
-        private Selector memberSelector => mainWindow.memberSelector;
-        private Selector equipmentSelector => mainWindow.equipmentSelector;
-        private Selector equippableSelector => mainWindow.equippableSelector;
-        private Selector itemActionSelector => mainWindow.itemActionBar;
-        private Selector itemSelector => mainWindow.itemSelector;
-        private Selector skillCategorySelector => mainWindow.skillCategoryBar;
-        private TreeSelector skillSelector => mainWindow.skillSelector;
-        private Selector partyMemberSelector => mainWindow.partyMemberSelector;
-
         //States
         private Dictionary<MenuState, Selector> stateSelector = new Dictionary<MenuState, Selector>();
         private MenuState menuState = MenuState.Main;
@@ -35,16 +26,27 @@ namespace MGCNTN.Core
             this.mainWindow = mainWindow;
             this.pauseMenu = pauseMenu;
 
-            //Connecting selectors to states
+            //Selectors to Enum
+            //Main
             stateSelector.Add(MenuState.Main, mainSelector);
-            stateSelector.Add(MenuState.MemberSelection, memberSelector);
-            stateSelector.Add(MenuState.ItemSelection, itemSelector);
-            stateSelector.Add(MenuState.ItemActionSelection, itemActionSelector);
-            stateSelector.Add(MenuState.SkillCateogrySelection, skillCategorySelector);
-            stateSelector.Add(MenuState.SkillSelection, skillSelector);
-            stateSelector.Add(MenuState.EquipmentSelection, equipmentSelector);
-            stateSelector.Add(MenuState.EquippableSelection, equippableSelector);
-            stateSelector.Add(MenuState.PartyTargetSelection, partyMemberSelector);
+            stateSelector.Add(MenuState.MemberSelection, mainWindow.memberSelector);
+
+            //Items
+            stateSelector.Add(MenuState.ItemSelection, mainWindow.itemSelector);
+            stateSelector.Add(MenuState.ItemActionSelection, mainWindow.itemActionSelection);
+
+            //Skills
+            stateSelector.Add(MenuState.SkillCateogrySelection, mainWindow.skillCategoryBar);
+            stateSelector.Add(MenuState.SkillSelection, mainWindow.skillSelector);
+            stateSelector.Add(MenuState.SkillActionSelection, mainWindow.skillActionSelector);
+            stateSelector.Add(MenuState.SkillCombinationSelection, mainWindow.skillCombinationSelector);
+
+            //Equip
+            stateSelector.Add(MenuState.EquipmentSelection, mainWindow.equipmentSelector);
+            stateSelector.Add(MenuState.EquippableSelection, mainWindow.equippableSelector);
+
+            //Party
+            stateSelector.Add(MenuState.PartyTargetSelection, mainWindow.partyMemberSelector);
 
         }
 
@@ -54,16 +56,15 @@ namespace MGCNTN.Core
         {
             switch (menuState)
             {
+                //Main
                 case (MenuState.Main):
                     pauseMenu.Close();
                     break;
                 case (MenuState.MemberSelection):
                     returnToMain();
                     break;
-                case (MenuState.PartyTargetSelection):
-                    SetMenuState(prevState, true);
-                    mainWindow.closePartyTargetWindow();
-                    break;
+
+                //Items
                 case (MenuState.ItemActionSelection):
                     returnToMain();
                     mainWindow.closeItemView();
@@ -72,14 +73,25 @@ namespace MGCNTN.Core
                 case (MenuState.ItemSelection):
                     SetMenuState(MenuState.ItemActionSelection, true);
                     break;
+
+                //Skills
                 case (MenuState.SkillCateogrySelection):
-                    returnToMain();
+                    returnToMembers();
                     mainWindow.closeSkillView();
                     mainWindow.ShowDefaultView();
                     break;
                 case (MenuState.SkillSelection):
                     SetMenuState(MenuState.SkillCateogrySelection, true);
                     break;
+                case (MenuState.SkillActionSelection):
+                    mainWindow.closeSkillActionWindow();
+                    SetMenuState(MenuState.SkillSelection, true);
+                    break;
+                case (MenuState.SkillCombinationSelection):
+                    SetMenuState(MenuState.SkillActionSelection, true);
+                    break;
+
+                //Equipment
                 case (MenuState.EquipmentSelection):
                     returnToMembers();
                     break;
@@ -88,6 +100,11 @@ namespace MGCNTN.Core
                     SetMenuState(MenuState.EquipmentSelection, true);
                     break;
 
+                //Party
+                case (MenuState.PartyTargetSelection):
+                    SetMenuState(prevState, true);
+                    mainWindow.closePartyTargetWindow();
+                    break;
 
             }
         }
@@ -95,16 +112,15 @@ namespace MGCNTN.Core
         {
             switch (menuState)
             {
+                //Main
                 case (MenuState.Main):
                     ProcessMainSelection();
                     break;
                 case (MenuState.MemberSelection):
                     ProcessMemberSelection();
                     break;
-                case (MenuState.PartyTargetSelection):
-                    mainWindow.partyTargetSelected(CurrentSelector.SelectedIndex);
-                    Cancel();
-                    break;
+
+                //Items
                 case (MenuState.ItemActionSelection):
                     if (mainWindow.itemActionSelected(CurrentSelector.SelectedIndex)) //accounts for sorting
                         SetMenuState(MenuState.ItemSelection, true);
@@ -113,14 +129,30 @@ namespace MGCNTN.Core
                     mainWindow.itemSelected(CurrentSelector.SelectedIndex);
                     SetMenuState(MenuState.PartyTargetSelection, false);
                     break;
+
+                //Skills
                 case (MenuState.SkillCateogrySelection):
-                    //if (mainWindow.itemActionSelected(CurrentSelector.SelectedIndex)) //accounts for sorting
                     SetMenuState(MenuState.SkillSelection, true);
                     break;
                 case (MenuState.SkillSelection):
-                    mainWindow.skillSelected((CurrentSelector as TreeSelector).currNode);
-                    SetMenuState(MenuState.PartyTargetSelection, false);
+                    mainWindow.ShowSkillActionWindow();
+                    SetMenuState(MenuState.SkillActionSelection, false);
                     break;
+                case (MenuState.SkillActionSelection):
+                    if (CurrentSelector.SelectedIndex == 0)
+                        SetMenuState(MenuState.SkillCombinationSelection, false);
+                    else
+                    {
+                        mainWindow.skillSelected();
+                        SetMenuState(MenuState.PartyTargetSelection, false);
+                    }
+                    break;
+                case (MenuState.SkillCombinationSelection):
+                    Debug.Log("Combinin'");
+                    Cancel();
+                    break;
+
+                //Equip
                 case (MenuState.EquipmentSelection):
                     int selected = CurrentSelector.SelectedIndex;
                     SetMenuState(MenuState.EquippableSelection, false);
@@ -130,19 +162,34 @@ namespace MGCNTN.Core
                     mainWindow.swapEquippable(CurrentSelector);
                     Cancel();
                     break;
+
+                //Party
+                case (MenuState.PartyTargetSelection):
+                    mainWindow.partyTargetSelected(CurrentSelector.SelectedIndex);
+                    Cancel();
+                    break;
             }
+
+            checkHover();
         }
         public override void checkHover()
         {
             switch (menuState)
             {
+                //Equip
                 case MenuState.EquipmentSelection:
                 case MenuState.EquippableSelection:
                     mainWindow.updateEquipmentStats(CurrentSelector);
                     break;
-                case MenuState.SkillSelection:
-                    Debug.Log("Skilling");
+
+                //Skills
+                case MenuState.SkillCateogrySelection:
+                    Debug.Log("Cateogry Stuff");
                     break;
+                case MenuState.SkillSelection:
+                    mainWindow.skillDescription();
+                    break;
+
                 default:
                     break;
             }

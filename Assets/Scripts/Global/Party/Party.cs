@@ -55,6 +55,9 @@ namespace MGCNTN
 
         private static void generateParty()
         {
+            activeMembers.Clear();
+
+
             PartyMember Zane = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Zane));
             PartyMember Leon = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Leon));
             PartyMember Seth = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Seth));

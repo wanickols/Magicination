@@ -114,26 +114,6 @@ namespace MGCNTN
     ///Core Enums
     namespace Core
     {
-        //States of the game
-        public enum GameState
-        {
-            World,
-            Cutscene,
-            Dialogue,
-            Battle,
-            Transition,
-            Menu
-        }
-
-        //Danger Level of a Region
-        public enum DangerLevel
-        {
-            low = 1,
-            medium = 2,
-            high = 3,
-            extreme = 4,
-        }
-
         //UI
         public enum mainSelections
         {
@@ -162,7 +142,9 @@ namespace MGCNTN
 
             //Skill
             SkillCateogrySelection,
-            SkillSelection
+            SkillSelection,
+            SkillActionSelection,
+            SkillCombinationSelection,
         }
 
         public enum PartyTargetSelections
@@ -170,6 +152,28 @@ namespace MGCNTN
             item,
             skill,
         }
+
+        //States of the game
+        public enum GameState
+        {
+            World,
+            Cutscene,
+            Dialogue,
+            Battle,
+            Transition,
+            Menu
+        }
+
+        //Danger Level of a Region
+        public enum DangerLevel
+        {
+            low = 1,
+            medium = 2,
+            high = 3,
+            extreme = 4,
+        }
+
+
     }
 
     namespace Battle

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Attack Up I
   m_EditorClassIdentifier: 
   data:
-    id: 2
+    id: 0
     displayName: Attack Up
     description: Attack Raised By a small ammount
     requiredLevel: 1
-    sprite: {fileID: 0}
+    sprite: {fileID: 635302527, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
     augData: {fileID: 11400000, guid: a099bcff6165f5e459bdf70c3c996fc6, type: 2}
     cost: 20
-    skillStatus: 2
-    menuPos: {x: 0, y: 1}
+    menuUsable: 0
+    status: 2

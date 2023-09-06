@@ -11,14 +11,5 @@ namespace MGCNTN
             get => data;
             set => data = value;
         }
-
-        public void Activate(Stats target)
-        {
-            if (data.augData == null)
-                return;
-
-            data.augData.CreateAugmentation(target).ApplyEffect();
-        }
-
     }
 }

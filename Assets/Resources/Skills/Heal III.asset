@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Heal III
   m_EditorClassIdentifier: 
   data:
-    id: 2
+    id: 6
     displayName: Heal III
     description: Heals a lot of health
     requiredLevel: 1
-    sprite: {fileID: 0}
+    sprite: {fileID: -343394817, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
     augData: {fileID: 11400000, guid: 35f81a74b68f7084ca9144fd18721e31, type: 2}
     cost: 20
-    skillStatus: 2
-    menuPos: {x: 0, y: 1}
+    menuUsable: 1
+    status: 2

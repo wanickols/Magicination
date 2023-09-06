@@ -11,9 +11,8 @@ namespace MGCNTN.Core
         [Header("Selectors")]
         public Selector memberSelector;
         public Selector equipmentSelector, equippableSelector;
-        public Selector itemActionBar;
-        public Selector itemSelector;
-        public Selector skillCategoryBar;
+        public Selector itemActionSelection, itemSelector;
+        public Selector skillCategoryBar, skillActionSelector, skillCombinationSelector;
         public TreeSelector skillSelector;
         public Selector partyMemberSelector;
 
@@ -65,12 +64,7 @@ namespace MGCNTN.Core
             }
         }
 
-        //Party Targets
-        public void openPartyTargetWindow(PartyTargetSelections selection, Consumable item = null)
-        {
-            PartyTargetWindow.SetActive(true);
-            partyTargetMenu.initTargets(selection, item);
-        }
+
 
         public void closePartyTargetWindow() => PartyTargetWindow.SetActive(false);
         public void partyTargetSelected(int selected)
@@ -137,7 +131,17 @@ namespace MGCNTN.Core
         }
         public void closeItemView() => ItemsWindow.SetActive(false);
         public bool itemActionSelected(int selected) => itemMenu.setFlag(selected);
-        public void itemSelected(int selected) => openPartyTargetWindow(PartyTargetSelections.item, itemMenu.selectItem(selected));
+        public void itemSelected(int selected)
+        {
+
+            Consumable item = itemMenu.selectItem(selected);
+            if (!item)
+                return;
+
+            item.Consume();
+            openPartyTargetWindow(PartyTargetSelections.item, item.Data, null);
+
+        }
 
         //Skill Menu
         public void ShowSkillView(int selected)
@@ -145,15 +149,20 @@ namespace MGCNTN.Core
             hidePartyMembers();
             SkillsWindow.SetActive(true);
 
-            PartyMember selectedMember = Party.ActiveMembers[selected];
+            skillMenu.member = Party.ActiveMembers[selected];
         }
         public void closeSkillView() => SkillsWindow.SetActive(false);
 
-        public void skillSelected(SkillNode node)
+        public void skillDescription()
         {
-            Debug.Log(node.name);
-            //Need To make window that either gives the option to move, or combine this skill;
+            Debug.Log(skillMenu.skill.Data.description);
         }
+
+        public void skillSelected() => openPartyTargetWindow(PartyTargetSelections.skill, skillMenu.skill.Data, skillMenu.member.stats);
+
+        //Skill Action
+        public void ShowSkillActionWindow() => skillMenu.openActionBar();
+        public void closeSkillActionWindow() => skillMenu.closeActionBar();
 
         /// Private Functions
         //Party Targeting
@@ -164,6 +173,11 @@ namespace MGCNTN.Core
                 if (child.GetComponent<PartyMemberInfo>() != null)
                     child.gameObject.SetActive(false);
             }
+        }
+        private void openPartyTargetWindow(PartyTargetSelections selectionType, ObjectData data, Stats user)
+        {
+            PartyTargetWindow.SetActive(true);
+            partyTargetMenu.initTargets(selectionType, data, user);
         }
     }
 }

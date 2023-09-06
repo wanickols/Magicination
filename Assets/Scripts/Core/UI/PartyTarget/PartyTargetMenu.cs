@@ -5,24 +5,22 @@ namespace MGCNTN.Core
 {
     public class PartyTargetMenu : MonoBehaviour
     {
-
         public PartyTargetSelections selectionType { get; private set; }
-
         /// Private Parametres
 
         [SerializeField] private GameObject selectorPrefab;
         [SerializeField] private GameObject content;
 
         private List<PartyMemberTarget> targets = new List<PartyMemberTarget>();
-        private Consumable currItem;
+        private ObjectData data;
+        private Stats user;
 
         /// Public Functions
-        public void initTargets(PartyTargetSelections selectionType, Consumable item)
+        public void initTargets(PartyTargetSelections selectionType, ObjectData data, Stats user)
         {
             this.selectionType = selectionType;
-
-            if (item != null)
-                currItem = item;
+            this.data = data;
+            this.user = user;
 
             int activeCount = Party.ActiveMembers.Count;
 
@@ -50,7 +48,9 @@ namespace MGCNTN.Core
         }
         public void Select(int selected)
         {
-            currItem.Consume(targets[selected].member.stats);
+            data.use(targets[selected].member.stats, user);
+
+
             targets[selected].updateValues();
         }
 

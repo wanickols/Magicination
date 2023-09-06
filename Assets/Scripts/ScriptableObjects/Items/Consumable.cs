@@ -13,15 +13,6 @@ namespace MGCNTN
             set => data = value;
         }
 
-        public void Consume(Stats stats)
-        {
-            if (data.augData != null)
-            {
-                Augmentation aug = data.augData.CreateAugmentation(stats);
-                aug.ApplyEffect();
-
-            }
-            Party.bag.Remove(this);
-        }
+        public void Consume() => Party.bag.Remove(this);
     }
 }
