@@ -48,6 +48,8 @@ namespace MGCNTN
         //Accessors
         public Transform selectedTransform => getChild(SelectedIndex);
         public Transform getChild(int i) => transform.parent.GetChild(i);
+        public List<RectTransform> getSelectables() => selectableOptions;
+
         public int SelectedIndex
         {
             get => _selectedIndex;

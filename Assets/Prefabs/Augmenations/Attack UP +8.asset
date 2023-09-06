@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: daf7680ff5bec2444bda14089dfc4dbd, type: 3}
-  m_Name: Attack UP +4
+  m_Name: Attack UP +8
   m_EditorClassIdentifier: 
-  displayName: Attack Up I
+  displayName: Attack Up II
   description: Adds 8 Atk
   cost: 10
   duration: 0
   types: 04000000
-  values: 04000000
+  values: 08000000

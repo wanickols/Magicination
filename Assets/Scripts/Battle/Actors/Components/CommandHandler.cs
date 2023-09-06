@@ -36,9 +36,9 @@ namespace MGCNTN.Battle
             Attack command = new Attack(actor, targets);
             executeCommand(command);
         }
-        public void useItem(List<Actor> targets, IConsumable item)
+        public void useItem(Actor user, List<Actor> targets, ObjectData data)
         {
-            UseItem command = new UseItem(targets, item);
+            Use command = new Use(user, targets, data);
             executeCommand(command);
         }
 

@@ -8,49 +8,45 @@ namespace MGCNTN
     {
         public string displayName;
         public string description;
-        public bool costMP = false;
+        public bool costMP;
         public int cost; //for mp
         public float duration;
         public Stats target;
+        public Stats user;
         public Dictionary<AugType, int> values;
 
 
-        public Augmentation(string displayName, string description, int cost, float duration, Stats target, Dictionary<AugType, int> values)
+        public Augmentation(string displayName, string description, bool costMP, int cost, float duration, Stats target, Stats user, Dictionary<AugType, int> values)
         {
             this.displayName = displayName;
             this.description = description;
+            this.costMP = costMP;
             this.cost = cost;
             this.duration = duration;
             this.target = target;
+            this.user = user;
             this.values = values;
         }
 
         public void ApplyEffect()
         {
-            if (costMP)
-            {
-                if (target.MP < cost)
-                    return;
-            }
+            if (costMP && user.MP < cost)
+                return;
+
+            user.MP -= cost;
 
             foreach (KeyValuePair<AugType, int> pair in values)
-            {
                 augment(pair.Key, pair.Value);
-            }
 
             if (duration > 0)
-            {
                 Core.Game.manager.StartCoroutine(CO_RemoveAfterDuration());
-            }
         }
 
 
         public void RemoveEffect()
         {
             foreach (KeyValuePair<AugType, int> pair in values)
-            {
                 augment(pair.Key, -pair.Value);
-            }
         }
 
         private IEnumerator CO_RemoveAfterDuration()

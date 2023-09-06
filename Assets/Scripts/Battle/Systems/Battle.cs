@@ -181,9 +181,10 @@ namespace MGCNTN.Battle
                     data.currentActor.commander.attack(targets);
                     break;
                 case BattleMainSelections.Items:
+                case BattleMainSelections.Skills:
                     battleUI.revertToMain();
                     Consumable item = battleUI.getItem();
-                    data.currentActor.commander.useItem(targets, item);
+                    data.currentActor.commander.useItem(data.currentActor, targets, item.Data);
                     break;
                 default:
                     Debug.Log("Battle Selection Type Not Implemented in Battle Manager");

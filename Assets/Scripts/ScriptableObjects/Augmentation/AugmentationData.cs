@@ -15,7 +15,7 @@ namespace MGCNTN
         [SerializeField] private List<int> values;
 
         // The method that creates an augmentation instance from the data
-        public Augmentation CreateAugmentation(Stats target)
+        public Augmentation CreateAugmentation(Stats target, Stats user, bool costMP = false)
         {
             if (types.Count != values.Count)
             {
@@ -32,7 +32,7 @@ namespace MGCNTN
                 i++;
             }
 
-            return new Augmentation(displayName, description, cost, duration, target, augs);
+            return new Augmentation(displayName, description, costMP, cost, duration, target, user, augs);
         }
     }
 }

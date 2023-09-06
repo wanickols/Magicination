@@ -15,5 +15,7 @@ namespace MGCNTN
 
         [Header("Augmentation")]
         public AugmentationData augData;
+
+        public virtual void use(Stats target, Stats user) => augData.CreateAugmentation(target, user).ApplyEffect();
     }
 }

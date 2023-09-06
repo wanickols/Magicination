@@ -8,7 +8,7 @@ namespace MGCNTN
     {
         /// Private Parameters
         //Input
-        private float pressThreshold = .001f; // The minimum time between key presses private float
+        private float pressThreshold = .0001f; // The minimum time between key presses private float
         private float lastPressTime = 0f; // The time of the last key press
 
         //Components
@@ -123,7 +123,7 @@ namespace MGCNTN
             if (!node)
                 return;
 
-            tree.currNode = node;
+            tree.setNode(node);
             menuChangeSound.Play();
             selectorManager.checkHover();
         }
