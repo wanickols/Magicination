@@ -1,3 +1,6 @@
+
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MGCNTN
@@ -5,30 +8,55 @@ namespace MGCNTN
 
     public class SkillMenu : MonoBehaviour
     {
+        ///Public Parameters
+
+        public Skill skill => tree.currNode.transform.GetComponent<SkillHolder>().skill;
+
+        [NonSerialized] public PartyMember member;
+
         ///Private Parameters
-        [SerializeField] private GameObject treeParent; //curently one, need to make more
+        [SerializeField] private GameObject treesParent; //curently one, need to make more
         [SerializeField] private TreeSelector treeSelector;
         [SerializeField] private GameObject ActionBar;
 
         //Components
         private SkillTree tree = new SkillTree();
         private ActionBar actionBar;
+        private List<GameObject> treeParents = new List<GameObject>();
 
-        public PartyMember member;
-        public Skill skill => tree.currNode.transform.GetComponent<SkillHolder>().skill;
+        private int currTree = 0;
+
 
         ///Unity Functions
         private void Awake()
         {
+            foreach (Transform t in treesParent.GetComponentInChildren<Transform>())
+            {
+                if (t.GetComponent<Selector>())
+                    continue;
 
-            tree.reset(treeParent);
+                t.gameObject.SetActive(false);
+                treeParents.Add(t.gameObject);
+
+            }
+
             treeSelector.tree = tree;
+
+            tree.reset(treeParents[currTree]);
+            treeParents[currTree].SetActive(true);
 
             actionBar = GetComponentInChildren<ActionBar>();
             ActionBar.SetActive(false);
         }
 
         ///Public Functions
+        public void selectTree(int i)
+        {
+            treeParents[currTree].SetActive(false);
+            currTree = i;
+            tree.reset(treeParents[i]);
+            treeParents[currTree].SetActive(true);
+        }
         public void openActionBar()
         {
 
@@ -37,7 +65,8 @@ namespace MGCNTN
             ActionBar.SetActive(true);
 
             if (!skill.Data.menuUsable || mp < skill.Data.cost)
-                actionBar.deactivateOption(0);
+                actionBar.deactivateOption(1);
+
         }
 
         public void closeActionBar() => ActionBar.SetActive(false);

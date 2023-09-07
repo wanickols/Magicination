@@ -143,8 +143,8 @@ namespace MGCNTN
         //Moving
         private void move(int increment)
         {
-            menuChangeSound.Play();
             currSelector.SelectedIndex += increment;
+            menuChangeSound.Play();
             selectorManager.checkHover();
         }
     }
