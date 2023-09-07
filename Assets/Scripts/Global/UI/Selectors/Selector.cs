@@ -10,25 +10,24 @@ namespace MGCNTN
         /// Events
         public event Action SelectionChanged;
 
-        //All
+
+        [Header("Basic")]
         public SelectorType type;
 
-        //Grid
-        public int columnCount = 1;
-
-        //Offseet
+        /// Private Parameters
+        [SerializeField] private bool allowEmpty = false;
+        [SerializeField] private float SelectorSpeed = 8f;
         [SerializeField] private Vector3 mountingOffset;
+        [SerializeField] private GameObject imageHolder;
+
+
+        [Header("Grid")]
+        public int columnCount = 1;
 
         [Header("Scrollable")]
         public bool scrollable;
         public ScrollRect scrollRect;
 
-        //Private scrollable
-        [SerializeField] private GameObject imageHolder;
-        [SerializeField] private float SelectorSpeed = 8f;
-        [SerializeField] private bool allowEmpty = false;
-
-        /// Private Parameters
         //Scrollable
         private int half = 0;
         private float itemsPerView = 0;
@@ -68,6 +67,7 @@ namespace MGCNTN
         /// Unity Functions
         protected virtual void Awake()
         {
+
             rectTransform = GetComponent<RectTransform>();
             animator = GetComponent<Animator>();
 

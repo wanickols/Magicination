@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,13 +8,12 @@ namespace MGCNTN
     public class TreeSelector : Selector
     {
 
-        ///Private 
-        [SerializeField] private GameObject treeParent, skillWindow;
-        private List<SkillHolder> skillHolders;
-
-        ///Public
+        ///Public Parameters
         public SkillTree tree;
+        [NonSerialized] public GameObject treeParent;
 
+        ///Private Parameters
+        private List<SkillHolder> skillHolders;
 
         ///Unity Functions
         protected override void Awake()
@@ -59,9 +59,5 @@ namespace MGCNTN
         {
             rectTransform.anchoredPosition = Vector2.MoveTowards(rectTransform.anchoredPosition, tree.currNode.rectTransform.anchoredPosition, selectorSpeed);
         }
-
-
-
-
     }
 }

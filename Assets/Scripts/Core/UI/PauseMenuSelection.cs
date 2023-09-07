@@ -5,13 +5,13 @@ namespace MGCNTN.Core
 {
     public class PauseMenuSelection : SelectionManager
     {
+        ///Private Parameters
         //Variables
         private MainWindow mainWindow;
         private PauseMenu pauseMenu;
 
-        //Selectors
-        private Selector mainSelector => pauseMenu.mainSelector;
         //States
+        private Selector mainSelector => pauseMenu.mainSelector;
         private Dictionary<MenuState, Selector> stateSelector = new Dictionary<MenuState, Selector>();
         private MenuState menuState = MenuState.Main;
         private MenuState prevState;
@@ -74,7 +74,7 @@ namespace MGCNTN.Core
                     SetMenuState(MenuState.ItemActionSelection, true);
                     break;
 
-                //Skills
+                //Skillss
                 case (MenuState.SkillCateogrySelection):
                     returnToMembers();
                     mainWindow.closeSkillView();
@@ -91,7 +91,7 @@ namespace MGCNTN.Core
                     SetMenuState(MenuState.SkillActionSelection, true);
                     break;
 
-                //Equipment
+                //Equip
                 case (MenuState.EquipmentSelection):
                     returnToMembers();
                     break;
@@ -102,6 +102,9 @@ namespace MGCNTN.Core
 
                 //Party
                 case (MenuState.PartyTargetSelection):
+                    if (prevState == MenuState.SkillActionSelection)
+                        mainWindow.ShowSkillActionWindow();
+
                     SetMenuState(prevState, true);
                     mainWindow.closePartyTargetWindow();
                     break;
@@ -184,7 +187,7 @@ namespace MGCNTN.Core
 
                 //Skills
                 case MenuState.SkillCateogrySelection:
-                    Debug.Log("Cateogry Stuff");
+                    mainWindow.ShowSkillTree(CurrentSelector.SelectedIndex);
                     break;
                 case MenuState.SkillSelection:
                     mainWindow.skillDescription();
@@ -266,10 +269,10 @@ namespace MGCNTN.Core
                 prevState = menuState;
                 menuState = newState;
 
+                CurrentSelector.gameObject.SetActive(true);
+
                 if (!cancel)
                     CurrentSelector.SelectedIndex = 0;
-
-                CurrentSelector.gameObject.SetActive(true);
 
             }
         }

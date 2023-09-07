@@ -123,7 +123,7 @@ namespace MGCNTN.Core
         public void swapEquippable(Selector selector) => arsenalMenu.swapEquippable(selector);
         public void updateEquipmentStats(Selector selector) => arsenalMenu.updateStats(selector);
 
-        //Item Menu
+        ///Item Menu
         public void ShowItemView()
         {
             hidePartyMembers();
@@ -143,7 +143,8 @@ namespace MGCNTN.Core
 
         }
 
-        //Skill Menu
+        ///Skill Menu
+        //Skill View
         public void ShowSkillView(int selected)
         {
             hidePartyMembers();
@@ -153,6 +154,10 @@ namespace MGCNTN.Core
         }
         public void closeSkillView() => SkillsWindow.SetActive(false);
 
+        //Skill Category
+        public void ShowSkillTree(int i) => skillMenu.selectTree(i);
+
+        //Skill Selection
         public void skillDescription()
         {
             Debug.Log(skillMenu.skill.Data.description);

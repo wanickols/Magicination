@@ -6,21 +6,18 @@ namespace MGCNTN
     public class SkillHolder : MonoBehaviour
     {
         public Skill skill;
-        private Image background;
-        private Image icon;
+        [SerializeField] private Image icon;
+        [SerializeField] private Image background;
 
         public SkillNode skillNode;
 
         private void Awake()
         {
             skillNode = GetComponent<SkillNode>();
-            background = GetComponent<Image>();
-            icon = GetComponentInChildren<Image>();
 
             if (!skill)
                 return;
 
-            icon.sprite = skill.Data.sprite;
             checkSkillVisibility();
             skill.Data.changedStatus += checkSkillVisibility;
         }
@@ -30,17 +27,15 @@ namespace MGCNTN
             switch (skill.Data.skillStatus)
             {
                 case SkillStatus.unlocked:
-                    background.color = new Color(175, 175, 175);
                     icon.color = Color.white;
                     icon.enabled = true;
                     break;
                 case SkillStatus.locked:
-                    background.color = new Color(175, 175, 175);
                     icon.color = Color.black;
                     icon.enabled = true;
                     break;
                 case SkillStatus.hidden:
-                    background.color = Color.black;
+                    icon.color = Color.black;
                     icon.enabled = false;
                     break;
             }
