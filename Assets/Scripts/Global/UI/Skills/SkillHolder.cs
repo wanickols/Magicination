@@ -9,11 +9,11 @@ namespace MGCNTN
         [SerializeField] private Image icon;
         [SerializeField] private Image background;
 
-        public SkillNode skillNode;
+        public TreeNode skillNode;
 
         private void Awake()
         {
-            skillNode = GetComponent<SkillNode>();
+            skillNode = GetComponent<TreeNode>();
 
             if (!skill)
                 return;
@@ -41,7 +41,7 @@ namespace MGCNTN
             }
         }
 
-        public bool isNode(SkillNode node) => skillNode == node;
+        public bool isNode(TreeNode node) => skillNode == node;
 
         private void OnDestroy()
         {

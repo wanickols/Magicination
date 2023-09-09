@@ -111,7 +111,7 @@ namespace MGCNTN.Core
 
             }
         }
-        public override void Accept()
+        public override bool Accept()
         {
             switch (menuState)
             {
@@ -135,9 +135,11 @@ namespace MGCNTN.Core
 
                 //Skills
                 case (MenuState.SkillCateogrySelection):
-                    SetMenuState(MenuState.SkillSelection, true);
+                    SetMenuState(MenuState.SkillSelection, false);
                     break;
                 case (MenuState.SkillSelection):
+                    if (!mainWindow.canSelectSkill)
+                        return false;
                     mainWindow.ShowSkillActionWindow();
                     SetMenuState(MenuState.SkillActionSelection, false);
                     break;
@@ -151,7 +153,6 @@ namespace MGCNTN.Core
                     }
                     break;
                 case (MenuState.SkillCombinationSelection):
-                    Debug.Log("Combinin'");
                     Cancel();
                     break;
 
@@ -174,6 +175,7 @@ namespace MGCNTN.Core
             }
 
             checkHover();
+            return true;
         }
         public override void checkHover()
         {
@@ -272,6 +274,7 @@ namespace MGCNTN.Core
                 CurrentSelector.gameObject.SetActive(true);
 
                 if (!cancel)
+
                     CurrentSelector.SelectedIndex = 0;
 
             }

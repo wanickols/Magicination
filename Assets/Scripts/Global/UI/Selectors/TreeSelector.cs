@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace MGCNTN
@@ -18,10 +17,9 @@ namespace MGCNTN
         ///Unity Functions
         protected override void Awake()
         {
-            base.Awake();
+            rectTransform = GetComponent<RectTransform>();
+            animator = GetComponent<Animator>();
             type = SelectorType.Tree;
-            skillHolders = treeParent.GetComponentsInChildren<SkillHolder>().ToList();
-            tree.resetCurrNode();
         }
 
         protected override void Update()
@@ -34,12 +32,12 @@ namespace MGCNTN
         }
 
         ///Public Functions
-        public SkillNode currNode => tree.currNode;
+        public TreeNode currNode => tree.currNode;
 
-        public void setNode(SkillNode node) => tree.currNode = node;
+        public void setNode(TreeNode node) => tree.currNode = node;
 
 
-        public SkillHolder find(SkillNode node)
+        public SkillHolder find(TreeNode node)
         {
             SkillHolder holder = null;
 

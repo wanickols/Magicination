@@ -2,16 +2,16 @@ using UnityEngine;
 
 namespace MGCNTN
 {
-    public class SkillNode : MonoBehaviour
+    public class TreeNode : MonoBehaviour
     {
         public Vector2Int coord;
         public RectTransform rectTransform;
 
         private void Awake() => rectTransform = GetComponent<RectTransform>();
 
-        private SkillNode leftNeighbor, rightNeighbor, upNeighbor, downNeighbor; //neighbors
+        private TreeNode leftNeighbor, rightNeighbor, upNeighbor, downNeighbor; //neighbors
 
-        public void AddNeighbor(SkillNode node, Dir dir)
+        public void AddNeighbor(TreeNode node, Dir dir)
         {
             switch (dir)
             {
@@ -30,7 +30,7 @@ namespace MGCNTN
             }
         }
 
-        public SkillNode getNeighbor(Dir dir)
+        public TreeNode getNeighbor(Dir dir)
             => dir switch
             {
                 Dir.Left => leftNeighbor,

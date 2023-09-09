@@ -6,16 +6,16 @@ namespace MGCNTN
 {
     public class SkillTree
     {
-        private List<SkillNode> nodes;
-        private List<List<SkillNode>> nodeGrid = new List<List<SkillNode>>();
+        private List<TreeNode> nodes;
+        private List<List<TreeNode>> nodeGrid = new List<List<TreeNode>>();
 
-        public SkillNode currNode;
+        public TreeNode currNode;
 
         ///Public Functions
 
         public void reset(GameObject treeParent)
         {
-            nodes = treeParent.GetComponentsInChildren<SkillNode>().ToList();
+            nodes = treeParent.GetComponentsInChildren<TreeNode>().ToList();
             resetCurrNode();
             initTree();
         }
@@ -33,10 +33,10 @@ namespace MGCNTN
         {
             //Creates 8 grid for the 8 allowed columns in UI
             for (int i = 0; i < 8; i++)
-                nodeGrid.Add(new List<SkillNode>());
+                nodeGrid.Add(new List<TreeNode>());
 
             //Creates columns of all node based on x value
-            foreach (SkillNode node in nodes)
+            foreach (TreeNode node in nodes)
                 nodeGrid[node.coord.x].Add(node);
 
             createNeighbors();
@@ -46,31 +46,31 @@ namespace MGCNTN
         {
             for (int col = 0; col < nodeGrid.Count; col++)
             {
-                List<SkillNode> columnNodes = nodeGrid[col];
+                List<TreeNode> columnNodes = nodeGrid[col];
 
                 for (int i = 0; i < columnNodes.Count; i++)
                 {
-                    SkillNode currentNode = columnNodes[i];
+                    TreeNode currentNode = columnNodes[i];
 
                     // Find the down neighbor if it exists
                     if (i < columnNodes.Count - 1)
                     {
-                        SkillNode downNeighbor = columnNodes[i + 1];
+                        TreeNode downNeighbor = columnNodes[i + 1];
                         currentNode.AddNeighbor(downNeighbor, Dir.Down);
                     }
 
                     // Find the up neighbor if it exists
                     if (i > 0)
                     {
-                        SkillNode upNeighbor = columnNodes[i - 1];
+                        TreeNode upNeighbor = columnNodes[i - 1];
                         currentNode.AddNeighbor(upNeighbor, Dir.Up);
                     }
 
                     // Find the right neighbor if it exists
                     if (col < nodeGrid.Count - 1)
                     {
-                        List<SkillNode> nextColumnNodes = nodeGrid[col + 1];
-                        SkillNode rightNeighbor = FindClosestRightNeighbor(currentNode, nextColumnNodes);
+                        List<TreeNode> nextColumnNodes = nodeGrid[col + 1];
+                        TreeNode rightNeighbor = FindClosestRightNeighbor(currentNode, nextColumnNodes);
                         if (rightNeighbor != null)
                         {
                             currentNode.AddNeighbor(rightNeighbor, Dir.Right);
@@ -80,8 +80,8 @@ namespace MGCNTN
                     // Find the left neighbor if it exists
                     if (col > 0)
                     {
-                        List<SkillNode> prevColumnNodes = nodeGrid[col - 1];
-                        SkillNode leftNeighbor = FindClosestLeftNeighbor(currentNode, prevColumnNodes);
+                        List<TreeNode> prevColumnNodes = nodeGrid[col - 1];
+                        TreeNode leftNeighbor = FindClosestLeftNeighbor(currentNode, prevColumnNodes);
                         if (leftNeighbor != null)
                         {
                             currentNode.AddNeighbor(leftNeighbor, Dir.Left);
@@ -90,9 +90,9 @@ namespace MGCNTN
                 }
             }
         }
-        private SkillNode FindClosestRightNeighbor(SkillNode currentNode, List<SkillNode> nextColumnNodes)
+        private TreeNode FindClosestRightNeighbor(TreeNode currentNode, List<TreeNode> nextColumnNodes)
         {
-            SkillNode closestRightNeighbor = null;
+            TreeNode closestRightNeighbor = null;
             int closestMagnitude = int.MaxValue;
 
             foreach (var node in nextColumnNodes)
@@ -111,9 +111,9 @@ namespace MGCNTN
 
             return closestRightNeighbor;
         }
-        private SkillNode FindClosestLeftNeighbor(SkillNode currentNode, List<SkillNode> prevColumnNodes)
+        private TreeNode FindClosestLeftNeighbor(TreeNode currentNode, List<TreeNode> prevColumnNodes)
         {
-            SkillNode closestLeftNeighbor = null;
+            TreeNode closestLeftNeighbor = null;
             int closestMagnitude = int.MaxValue;
 
             foreach (var node in prevColumnNodes)

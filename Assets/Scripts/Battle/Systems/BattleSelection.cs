@@ -39,7 +39,7 @@ namespace MGCNTN.Battle
         }
 
         //Overrides
-        public override void Accept()
+        public override bool Accept()
         {
             switch (menuState)
             {
@@ -55,6 +55,8 @@ namespace MGCNTN.Battle
                 case BattleMenuStates.skillSelection:
                     break;
             }
+
+            return true;
         }
         public override void Cancel()
         {
