@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MGCNTN
+namespace MGCNTN.Core
 {
 
     public class SkillMenu : MonoBehaviour
@@ -25,6 +25,7 @@ namespace MGCNTN
         private List<GameObject> treeParents = new List<GameObject>();
 
         private int currTree = 0;
+        public bool canSelect => skill.Data.skillStatus == SkillStatus.unlocked;
 
 
         ///Unity Functions
@@ -50,12 +51,22 @@ namespace MGCNTN
         }
 
         ///Public Functions
+
         public void selectTree(int i)
         {
             treeParents[currTree].SetActive(false);
             currTree = i;
             tree.reset(treeParents[i]);
             treeParents[currTree].SetActive(true);
+        }
+
+        public string showDescription()
+        {
+
+            if (skill.Data.skillStatus == SkillStatus.hidden)
+                return "Hidden.";
+            else
+                return skill.Data.description;
         }
         public void openActionBar()
         {
@@ -68,7 +79,6 @@ namespace MGCNTN
                 actionBar.deactivateOption(1);
 
         }
-
         public void closeActionBar() => ActionBar.SetActive(false);
 
         ///Private Functions

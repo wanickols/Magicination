@@ -29,6 +29,8 @@ namespace MGCNTN.Core
         private SkillMenu skillMenu;
         private PartyTargetMenu partyTargetMenu;
 
+        public bool canSelectSkill => skillMenu.canSelect;
+
         /// Unity Functions
         private void Start()
         {
@@ -160,8 +162,10 @@ namespace MGCNTN.Core
         //Skill Selection
         public void skillDescription()
         {
-            Debug.Log(skillMenu.skill.Data.description);
+
+            Debug.Log(skillMenu.showDescription());
         }
+
 
         public void skillSelected() => openPartyTargetWindow(PartyTargetSelections.skill, skillMenu.skill.Data, skillMenu.member.stats);
 

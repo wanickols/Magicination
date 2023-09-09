@@ -1,3 +1,4 @@
+using MGCNTN.Core;
 using System;
 using UnityEngine;
 
@@ -118,7 +119,7 @@ namespace MGCNTN
             if (!tree)
                 return;
 
-            SkillNode node = tree.currNode.getNeighbor(dir);
+            TreeNode node = tree.currNode.getNeighbor(dir);
 
             if (!node)
                 return;
@@ -132,8 +133,8 @@ namespace MGCNTN
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
+                if (selectorManager.Accept()) ;
                 menuSelectSound.Play();
-                selectorManager.Accept();
             }
 
             else if (Input.GetKeyDown(KeyCode.Escape))

@@ -39,7 +39,7 @@ namespace MGCNTN
         private int _selectedIndex = 0;
 
         //Components
-        private Animator animator;
+        protected Animator animator;
         protected RectTransform rectTransform;
         private List<RectTransform> selectableOptions = new List<RectTransform>();
 
@@ -94,6 +94,8 @@ namespace MGCNTN
                 scrollableCount = selectableOptions.Count - itemsPerView;
             }
         }
+
+
 
 
         protected virtual void Update()
