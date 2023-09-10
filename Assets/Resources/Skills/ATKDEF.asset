@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17fd1397b651a274680aebcc05a89e95, type: 3}
-  m_Name: Attack Up I
+  m_Name: ATKDEF
   m_EditorClassIdentifier: 
   data:
-    id: 0
-    displayName: Attack Up I
-    description: Attack Raised By a small ammount
+    id: 9
+    displayName: ATKDEF
+    description: Combines Attack and Def
     requiredLevel: 1
-    sprite: {fileID: 635302527, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
-    augData: {fileID: 11400000, guid: a099bcff6165f5e459bdf70c3c996fc6, type: 2}
-    cost: 20
+    sprite: {fileID: 129873669, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
+    augData: {fileID: 11400000, guid: 1aa65aa51665b6942994918d1f0438a3, type: 2}
+    cost: 0
     menuUsable: 0
     status: 2

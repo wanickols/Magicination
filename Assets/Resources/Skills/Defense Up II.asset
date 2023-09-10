@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     id: 3
-    displayName: Attack Up
+    displayName: Defense Up II
     description: Defense Raised By a good ammount
     requiredLevel: 1
     sprite: {fileID: 92380455, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}

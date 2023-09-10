@@ -10,15 +10,19 @@ namespace MGCNTN.Core
     {
 
         private SkillManager manager;
-        private Skill option1;
-        private Skill option2;
-        private Skill newSkill;
+        List<Skill> selectedSkills = new List<Skill>();
 
-        private List<GUIContent> skillGUIContents;
-        private List<Skill> skillList;
+        private List<GUIContent> skillGUIContents = new List<GUIContent>();
+        private List<Skill> skillList = new List<Skill>();
+        private int currOption = 0;
 
         private void OnEnable()
         {
+            selectedSkills.Clear();
+            selectedSkills.Add(new Skill());
+            selectedSkills.Add(new Skill());
+            selectedSkills.Add(new Skill());
+
             manager = (SkillManager)target;
             RetrieveSkillList();
             SkillEditorWindow.OnSkillCreated += HandleSkillCreated;
@@ -26,7 +30,7 @@ namespace MGCNTN.Core
 
         private void RetrieveSkillList()
         {
-            string[] guids = AssetDatabase.FindAssets("t:Skill", new[] { "Assets/Skills" }); // Adjust the folder path accordingly
+            string[] guids = AssetDatabase.FindAssets("t:Skill", new[] { "Assets/Resources/Skills" }); // Adjust the folder path accordingly
             foreach (string guid in guids)
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
@@ -43,17 +47,36 @@ namespace MGCNTN.Core
 
             EditorGUILayout.Space();
 
-            option1 = ShowSkillSelectionPopup();
-            option2 = ShowSkillSelectionPopup();
+
+            ShowSkillSelectionPopup(selectedSkills[0]?.Data.displayName, 0);
+            ShowSkillSelectionPopup(selectedSkills[1]?.Data.displayName, 1);
+            ShowSkillSelectionPopup(selectedSkills[2]?.Data.displayName, 2);
+
+
 
             // Button to create a new skill
             if (GUILayout.Button("Create New Skill"))
                 CreateSkillPrompt();
+
+            // Button to create a new skill
+            if (selectedSkills[0] && selectedSkills[1] && selectedSkills[2] && GUILayout.Button("Combine"))
+            {
+                manager.AddCombination(selectedSkills[0], selectedSkills[1], selectedSkills[2]);
+            }
+            else
+            {
+                GUI.enabled = false; // Disable the button
+                GUILayout.Button("Combine"); // Display the greyed out button
+                GUI.enabled = true; // Enable GUI elements again
+            }
         }
 
-        private Skill ShowSkillSelectionPopup(string dropdownTitle = "Skill")
+        private void ShowSkillSelectionPopup(string dropdownTitle = "Skill", int option = 0)
         {
             int selectedSkillIndex = -1;
+
+            if (skillGUIContents == null)
+                return;
 
             if (GUILayout.Button(dropdownTitle))
             {
@@ -65,16 +88,24 @@ namespace MGCNTN.Core
                    SkillSelectedCallback,
                    null // Adjust the width as needed.
                );
-            }
 
-            if (selectedSkillIndex >= 0)
+                currOption = option;
+            }
+        }
+
+        private void SkillSelectedCallback(object userData, string[] options, int selected)
+        {
+            // Store the selected skill index.
+            if (selected >= 0)
             {
-                // Store the selected skill in your custom variable (option1 or option2).
-                return skillList[selectedSkillIndex];
+                Skill selectedSkill = skillList[selected];
+                Debug.Log("Selected Skill: " + selectedSkill.Data.displayName);
+                Debug.Log("Current Option: " + currOption);
+                selectedSkills[currOption] = selectedSkill;
             }
 
-            // Handle the case where no skill was selected.
-            return null;
+            // Log the updated selectedSkillIndex.
+            Debug.Log(options[selected]);
         }
 
         private void CreateSkillPrompt()
@@ -83,13 +114,9 @@ namespace MGCNTN.Core
             skillEditorWindow.Show();
         }
 
-        private void SkillSelectedCallback(object userData, string[] options, int selected)
-        {
-            // Handle the selected skill here.
-        }
+
         private void HandleSkillCreated(Skill newSkill)
         {
-            this.newSkill = newSkill;
             // Add the new skill to your skillList and skillGUIContents.
             skillList.Add(newSkill);
             // Add a corresponding GUIContent to skillGUIContents.
