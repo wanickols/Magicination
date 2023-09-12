@@ -5,11 +5,41 @@ namespace MGCNTN
 {
     public class SkillHolder : MonoBehaviour
     {
-        public Skill skill;
+        [SerializeField] private Skill skill;
+
+        public Skill Skill
+        {
+            get => skill;
+            set
+            {
+                forgetSkill();
+                skill = value;
+                refresh();
+            }
+        }
         [SerializeField] private Image icon;
         [SerializeField] private Image background;
 
         public TreeNode skillNode;
+        public bool isNode(TreeNode node) => skillNode == node;
+
+
+        ///Private
+        private void refresh()
+        {
+            if (skill != null)
+            {
+                icon.sprite = skill.Data.sprite;
+                icon.enabled = true;
+            }
+            else
+            {
+                icon.sprite = null;
+                icon.enabled = false;
+            }
+
+
+        }
 
         private void Awake()
         {
@@ -41,13 +71,14 @@ namespace MGCNTN
             }
         }
 
-        public bool isNode(TreeNode node) => skillNode == node;
-
-        private void OnDestroy()
+        private void forgetSkill()
         {
             if (skill)
                 skill.Data.changedStatus -= checkSkillVisibility;
         }
+
+        private void OnDestroy() => skill = null;
+
 
     }
 }

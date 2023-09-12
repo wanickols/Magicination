@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +9,7 @@ namespace MGCNTN.Core
     {
         ///Public Parameters
 
-        public Skill skill => tree.currNode.transform.GetComponent<SkillHolder>().skill;
+        public Skill skill => treeSelector.currNode.GetComponent<SkillHolder>().Skill;
 
         [NonSerialized] public PartyMember member;
 
@@ -19,14 +18,24 @@ namespace MGCNTN.Core
         [SerializeField] private TreeSelector treeSelector;
         [SerializeField] private GameObject ActionBar;
 
+        [SerializeField] private SkillHolder skill1, skill2, skill3;
+
+        [SerializeField] private GameObject combinationVisible, combinationNotVisible;
+        [SerializeField] private GameObject successWindow, failWindow;
+
         //Components
         private SkillTree tree = new SkillTree();
         private ActionBar actionBar;
         private List<GameObject> treeParents = new List<GameObject>();
 
+        private SkillManager skillManager = new SkillManager();
+
         private int currTree = 0;
         public bool canSelect => skill.Data.skillStatus == SkillStatus.unlocked;
 
+        public int skillCount = 0;
+
+        private bool clearNext = false;
 
         ///Unity Functions
         private void Awake()
@@ -62,6 +71,9 @@ namespace MGCNTN.Core
 
         public string showDescription()
         {
+            if (!skill)
+                return "Error";
+
 
             if (skill.Data.skillStatus == SkillStatus.hidden)
                 return "Hidden.";
@@ -81,6 +93,98 @@ namespace MGCNTN.Core
         }
         public void closeActionBar() => ActionBar.SetActive(false);
 
+        public bool selectSkill(int index)
+        {
+            if (index == 2)
+                return combine();
+
+            if (!skill)
+                return false;
+
+            changeSkills(skill, index);
+
+            if (skillCount < 2)
+                return false;
+
+
+
+            return true;
+        }
+
+        private bool combine()
+        {
+
+            Skill skill = skillManager.FindCombination(skill1.Skill, skill2.Skill);
+
+            if (skill)
+            {
+                changeSkills(skill, 2);
+
+                Debug.Log(skill.Data.description);
+                skill.unlock();
+
+                ShowSuccessWindow();
+                clearNext = true;
+                return false;
+            }
+            else
+            {
+                Debug.Log("Combination Failed");
+                return true;
+            }
+
+
+
+        }
+
+        public void back(int index)
+        {
+            if (clearNext)
+            {
+                skillCount = 0;
+                skill1.Skill = null;
+                skill2.Skill = null;
+                skill3.Skill = null;
+            }
+            else
+                removeSkill(index);
+        }
+
+        private void removeSkill(int index) => changeSkills(null, index);
+
         ///Private Functions
+        ///
+        private void changeSkills(Skill skill, int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    skill1.Skill = skill;
+                    break;
+                case 1:
+                    skill2.Skill = skill;
+                    break;
+                case 2:
+                    skill3.Skill = skill;
+                    break;
+            }
+
+            if (skill)
+                skillCount++;
+            else
+                skillCount--;
+
+            checkCombine();
+        }
+
+        private void checkCombine()
+        {
+            bool active = skillCount == 2;
+            combinationVisible.SetActive(active);
+            combinationNotVisible.SetActive(!active);
+        }
+
+        private void ShowSuccessWindow() => successWindow.SetActive(true);
+
     }
 }

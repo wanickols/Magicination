@@ -173,6 +173,13 @@ namespace MGCNTN.Core
         public void ShowSkillActionWindow() => skillMenu.openActionBar();
         public void closeSkillActionWindow() => skillMenu.closeActionBar();
 
+        //Skill Combos
+
+        public int getCombineCount() => skillMenu.skillCount;
+        public bool skillComboSelected(int index) => skillMenu.selectSkill(index);
+
+        public void removeSkill(int index) => skillMenu.back(index);
+
         /// Private Functions
         //Party Targeting
         private void hidePartyMembers()
