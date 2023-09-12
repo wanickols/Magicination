@@ -24,6 +24,7 @@ namespace MGCNTN.Core
             selectedSkills.Add(new Skill());
 
             manager = (SkillManager)target;
+            manager.LoadCombinations();
             RetrieveSkillList();
             SkillEditorWindow.OnSkillCreated += HandleSkillCreated;
         }
@@ -62,6 +63,7 @@ namespace MGCNTN.Core
             if (selectedSkills[0] && selectedSkills[1] && selectedSkills[2] && GUILayout.Button("Combine"))
             {
                 manager.AddCombination(selectedSkills[0], selectedSkills[1], selectedSkills[2]);
+                manager.SaveCombinations();
             }
             else
             {

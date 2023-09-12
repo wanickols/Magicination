@@ -74,21 +74,25 @@ namespace MGCNTN.Core
                     SetMenuState(MenuState.ItemActionSelection, true);
                     break;
 
-                //Skillss
+                //Skills
                 case (MenuState.SkillCateogrySelection):
                     returnToMembers();
                     mainWindow.closeSkillView();
                     mainWindow.ShowDefaultView();
                     break;
                 case (MenuState.SkillSelection):
-                    SetMenuState(MenuState.SkillCateogrySelection, true);
+                    if (mainWindow.getCombineCount() == 0)
+                        SetMenuState(MenuState.SkillCateogrySelection, true);
+                    else
+                        SetMenuState(MenuState.SkillCombinationSelection, false);
                     break;
                 case (MenuState.SkillActionSelection):
                     mainWindow.closeSkillActionWindow();
                     SetMenuState(MenuState.SkillSelection, true);
                     break;
                 case (MenuState.SkillCombinationSelection):
-                    SetMenuState(MenuState.SkillActionSelection, true);
+                    mainWindow.removeSkill(CurrentSelector.SelectedIndex);
+                    delayCancel(MenuState.SkillActionSelection, true);
                     break;
 
                 //Equip
@@ -153,7 +157,8 @@ namespace MGCNTN.Core
                     }
                     break;
                 case (MenuState.SkillCombinationSelection):
-                    Cancel();
+                    if (!mainWindow.skillComboSelected(CurrentSelector.SelectedIndex))
+                        delayCancel(MenuState.SkillActionSelection, true);
                     break;
 
                 //Equip
@@ -278,6 +283,12 @@ namespace MGCNTN.Core
                     CurrentSelector.SelectedIndex = 0;
 
             }
+        }
+
+        private void delayCancel(MenuState passState, bool cancel)
+        {
+            SetMenuState(passState, cancel);
+            Cancel();
         }
     }
 

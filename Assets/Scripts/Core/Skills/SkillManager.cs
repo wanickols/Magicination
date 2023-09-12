@@ -9,12 +9,6 @@ namespace MGCNTN.Core
     [Serializable]
     public class CombinationData
     {
-        /*public CombinationData(string skill1, string skill2, string comboSkill)
-        {
-            this.parentSkill1 = skill1;
-            this.parentSkill2 = skill2;
-            this.resultSkill = comboSkill;
-        }*/
         public string parentSkill1;
         public string parentSkill2;
         public string resultSkill;
@@ -23,7 +17,7 @@ namespace MGCNTN.Core
     public class SkillManager : MonoBehaviour
     {
 
-        private Dictionary<Tuple<Skill, Skill>, Skill> combinationDictionary = new Dictionary<Tuple<Skill, Skill>, Skill>();
+        private static Dictionary<Tuple<Skill, Skill>, Skill> combinationDictionary = new Dictionary<Tuple<Skill, Skill>, Skill>();
 
         private void Awake() => LoadCombinations();
 
@@ -34,6 +28,10 @@ namespace MGCNTN.Core
             if (combinationDictionary.TryGetValue(key, out Skill result))
                 return result;
 
+            Tuple<Skill, Skill> key2 = new Tuple<Skill, Skill>(skill2, skill1);
+
+            if (combinationDictionary.TryGetValue(key2, out Skill result2))
+                return result2;
 
             // Combination not found
             return null;
@@ -43,36 +41,34 @@ namespace MGCNTN.Core
         {
             Tuple<Skill, Skill> key = new Tuple<Skill, Skill>(skill1, skill2);
             combinationDictionary[key] = resultSkill;
-            SaveCombinations();
         }
 
         ///Private
-        private void LoadCombinations()
+        public void LoadCombinations()
         {
             // Load the JSON data from "Combinations.json"
-            string json = File.ReadAllText("Assets/Resources/Combinations.json");
+            string[] jsons = File.ReadAllLines("Assets/Resources/Combinations.json");
 
-            // Deserialize the JSON data into combination data
-            List<CombinationData> combinationDataList = JsonUtility.FromJson<List<CombinationData>>(json);
+            combinationDictionary.Clear();
 
-            // Iterate through combination data and create combinations
-            foreach (CombinationData combinationData in combinationDataList)
+            foreach (string json in jsons)
             {
+                CombinationData combinationData = JsonUtility.FromJson<CombinationData>(json);
+
                 Skill parentSkill1 = Resources.Load<Skill>("Skills/" + combinationData.parentSkill1);
                 Skill parentSkill2 = Resources.Load<Skill>("Skills/" + combinationData.parentSkill2);
                 Skill resultSkill = Resources.Load<Skill>("Skills/" + combinationData.resultSkill);
 
                 if (parentSkill1 != null && parentSkill2 != null && resultSkill != null)
-                {
                     AddCombination(parentSkill1, parentSkill2, resultSkill);
-                }
+
             }
+
+
+
         }
-        private void SaveCombinations()
+        public void SaveCombinations()
         {
-
-            LoadCombinations();
-
             // Collect combination data from combinationDictionary
             List<CombinationData> combinationDataList = new List<CombinationData>();
 
@@ -92,13 +88,10 @@ namespace MGCNTN.Core
 
             List<string> jsons = new List<string>();
             jsons.Capacity = (combinationDataList.Count * 3) + 2;
-            jsons.Add("{");
             // Serialize the combination data to JSON format
             foreach (CombinationData combinationData in combinationDataList)
                 jsons.Add(EditorJsonUtility.ToJson(combinationData));
 
-
-            jsons.Add("}");
 
 
             // Write the JSON data to "Combinations.json"
