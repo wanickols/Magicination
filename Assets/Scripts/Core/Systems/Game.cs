@@ -6,7 +6,7 @@ namespace MGCNTN.Core
     {
 
         //Seriazlied
-        [SerializeField] private GameObject playerPrefab, uiPrefab;
+        [SerializeField] private GameObject playerPrefab, uiPrefab, skillsPrefab;
         [SerializeField] private Vector2Int startingCell;
         [SerializeField] private Map startingMap;
 
@@ -20,15 +20,20 @@ namespace MGCNTN.Core
         public GameState State => stateManager.State; //Only used for nonmanager classes please
 
         //Managers
-        public CutsceneManager cutsceneManager { get; private set; }
-        public MapManager mapManager;
 
+        public MapManager mapManager;
+        public StateManager stateManager = new StateManager();
+
+        public CutsceneManager cutsceneManager { get; private set; }
+        public CombinationManager combinationManager { get; private set; }
+        public SaveManager saveManager { get; private set; } = new SaveManager();
 
         ///Private
         //Managers
-        public StateManager stateManager = new StateManager();
         private UI uiManager;
         private SceneLoader sceneLoader;
+        private SkillManager skillManager;
+
 
 
         ///Private Functions
@@ -47,8 +52,9 @@ namespace MGCNTN.Core
             initMap();
             initPlayer(); // map
             initCutscene(); // state map
+            initSkills(); //Does Skills and combinations
 
-
+            //DEbug
             Consumable potion = Resources.Load<Consumable>("items/consumables/potion");
             Consumable revive = Resources.Load<Consumable>("items/consumables/revive");
 
@@ -66,6 +72,9 @@ namespace MGCNTN.Core
             initInput(); // player, UI, Map
             initDialogue(); //UI
             DontDestroyOnLoad(this);
+
+            //
+            saveManager.Load();
         }
 
         //Init Functions
@@ -83,6 +92,14 @@ namespace MGCNTN.Core
             DontDestroyOnLoad(player);
         }
         private void initCutscene() => cutsceneManager = new CutsceneManager(stateManager);
+        private void initSkills()
+        {
+            GameObject skills = Instantiate(skillsPrefab);
+            skillManager = skills.GetComponent<SkillManager>();
+            combinationManager = skills.GetComponent<CombinationManager>();
+            combinationManager.init(skillManager);
+        }
+
         private void initSceneLoader() => sceneLoader = new SceneLoader();
         private void initInput() => inputHandler = new InputHandler(player, uiManager.mainMenu, mapManager, stateManager);
         private void initDialogue() => DialogueManager.instance.Init(inputHandler);

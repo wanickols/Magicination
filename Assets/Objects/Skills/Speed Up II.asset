@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17fd1397b651a274680aebcc05a89e95, type: 3}
-  m_Name: Heal III
+  m_Name: Speed Up II
   m_EditorClassIdentifier: 
   data:
-    id: 6
-    displayName: Heal III
-    description: Heals a lot of health
+    id: 9
+    displayName: Speed Up II
+    description: Speed Raised by a good amount
     requiredLevel: 1
-    sprite: {fileID: -343394817, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
-    augData: {fileID: 11400000, guid: 35f81a74b68f7084ca9144fd18721e31, type: 2}
+    sprite: {fileID: 1790841826, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
+    augData: {fileID: 11400000, guid: c64544a1cb861184b801f6ffc3950072, type: 2}
     cost: 20
-    menuUsable: 1
+    menuUsable: 0
     status: 2

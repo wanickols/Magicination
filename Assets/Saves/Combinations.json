@@ -2,3 +2,6 @@
 {"parentSkill1":"Defense Up I","parentSkill2":"Defense Up I","resultSkill":"Defense Up II"}
 {"parentSkill1":"Attack Up I","parentSkill2":"Attack Up I","resultSkill":"Attack Up II"}
 {"parentSkill1":"Attack Up I","parentSkill2":"Defense Up I","resultSkill":"ATKDEF"}
+{"parentSkill1":"Heal II","parentSkill2":"Heal II","resultSkill":"Heal III"}
+{"parentSkill1":"Speed Up I","parentSkill2":"Speed Up I","resultSkill":"Speed Up I"}
+{"parentSkill1":"Attack Up II","parentSkill2":"Attack Up II","resultSkill":"Attack Up III"}
