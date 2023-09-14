@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17fd1397b651a274680aebcc05a89e95, type: 3}
-  m_Name: Speed Up I
+  m_Name: Defense Up II
   m_EditorClassIdentifier: 
   data:
-    id: 7
-    displayName: Speed Up I
-    description: Speed raised by a small ammount
+    id: 4
+    displayName: Defense Up II
+    description: Defense Raised By a good ammount
     requiredLevel: 1
-    sprite: {fileID: -12225437, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
-    augData: {fileID: 11400000, guid: e9a5b36dbde854140935eaa51aa4888d, type: 2}
+    sprite: {fileID: 92380455, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
+    augData: {fileID: 11400000, guid: 6b199558d5ceff746882ab1e4c0634c5, type: 2}
     cost: 20
+    menuUsable: 0
     status: 2

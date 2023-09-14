@@ -28,7 +28,7 @@ namespace MGCNTN.Core
         private ActionBar actionBar;
         private List<GameObject> treeParents = new List<GameObject>();
 
-        private SkillManager skillManager = new SkillManager();
+
 
         private int currTree = 0;
         public bool canSelect => skill.Data.skillStatus == SkillStatus.unlocked;
@@ -114,7 +114,7 @@ namespace MGCNTN.Core
         private bool combine()
         {
 
-            Skill skill = skillManager.FindCombination(skill1.Skill, skill2.Skill);
+            Skill skill = Game.manager.combinationManager.FindCombination(skill1.Skill.Data.displayName, skill2.Skill.Data.displayName);
 
             if (skill)
             {

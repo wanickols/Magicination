@@ -1,8 +1,7 @@
-using MGCNTN;
 using UnityEditor;
 using UnityEngine;
 
-public class SkillEditor : MonoBehaviour
+namespace MGCNTN.Core
 {
     public class SkillEditorWindow : EditorWindow
     {
@@ -48,12 +47,10 @@ public class SkillEditor : MonoBehaviour
             Skill newSkill = ScriptableObject.CreateInstance<Skill>();
             newSkill.Data = newSkillData;
             // Save the new skill as an asset (optional).
-            AssetDatabase.CreateAsset(newSkill, $"Assets/Resources/Skills/{displayName}.asset");
+            AssetDatabase.CreateAsset(newSkill, $"Assets/Objects/Skills/{displayName}.asset");
             AssetDatabase.SaveAssets();
 
             return newSkill;
         }
-
-
     }
 }

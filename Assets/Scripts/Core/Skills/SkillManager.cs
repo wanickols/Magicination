@@ -1,102 +1,113 @@
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using System;
 using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 namespace MGCNTN.Core
 {
-    [Serializable]
-    public class CombinationData
-    {
-        public string parentSkill1;
-        public string parentSkill2;
-        public string resultSkill;
-    }
-
-    public class SkillManager : MonoBehaviour
+    public class SkillManager : Savable
     {
 
-        private static Dictionary<Tuple<Skill, Skill>, Skill> combinationDictionary = new Dictionary<Tuple<Skill, Skill>, Skill>();
+        ///Private Variables
+        private List<Skill> skills = new List<Skill>();
 
-        private void Awake() => LoadCombinations();
-
-        public Skill FindCombination(Skill skill1, Skill skill2)
+        ///Protected Variable
+        protected override string customPath
         {
-            Tuple<Skill, Skill> key = new Tuple<Skill, Skill>(skill1, skill2);
-
-            if (combinationDictionary.TryGetValue(key, out Skill result))
-                return result;
-
-            Tuple<Skill, Skill> key2 = new Tuple<Skill, Skill>(skill2, skill1);
-
-            if (combinationDictionary.TryGetValue(key2, out Skill result2))
-                return result2;
-
-            // Combination not found
-            return null;
+            get => "Skills.json";
         }
 
-        public void AddCombination(Skill skill1, Skill skill2, Skill resultSkill)
+        ///Unity Functions
+
+        protected override void Awake()
         {
-            Tuple<Skill, Skill> key = new Tuple<Skill, Skill>(skill1, skill2);
-            combinationDictionary[key] = resultSkill;
+            base.Awake();
+#if UNITY_EDITOR
+            SaveSkillsInFolder("Assets/Objects/Skills");
+#endif
         }
 
-        ///Private
-        public void LoadCombinations()
-        {
-            // Load the JSON data from "Combinations.json"
-            string[] jsons = File.ReadAllLines("Assets/Resources/Combinations.json");
+        ///Public Functions
+        //Accessors
+        public Skill getSkillByName(string name) => skills.Find(skill => skill.Data.displayName == name);
+        public Skill getSkillByInt(int index) => skills[index];
+        public void Add(Skill skill) => skills.Add(skill);
 
-            combinationDictionary.Clear();
+        //Editor
+        public List<GUIContent> getSkillGUIs()
+        {
+            List<GUIContent> skillContent = new List<GUIContent>();
+
+
+            foreach (var skill in skills)
+                skillContent.Add(new GUIContent(skill.Data.displayName));
+
+            return skillContent;
+        }
+
+
+        //Parent Implementations
+        public override bool LoadData()
+        {
+            string[] jsons = loadFromFile();
+
+            if (jsons == null)
+                return false;
+
+            skills.Clear();
 
             foreach (string json in jsons)
-            {
-                CombinationData combinationData = JsonUtility.FromJson<CombinationData>(json);
-
-                Skill parentSkill1 = Resources.Load<Skill>("Skills/" + combinationData.parentSkill1);
-                Skill parentSkill2 = Resources.Load<Skill>("Skills/" + combinationData.parentSkill2);
-                Skill resultSkill = Resources.Load<Skill>("Skills/" + combinationData.resultSkill);
-
-                if (parentSkill1 != null && parentSkill2 != null && resultSkill != null)
-                    AddCombination(parentSkill1, parentSkill2, resultSkill);
-
-            }
+                skills.Add(JsonToSkill(json));
 
 
-
+            return true;
         }
-        public void SaveCombinations()
+
+        public override bool SaveData()
         {
-            // Collect combination data from combinationDictionary
-            List<CombinationData> combinationDataList = new List<CombinationData>();
-
-            // Iterate through combinationDictionary and add data to the list
-
-            foreach (var key in combinationDictionary.Keys)
-            {
-                CombinationData data = new CombinationData();
-                data.parentSkill1 = key.Item1.Data.displayName;
-                data.parentSkill2 = key.Item2.Data.displayName;
-                data.resultSkill = combinationDictionary[key].Data.displayName;
-                combinationDataList.Add(data);
-            }
-
-            if (combinationDataList.Count <= 0)
-                return;
-
             List<string> jsons = new List<string>();
-            jsons.Capacity = (combinationDataList.Count * 3) + 2;
-            // Serialize the combination data to JSON format
-            foreach (CombinationData combinationData in combinationDataList)
-                jsons.Add(EditorJsonUtility.ToJson(combinationData));
+
+            foreach (Skill skill in skills)
+                jsons.Add(JsonUtility.ToJson(skill.Data));
 
 
+            if (jsons.Count <= 0)
+                return false;
 
-            // Write the JSON data to "Combinations.json"
-            File.WriteAllLines("Assets/Resources/Combinations.json", jsons);
+            saveToFile(jsons);
+
+            return true;
         }
 
+
+        ///Private Functions
+        private Skill JsonToSkill(String json)
+        {
+            Skill skill = new Skill();
+            SkillData data = JsonUtility.FromJson<SkillData>(json);
+            skill.Data = data;
+            //Do image stuff here
+            return skill;
+        }
+
+        //Editor
+#if UNITY_EDITOR
+        public void SaveSkillsInFolder(string folderPath)
+        {
+            skills.Clear();
+
+            string[] guids = AssetDatabase.FindAssets("t:Skill", new[] { folderPath }); // Adjust the folder path accordingly
+            foreach (string guid in guids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                Skill skill = AssetDatabase.LoadAssetAtPath<Skill>(path);
+                skills.Add(skill);
+            }
+
+            SaveData();
+        }
+#endif
     }
 }

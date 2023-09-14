@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8740641598906599593, guid: 6b0239a5417500e4f8b13b87e866d232, type: 3}
   uiPrefab: {fileID: 1174632973390869395, guid: a7d10abf8b949b947a7e73620213076a, type: 3}
+  skillsPrefab: {fileID: 5627359979704420389, guid: b3be9c938859f2845b4fb6849999f55d, type: 3}
   startingCell: {x: -8, y: 5}
   startingMap: {fileID: 4170751599150295614, guid: 26416334efc50944da7cdb57d687925e, type: 3}
   encounterManager:
