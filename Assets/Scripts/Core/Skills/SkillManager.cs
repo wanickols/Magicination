@@ -14,21 +14,16 @@ namespace MGCNTN.Core
         private List<Skill> skills = new List<Skill>();
 
         ///Protected Variable
-        protected override string customPath
-        {
-            get => "Skills.json";
-        }
+        protected override string customPath { get => "Creation/Skills.json"; }
 
+#if UNITY_EDITOR
         ///Unity Functions
-
         protected override void Awake()
         {
             base.Awake();
-#if UNITY_EDITOR
             SaveSkillsInFolder("Assets/Objects/Skills");
-#endif
         }
-
+#endif
         ///Public Functions
         //Accessors
         public Skill getSkillByName(string name) => skills.Find(skill => skill.Data.displayName == name);

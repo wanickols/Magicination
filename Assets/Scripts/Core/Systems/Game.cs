@@ -33,6 +33,7 @@ namespace MGCNTN.Core
         private UI uiManager;
         private SceneLoader sceneLoader;
         private SkillManager skillManager;
+        private Party party;
 
 
 
@@ -48,6 +49,7 @@ namespace MGCNTN.Core
                 manager = this;
 
             //Gamestate
+            initParty();
             initUI();
             initMap();
             initPlayer(); // map
@@ -78,6 +80,7 @@ namespace MGCNTN.Core
         }
 
         //Init Functions
+        private void initParty() => party = Instantiate(playerPrefab).GetComponent<Party>();
         private void initEncounterManager() => encounterManager.init(stateManager, sceneLoader, mapManager);
         private void Update() => inputHandler.CheckInput();
         private void initUI()

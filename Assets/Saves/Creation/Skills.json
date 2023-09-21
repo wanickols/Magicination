@@ -1,0 +1,11 @@
+{"id":9,"displayName":"ATKDEF","description":"Combines Attack and Def","requiredLevel":1,"sprite":{"instanceID":46514},"augData":{"instanceID":28804},"cost":0,"menuUsable":false,"status":2}
+{"id":0,"displayName":"Attack Up I","description":"Attack Raised By a small ammount","requiredLevel":1,"sprite":{"instanceID":45922},"augData":{"instanceID":28934},"cost":20,"menuUsable":false,"status":2}
+{"id":1,"displayName":"Attack Up II","description":"Attack Raised By a good ammount","requiredLevel":1,"sprite":{"instanceID":45928},"augData":{"instanceID":33196},"cost":20,"menuUsable":false,"status":2}
+{"id":2,"displayName":"Attack Up III","description":"Raises Attack by a lot","requiredLevel":1,"sprite":{"instanceID":46516},"augData":{"instanceID":29416},"cost":0,"menuUsable":false,"status":2}
+{"id":3,"displayName":"Defense Up I","description":"Defense Raised By a small ammount","requiredLevel":1,"sprite":{"instanceID":45926},"augData":{"instanceID":26904},"cost":20,"menuUsable":false,"status":2}
+{"id":4,"displayName":"Defense Up II","description":"Defense Raised By a good ammount","requiredLevel":1,"sprite":{"instanceID":45924},"augData":{"instanceID":28632},"cost":20,"menuUsable":false,"status":2}
+{"id":5,"displayName":"Heal I","description":"Heals a little bit of health","requiredLevel":1,"sprite":{"instanceID":45916},"augData":{"instanceID":28898},"cost":10,"menuUsable":true,"status":0}
+{"id":7,"displayName":"Heal II","description":"Heals a good amount of health","requiredLevel":1,"sprite":{"instanceID":37454},"augData":{"instanceID":27062},"cost":20,"menuUsable":true,"status":1}
+{"id":7,"displayName":"Heal III","description":"Heals a lot of health","requiredLevel":1,"sprite":{"instanceID":45930},"augData":{"instanceID":27062},"cost":20,"menuUsable":true,"status":2}
+{"id":8,"displayName":"Speed Up I","description":"Speed raised by a small ammount","requiredLevel":1,"sprite":{"instanceID":45918},"augData":{"instanceID":28272},"cost":20,"menuUsable":false,"status":2}
+{"id":9,"displayName":"Speed Up II","description":"Speed Raised by a good amount","requiredLevel":1,"sprite":{"instanceID":45920},"augData":{"instanceID":34122},"cost":20,"menuUsable":false,"status":2}
