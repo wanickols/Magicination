@@ -15,25 +15,16 @@ namespace MGCNTN.Core
 
     public class CombinationManager : Savable
     {
+        //
         private static Dictionary<Tuple<string, string>, string> combinationDictionary = new Dictionary<Tuple<string, string>, string>();
-
         private string currError = string.Empty;
         private SkillManager skillManager;
 
-        public override string errorMessage
-        {
-            get => currError;
-        }
-
-        protected override string customPath
-        {
-            get => "Combinations.json";
-        }
-
+        public override string errorMessage { get => currError; }
+        protected override string customPath { get => "Creation/Combinations.json"; }
 
         ///Public Functions
         public void init(SkillManager manager) => skillManager = manager;
-
         public Skill FindCombination(string skill1, string skill2)
         {
             Tuple<string, string> key = new Tuple<string, string>(skill1, skill2);
@@ -72,14 +63,14 @@ namespace MGCNTN.Core
 
             return true;
         }
+
+        //
         public override bool SaveData()
         {
-
             // Collect combination data from combinationDictionary
             List<CombinationData> combinationDataList = new List<CombinationData>();
 
             // Iterate through combinationDictionary and add data to the list
-
             foreach (var key in combinationDictionary.Keys)
             {
                 CombinationData data = new CombinationData();
@@ -97,8 +88,6 @@ namespace MGCNTN.Core
             // Serialize the combination data to JSON format
             foreach (CombinationData combinationData in combinationDataList)
                 jsons.Add(EditorJsonUtility.ToJson(combinationData));
-
-
 
             // Write the JSON data to "Combinations.json"
             saveToFile(jsons);
@@ -118,8 +107,5 @@ namespace MGCNTN.Core
             else
                 currError = "Failed to get skill loaded";
         }
-
-
-
     }
 }

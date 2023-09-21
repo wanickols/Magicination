@@ -1,9 +1,8 @@
-using MGCNTN.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MGCNTN
+namespace MGCNTN.Core
 {
 
     [CreateAssetMenu(fileName = "New Region", menuName = "New Region")]

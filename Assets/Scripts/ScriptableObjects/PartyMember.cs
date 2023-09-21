@@ -1,4 +1,8 @@
 using MGCNTN;
+using MGCNTN.Core;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
 public class PartyMember : MemberBattleInfo
 {
@@ -9,5 +13,36 @@ public class PartyMember : MemberBattleInfo
     public Equipment equipment = new Equipment();
 
     public Stats Stats => stats + equipment.getEquipmentTotalStats() + augmentStats!;
+
+    public void LoadFromFile(string filePath)
+    {
+        string[] jsons = File.ReadAllLines(filePath);
+        Stats[] statsArr = new Stats[jsons.Length];
+
+        int i = 0;
+        foreach (string json in jsons)
+            statsArr[i++] = JsonUtility.FromJson<Stats>(json);
+
+        stats = statsArr[0];
+        augmentStats = statsArr[1];
+
+        //Load Equipment
+    }
+
+    public string SaveToFile()
+    {
+        string path = SaveManager.savePath + "Playtime/PartyMembers/" + DisplayName;
+
+        List<string> jsons = new List<string>
+        {
+            JsonUtility.ToJson(stats),
+            JsonUtility.ToJson(augmentStats)
+        };
+
+        //Save Equipment
+
+        File.WriteAllLines(path, jsons);
+        return path;
+    }
 
 }
