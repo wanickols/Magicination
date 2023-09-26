@@ -223,6 +223,8 @@ namespace MGCNTN.Core
                     SetMenuState(MenuState.MemberSelection, false);
                     break;
                 case mainSelections.Save:
+                    Game.manager.saveManager.Save();
+                    break;
                 case mainSelections.Quit:
                 default:
                     Debug.LogWarning("Not implemented!");

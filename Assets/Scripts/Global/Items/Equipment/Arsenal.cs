@@ -42,6 +42,7 @@ namespace MGCNTN
             equippableList.Remove(equippable);
         }
 
+        public void Clear() { equippableList.Clear(); typeCount.Clear(); }
 
         public List<Equippable> getEquippables(EquippableType type)
         {

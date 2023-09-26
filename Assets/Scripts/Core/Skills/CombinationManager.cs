@@ -13,14 +13,14 @@ namespace MGCNTN.Core
         public string resultSkill;
     }
 
-    public class CombinationManager : Savable
+    public class CombinationManager : MonoSavable
     {
         //
         private static Dictionary<Tuple<string, string>, string> combinationDictionary = new Dictionary<Tuple<string, string>, string>();
         private string currError = string.Empty;
         private SkillManager skillManager;
 
-        public override string errorMessage { get => currError; }
+        protected override string errorMessage { get => currError; }
         protected override string customPath { get => "Creation/Combinations.json"; }
 
         ///Public Functions

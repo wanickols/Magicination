@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MGCNTN.Core
 {
-    public class SkillManager : Savable
+    public class SkillManager : MonoSavable
     {
 
         ///Private Variables
@@ -16,14 +16,10 @@ namespace MGCNTN.Core
         ///Protected Variable
         protected override string customPath { get => "Creation/Skills.json"; }
 
-#if UNITY_EDITOR
-        ///Unity Functions
-        protected override void Awake()
-        {
-            base.Awake();
-            SaveSkillsInFolder("Assets/Objects/Skills");
-        }
-#endif
+        protected override string errorMessage { get => "Error in Skill Manager Saving and Loading"; }
+
+        private void Awake() { SaveSkillsInFolder("Assets/Objects/Skills"); }
+
         ///Public Functions
         //Accessors
         public Skill getSkillByName(string name) => skills.Find(skill => skill.Data.displayName == name);

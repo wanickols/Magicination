@@ -1,30 +1,51 @@
 using System.Collections.Generic;
+
 using System.IO;
 using UnityEngine;
 
 namespace MGCNTN.Core
 {
-    public abstract class Savable : MonoBehaviour
+    public abstract class Savable : ISavable
     {
 
-        ///private parameters
+        public Savable()
+        {
+            Game.manager.saveManager.addSavable(this);
+        }
+
+        ///Private Variables
         private string path => SaveManager.savePath + customPath;
 
-        ///Protected Parameter
+        ///Protected Variables
         protected abstract string customPath { get; }
+        protected abstract string errorMessage { get; }
 
-        ///Unity Functions
-        protected virtual void Awake() => Game.manager.saveManager.addSavable(this);
+        string ISavable.CustomPath => customPath;
 
+        string ISavable.ErrorMessage => errorMessage;
 
         ///Public Functions
-        public virtual string errorMessage { get; }
         public abstract bool SaveData();
         public abstract bool LoadData();
 
         ///Protected Functions
         protected void saveToFile(List<string> jsons) => File.WriteAllLines(path, jsons);
-        protected string[] loadFromFile() => File.ReadAllLines(path);
+        protected string[] loadFromFile()
+        {
+            try
+            {
+                return File.ReadAllLines(path);
+            }
+            catch
+            {
+                Debug.LogWarning("Error: Failed to load " + path);
+            }
 
+            return null;
+        }
+
+        bool ISavable.SaveData() => this.SaveData();
+
+        bool ISavable.LoadData() => this.LoadData();
     }
 }
