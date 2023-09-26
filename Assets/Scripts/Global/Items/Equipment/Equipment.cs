@@ -1,150 +1,109 @@
-﻿using System;
+﻿using MGCNTN.Core;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace MGCNTN
 {
     //Hold all equipables for a character
-    public class Equipment
+    public class Equipment : Savable
     {
 
         public Action changedEquipment;
 
-        private Equippable weapon;
-        private Equippable head;
-        private Equippable arms;
-        private Equippable chest;
-        private Equippable legs;
-        private Equippable accessoryOne;
+        private Dictionary<EquippableType, Equippable> equipmentSlots = new Dictionary<EquippableType, Equippable>
+        {
+        { EquippableType.Weapon, null },
+        { EquippableType.Head, null },
+        { EquippableType.Arms, null },
+        { EquippableType.Chest, null },
+        { EquippableType.Legs, null },
+        { EquippableType.Accesesory, null }
+        };
 
+        private string currPath = "Equipment.json";
+        protected override string customPath => currPath;
+
+        protected override string errorMessage { get => "Error in Equipment Saving and Loading"; }
 
         public void Equip(Equippable item)
         {
-            switch (item.Type)
-            {
-                case EquippableType.Weapon:
-                    exchangeWeapon(item);
-                    break;
-                case EquippableType.Head:
-                    exchangeHead(item);
-                    break;
-                case EquippableType.Arms:
-                    exchangeArms(item);
-                    break;
-                case EquippableType.Chest:
-                    exchangeChest(item);
-                    break;
-                case EquippableType.Legs:
-                    exchangeLegs(item);
-                    break;
-                case EquippableType.Accesesory:
-                    exchangeAccessory(item);
-                    break;
-                default:
-                    break;
-            };
+            exchangeItem(item);
 
             changedEquipment?.Invoke();
         }
 
-        private void Equip(EquippableType type)
+        private void Unequip(EquippableType type)
         {
-            switch (type)
-            {
-                case EquippableType.Weapon:
-                    exchangeWeapon(null);
-                    break;
-                case EquippableType.Head:
-                    exchangeHead(null);
-                    break;
-                case EquippableType.Arms:
-                    exchangeArms(null);
-                    break;
-                case EquippableType.Chest:
-                    exchangeChest(null);
-                    break;
-                case EquippableType.Legs:
-                    exchangeLegs(null);
-                    break;
-                case EquippableType.Accesesory:
-                    exchangeAccessory(null);
-                    break;
-                default:
-                    break;
-            };
-
+            exchangeItem(null, type);
             changedEquipment?.Invoke();
         }
 
-        public Equippable getEquipped(EquippableType type)
-        {
-            Equippable equippable = type switch
-            {
-                EquippableType.Weapon => weapon,
-                EquippableType.Head => head,
-                EquippableType.Arms => arms,
-                EquippableType.Chest => chest,
-                EquippableType.Legs => legs,
-                EquippableType.Accesesory => accessoryOne,
-                _ => null
-            };
-
-            return equippable;
-        }
-
+        public Equippable getEquipped(EquippableType type) => equipmentSlots[type];
         public Stats getEquipmentTotalStats()
         {
             // Initialize an empty Stats object
             Stats total = new Stats();
-            // Add each equipment's Stats to the total, if not null
-            total += weapon?.Stats;
-            total += head?.Stats;
-            total += chest?.Stats;
-            total += legs?.Stats;
-            total += arms?.Stats;
-            total += accessoryOne?.Stats;
-            // Return the total Stats
+
+            foreach (Equippable equipable in equipmentSlots.Values)
+            {
+                if (equipable)
+                    total += equipable.Stats!;
+            }
             return total;
         }
-        public void Remove(EquippableType type) => Equip(type);
+        public void Remove(EquippableType type) => Unequip(type);
         ///Private
 
-        private void exchangeWeapon(Equippable item)
+        private void exchangeItem(Equippable item, EquippableType type = EquippableType.Weapon)
         {
-            Party.arsenal.Add(weapon);
-            weapon = item;
-            Party.arsenal.Remove(item);
+            if (!item)
+            {
+                Party.arsenal.Add(equipmentSlots[type]);
+                equipmentSlots[type] = item;
+
+            }
+            else
+            {
+
+                Party.arsenal.Add(equipmentSlots[item.Type]);
+                equipmentSlots[item.Type] = item;
+                Party.arsenal.Remove(item);
+            }
         }
 
-        private void exchangeHead(Equippable item)
+        public void Save(string path)
         {
-            Party.arsenal.Add(head);
-            head = item;
-            Party.arsenal.Remove(item);
-        }
-        private void exchangeArms(Equippable item)
-        {
-            Party.arsenal.Add(arms);
-            arms = item;
-            Party.arsenal.Remove(item);
+            currPath = path + "Equipment.json";
+            SaveData();
         }
 
-        private void exchangeChest(Equippable item)
+        public override bool SaveData()
         {
-            Party.arsenal.Add(chest);
-            chest = item;
-            Party.arsenal.Remove(item);
-        }
-        private void exchangeLegs(Equippable item)
-        {
-            Party.arsenal.Add(legs);
-            legs = item;
-            Party.arsenal.Remove(item);
+            List<string> jsons = new List<string>();
+
+            foreach (Equippable equipable in equipmentSlots.Values)
+                jsons.Add(JsonUtility.ToJson(equipable));
+
+            saveToFile(jsons);
+
+            return true;
+
         }
 
-        private void exchangeAccessory(Equippable item)
+        public override bool LoadData()
         {
-            Party.arsenal.Add(accessoryOne);
-            accessoryOne = item;
-            Party.arsenal.Remove(item);
+            string[] jsons = loadFromFile();
+
+            if (jsons == null)
+                return false;
+
+
+            foreach (string json in jsons)
+                Equip(JsonUtility.FromJson<Equippable>(json));
+
+
+            return true;
         }
     }
 

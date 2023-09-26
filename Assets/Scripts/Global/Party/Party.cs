@@ -13,17 +13,20 @@ namespace MGCNTN
 
         protected override string customPath { get => "Playtime/Partymembers.json"; }
 
+        protected override string errorMessage { get => "Error in party Saving and Loading"; }
+
         public static Arsenal arsenal = new Arsenal();
         public static ItemBag bag = new ItemBag();
 
         private static bool canEncounter = true;
 
-        protected override void Awake()
+        public Party() : base()
         {
             generateParty();
-            //SaveData();
+            SaveData();
             //LoadData();
         }
+
         public void AddActiveMember(PartyMember memberToAdd)
         {
             if (activeMembers.Contains(memberToAdd))
@@ -63,10 +66,10 @@ namespace MGCNTN
             activeMembers.Clear();
 
 
-            PartyMember Zane = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Zane));
-            PartyMember Leon = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Leon));
-            PartyMember Seth = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Seth));
-            PartyMember Aurora = ScriptableObject.Instantiate(Resources.Load<PartyMember>(Paths.Aurora));
+            PartyMember Zane = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.Zane));
+            PartyMember Leon = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.Leon));
+            PartyMember Seth = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.Seth));
+            PartyMember Aurora = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.Aurora));
 
             activeMembers.Add(Zane);
             activeMembers.Add(Leon);

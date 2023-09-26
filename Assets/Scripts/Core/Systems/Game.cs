@@ -27,13 +27,14 @@ namespace MGCNTN.Core
         public CutsceneManager cutsceneManager { get; private set; }
         public CombinationManager combinationManager { get; private set; }
         public SaveManager saveManager { get; private set; } = new SaveManager();
+        public Party party { get; private set; }
 
         ///Private
         //Managers
         private UI uiManager;
         private SceneLoader sceneLoader;
         private SkillManager skillManager;
-        private Party party;
+
 
 
 
@@ -49,8 +50,8 @@ namespace MGCNTN.Core
                 manager = this;
 
             //Gamestate
-            initParty();
             initUI();
+            initParty();
             initMap();
             initPlayer(); // map
             initCutscene(); // state map
@@ -80,7 +81,6 @@ namespace MGCNTN.Core
         }
 
         //Init Functions
-        private void initParty() => party = Instantiate(playerPrefab).GetComponent<Party>();
         private void initEncounterManager() => encounterManager.init(stateManager, sceneLoader, mapManager);
         private void Update() => inputHandler.CheckInput();
         private void initUI()
@@ -102,6 +102,8 @@ namespace MGCNTN.Core
             combinationManager = skills.GetComponent<CombinationManager>();
             combinationManager.init(skillManager);
         }
+
+        private void initParty() => party = new Party();
 
         private void initSceneLoader() => sceneLoader = new SceneLoader();
         private void initInput() => inputHandler = new InputHandler(player, uiManager.mainMenu, mapManager, stateManager);

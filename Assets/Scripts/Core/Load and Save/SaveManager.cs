@@ -7,17 +7,17 @@ namespace MGCNTN.Core
     {
         public static string savePath = "Assets/Saves/";
 
-        private List<Savable> saveObjects = new List<Savable>();
+        private List<ISavable> saveObjects = new List<ISavable>();
 
         public bool Load()
         {
             bool success = true;
-            foreach (Savable obj in saveObjects)
+            for (int i = 0; i < saveObjects.Count; i++)
             {
-                if (!obj.LoadData())
+                if (!saveObjects[i].LoadData())
                 {
                     success = false;
-                    Debug.Log("Saving failed of " + obj.errorMessage);
+                    Debug.Log("Loading failed of " + saveObjects[i].ErrorMessage);
                 }
             }
 
@@ -27,19 +27,19 @@ namespace MGCNTN.Core
         public bool Save()
         {
             bool success = true;
-            foreach (Savable obj in saveObjects)
+            foreach (ISavable obj in saveObjects)
             {
                 if (!obj.SaveData())
                 {
                     success = false;
-                    Debug.Log("Saving failed of " + obj.errorMessage);
+                    Debug.Log("Saving failed of " + obj.ErrorMessage);
                 }
             }
 
             return success;
         }
 
-        public bool addSavable(Savable obj)
+        public bool addSavable(ISavable obj)
         {
             if (saveObjects.Contains(obj))
             {

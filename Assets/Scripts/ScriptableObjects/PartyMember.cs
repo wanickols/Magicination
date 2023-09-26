@@ -13,7 +13,6 @@ public class PartyMember : MemberBattleInfo
     public Equipment equipment = new Equipment();
 
     public Stats Stats => stats + equipment.getEquipmentTotalStats() + augmentStats!;
-
     public void LoadFromFile(string filePath)
     {
         string[] jsons = File.ReadAllLines(filePath);
@@ -31,7 +30,8 @@ public class PartyMember : MemberBattleInfo
 
     public string SaveToFile()
     {
-        string path = SaveManager.savePath + "Playtime/PartyMembers/" + DisplayName;
+        string folderpath = "Playtime/PartyMembers/" + DisplayName + "/";
+        string path = SaveManager.savePath + folderpath + DisplayName + ".json";
 
         List<string> jsons = new List<string>
         {
@@ -40,6 +40,7 @@ public class PartyMember : MemberBattleInfo
         };
 
         //Save Equipment
+        equipment.Save(folderpath);
 
         File.WriteAllLines(path, jsons);
         return path;
