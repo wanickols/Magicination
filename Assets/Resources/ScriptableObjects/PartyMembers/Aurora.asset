@@ -15,11 +15,12 @@ MonoBehaviour:
   _name: Aurora
   actorPrefab: {fileID: 2832430299845234393, guid: 7e9c88459d0778e40be390b6391881c7, type: 3}
   menuPortrait: {fileID: 21300000, guid: 7a2e5438683bc2f429303fb9dd5386b2, type: 3}
+  playableCharacter: 0
   stats:
     lv: 1
     exp: 1
     nxtExp: 100
-    hp: 1
+    hp: 100
     maxHp: 100
     mp: 19
     maxMp: 19

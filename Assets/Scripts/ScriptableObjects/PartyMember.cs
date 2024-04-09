@@ -15,15 +15,26 @@ public class PartyMember : MemberBattleInfo
     public Stats Stats => stats + equipment.getEquipmentTotalStats() + augmentStats!;
     public void LoadFromFile(string filePath)
     {
+
         string[] jsons = File.ReadAllLines(filePath);
-        Stats[] statsArr = new Stats[jsons.Length];
+        int jsonLength = jsons.Length;
 
-        int i = 0;
-        foreach (string json in jsons)
-            statsArr[i++] = JsonUtility.FromJson<Stats>(json);
+        Stats[] statsArr = new Stats[jsonLength];
 
+        playableCharacter = JsonUtility.FromJson<PlayableCharacters>(jsons[0]);
+
+
+        for (int i = 1; i < jsonLength; i++)
+        {
+            statsArr[i - 1] = JsonUtility.FromJson<Stats>(jsons[i]);
+        }
+
+
+        stats = new Stats();
         stats = statsArr[0];
-        augmentStats = statsArr[1];
+
+        if (jsonLength > 1)
+            augmentStats = statsArr[1];
 
         //Load Equipment
     }
@@ -35,6 +46,7 @@ public class PartyMember : MemberBattleInfo
 
         List<string> jsons = new List<string>
         {
+            JsonUtility.ToJson(playableCharacter),
             JsonUtility.ToJson(stats),
             JsonUtility.ToJson(augmentStats)
         };

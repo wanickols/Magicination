@@ -47,7 +47,7 @@ namespace MGCNTN.Core
 
         }
 
-
+        ///TODO move this logic into a npc movement component or something
         private void MoveInRandomDirection()
         {
             int random = UnityEngine.Random.Range(0, 4);
