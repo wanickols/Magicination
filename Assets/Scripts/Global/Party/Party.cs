@@ -1,5 +1,6 @@
 using MGCNTN.Core;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace MGCNTN
@@ -22,8 +23,8 @@ namespace MGCNTN
 
         public Party() : base()
         {
-            generateParty();
-            SaveData();
+            //generateParty();
+            //SaveData();
             //LoadData();
         }
 
@@ -66,10 +67,10 @@ namespace MGCNTN
             activeMembers.Clear();
 
 
-            PartyMember Zane = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.Zane));
-            PartyMember Leon = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.Leon));
-            PartyMember Seth = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.Seth));
-            PartyMember Aurora = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.Aurora));
+            PartyMember Zane = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.getCharacterPath(PlayableCharacters.Zane)));
+            PartyMember Leon = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.getCharacterPath(PlayableCharacters.Leon)));
+            PartyMember Seth = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.getCharacterPath(PlayableCharacters.Seth)));
+            PartyMember Aurora = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.getCharacterPath(PlayableCharacters.Aurora)));
 
             activeMembers.Add(Zane);
             activeMembers.Add(Leon);
@@ -106,6 +107,7 @@ namespace MGCNTN
 
         public override bool LoadData()
         {
+
             string[] jsons = loadFromFile();
 
             if (jsons == null)
@@ -130,7 +132,15 @@ namespace MGCNTN
 
         private PartyMember JsonToPartyMember(string json)
         {
-            PartyMember member = new PartyMember();
+            string[] jsons = File.ReadAllLines(json);
+
+            PlayableCharacters playableCharacter = JsonUtility.FromJson<PlayableCharacters>(jsons[0]);
+
+
+            PartyMember member = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.getCharacterPath(playableCharacter)));
+
+            Debug.Assert(member != null, "Error: Part member creation was given invalid playable character in save file");
+
             member.LoadFromFile(json);
 
             return member;

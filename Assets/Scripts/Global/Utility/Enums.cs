@@ -84,6 +84,15 @@ namespace MGCNTN
         Bard,
     }
 
+    //Characters
+    public enum PlayableCharacters
+    {
+        Aurora,
+        Leon,
+        Seth,
+        Zane
+    }
+
     //Rarity for Enemy spawns and stats
     public enum EnemyRarity
     {

@@ -54,7 +54,7 @@ namespace MGCNTN
 
         private void Play()
         {
-            isStarted = manager.tryPlayCutscene(this);
+            isStarted = manager.tryPlayCutscene(this); ///Consider reworking this using actions
         }
 
         private void OnDestroy()

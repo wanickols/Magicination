@@ -1,5 +1,5 @@
+using MGCNTN;
 using UnityEngine;
-
 
 [CreateAssetMenu(fileName = "Member Battle Info", menuName = "Member Battle Info")]
 public class MemberBattleInfo : ScriptableObject
@@ -9,6 +9,8 @@ public class MemberBattleInfo : ScriptableObject
 
     [SerializeField] private Sprite menuPortrait;
 
+
+    public PlayableCharacters playableCharacter;
     public string DisplayName => _name;
     public GameObject ActorPrefab => actorPrefab;
 

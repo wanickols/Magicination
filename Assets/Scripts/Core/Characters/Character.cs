@@ -19,8 +19,6 @@ namespace MGCNTN.Core
 
         protected virtual void Awake()
         {
-
-
             animator = new CharacterAnimator(this);
         }
 
@@ -35,15 +33,12 @@ namespace MGCNTN.Core
         // Update is called once per frame
         protected virtual void Update()
         {
-
+            ///TODO maybe make animator check here so we can have non animated characters not need to update.
             //Animator
             animator.ChooseLayer();
             animator.UpdateParameters();
         }
 
-        public abstract void setCurrCell();
-
-
-
+        public abstract void setCurrCell(); ///TODO why not have defualt defintion
     }
 }
