@@ -33,7 +33,8 @@ namespace MGCNTN
             if (costMP && user.MP < cost)
                 return;
 
-            user.MP -= cost;
+            if (costMP)
+                user.MP -= cost;
 
             foreach (KeyValuePair<AugType, int> pair in values)
                 augment(pair.Key, pair.Value);

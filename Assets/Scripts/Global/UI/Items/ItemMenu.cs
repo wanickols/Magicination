@@ -1,3 +1,4 @@
+using MGCNTN.Core;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,10 +30,10 @@ namespace MGCNTN
                 if (option == null)
                     continue;
 
-                if (i < Party.bag.consumables.Count)
+                if (i < Game.manager.party.bag.consumables.Count)
                 {
                     t.gameObject.SetActive(true);
-                    option.changeOption(Party.bag.consumables.Keys.ElementAt(i), Party.bag.consumables.Values.ElementAt(i));
+                    option.changeOption(Game.manager.party.bag.consumables.Keys.ElementAt(i), Game.manager.party.bag.consumables.Values.ElementAt(i));
                     options.Add(option);
                 }
                 else

@@ -1,3 +1,4 @@
+using MGCNTN.Core;
 using UnityEngine;
 
 namespace MGCNTN
@@ -13,6 +14,6 @@ namespace MGCNTN
             set => data = value;
         }
 
-        public void Consume() => Party.bag.Remove(this);
+        public void Consume() => Game.manager.party.bag.Remove(this);
     }
 }

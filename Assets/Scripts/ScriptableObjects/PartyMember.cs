@@ -2,6 +2,7 @@ using MGCNTN;
 using MGCNTN.Core;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class PartyMember : MemberBattleInfo
@@ -11,6 +12,8 @@ public class PartyMember : MemberBattleInfo
     public Stats augmentStats;
 
     public Equipment equipment = new Equipment();
+
+    string folderpath => "Playtime/PartyMembers/" + DisplayName + "/";
 
     public Stats Stats => stats + equipment.getEquipmentTotalStats() + augmentStats!;
     public void LoadFromFile(string filePath)
@@ -37,12 +40,18 @@ public class PartyMember : MemberBattleInfo
             augmentStats = statsArr[1];
 
         //Load Equipment
+        filePath = SaveManager.savePath + folderpath + "Equipment.json";
+        List<string> paths = File.ReadAllLines(filePath).ToList();
+
+        equipment.loadEquipmentFromList(paths);
     }
 
     public string SaveToFile()
     {
-        string folderpath = "Playtime/PartyMembers/" + DisplayName + "/";
         string path = SaveManager.savePath + folderpath + DisplayName + ".json";
+
+
+
 
         List<string> jsons = new List<string>
         {
@@ -52,7 +61,8 @@ public class PartyMember : MemberBattleInfo
         };
 
         //Save Equipment
-        equipment.Save(folderpath);
+        File.WriteAllLines(SaveManager.savePath + folderpath + "Equipment.json", equipment.getSaveList());
+
 
         File.WriteAllLines(path, jsons);
         return path;
