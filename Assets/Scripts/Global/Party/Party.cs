@@ -16,8 +16,8 @@ namespace MGCNTN
 
         protected override string errorMessage { get => "Error in party Saving and Loading"; }
 
-        public static Arsenal arsenal = new Arsenal();
-        public static ItemBag bag = new ItemBag();
+        public Arsenal arsenal = new Arsenal();
+        public ItemBag bag = new ItemBag();
 
         private static bool canEncounter = true;
 
@@ -77,13 +77,7 @@ namespace MGCNTN
             //activeMembers.Add(Seth);
             activeMembers.Add(Aurora);
 
-            Equippable rustySword = Resources.Load<Equippable>("items/equipment/weapons/RustySword");
-            Equippable testChest = Resources.Load<Equippable>("items/equipment/armor/TestChest");
-            Equippable jadeRing = Resources.Load<Equippable>("items/equipment/accessories/Jade Ring");
 
-            arsenal.Add(rustySword);
-            arsenal.Add(testChest);
-            arsenal.Add(jadeRing);
 
         }
 
@@ -107,6 +101,8 @@ namespace MGCNTN
 
         public override bool LoadData()
         {
+
+            //test();
 
             string[] jsons = loadFromFile();
 
@@ -138,12 +134,24 @@ namespace MGCNTN
 
 
             PartyMember member = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.getCharacterPath(playableCharacter)));
+            member.equipment.arsenal = arsenal;
 
             Debug.Assert(member != null, "Error: Part member creation was given invalid playable character in save file");
 
             member.LoadFromFile(json);
 
             return member;
+        }
+
+
+        private void test()
+        {
+            //DEbug
+            Consumable potion = Resources.Load<Consumable>("items/consumables/potion");
+            //Consumable revive = Resources.Load<Consumable>("items/consumables/revive");
+
+            //bag.Add(potion);
+
         }
     }
 }

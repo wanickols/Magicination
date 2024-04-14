@@ -1,12 +1,11 @@
-﻿using MGCNTN.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEditor;
 
 namespace MGCNTN
 {
     //Hold all equipables for a character
-    public class Equipment : Savable
+    public class Equipment
     {
 
         public Action changedEquipment;
@@ -21,14 +20,13 @@ namespace MGCNTN
         { EquippableType.Accesesory, null }
         };
 
-        private string currPath = "Equipment.json";
-        protected override string customPath => currPath;
-
-        protected override string errorMessage { get => "Error in Equipment Saving and Loading"; }
+        public Arsenal arsenal;
 
         public void Equip(Equippable item)
         {
-            exchangeItem(item);
+            if (item == null) return;
+
+            exchangeItem(item, item.Type);
 
             changedEquipment?.Invoke();
         }
@@ -59,52 +57,47 @@ namespace MGCNTN
         {
             if (!item)
             {
-                Party.arsenal.Add(equipmentSlots[type]);
+                arsenal.Add(equipmentSlots[type]);
                 equipmentSlots[type] = item;
 
             }
             else
             {
 
-                Party.arsenal.Add(equipmentSlots[item.Type]);
+                arsenal.Add(equipmentSlots[item.Type]);
                 equipmentSlots[item.Type] = item;
-                Party.arsenal.Remove(item);
+                arsenal.Remove(item);
             }
         }
 
-        public void Save(string path)
+        public List<string> getSaveList()
         {
-            currPath = path + "Equipment.json";
-            SaveData();
-        }
-
-        public override bool SaveData()
-        {
-            List<string> jsons = new List<string>();
+            List<string> paths = new List<string>();
 
             foreach (Equippable equipable in equipmentSlots.Values)
-                jsons.Add(JsonUtility.ToJson(equipable));
+            {
+                // Get the path to the object using AssetDatabase
+                string path = AssetDatabase.GetAssetPath(equipable);
 
-            saveToFile(jsons);
+                // Add the path to the list of paths
+                paths.Add(path);
+            }
 
-            return true;
-
+            return paths;
         }
 
-        public override bool LoadData()
+        public void loadEquipmentFromList(List<string> paths)
         {
-            string[] jsons = loadFromFile();
+            foreach (string path in paths)
+            {
+                // Load the ScriptableObject Equippable from the path
+                Equippable newEquipable = AssetDatabase.LoadAssetAtPath<Equippable>(path);
 
-            if (jsons == null)
-                return false;
-
-
-            foreach (string json in jsons)
-                Equip(JsonUtility.FromJson<Equippable>(json));
-
-
-            return true;
+                // Call the Equip function passing in the new item
+                Equip(newEquipable);
+            }
         }
+
     }
 
 }

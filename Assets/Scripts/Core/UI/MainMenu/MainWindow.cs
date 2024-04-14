@@ -103,7 +103,7 @@ namespace MGCNTN.Core
             arsenalMenu.lastSelectedEquippableType = (EquippableType)selected;
 
             //Get list from arsenal
-            List<Equippable> equippables = Party.arsenal.getEquippables((EquippableType)selected);
+            List<Equippable> equippables = Game.manager.party.arsenal.getEquippables((EquippableType)selected);
 
             int count = equippables.Count;
 

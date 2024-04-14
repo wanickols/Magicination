@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     id: 6
-    price: 250
     displayName: Revive
     description: Saves a fallen from the depths
-    quantity: 1
-    sprite: {fileID: 335424580, guid: 00dbbd8f5c36ba343add51bde370bc51, type: 3}
     requiredLevel: 0
+    sprite: {fileID: 335424580, guid: 00dbbd8f5c36ba343add51bde370bc51, type: 3}
+    augData: {fileID: 11400000, guid: a099bcff6165f5e459bdf70c3c996fc6, type: 2}
+    price: 250
+    quantity: 1

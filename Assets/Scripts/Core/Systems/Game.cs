@@ -57,13 +57,6 @@ namespace MGCNTN.Core
             initCutscene(); // state map
             initSkills(); //Does Skills and combinations
 
-            //DEbug
-            Consumable potion = Resources.Load<Consumable>("items/consumables/potion");
-            Consumable revive = Resources.Load<Consumable>("items/consumables/revive");
-
-            Party.bag.clear();
-            Party.bag.Add(potion);
-            Party.bag.Add(revive);
 
         }
 
