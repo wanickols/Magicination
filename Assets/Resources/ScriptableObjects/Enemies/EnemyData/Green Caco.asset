@@ -15,20 +15,21 @@ MonoBehaviour:
   _name: 
   actorPrefab: {fileID: 2832430299845234393, guid: f2996038ee9446b4bb62346421aa9c90, type: 3}
   menuPortrait: {fileID: 21300000, guid: 0b3163b5f95df7d43beafebba2d1dbd7, type: 3}
+  augmentingStats: []
+  playableCharacter: 0
   stats:
     lv: 0
     exp: 0
     nxtExp: 0
     hp: 10
     maxHp: 10
-    mp: 0
-    maxMp: 0
+    eng: 0
+    maxEng: 0
     atk: 4
-    matk: 0
     def: 2
-    mdef: 0
     spd: 5
     evs: 1
     enc: 0
+    duration: -1
     battleWeight: 2
     enemyRarity: 1

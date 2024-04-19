@@ -12,9 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf7680ff5bec2444bda14089dfc4dbd, type: 3}
   m_Name: Attack UP +8
   m_EditorClassIdentifier: 
-  displayName: Attack Up II
-  description: Adds 8 Atk
-  cost: 10
-  duration: 0
-  types: 04000000
-  values: 08000000
+  stats: 1
+  augmentStats:
+    lv: 0
+    exp: 0
+    nxtExp: 0
+    hp: 0
+    maxHp: 0
+    eng: 0
+    maxEng: 0
+    atk: 8
+    def: 0
+    spd: 0
+    evs: 0
+    enc: 0
+    duration: -1
+  status: 0
+  statusList: []

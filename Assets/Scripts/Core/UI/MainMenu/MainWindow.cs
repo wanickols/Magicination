@@ -167,7 +167,7 @@ namespace MGCNTN.Core
         }
 
 
-        public void skillSelected() => openPartyTargetWindow(PartyTargetSelections.skill, skillMenu.skill.Data, skillMenu.member.stats);
+        public void skillSelected() => openPartyTargetWindow(PartyTargetSelections.skill, skillMenu.skill.Data, skillMenu.member.Stats);
 
         //Skill Action
         public void ShowSkillActionWindow() => skillMenu.openActionBar();

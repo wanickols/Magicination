@@ -17,6 +17,14 @@ namespace MGCNTN
         Status,
     }
 
+    public enum StatusType
+    {
+        Poison,
+        Burn,
+        Paralysis,
+        //TODO
+    }
+
     //Items
     public enum ItemRarity
     {

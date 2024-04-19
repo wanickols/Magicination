@@ -15,20 +15,21 @@ MonoBehaviour:
   _name: Black Cacoe
   actorPrefab: {fileID: 2832430299845234393, guid: ffccabd33a1ded14fbff9ca56f0aa9c7, type: 3}
   menuPortrait: {fileID: 21300000, guid: a315930d197bb6d4ea50083428e6aa58, type: 3}
+  augmentingStats: []
+  playableCharacter: 0
   stats:
     lv: 0
     exp: 0
     nxtExp: 0
     hp: 20
     maxHp: 20
-    mp: 0
-    maxMp: 0
+    eng: 0
+    maxEng: 0
     atk: 4
-    matk: 0
     def: 2
-    mdef: 0
     spd: 10
     evs: 1
     enc: 0
+    duration: -1
     battleWeight: 4
     enemyRarity: 4

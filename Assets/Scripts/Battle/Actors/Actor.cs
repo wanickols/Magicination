@@ -20,14 +20,17 @@ namespace MGCNTN.Battle
         public BattlerAI ai;
 
         //Data Accessors
-        public float baseTurnSpeed => Stats.turnSpeed;
+
         ///Public Paramaeters
         [NonSerialized] public float turnTime = 0;
 
         [NonSerialized] public bool isTakingTurn = false;
         //Battle Data
-        public Stats Stats { get; private set; }
-        public Sprite battlePortrait { get; private set; }
+        public MemberBattleInfo memberBattleInfo { get; private set; }
+        public Stats Stats => memberBattleInfo.Stats;
+
+        public float baseTurnSpeed => Stats.turnSpeed;
+        public Sprite battlePortrait => memberBattleInfo.MenuPortrait;
 
         //Type
         public ActorType type;
@@ -62,11 +65,9 @@ namespace MGCNTN.Battle
         }
 
         ///Public Functions
-        public void setMemberBattleInfo(Stats stats, Sprite sprite)
+        public void setMemberBattleInfo(MemberBattleInfo info)
         {
-            //Status
-            Stats = stats;
-            battlePortrait = sprite;
+            memberBattleInfo = info;
             turnTime = baseTurnSpeed;
         }
         public void Die() => StartCoroutine(gfx.CO_DeathAnim());

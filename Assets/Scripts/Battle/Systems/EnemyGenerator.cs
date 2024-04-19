@@ -29,7 +29,7 @@ namespace MGCNTN.Battle
                 Vector2 spawnPos = new Vector2(enemyPack.SpawnCoordinates[i].x, enemyPack.SpawnCoordinates[i].y);
 
                 Actor enemy = GameObject.Instantiate(enemyData.ActorPrefab, spawnPos, Quaternion.identity).GetComponent<Actor>();
-                enemy.setMemberBattleInfo(enemyData.Stats, enemyData.MenuPortrait);
+                enemy.setMemberBattleInfo(enemyData);
 
                 turnSystem.enqueue(enemy);
                 enemies.Add(enemy);
@@ -74,10 +74,10 @@ namespace MGCNTN.Battle
 
                 EnemyData e = enemies[selectedEnemy];
 
-                if (e.Stats.BattleWeight + currWeight <= region.maxWeight)
+                if (e.BattleWeight + currWeight <= region.maxWeight)
                 {
                     enemyPack.addEnemy(e);
-                    currWeight += e.Stats.BattleWeight;
+                    currWeight += e.BattleWeight;
                 }
             }
 

@@ -27,14 +27,24 @@ namespace MGCNTN
 
         public static int nextID = 0;
 
-        public override void use(Stats target, Stats user)
+        public override void usePerm(MemberBattleInfo target, Stats user)
         {
             if (user.ENG < cost)
                 return; //Call Invalid action noise or something
 
             user.ENG -= cost;
 
-            augData.CreateAugmentation(target, user, true).ApplyEffect();
+            base.usePerm(target, user);
+        }
+
+        public override void useTemp(MemberBattleInfo target, Stats user)
+        {
+            if (user.ENG < cost)
+                return; //Call Invalid action noise or something
+
+            user.ENG -= cost;
+
+            base.useTemp(target, user);
         }
 
         public SkillData()

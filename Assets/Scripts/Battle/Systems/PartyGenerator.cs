@@ -21,7 +21,7 @@ namespace MGCNTN.Battle
             {
                 var temp = GameObject.Instantiate(member.ActorPrefab, positionList[i], Quaternion.identity);
                 Actor ally = temp.GetComponent<Actor>();
-                ally.setMemberBattleInfo(member.Stats, member.MenuPortrait);
+                ally.setMemberBattleInfo(member);
                 turnSystem.enqueue(ally);
                 allies.Add(ally);
                 ally.checkDeath(true); //Kills

@@ -1,3 +1,2 @@
 {"value__":1}
-{"lv":1,"exp":1,"nxtExp":100,"hp":100,"maxHp":100,"mp":0,"maxMp":0,"atk":3,"matk":3,"def":1,"mdef":1,"spd":8,"evs":1,"enc":1}
-{"lv":0,"exp":0,"nxtExp":0,"hp":0,"maxHp":0,"mp":0,"maxMp":0,"atk":0,"matk":0,"def":0,"mdef":0,"spd":0,"evs":0,"enc":0}
+{"lv":1,"exp":1,"nxtExp":100,"hp":100,"maxHp":100,"eng":19,"maxEng":19,"atk":3,"def":1,"spd":8,"evs":1,"enc":1}

@@ -1,4 +1,3 @@
-using MGCNTN.Core;
 using System;
 using UnityEngine;
 
@@ -133,8 +132,8 @@ namespace MGCNTN
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                if (selectorManager.Accept()) ;
-                menuSelectSound.Play();
+                if (selectorManager.Accept())
+                    menuSelectSound.Play();
             }
 
             else if (Input.GetKeyDown(KeyCode.Escape))

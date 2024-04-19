@@ -36,11 +36,11 @@ namespace MGCNTN.Core
         {
             if (lowestWeight == -1)
             {
-                lowestWeight = possibleEnemies[0].Stats.BattleWeight;
+                lowestWeight = possibleEnemies[0].BattleWeight;
                 foreach (EnemyData e in possibleEnemies)
                 {
-                    if (e.Stats.BattleWeight < lowestWeight)
-                        lowestWeight = e.Stats.BattleWeight;
+                    if (e.BattleWeight < lowestWeight)
+                        lowestWeight = e.BattleWeight;
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace MGCNTN.Core
         {
             foreach (EnemyData e in possibleEnemies)
             {
-                switch (e.Stats.enemyRarity)
+                switch (e.enemyRarity)
                 {
                     case EnemyRarity.common:
                         commonEnemies.Add(e);

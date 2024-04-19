@@ -8,11 +8,17 @@ public class AugmentationDataEditor : Editor
     private SerializedProperty statsProperty;
     private SerializedProperty augmentStatsProperty;
 
+    private SerializedProperty statusProperty;
+    private SerializedProperty statusListProperty;
+
     private void OnEnable()
     {
         // Find the serialized properties
-        statsProperty = serializedObject.FindProperty("stats");
+        statsProperty = serializedObject.FindProperty("hasStats");
         augmentStatsProperty = serializedObject.FindProperty("augmentStats");
+
+        statusProperty = serializedObject.FindProperty("hasStatus");
+        statusListProperty = serializedObject.FindProperty("statusList");
     }
 
     public override void OnInspectorGUI()
@@ -23,11 +29,22 @@ public class AugmentationDataEditor : Editor
         // Draw the stats property
         EditorGUILayout.PropertyField(statsProperty);
 
+
         // If stats is true, draw augmentStats
         if (statsProperty.boolValue)
         {
             EditorGUILayout.PropertyField(augmentStatsProperty);
         }
+
+        EditorGUILayout.PropertyField(statusProperty);
+
+        // If status is true, draw statusList
+        if (statsProperty.boolValue)
+        {
+            EditorGUILayout.PropertyField(statusListProperty);
+        }
+
+
 
         // Apply changes to the serializedObject
         serializedObject.ApplyModifiedProperties();

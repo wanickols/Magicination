@@ -1,24 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace MGCNTN
 {
     public class Augmentation
     {
-        public float duration;
-        public Stats target;
-        public Stats user;
+        public MemberBattleInfo target;
         public Stats augments;
         public List<AugType> types;
-        //List of Status
+        public List<Status> statusList;
 
-        public Augmentation(float duration, Stats target, Stats user, Stats augments, List<AugType> types)
+        public Augmentation(MemberBattleInfo target, Stats augments, List<AugType> types, List<Status> statusList)
         {
-            this.duration = duration;
             this.target = target;
-            this.user = user;
+            this.augments = augments;
             this.types = types;
+            this.statusList = statusList;
         }
 
         public void ApplyEffect()
@@ -27,11 +23,6 @@ namespace MGCNTN
             foreach (AugType type in types)
                 augment(type);
 
-
-            //For each status add status
-
-            if (duration > 0) ///FIX ME to work with turns instead of time
-                Core.Game.manager.StartCoroutine(CO_RemoveAfterDuration());
         }
 
         private void augment(AugType type)
@@ -49,44 +40,15 @@ namespace MGCNTN
             };
         }
 
-        public void RemoveEffect()
+        private void addStats()
         {
-
-            foreach (AugType type in types)
-            {
-                switch (type)
-                {
-                    case AugType.Stats:
-                        removeStats();
-                        break;
-                    case AugType.Status:
-                        removeStatus();
-                        break;
-                    default:
-                        break;
-                };
-            }
+            if (augments is AugmentStats) //temp
+                target.augmentingStats.Add((AugmentStats)augments);
+            else //permanent
+                target.baseStats += augments;
 
         }
-
-
-        private IEnumerator CO_RemoveAfterDuration()
-        {
-            yield return new WaitForSeconds(duration);
-
-            RemoveEffect();
-        }
-
-        private void addStats() => target += augments;
-        private void removeStats() => target -= augments;
-
-        private void augmentStatus()
-        {
-        }
-
-        private void removeStatus()
-        {
-        }
+        private void augmentStatus() => target.Statuses.AddRange(statusList);
     }
 
 

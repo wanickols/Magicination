@@ -7,37 +7,34 @@ using UnityEngine;
 
 public class PartyMember : MemberBattleInfo
 {
-    public Stats stats;
-
-    public Stats augmentStats;
+    [SerializeField] private Stats stats;
 
     public Equipment equipment = new Equipment();
 
     string folderpath => "Playtime/PartyMembers/" + DisplayName + "/";
 
-    public Stats Stats => stats + equipment.getEquipmentTotalStats() + augmentStats!;
+    public override Stats baseStats { get => stats; set => stats = value; }
+
+    public Stats CombinedStats => baseStats + equipment.getEquipmentTotalStats();
     public void LoadFromFile(string filePath)
     {
 
         string[] jsons = File.ReadAllLines(filePath);
         int jsonLength = jsons.Length;
 
-        Stats[] statsArr = new Stats[jsonLength];
-
+        // Load playableCharacter data
         playableCharacter = JsonUtility.FromJson<PlayableCharacters>(jsons[0]);
 
+        // Load baseStats data
+        baseStats = JsonUtility.FromJson<Stats>(jsons[1]);
 
-        for (int i = 1; i < jsonLength; i++)
+        // Load augmentingStats data
+        augmentingStats.Clear(); // Clear augmentingStats list to avoid duplicates
+        for (int i = 2; i < jsonLength; i++)
         {
-            statsArr[i - 1] = JsonUtility.FromJson<Stats>(jsons[i]);
+            AugmentStats augmentStats = JsonUtility.FromJson<AugmentStats>(jsons[i]);
+            augmentingStats.Add(augmentStats);
         }
-
-
-        stats = new Stats();
-        stats = statsArr[0];
-
-        if (jsonLength > 1)
-            augmentStats = statsArr[1];
 
         //Load Equipment
         filePath = SaveManager.savePath + folderpath + "Equipment.json";
@@ -52,13 +49,19 @@ public class PartyMember : MemberBattleInfo
 
 
 
-
+        ///Base Stats and Name
         List<string> jsons = new List<string>
         {
             JsonUtility.ToJson(playableCharacter),
-            JsonUtility.ToJson(stats),
-            JsonUtility.ToJson(augmentStats)
+            JsonUtility.ToJson(baseStats),
+
         };
+
+        ///Augmenting Stats
+        foreach (Stats stats in augmentingStats)
+        {
+            jsons.Add(JsonUtility.ToJson(stats));
+        }
 
         //Save Equipment
         File.WriteAllLines(SaveManager.savePath + folderpath + "Equipment.json", equipment.getSaveList());

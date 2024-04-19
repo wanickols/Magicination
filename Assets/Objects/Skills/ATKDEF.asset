@@ -17,6 +17,8 @@ MonoBehaviour:
     displayName: ATKDEF
     description: Combines Attack and Def
     requiredLevel: 1
+    isPermanant: 1
+    duration: 0
     sprite: {fileID: 129873669, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
     augData: {fileID: 11400000, guid: 1aa65aa51665b6942994918d1f0438a3, type: 2}
     cost: 0

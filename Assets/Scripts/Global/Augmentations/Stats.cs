@@ -59,7 +59,6 @@ namespace MGCNTN
 
         public float turnSpeed => (MAX_POSSIBLE_SPD - SPD) / (float)MAX_POSSIBLE_SPD; //Battle order determinant
 
-
         public int LV
         {
             get => lv;
@@ -171,21 +170,24 @@ namespace MGCNTN
         /// Operators
         public static Stats operator +(Stats a, Stats b)
         {
-            Stats result = nullCheck(a, b);
+            //NullCheck
+            if (a == null && b == null)
+                return null;
+            else if (a == null)
+                return b;
+            else if (b == null)
+                return a;
 
-            if (result == null)
-                return new Stats();
-
-
+            Stats result = new Stats();
 
             result.LV = a.lv + b.lv;
-            result.EXP = a.exp + b.exp;
             result.NXTEXP = a.nxtExp + b.nxtExp;
-            result.HP = a.hp + b.hp;
+            result.EXP = a.exp + b.exp;
             result.MAXHP = a.maxHp + b.maxHp;
+            result.HP = a.hp + b.hp;
+            result.MAXENG = a.maxEng + b.maxEng;
             result.ENG = a.eng + b.eng;
-            result.ATK = a.maxEng + b.maxEng;
-            result.atk = a.atk + b.atk;
+            result.ATK = a.atk + b.atk;
             result.DEF = a.def + b.def;
             result.SPD = a.spd + b.spd;
             result.EVS = a.evs + b.evs;
@@ -197,18 +199,23 @@ namespace MGCNTN
 
         public static Stats operator -(Stats a, Stats b)
         {
-            Stats result = nullCheck(a, b);
+            //NullCheck
+            if (a == null && b == null)
+                return null;
+            else if (a == null)
+                return b;
+            else if (b == null)
+                return a;
 
-            if (result == null)
-                return new Stats();
+            Stats result = new Stats();
 
             result.LV = a.lv - b.lv;
-            result.EXP = a.exp - b.exp;
             result.NXTEXP = a.nxtExp - b.nxtExp;
-            result.HP = a.hp - b.hp;
+            result.EXP = a.exp - b.exp;
             result.MAXHP = a.maxHp - b.maxHp;
-            result.ENG = a.eng - b.eng;
+            result.HP = a.hp - b.hp;
             result.MAXENG = a.maxEng + b.maxEng;
+            result.ENG = a.eng - b.eng;
             result.ATK = a.atk - b.atk;
             result.DEF = a.def - b.def;
             result.SPD = a.spd - b.spd;
@@ -217,19 +224,5 @@ namespace MGCNTN
 
             return result;
         }
-
-        private static Stats nullCheck(Stats a, Stats b)
-        {
-            //Null Check
-            if (a == null && b == null)
-                return null;
-            else if (a == null)
-                return b;
-            else if (b == null)
-                return a;
-
-            return null;
-        }
-
     }
 }
