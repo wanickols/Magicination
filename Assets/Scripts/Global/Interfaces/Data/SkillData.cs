@@ -27,8 +27,15 @@ namespace MGCNTN
 
         public static int nextID = 0;
 
-        public override void use(Stats target, Stats user) => augData.CreateAugmentation(target, user, true).ApplyEffect();
+        public override void use(Stats target, Stats user)
+        {
+            if (user.ENG < cost)
+                return; //Call Invalid action noise or something
 
+            user.ENG -= cost;
+
+            augData.CreateAugmentation(target, user, true).ApplyEffect();
+        }
 
         public SkillData()
         {

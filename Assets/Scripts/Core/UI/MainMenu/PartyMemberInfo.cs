@@ -38,7 +38,7 @@ namespace MGCNTN.Core
 
             memberLevel.text = stats.LV.ToString();
             memberHP.text = $"{stats.HP}/{stats.MAXHP}";
-            memberMP.text = $"{stats.MP}/{stats.MAXMP}";
+            memberMP.text = $"{stats.ENG}/{stats.MAXENG}";
             memberCurrEXP.text = stats.EXP.ToString();
             memberNextEXP.text = stats.NXTEXP.ToString();
 

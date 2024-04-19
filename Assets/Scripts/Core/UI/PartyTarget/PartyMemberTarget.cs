@@ -23,7 +23,7 @@ namespace MGCNTN.Core
             avatar.sprite = member.MenuPortrait;
             Name.text = member.DisplayName;
             HP.text = $"{member.Stats.HP}/{member.Stats.MAXHP}";
-            MP.text = $"{member.Stats.MP}/{member.Stats.MAXMP}";
+            MP.text = $"{member.Stats.ENG}/{member.Stats.MAXENG}";
         }
     }
 }

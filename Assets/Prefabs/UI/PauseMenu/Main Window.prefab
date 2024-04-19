@@ -3349,10 +3349,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5179819591860311171}
   - {fileID: 127356407909374782}
-  - {fileID: 7926908294936335164}
   - {fileID: 131762125390067333}
+  - {fileID: 5179819591860311171}
+  - {fileID: 7926908294936335164}
   - {fileID: 5956667812354318548}
   - {fileID: 7955284177622056982}
   m_Father: {fileID: 5213173529917893269}
@@ -8375,7 +8375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 257.4, y: -160}
+  m_AnchoredPosition: {x: 257.4, y: -208}
   m_SizeDelta: {x: 418.8, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8695139765212871153
@@ -21548,7 +21548,7 @@ GameObject:
   - component: {fileID: 253743881362504429}
   - component: {fileID: 6807484033468972044}
   m_Layer: 5
-  m_Name: Magic Def
+  m_Name: Energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21573,7 +21573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 257.4, y: -208}
+  m_AnchoredPosition: {x: 257.4, y: -112}
   m_SizeDelta: {x: 418.8, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8013398357826230857
@@ -23477,7 +23477,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Magic Def
+  m_text: 'Energy
 
 '
   m_isRightToLeft: 0
@@ -24307,7 +24307,7 @@ GameObject:
   - component: {fileID: 458547525228104659}
   - component: {fileID: 3060291611661120351}
   m_Layer: 5
-  m_Name: Magic
+  m_Name: Energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24362,7 +24362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "MP \n"
+  m_text: ENG
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -43456,7 +43456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 257.4, y: -64}
+  m_AnchoredPosition: {x: 257.4, y: -160}
   m_SizeDelta: {x: 418.8, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2954753429960757894
@@ -48508,10 +48508,10 @@ MonoBehaviour:
   lvlVal: {fileID: 361464974900932}
   HPVal: {fileID: 3752558496065491290}
   MPVal: {fileID: 7377196691915872681}
+  healthVal: {fileID: 5920354878575618677}
+  energyVal: {fileID: 7718146328736147181}
   attackVal: {fileID: 2678955026415437676}
-  magicAtkVal: {fileID: 5920354878575618677}
   defenseVal: {fileID: 5725598783436825504}
-  magicDefVal: {fileID: 7718146328736147181}
   speedVal: {fileID: 4860558331368506804}
   evasionVal: {fileID: 5160306419540384071}
   weaponName: {fileID: 4510855366759845367}
@@ -60056,7 +60056,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Magic Atk
+  m_text: 'Health
 
 '
   m_isRightToLeft: 0
@@ -72307,7 +72307,7 @@ GameObject:
   - component: {fileID: 1739517226581568915}
   - component: {fileID: 4720330405118260721}
   m_Layer: 5
-  m_Name: Magic Atk
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72332,7 +72332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 257.4, y: -112}
+  m_AnchoredPosition: {x: 257.4, y: -64}
   m_SizeDelta: {x: 418.8, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6577324690028917589

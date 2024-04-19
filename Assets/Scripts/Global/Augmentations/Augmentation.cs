@@ -6,49 +6,69 @@ namespace MGCNTN
 {
     public class Augmentation
     {
-        public string displayName;
-        public string description;
-        public bool costMP;
-        public int cost; //for mp
         public float duration;
         public Stats target;
         public Stats user;
-        public Dictionary<AugType, int> values;
+        public Stats augments;
+        public List<AugType> types;
+        //List of Status
 
-
-        public Augmentation(string displayName, string description, bool costMP, int cost, float duration, Stats target, Stats user, Dictionary<AugType, int> values)
+        public Augmentation(float duration, Stats target, Stats user, Stats augments, List<AugType> types)
         {
-            this.displayName = displayName;
-            this.description = description;
-            this.costMP = costMP;
-            this.cost = cost;
             this.duration = duration;
             this.target = target;
             this.user = user;
-            this.values = values;
+            this.types = types;
         }
 
         public void ApplyEffect()
         {
-            if (costMP && user.MP < cost)
-                return;
 
-            if (costMP)
-                user.MP -= cost;
+            foreach (AugType type in types)
+                augment(type);
 
-            foreach (KeyValuePair<AugType, int> pair in values)
-                augment(pair.Key, pair.Value);
 
-            if (duration > 0)
+            //For each status add status
+
+            if (duration > 0) ///FIX ME to work with turns instead of time
                 Core.Game.manager.StartCoroutine(CO_RemoveAfterDuration());
         }
 
+        private void augment(AugType type)
+        {
+            switch (type)
+            {
+                case AugType.Stats:
+                    addStats();
+                    break;
+                case AugType.Status:
+                    augmentStatus();
+                    break;
+                default:
+                    break;
+            };
+        }
 
         public void RemoveEffect()
         {
-            foreach (KeyValuePair<AugType, int> pair in values)
-                augment(pair.Key, -pair.Value);
+
+            foreach (AugType type in types)
+            {
+                switch (type)
+                {
+                    case AugType.Stats:
+                        removeStats();
+                        break;
+                    case AugType.Status:
+                        removeStatus();
+                        break;
+                    default:
+                        break;
+                };
+            }
+
         }
+
 
         private IEnumerator CO_RemoveAfterDuration()
         {
@@ -57,60 +77,17 @@ namespace MGCNTN
             RemoveEffect();
         }
 
-        private void augment(AugType type, int value)
-        {
-            switch (type)
-            {
-                case AugType.LVL:
-                    augmentLVL(value);
-                    break;
-                case AugType.HP:
-                    augmentHP(value);
-                    break;
-                case AugType.EXP:
-                    augmentEXP(value);
-                    break;
-                case AugType.MP:
-                    augmentMP(value);
-                    break;
-                case AugType.ATK:
-                    augmentATK(value);
-                    break;
-                case AugType.DEF:
-                    augmentDEF(value);
-                    break;
-                case AugType.MATK:
-                    augmentMATK(value);
-                    break;
-                case AugType.MDEF:
-                    augmentMDEF(value);
-                    break;
-                case AugType.SPD:
-                    augmentSPD(value);
-                    break;
-                case AugType.EVS:
-                    augmentEVS(value);
-                    break;
-                case AugType.ACC:
-                    augmentACC(value);
-                    break;
+        private void addStats() => target += augments;
+        private void removeStats() => target -= augments;
 
-            }
+        private void augmentStatus()
+        {
         }
 
-
-        private void augmentLVL(int val) => target.LV += val;
-        private void augmentHP(int val) => target.HP += val;
-        private void augmentEXP(int val) => target.EXP += val;
-        private void augmentMP(int val) => target.MP += val;
-        private void augmentATK(int val) => target.ATK += val;
-        private void augmentDEF(int val) => target.DEF += val;
-        private void augmentMATK(int val) => target.MATK += val;
-        private void augmentMDEF(int val) => target.MDEF += val;
-        private void augmentSPD(int val) => target.SPD += val;
-        private void augmentEVS(int val) => target.EVS += val;
-        private void augmentACC(int val) => Debug.Log("Accuracy Not implemented)");
-
-
+        private void removeStatus()
+        {
+        }
     }
+
+
 }

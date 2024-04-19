@@ -83,7 +83,7 @@ namespace MGCNTN.Core
         public void openActionBar()
         {
 
-            int mp = member.Stats.MP;
+            int mp = member.Stats.ENG;
 
             ActionBar.SetActive(true);
 

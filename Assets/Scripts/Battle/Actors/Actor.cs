@@ -64,6 +64,7 @@ namespace MGCNTN.Battle
         ///Public Functions
         public void setMemberBattleInfo(Stats stats, Sprite sprite)
         {
+            //Status
             Stats = stats;
             battlePortrait = sprite;
             turnTime = baseTurnSpeed;

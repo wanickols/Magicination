@@ -11,6 +11,8 @@ namespace MGCNTN
         public string displayName;
         public string description;
         public int requiredLevel;
+        public bool isPermanant = true;
+        public int duration = 0;
         public Sprite sprite;
 
         [Header("Augmentation")]

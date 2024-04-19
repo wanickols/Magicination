@@ -12,13 +12,10 @@ namespace MGCNTN
         protected const int MAX_POSSIBLE_EXP = 9999999;
 
         protected const int MAX_POSSIBLE_HP = 9999; //Health Points
-        protected const int MAX_POSSIBLE_MP = 9999; //Magic Points
+        protected const int MAX_POSSIBLE_ENG = 999; //Energy Points
 
         protected const int MAX_POSSIBLE_ATK = 999; //Physical Attack
-        protected const int MAX_POSSIBLE_MATK = 999; //Magic Attack
-
         protected const int MAX_POSSIBLE_DEF = 999; //Physical Defense
-        protected const int MAX_POSSIBLE_MDEF = 999; //Magic Defense
 
         protected const int MAX_POSSIBLE_SPD = 99; //Speed 
         protected const int MAX_POSSIBLE_EVS = 99; //Evasion
@@ -32,32 +29,28 @@ namespace MGCNTN
         [SerializeField] protected int nxtExp;
         [SerializeField] protected int hp;
         [SerializeField] protected int maxHp;
-        [SerializeField] protected int mp;
-        [SerializeField] protected int maxMp;
+        [SerializeField] protected int eng;
+        [SerializeField] protected int maxEng;
         [SerializeField] protected int atk;
-        [SerializeField] protected int matk;
         [SerializeField] protected int def;
-        [SerializeField] protected int mdef;
         [SerializeField] protected int spd;
         [SerializeField] protected int evs;
         [SerializeField] protected int enc;
 
 
         /// Public Functions
-        public Stats() => lv = exp = hp = maxHp = mp = maxMp = atk = matk = def = mdef = spd = evs = 0;
+        public Stats() => lv = exp = hp = maxHp = eng = maxEng = atk = def = spd = evs = 0;
 
-        public Stats(int lv, int exp, int hp, int maxHp, int mp, int maxMp, int atk, int matk, int def, int mdef, int spd, int evs)
+        public Stats(int lv, int exp, int hp, int maxHp, int eng, int maxEng, int atk, int def, int spd, int evs)
         {
             this.lv = lv;
             this.exp = exp;
             this.hp = hp;
             this.maxHp = maxHp;
-            this.maxMp = maxMp;
-            this.mp = mp;
+            this.maxEng = maxEng;
+            this.eng = eng;
             this.atk = atk;
-            this.matk = matk;
             this.def = def;
-            this.mdef = mdef;
             this.spd = spd;
             this.evs = evs;
         }
@@ -104,12 +97,12 @@ namespace MGCNTN
             }
         }
 
-        public int MP
+        public int ENG
         {
-            get => mp;
+            get => eng;
             set
             {
-                mp = Mathf.Clamp(value, 0, maxMp);
+                eng = Mathf.Clamp(value, 0, maxEng);
             }
         }
 
@@ -122,12 +115,12 @@ namespace MGCNTN
             }
         }
 
-        public int MAXMP
+        public int MAXENG
         {
-            get => maxMp;
+            get => maxEng;
             set
             {
-                maxMp = Mathf.Clamp(value, 0, MAX_POSSIBLE_MP);
+                maxEng = Mathf.Clamp(value, 0, MAX_POSSIBLE_ENG);
             }
         }
 
@@ -140,15 +133,6 @@ namespace MGCNTN
             }
         }
 
-        public int MATK
-        {
-            get => matk;
-            set
-            {
-                matk = Mathf.Clamp(value, 0, MAX_POSSIBLE_MATK);
-            }
-        }
-
         public int DEF
         {
             get => def;
@@ -157,16 +141,6 @@ namespace MGCNTN
                 def = Mathf.Clamp(value, 0, MAX_POSSIBLE_DEF);
             }
         }
-
-        public int MDEF
-        {
-            get => mdef;
-            set
-            {
-                mdef = Mathf.Clamp(value, 0, MAX_POSSIBLE_MDEF);
-            }
-        }
-
         public int SPD
         {
             get => spd;
@@ -197,34 +171,64 @@ namespace MGCNTN
         /// Operators
         public static Stats operator +(Stats a, Stats b)
         {
-            Stats result = new Stats();
+            Stats result = nullCheck(a, b);
 
+            if (result == null)
+                return new Stats();
+
+
+
+            result.LV = a.lv + b.lv;
+            result.EXP = a.exp + b.exp;
+            result.NXTEXP = a.nxtExp + b.nxtExp;
+            result.HP = a.hp + b.hp;
+            result.MAXHP = a.maxHp + b.maxHp;
+            result.ENG = a.eng + b.eng;
+            result.ATK = a.maxEng + b.maxEng;
+            result.atk = a.atk + b.atk;
+            result.DEF = a.def + b.def;
+            result.SPD = a.spd + b.spd;
+            result.EVS = a.evs + b.evs;
+            result.ENC = a.enc + b.enc;
+
+            // Return the new Stats object
+            return result;
+        }
+
+        public static Stats operator -(Stats a, Stats b)
+        {
+            Stats result = nullCheck(a, b);
+
+            if (result == null)
+                return new Stats();
+
+            result.LV = a.lv - b.lv;
+            result.EXP = a.exp - b.exp;
+            result.NXTEXP = a.nxtExp - b.nxtExp;
+            result.HP = a.hp - b.hp;
+            result.MAXHP = a.maxHp - b.maxHp;
+            result.ENG = a.eng - b.eng;
+            result.MAXENG = a.maxEng + b.maxEng;
+            result.ATK = a.atk - b.atk;
+            result.DEF = a.def - b.def;
+            result.SPD = a.spd - b.spd;
+            result.EVS = a.evs - b.evs;
+            result.ENC = a.enc - b.enc;
+
+            return result;
+        }
+
+        private static Stats nullCheck(Stats a, Stats b)
+        {
             //Null Check
             if (a == null && b == null)
-                return result;
+                return null;
             else if (a == null)
                 return b;
             else if (b == null)
                 return a;
 
-
-            result.lv = a.lv + b.lv;
-            result.exp = a.exp + b.exp;
-            result.nxtExp = a.nxtExp + b.nxtExp;
-            result.hp = a.hp + b.hp;
-            result.maxHp = a.maxHp + b.maxHp;
-            result.mp = a.mp + b.mp;
-            result.maxMp = a.maxMp + b.maxMp;
-            result.atk = a.atk + b.atk;
-            result.matk = a.matk + b.matk;
-            result.def = a.def + b.def;
-            result.mdef = a.mdef + b.mdef;
-            result.spd = a.spd + b.spd;
-            result.evs = a.evs + b.evs;
-            result.enc = a.enc + b.enc;
-
-            // Return the new Stats object
-            return result;
+            return null;
         }
 
     }

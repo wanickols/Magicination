@@ -35,7 +35,7 @@ namespace MGCNTN.Battle
             defender.checkDeath(false);
 
             defender.updateHealth?.Invoke(dStats.HP, dStats.MAXHP);
-            defender.updateMP?.Invoke(dStats.MP, dStats.MAXMP);
+            defender.updateMP?.Invoke(dStats.ENG, dStats.MAXENG);
         }
 
 

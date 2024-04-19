@@ -21,7 +21,7 @@ namespace MGCNTN.Battle
 
             //memberLevel.text = stats.LV.ToString();
             memberHP.text = $"{stats.HP}/{stats.MAXHP}";
-            memberMP.text = $"{stats.MP}/{stats.MAXMP}";
+            memberMP.text = $"{stats.ENG}/{stats.MAXENG}";
 
             setColor(stats.HP, stats.MAXHP);
         }

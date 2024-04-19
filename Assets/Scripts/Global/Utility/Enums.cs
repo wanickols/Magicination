@@ -13,18 +13,8 @@ namespace MGCNTN
     //Augemenations
     public enum AugType
     {
-        LVL,
-        HP,
-        EXP,
-        MP,
-        ATK,
-        DEF,
-        MATK,
-        MDEF,
-        EVS,
-        SPD,
-        ENC,
-        ACC,
+        Stats,
+        Status,
     }
 
     //Items

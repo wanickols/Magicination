@@ -11,7 +11,7 @@ namespace MGCNTN.Battle
         [SerializeField] protected int battleWeight;
         [SerializeField] public EnemyRarity enemyRarity = EnemyRarity.common;
 
-        public EnemyStats(int lv, int exp, int hp, int maxHp, int mp, int maxMp, int atk, int matk, int def, int mdef, int spd, int evs, int battleWeight) : base(lv, exp, hp, maxHp, mp, maxMp, atk, matk, def, mdef, spd, evs)
+        public EnemyStats(int lv, int exp, int hp, int maxHp, int mp, int maxMp, int atk, int def, int spd, int evs, int battleWeight) : base(lv, exp, hp, maxHp, mp, maxMp, atk, def, spd, evs)
         {
             this.battleWeight = battleWeight;
         }

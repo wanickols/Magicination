@@ -17,10 +17,10 @@ namespace MGCNTN.Core
         [SerializeField] private TextMeshProUGUI lvlVal;
         [SerializeField] private TextMeshProUGUI HPVal;
         [SerializeField] private TextMeshProUGUI MPVal;
+        [SerializeField] private TextMeshProUGUI healthVal;
+        [SerializeField] private TextMeshProUGUI energyVal;
         [SerializeField] private TextMeshProUGUI attackVal;
-        [SerializeField] private TextMeshProUGUI magicAtkVal;
         [SerializeField] private TextMeshProUGUI defenseVal;
-        [SerializeField] private TextMeshProUGUI magicDefVal;
         [SerializeField] private TextMeshProUGUI speedVal;
         [SerializeField] private TextMeshProUGUI evasionVal;
 
@@ -59,13 +59,13 @@ namespace MGCNTN.Core
             Stats sts = partyMember.Stats;
             lvlVal.text = sts.LV.ToString();
             HPVal.text = $"{sts.HP}/{sts.MAXHP}";
-            MPVal.text = $"{sts.MP}/{sts.MAXMP}";
+            MPVal.text = $"{sts.ENG}/{sts.MAXENG}";
 
             //Stats Values
+            healthVal.text = sts.HP.ToString();
+            energyVal.text = sts.ENG.ToString();
             attackVal.text = sts.ATK.ToString();
-            magicAtkVal.text = sts.MATK.ToString();
             defenseVal.text = sts.DEF.ToString();
-            magicDefVal.text = sts.MDEF.ToString();
             speedVal.text = sts.SPD.ToString();
             evasionVal.text = sts.EVS.ToString();
         }
