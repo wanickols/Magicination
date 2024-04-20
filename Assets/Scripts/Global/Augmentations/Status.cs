@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace MGCNTN
 {
@@ -6,7 +7,8 @@ namespace MGCNTN
     public class Status
     {
         public StatusType type;
-        public int duration;
-        public int severityLevel;
+        [HideInInspector]
+        public UInt16 duration;
+        public UInt16 severityLevel;
     }
 }

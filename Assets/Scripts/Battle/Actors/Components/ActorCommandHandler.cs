@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace MGCNTN.Battle
 {
-    public class CommandHandler : MonoBehaviour
+    public class ActorCommandHandler : MonoBehaviour
     {
         ///Private Parameters
         //Components
-        private BattlerAI ai => actor.ai;
+        private ActorAI ai => actor.ai;
         private ActorGraphics gfx => actor.gfx;
+        private EffectsHandler effectsHandler => actor.effects;
         private Actor actor;
 
         ///Unity Functions        
@@ -23,6 +24,9 @@ namespace MGCNTN.Battle
         {
             if (actor.IsDead)
                 return;
+
+            //Increment Statuses
+            //Increment Stats
 
             actor.isTakingTurn = true;
             StartCoroutine(gfx.Co_MoveToAttackAnim());

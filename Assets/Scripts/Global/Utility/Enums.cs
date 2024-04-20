@@ -19,9 +19,14 @@ namespace MGCNTN
 
     public enum StatusType
     {
-        Poison,
+
         Burn,
+        Confused,
         Paralysis,
+        Poison,
+        Petrified,
+        Sleep,
+        Slowed,
         //TODO
     }
 

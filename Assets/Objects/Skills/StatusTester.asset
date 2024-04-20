@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17fd1397b651a274680aebcc05a89e95, type: 3}
-  m_Name: Speed Up I
+  m_Name: StatusTester
   m_EditorClassIdentifier: 
   data:
-    id: 8
-    displayName: Speed Up I
-    description: Speed raised by a small ammount
+    id: 3
+    displayName: Status Test
+    description: Deals A Status
     requiredLevel: 1
-    sprite: {fileID: -12225437, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
-    augData: {fileID: 11400000, guid: e9a5b36dbde854140935eaa51aa4888d, type: 2}
+    duration: 3
+    maxStacks: 1
+    sprite: {fileID: -1625233169, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
+    augData: {fileID: 11400000, guid: f82e5f1f0606bd7428ac2d2223d677aa, type: 2}
     cost: 20
-    menuUsable: 0
+    menuUsable: 1
     status: 2

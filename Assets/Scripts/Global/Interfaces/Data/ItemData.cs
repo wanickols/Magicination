@@ -9,7 +9,8 @@ namespace MGCNTN
         [Header("Items")]
         public int price;
         public static int nextID = 0;
-        public int quantity;
+        [HideInInspector]
+        public int quantity = 1;
 
         public ItemData()
         {

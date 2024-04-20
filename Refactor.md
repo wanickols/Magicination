@@ -32,3 +32,12 @@ The scripts folder, scriptable objects, and all the extra folders I have in the 
 
 #### ints
 I want to refactor the integers in stats class to be unsigned ints of specific sizes. Since the stat class is being passed around so much, and these values are pretty well determined to always be positive and of set maximums, I think it'd be worthwhile.
+
+#### Item Box
+No need to keep a dictionary in here from what I see, just use a list or something. You could search by ID, or name or whatever.
+
+Quantity allows you to basically keep track of many duplicates you have of a singular item, allows for item-specific caps etc. No need to have a seperate value in inventories for that. 
+
+
+#### Object IDs
+Object IDs should be using a scriptable object int value, not a static value, so that recompiles don't effect it. 

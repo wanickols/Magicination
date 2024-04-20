@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MGCNTN.Battle
 {
-    public abstract class BattlerAI : MonoBehaviour
+    public abstract class ActorAI : MonoBehaviour
     {
         protected Actor actor;
         protected List<Actor> possibleTargets = new List<Actor>();

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Potion
   m_EditorClassIdentifier: 
   data:
-    id: 5
+    id: 4
     displayName: Potion
     description: Restores a small amount of health
     requiredLevel: 0
+    duration: 0
+    maxStacks: 1
     sprite: {fileID: -1792369166, guid: 00dbbd8f5c36ba343add51bde370bc51, type: 3}
     augData: {fileID: 11400000, guid: e812f9191c94e1d40b03a80c4b0b3011, type: 2}
     price: 42

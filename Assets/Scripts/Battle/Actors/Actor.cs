@@ -16,8 +16,9 @@ namespace MGCNTN.Battle
 
         ///Public Parameters
         //Components
-        public CommandHandler commander { get; private set; }
-        public BattlerAI ai;
+        public ActorCommandHandler commander { get; private set; }
+        public EffectsHandler effects;
+        public ActorAI ai;
 
         //Data Accessors
 
@@ -35,7 +36,7 @@ namespace MGCNTN.Battle
         //Type
         public ActorType type;
         [Header("Graphics")]
-        public ActorGraphics gfx = new ActorGraphics();
+        public ActorGraphics gfx;
 
         ///Private Parameters
         //Components
@@ -58,9 +59,11 @@ namespace MGCNTN.Battle
         /// Unity Functions
         private void Awake()
         {
-            ai = GetComponent<BattlerAI>();
-            commander = GetComponent<CommandHandler>();
+            ai = GetComponent<ActorAI>();
+            effects = new EffectsHandler(memberBattleInfo);
+            commander = GetComponent<ActorCommandHandler>();
             Animator animator = GetComponent<Animator>();
+
             gfx.init(this, animator);
         }
 

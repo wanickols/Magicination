@@ -100,7 +100,7 @@ namespace MGCNTN.Battle
             if (anim)
                 anim.Play("Idle");
 
-            actor.isTakingTurn = false;
+            actor.isTakingTurn = false; ///Maybe reconsider using an an action
         }
 
         //Death Anim

@@ -15,7 +15,7 @@ public class AugmentationDataEditor : Editor
     {
         // Find the serialized properties
         statsProperty = serializedObject.FindProperty("hasStats");
-        augmentStatsProperty = serializedObject.FindProperty("augmentStats");
+        augmentStatsProperty = serializedObject.FindProperty("stats");
 
         statusProperty = serializedObject.FindProperty("hasStatus");
         statusListProperty = serializedObject.FindProperty("statusList");
@@ -39,7 +39,7 @@ public class AugmentationDataEditor : Editor
         EditorGUILayout.PropertyField(statusProperty);
 
         // If status is true, draw statusList
-        if (statsProperty.boolValue)
+        if (statusProperty.boolValue)
         {
             EditorGUILayout.PropertyField(statusListProperty);
         }

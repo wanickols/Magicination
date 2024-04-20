@@ -10,7 +10,7 @@ namespace MGCNTN
         //Serialized Fields
         [SerializeField] private EquippableType type;
         [SerializeField] private equipmentEffect effect;
-        [SerializeField] private EquippableData data = new EquippableData();
+        [SerializeField] private ItemData data = new ItemData();
         [SerializeField] protected EquippableStats stats = new EquippableStats();
 
         //Accessors
@@ -18,8 +18,8 @@ namespace MGCNTN
         public string DisplayName => data.displayName;
         public override ItemData Data
         {
-            get { return data as EquippableData; }
-            set { data = value as EquippableData; }
+            get => data;
+            set => data = value;
         }
 
         public EquippableStats Stats => stats;

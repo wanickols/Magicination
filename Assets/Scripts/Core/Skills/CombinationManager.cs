@@ -98,6 +98,8 @@ namespace MGCNTN.Core
         {
             CombinationData combinationData = JsonUtility.FromJson<CombinationData>(json);
 
+            if (combinationData == null) return;
+
             Skill parentSkill1 = skillManager.getSkillByName(combinationData.parentSkill1);
             Skill parentSkill2 = skillManager.getSkillByName(combinationData.parentSkill2);
             Skill resultSkill = skillManager.getSkillByName(combinationData.resultSkill);

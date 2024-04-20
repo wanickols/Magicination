@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf7680ff5bec2444bda14089dfc4dbd, type: 3}
   m_Name: Restore800HP
   m_EditorClassIdentifier: 
-  stats: 1
-  augmentStats:
+  hasStats: 1
+  stats:
     lv: 0
     exp: 0
     nxtExp: 0
-    hp: 400
+    hp: 800
     maxHp: 0
     eng: 0
     maxEng: 0
@@ -26,6 +26,5 @@ MonoBehaviour:
     spd: 0
     evs: 0
     enc: 0
-    duration: -1
-  status: 0
+  hasStatus: 0
   statusList: []

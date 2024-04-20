@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MGCNTN.Battle
 {
-    public class BasicBattler : BattlerAI
+    public class BasicBattler : ActorAI
     {
         public override ICommand ChooseAction() => singleTargetAttack();
 

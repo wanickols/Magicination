@@ -22,6 +22,7 @@ namespace MGCNTN.Battle
 
         public IEnumerator Co_Execute()
         {
+            //Currently for single target and multi-single target
             foreach (Actor target in targets)
             {
                 yield return attackerGFX.CO_AttackAnim(target);
