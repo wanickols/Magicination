@@ -48,7 +48,7 @@ namespace MGCNTN
                 target.baseStats += augments;
 
         }
-        private void augmentStatus() => target.Statuses.AddRange(statusList);
+        private void augmentStatus() => target.Statuses.Add(statusList);
     }
 
 

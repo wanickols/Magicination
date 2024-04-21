@@ -81,19 +81,7 @@ namespace MGCNTN
         public static void discover(this Skill skill) => skill.Data.skillStatus = SkillStatus.locked;
         public static void hide(this Skill skill) => skill.Data.skillStatus = SkillStatus.hidden;
 
-        ///Status
-        //Decrements the list of statuses, and removes them if their duration has run out
-        public static void tickDuration(this List<Status> statuses)
-        {
-            for (int i = statuses.Count - 1; i >= 0; i--)
-                if (--statuses[i].duration <= 0)
-                    statuses.RemoveAt(i);
-        }
 
-        public static void applyStatusEffect(this List<Status> statuses)
-        {
-
-        }
 
         ///AugmentStats
         public static void tickDuration(this List<AugmentStats> augmentStats)
