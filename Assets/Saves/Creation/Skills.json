@@ -1,4 +1,4 @@
-{"id":0,"displayName":"Heal I","description":"Heals a little bit of health","requiredLevel":1,"duration":0,"maxStacks":1,"sprite":{"instanceID":45936},"augData":{"instanceID":28922},"cost":10,"menuUsable":true,"status":0}
-{"id":1,"displayName":"Heal II","description":"Heals a good amount of health","requiredLevel":1,"duration":0,"maxStacks":1,"sprite":{"instanceID":37474},"augData":{"instanceID":27086},"cost":20,"menuUsable":true,"status":1}
-{"id":2,"displayName":"Heal III","description":"Heals a lot of health","requiredLevel":1,"duration":0,"maxStacks":1,"sprite":{"instanceID":45950},"augData":{"instanceID":27086},"cost":20,"menuUsable":true,"status":2}
-{"id":3,"displayName":"Status Test","description":"Deals A Status","requiredLevel":1,"duration":3,"maxStacks":1,"sprite":{"instanceID":56202},"augData":{"instanceID":55290},"cost":20,"menuUsable":true,"status":2}
+{"id":0,"displayName":"Heal I","description":"Heals a little bit of health","requiredLevel":1,"duration":0,"sprite":{"instanceID":45936},"augData":{"instanceID":28922},"cost":10,"menuUsable":true,"status":0}
+{"id":1,"displayName":"Heal II","description":"Heals a good amount of health","requiredLevel":1,"duration":0,"sprite":{"instanceID":37474},"augData":{"instanceID":27086},"cost":20,"menuUsable":true,"status":1}
+{"id":2,"displayName":"Heal III","description":"Heals a lot of health","requiredLevel":1,"duration":0,"sprite":{"instanceID":45950},"augData":{"instanceID":27086},"cost":20,"menuUsable":true,"status":2}
+{"id":3,"displayName":"Status Test","description":"Deals A Status","requiredLevel":1,"duration":3,"sprite":{"instanceID":56202},"augData":{"instanceID":55290},"cost":20,"menuUsable":true,"status":2}

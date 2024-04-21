@@ -60,7 +60,6 @@ namespace MGCNTN.Battle
         private void Awake()
         {
             ai = GetComponent<ActorAI>();
-            effects = new EffectsHandler(memberBattleInfo);
             commander = GetComponent<ActorCommandHandler>();
             Animator animator = GetComponent<Animator>();
 
@@ -72,6 +71,7 @@ namespace MGCNTN.Battle
         {
             memberBattleInfo = info;
             turnTime = baseTurnSpeed;
+            effects = new EffectsHandler(memberBattleInfo);
         }
         public void Die() => StartCoroutine(gfx.CO_DeathAnim());
 

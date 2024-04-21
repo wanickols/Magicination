@@ -10,7 +10,10 @@ namespace MGCNTN
         public bool isPetrified = false;
 
         ///Public Functions
-
+        public StatusCollection()
+        {
+            statusList = new List<Status>();
+        }
 
         //Decrements the list of statuses, and removes them if their duration has run out
         public void tickDuration()

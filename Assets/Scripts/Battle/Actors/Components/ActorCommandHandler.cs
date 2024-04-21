@@ -25,10 +25,13 @@ namespace MGCNTN.Battle
             if (actor.IsDead)
                 return;
 
-            effectsHandler.Tick();
+            if (effectsHandler != null)
+            {
+                effectsHandler.Tick();
 
-            if (!effectsHandler.canMove)
-                return;
+                if (!effectsHandler.canMove)
+                    return;
+            }
 
             actor.isTakingTurn = true;
             StartCoroutine(gfx.Co_MoveToAttackAnim());

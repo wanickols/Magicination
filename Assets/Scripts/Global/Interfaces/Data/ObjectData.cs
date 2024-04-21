@@ -12,41 +12,23 @@ namespace MGCNTN
         public string description;
         public int requiredLevel;
         public int duration = 0;
-        public int maxStacks = 1;
-        private int stackCount = 0;
         public Sprite sprite;
 
         [Header("Augmentation")]
         public AugmentationData augData;
 
-        public virtual void usePerm(MemberBattleInfo target, Stats user)
+        public void use(MemberBattleInfo target, Stats user)
         {
-            if (canStack())
-                augData.CreateAugmentation(target).ApplyEffect();
+            if (duration == 0)
+                usePerm(target, user);
+            else
+                useTemp(target, user);
         }
 
-        public virtual void useTemp(MemberBattleInfo target, Stats user)
-        {
-            if (canStack())
-                augData.CreateAugmentation(target, duration, id).ApplyEffect();
-        }
+        protected virtual void usePerm(MemberBattleInfo target, Stats user) => augData.CreateAugmentation(target).ApplyEffect();
 
-        public void decrementStack()
-        {
-            if (--maxStacks < 0)
-                maxStacks = 0;
-        }
-        protected bool canStack()
-        {
+        protected virtual void useTemp(MemberBattleInfo target, Stats user) => augData.CreateAugmentation(target, duration, id).ApplyEffect();
 
-            if (++stackCount >= maxStacks)
-            {
-                stackCount = maxStacks;
-                return false; //invalid noise
-            }
-
-            return true;
-        }
 
 
     }

@@ -27,7 +27,7 @@ namespace MGCNTN
 
         public static int nextID = 0;
 
-        public override void usePerm(MemberBattleInfo target, Stats user)
+        protected override void usePerm(MemberBattleInfo target, Stats user)
         {
             if (user.ENG < cost)
                 return; //Call Invalid action noise or something
@@ -37,7 +37,7 @@ namespace MGCNTN
             base.usePerm(target, user);
         }
 
-        public override void useTemp(MemberBattleInfo target, Stats user)
+        protected override void useTemp(MemberBattleInfo target, Stats user)
         {
             if (user.ENG < cost)
                 return; //Call Invalid action noise or something

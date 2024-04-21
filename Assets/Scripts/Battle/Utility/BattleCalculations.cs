@@ -30,7 +30,7 @@ namespace MGCNTN.Battle
             Stats dStats = defender.Stats;
 
 
-            data.usePerm(defender.memberBattleInfo, attacker.Stats);
+            data.use(defender.memberBattleInfo, attacker.Stats);
 
             defender.checkDeath(false);
 

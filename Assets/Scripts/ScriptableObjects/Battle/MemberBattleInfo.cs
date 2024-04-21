@@ -39,7 +39,7 @@ public class MemberBattleInfo : ScriptableObject
 
 
     ///Status
-    public StatusCollection Statuses { get; set; } //
+    public StatusCollection Statuses = new StatusCollection();
 
 
     public PlayableCharacters playableCharacter;

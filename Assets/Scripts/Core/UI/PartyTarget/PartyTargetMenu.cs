@@ -48,7 +48,7 @@ namespace MGCNTN.Core
         }
         public void Select(int selected)
         {
-            data.usePerm(targets[selected].member, user);
+            data.use(targets[selected].member, user);
 
 
             targets[selected].updateValues();
