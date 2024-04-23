@@ -19,7 +19,6 @@ namespace MGCNTN
 
     public enum StatusType
     {
-
         Burn,
         Confused,
         Paralysis,

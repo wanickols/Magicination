@@ -136,11 +136,13 @@ MonoBehaviour:
   ai: {fileID: 0}
   type: 1
   gfx:
+    statusContainer: {fileID: 8401022004988522771, guid: 8e57d7093aa889740890ead268eb6c62, type: 3}
     selector: {fileID: 1045657364043076702, guid: c66c79e9c3dbb4b4b8c1806b9b88346c, type: 3}
+    selectorPosition: {x: -0.1, y: 0.5}
     offset: -0.5
     animationSpeed: 2
+    statusWaitTimeMil: 600
     attackSetupComplete: 0
-    selectorPosition: {x: -0.1, y: 0.5}
 --- !u!114 &2870400533787761768
 MonoBehaviour:
   m_ObjectHideFlags: 0

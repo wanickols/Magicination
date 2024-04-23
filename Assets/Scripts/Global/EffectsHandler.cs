@@ -10,10 +10,13 @@ namespace MGCNTN
 
         const float poisonPercentage = 0.05f; // 5% poison damage
 
+
+        ///Actions
+        public Action statusChanged;
+        public Action<int> damageApplied;
+
         ///Public Variables
         public bool canMove = true;
-        public Action<StatusType> statusApplied;
-        public Action<int> damageApplied;
 
         ///Private variables
         private MemberBattleInfo m_battleInfo;
@@ -38,8 +41,13 @@ namespace MGCNTN
         public void removeStatus(Status status)
         {
             statuses.Remove(status.type);
+            statusChanged?.Invoke();
         }
-        public void clearStatuses() { }
+        public void clearStatuses()
+        {
+            statuses.clear();
+            statusChanged?.Invoke();
+        }
 
         ///Private Functions
         private void tickStatuses()
@@ -69,7 +77,7 @@ namespace MGCNTN
                     break;
             }
 
-            statusApplied?.Invoke(status.type);
+            statusChanged?.Invoke();
         }
 
         private void applyPoison(Status status)

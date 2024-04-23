@@ -66,12 +66,16 @@ namespace MGCNTN.Battle
             gfx.init(this, animator);
         }
 
+        private void Update() => gfx.AnimateStatuses();
+
         ///Public Functions
         public void setMemberBattleInfo(MemberBattleInfo info)
         {
             memberBattleInfo = info;
             turnTime = baseTurnSpeed;
             effects = new EffectsHandler(memberBattleInfo);
+            effects.statusChanged += statusApplied;
+            effects.damageApplied += takeDamage;
         }
         public void Die() => StartCoroutine(gfx.CO_DeathAnim());
 
@@ -88,5 +92,16 @@ namespace MGCNTN.Battle
             }
         }
 
+        private void statusApplied() => gfx.RefreshStatus();
+        private void takeDamage(int amount) => StartCoroutine(gfx.CO_HitAnim(amount));
+
+        private void OnDestroy()
+        {
+            if (effects != null)
+            {
+                effects.statusChanged -= statusApplied;
+                effects.damageApplied -= takeDamage;
+            }
+        }
     }
 }
