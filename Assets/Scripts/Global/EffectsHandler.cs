@@ -14,6 +14,7 @@ namespace MGCNTN
         ///Actions
         public Action statusChanged;
         public Action<int> damageApplied;
+        public Action<int, Color> coloredDamage;
 
         ///Public Variables
         public bool canMove = true;
@@ -88,7 +89,7 @@ namespace MGCNTN
 
             // Apply poison damage to current HP
             m_battleInfo.baseStats.HP -= poisonDamage;
-            damageApplied?.Invoke(poisonDamage);
+            coloredDamage?.Invoke(poisonDamage, Color.magenta);
         }
 
         private void applyBurn(Status status)
@@ -96,7 +97,7 @@ namespace MGCNTN
             int burnDamage = 100 * status.severityLevel;
 
             m_battleInfo.baseStats.HP -= burnDamage;
-            damageApplied?.Invoke(burnDamage);
+            coloredDamage?.Invoke(burnDamage, Color.red);
         }
         private void tickStats() => augmentStats.tickDuration();
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace MGCNTN.Battle
@@ -248,21 +249,50 @@ namespace MGCNTN.Battle
             }
         }
 
-        public IEnumerator CO_HitAnim(int damage)
+        public IEnumerator CO_DamageAnimation(int damage, Color color)
         {
             if (!anim)
+            {
+                spawnDamageNumbers(damage, color);
                 yield return null;
+            }
             else
             {
-                anim.Play("Hit");
+                anim.Play("Damaged");
+                spawnDamageNumbers(damage, color);
+                Vector2 target = currPosition + new Vector2(0.1f, 0.1f);
 
+                while ((Vector2)currPosition != target)
+                {
+                    actor.transform.position = Vector2.MoveTowards(currPosition, target, Time.deltaTime * 10);
 
-                // Do a little damage thingy
+                    yield return null;
+                }
 
                 do yield return null;
                 while (anim.IsAnimating());
 
+                target -= new Vector2(0.1f, 0.1f);
+                while ((Vector2)currPosition != target)
+                {
+                    actor.transform.position = Vector2.MoveTowards(currPosition, target, Time.deltaTime * 10);
+
+                    yield return null;
+                }
+
+
                 anim.Play("Idle");
+
+            }
+        }
+
+        private void spawnDamageNumbers(int damage, Color color)
+        {
+            GameObject damagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(Paths.damagePrefab);
+            if (damagePrefab != null)
+            {
+                damagePrefab = GameObject.Instantiate(damagePrefab, actor.transform);
+                damagePrefab.GetComponent<DamageNumbers>().setText(damage, color);
             }
         }
 

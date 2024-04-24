@@ -16,25 +16,33 @@ public class MemberBattleInfo : ScriptableObject
 
     [HideInInspector] public List<AugmentStats> augmentingStats = new List<AugmentStats>();
 
-    public Stats Stats
+    public Stats Stats { get; private set; }
+
+    public void updateStats()
     {
-        get
+        Stats combinedStats = new Stats();
+
+        // Add individual stats
+        if (baseStats != null)
+            combinedStats += baseStats;
+
+        int damageTaken = 0, energyUsed = 0;
+
+        if (Stats != null)
         {
-            // Create a new Stats object to hold the combined stats
-            Stats combinedStats = new Stats();
-
-            // Add individual stats
-            if (baseStats != null)
-                combinedStats += baseStats;
-
-            // Add augmenting stats
-            foreach (var augmentingStat in augmentingStats)
-            {
-                combinedStats += augmentingStat;
-            }
-
-            return combinedStats;
+            damageTaken = Stats.MAXHP - Stats.HP;
+            energyUsed = Stats.MAXENG - Stats.ENG;
         }
+        // Add augmenting stats
+        foreach (var augmentingStat in augmentingStats)
+        {
+            combinedStats += augmentingStat;
+        }
+
+        Stats = combinedStats;
+
+        Stats.HP -= damageTaken;
+        Stats.ENG -= energyUsed;
     }
 
 

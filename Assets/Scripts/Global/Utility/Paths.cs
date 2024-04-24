@@ -25,6 +25,7 @@ namespace MGCNTN
             };
         }
 
+        public static string damagePrefab = "Assets/Prefabs/Battle/UI/DamageNumbers.prefab";
 
 
         //other

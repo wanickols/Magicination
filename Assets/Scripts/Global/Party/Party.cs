@@ -135,6 +135,7 @@ namespace MGCNTN
 
             PartyMember member = GameObject.Instantiate(Resources.Load<PartyMember>(Paths.getCharacterPath(playableCharacter)));
             member.equipment.arsenal = arsenal;
+            member.updateStats();
 
             Debug.Assert(member != null, "Error: Part member creation was given invalid playable character in save file");
 

@@ -72,10 +72,12 @@ namespace MGCNTN.Battle
         public void setMemberBattleInfo(MemberBattleInfo info)
         {
             memberBattleInfo = info;
+            info.updateStats();
             turnTime = baseTurnSpeed;
             effects = new EffectsHandler(memberBattleInfo);
             effects.statusChanged += statusApplied;
             effects.damageApplied += takeDamage;
+            effects.coloredDamage += takeDamage;
         }
         public void Die() => StartCoroutine(gfx.CO_DeathAnim());
 
@@ -93,8 +95,26 @@ namespace MGCNTN.Battle
         }
 
         private void statusApplied() => gfx.RefreshStatus();
-        private void takeDamage(int amount) => StartCoroutine(gfx.CO_HitAnim(amount));
+        public void takeDamage(int damage, Color color)
+        {
+            StartCoroutine(gfx.CO_DamageAnimation(damage, color));
+            handleDamage(damage);
+        }
 
+        public void takeDamage(int damage)
+        {
+            StartCoroutine(gfx.CO_DamageAnimation(damage, Color.white));
+            handleDamage(damage);
+        }
+
+        private void handleDamage(int damage)
+        {
+            Stats.HP -= damage;
+            checkDeath(false);
+            updateHealth?.Invoke(Stats.HP, Stats.MAXHP);
+        }
+
+        ///Destroy
         private void OnDestroy()
         {
             if (effects != null)

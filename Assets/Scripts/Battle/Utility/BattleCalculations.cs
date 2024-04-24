@@ -7,23 +7,15 @@ namespace MGCNTN.Battle
     public static class BattleCalculations
     {
 
-        public static int Attack(Actor attacker, Actor defender)
+        public static void Attack(Actor attacker, Actor defender)
         {
-
-            Stats dStats = defender.Stats;
-            int damage = attacker.Stats.ATK - dStats.DEF;
+            int damage = attacker.Stats.ATK - defender.Stats.DEF;
 
             if (damage < 1)
                 damage = 1;
 
 
-            dStats.HP -= damage;
-
-            defender.checkDeath(false);
-
-            defender.updateHealth?.Invoke(dStats.HP, dStats.MAXHP);
-
-            return damage;
+            defender.takeDamage(damage);
         }
         public static void useItem(Actor attacker, Actor defender, ObjectData data)
         {
