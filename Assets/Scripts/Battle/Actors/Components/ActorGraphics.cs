@@ -37,6 +37,12 @@ namespace MGCNTN.Battle
 
         public bool attackSetupComplete = false;
 
+        //prefabs
+        private GameObject damagedNumbers;
+        private GameObject statusUI;
+
+
+        private bool canAnimate = true;
 
 
         ///Public Functions
@@ -54,14 +60,23 @@ namespace MGCNTN.Battle
 
             currStatusTime = statusWaitTimeMil;
 
+
+            //Selector
             selector.transform.position = selectorPosition;
             selector = GameObject.Instantiate(selector, actor.transform);
             selector.SetActive(false);
 
+            //Status
             statusContainer = GameObject.Instantiate(statusContainer, actor.transform);
             statusContainer.SetActive(false);
             statusAnimator = statusContainer.GetComponent<Animator>();
 
+            damagedNumbers = AssetDatabase.LoadAssetAtPath<GameObject>(Paths.damagedNumbers);
+            statusUI = AssetDatabase.LoadAssetAtPath<GameObject>(Paths.statusUI);
+            statusUI = GameObject.Instantiate(statusUI, actor.transform);
+
+
+            //Targeting
             targetPosition = startingPosition = actor.transform.position;
             targetPosition += new Vector2(offset, 0);
         }
@@ -133,10 +148,16 @@ namespace MGCNTN.Battle
 
             statusList.Sort((s1, s2) => s2.duration.CompareTo(s1.duration));
             statusQueue.Clear();
+
+            StatusUI ui = statusUI.GetComponent<StatusUI>();
             foreach (Status status in statusList)
             {
+                ui.setActivated((int)status.type);
                 statusQueue.Enqueue(status);
             }
+
+            ui.Activate();
+
         }
 
         ///Animations
@@ -145,8 +166,14 @@ namespace MGCNTN.Battle
         {
             attackSetupComplete = false;
 
+
             if (anim)
+            {
+                do yield return null;
+                while (!canAnimate);
+                canAnimate = false;
                 anim.Play("Moving");
+            }
 
             while ((Vector2)currPosition != targetPosition)
             {
@@ -158,14 +185,16 @@ namespace MGCNTN.Battle
             if (anim)
                 anim.Play("Idle");
 
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.3f);
 
-            attackSetupComplete = true;
+            canAnimate = attackSetupComplete = true;
         }
 
         //Moving back to middle waiting then back to starting
         public IEnumerator EndTurnAnim()
         {
+            do yield return null;
+            while (!canAnimate);
 
             if (anim)
                 anim.Play("Moving");
@@ -199,6 +228,9 @@ namespace MGCNTN.Battle
         //Death Anim
         public IEnumerator CO_DeathAnim()
         {
+            do yield return null;
+            while (!canAnimate);
+
             if (anim != null)
             {
                 anim.Play("Death");
@@ -249,8 +281,13 @@ namespace MGCNTN.Battle
             }
         }
 
+        //Take Damage Anim
         public IEnumerator CO_DamageAnimation(int damage, Color color)
         {
+
+            do yield return null;
+            while (!canAnimate);
+
             if (!anim)
             {
                 spawnDamageNumbers(damage, color);
@@ -258,6 +295,7 @@ namespace MGCNTN.Battle
             }
             else
             {
+                canAnimate = false;
                 anim.Play("Damaged");
                 spawnDamageNumbers(damage, color);
                 Vector2 target = currPosition + new Vector2(0.1f, 0.1f);
@@ -276,24 +314,14 @@ namespace MGCNTN.Battle
                 while ((Vector2)currPosition != target)
                 {
                     actor.transform.position = Vector2.MoveTowards(currPosition, target, Time.deltaTime * 10);
-
                     yield return null;
                 }
 
-
                 anim.Play("Idle");
-
             }
-        }
 
-        private void spawnDamageNumbers(int damage, Color color)
-        {
-            GameObject damagePrefab = AssetDatabase.LoadAssetAtPath<GameObject>(Paths.damagePrefab);
-            if (damagePrefab != null)
-            {
-                damagePrefab = GameObject.Instantiate(damagePrefab, actor.transform);
-                damagePrefab.GetComponent<DamageNumbers>().setText(damage, color);
-            }
+            yield return new WaitForSeconds(.2f);
+            canAnimate = true;
         }
 
         //Item Use
@@ -304,5 +332,9 @@ namespace MGCNTN.Battle
         }
 
 
+        ///Private Helpers
+        private void spawnDamageNumbers(int damage, Color color) =>
+            GameObject.Instantiate(damagedNumbers, actor.transform)
+                .GetComponent<DamageNumbers>().setText(damage, color);
     }
 }

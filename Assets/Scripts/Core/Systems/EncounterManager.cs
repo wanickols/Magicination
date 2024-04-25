@@ -40,6 +40,9 @@ namespace MGCNTN.Core
             Battle.Battle.currentRegion = map.region;
             Battle.Battle.endBattle += EndBattle;
 
+            if (map.region != null)
+                map.region.TriggerBattle -= StartBattle;
+
             Game.manager.StartCoroutine(sceneLoader.Co_loadScene(SceneLoader.scene.battle, transitionPrefab, map));
             map.gameObject.SetActive(false);
 
@@ -50,6 +53,8 @@ namespace MGCNTN.Core
             if (!stateManager.tryState(GameState.World))
                 return;
 
+            if (map.region != null)
+                map.region.TriggerBattle += StartBattle;
 
             map.gameObject.SetActive(true);
             sceneLoader.loadScene(SceneLoader.savedScene, map);

@@ -94,7 +94,7 @@ namespace MGCNTN.Battle
             }
         }
 
-        private void statusApplied() => gfx.RefreshStatus();
+        public void statusApplied() => gfx.RefreshStatus();
         public void takeDamage(int damage, Color color)
         {
             StartCoroutine(gfx.CO_DamageAnimation(damage, color));

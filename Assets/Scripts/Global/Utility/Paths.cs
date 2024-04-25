@@ -25,7 +25,10 @@ namespace MGCNTN
             };
         }
 
-        public static string damagePrefab = "Assets/Prefabs/Battle/UI/DamageNumbers.prefab";
+
+        ///Battle UI
+        public static string damagedNumbers = "Assets/Prefabs/Battle/UI/DamageNumbers.prefab";
+        public static string statusUI = "Assets/Prefabs/Battle/UI/StatusUI.prefab";
 
 
         //other

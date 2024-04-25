@@ -28,6 +28,7 @@ namespace MGCNTN.Battle
 
             defender.updateHealth?.Invoke(dStats.HP, dStats.MAXHP);
             defender.updateMP?.Invoke(dStats.ENG, dStats.MAXENG);
+            defender.statusApplied();
         }
 
 

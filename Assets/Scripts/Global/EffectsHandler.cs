@@ -18,7 +18,7 @@ namespace MGCNTN
 
         ///Public Variables
         public bool canMove = true;
-
+        public bool ticking = false;
         ///Private variables
         private MemberBattleInfo m_battleInfo;
 
@@ -57,6 +57,8 @@ namespace MGCNTN
                 applyStatus(status);
 
             statuses.tickDuration();
+
+            statusChanged?.Invoke();
         }
 
         private void applyStatus(Status status)
@@ -77,8 +79,6 @@ namespace MGCNTN
                 default:
                     break;
             }
-
-            statusChanged?.Invoke();
         }
 
         private void applyPoison(Status status)
@@ -94,7 +94,7 @@ namespace MGCNTN
 
         private void applyBurn(Status status)
         {
-            int burnDamage = 100 * status.severityLevel;
+            int burnDamage = 10 * status.severityLevel;
 
             m_battleInfo.baseStats.HP -= burnDamage;
             coloredDamage?.Invoke(burnDamage, Color.red);
