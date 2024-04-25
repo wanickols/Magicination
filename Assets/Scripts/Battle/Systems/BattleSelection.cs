@@ -10,14 +10,15 @@ namespace MGCNTN.Battle
     {
         /// Public Parameter
         public override Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
-        public Consumable currItem;
+
+        public ObjectData currData;
         public BattleMainSelections currBattleSelection;
 
         /// Private Parameters
         [Header("Selectors")]
         [SerializeField] private Selector mainSelector;
         [SerializeField] private Selector itemSelector;
-        //[SerializeField] private Selector skillSelector;
+        [SerializeField] private Selector skillSelector;
 
         //States
         private BattleMenuStates menuState = BattleMenuStates.mainSelection;
@@ -35,7 +36,7 @@ namespace MGCNTN.Battle
             //Connecting selectors to states
             stateSelector.Add(BattleMenuStates.mainSelection, mainSelector);
             stateSelector.Add(BattleMenuStates.itemSelection, itemSelector);
-            //stateSelector.Add(BattleMenuStates.skillSelection, skillSelector);
+            stateSelector.Add(BattleMenuStates.skillSelection, skillSelector);
         }
 
         //Overrides
@@ -47,12 +48,16 @@ namespace MGCNTN.Battle
                     ProcessMainSelection();
                     break;
                 case BattleMenuStates.itemSelection:
-                    currItem = battleWindow.getItem(CurrentSelector.SelectedIndex);
+                    currData = battleWindow.getItem(CurrentSelector.SelectedIndex).Data;
                     currBattleSelection = BattleMainSelections.Items;
                     battleWindow.closeItemWindow();
                     manager.trySelect();
                     break;
                 case BattleMenuStates.skillSelection:
+                    currData = battleWindow.getSkill(CurrentSelector.SelectedIndex).Data;
+                    currBattleSelection = BattleMainSelections.Skills;
+                    battleWindow.closeSkillWindow();
+                    manager.trySelect();
                     break;
             }
 
@@ -69,6 +74,7 @@ namespace MGCNTN.Battle
                     returnToMain();
                     break;
                 case BattleMenuStates.skillSelection:
+                    battleWindow.closeSkillWindow();
                     returnToMain();
                     break;
             }
@@ -87,6 +93,9 @@ namespace MGCNTN.Battle
                     break;
                 case BattleMenuStates.itemSelection:
                     battleWindow.ShowItemWindow();
+                    break;
+                case BattleMenuStates.skillSelection:
+                    battleWindow.ShowSkillWindow();
                     break;
             }
         }
@@ -107,7 +116,9 @@ namespace MGCNTN.Battle
                     SetMenuState(BattleMenuStates.itemSelection, false);
                     break;
                 case BattleMainSelections.Skills:
-                //SetMenuState(BattleMenuStates.skillSelection, false);
+                    battleWindow.ShowSkillWindow();
+                    SetMenuState(BattleMenuStates.skillSelection, false);
+                    break;
                 case BattleMainSelections.Run:
                     manager.tryRun();
                     break;

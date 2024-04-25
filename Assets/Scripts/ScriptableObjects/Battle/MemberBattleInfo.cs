@@ -50,6 +50,9 @@ public class MemberBattleInfo : ScriptableObject
     public StatusCollection Statuses = new StatusCollection();
 
 
+    ///Skills
+    public SkillsCollection activeSkills = new SkillsCollection();
+
     public PlayableCharacters playableCharacter;
     public string DisplayName => _name;
     public GameObject ActorPrefab => actorPrefab;

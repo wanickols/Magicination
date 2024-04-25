@@ -8,6 +8,7 @@ namespace MGCNTN
         public List<Status> statusList { get; private set; } = new List<Status>();
         public Dictionary<StatusType, Status> statusDictionary { get; private set; } = new Dictionary<StatusType, Status>();
 
+
         public bool isPetrified => statusDictionary.ContainsKey(StatusType.Petrified);
 
         ///Public Functions

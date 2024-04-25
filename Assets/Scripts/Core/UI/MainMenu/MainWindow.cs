@@ -26,7 +26,7 @@ namespace MGCNTN.Core
         private EquipMenu equipMenu;
         private ArsenalMenu arsenalMenu;
         private ItemMenu itemMenu;
-        private SkillMenu skillMenu;
+        private SkillPauseMenu skillMenu;
         private PartyTargetMenu partyTargetMenu;
 
         public bool canSelectSkill => skillMenu.canSelect;
@@ -50,7 +50,7 @@ namespace MGCNTN.Core
             partyTargetMenu = PartyTargetWindow.GetComponent<PartyTargetMenu>();
 
             //Skills
-            skillMenu = SkillsWindow.GetComponent<SkillMenu>();
+            skillMenu = SkillsWindow.GetComponent<SkillPauseMenu>();
         }
 
         /// Public Functions

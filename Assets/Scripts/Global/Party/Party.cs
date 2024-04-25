@@ -102,7 +102,7 @@ namespace MGCNTN
         public override bool LoadData()
         {
 
-            //test();
+
 
             string[] jsons = loadFromFile();
 
@@ -122,7 +122,7 @@ namespace MGCNTN
                 for (int j = i; j < jsons.Length; i++)
                     reserveMembers.Add(JsonToPartyMember(jsons[j]));
 
-
+            test();
             return true;
         }
 
@@ -148,7 +148,8 @@ namespace MGCNTN
         private void test()
         {
             //DEbug
-            Consumable potion = Resources.Load<Consumable>("items/consumables/potion");
+            Skill status = Resources.Load<Skill>("Objects/Skills/StatusTester");
+            activeMembers[0].activeSkills.Add(0, status);
             //Consumable revive = Resources.Load<Consumable>("items/consumables/revive");
 
             //bag.Add(potion);

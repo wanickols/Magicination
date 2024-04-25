@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MGCNTN.Core
 {
 
-    public class SkillMenu : MonoBehaviour
+    public class SkillPauseMenu : MonoBehaviour
     {
         ///Public Parameters
 

@@ -53,7 +53,11 @@ namespace MGCNTN.Battle
         //Battle Menu Functions
         public void setBattleMenu(bool active) => BattleMenu.SetActive(active);
 
-        public void toggleBattleMenu() => setBattleMenu(data.currentActor.GetComponent<ActorAI>() == null);
+        public void nextTurn()
+        {
+            setBattleMenu(data.currentActor.GetComponent<ActorAI>() == null);
+            battleWindow.UpdateSkills();
+        }
 
         public void hideUI() => BattleUIContainer.SetActive(false);
 
@@ -83,7 +87,7 @@ namespace MGCNTN.Battle
         public void tryRun() => run?.Invoke();
 
         //Items
-        public Consumable getItem() => selectorManager.currItem;
+        public ObjectData getData() => selectorManager.currData;
 
 
 

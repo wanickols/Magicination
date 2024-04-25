@@ -149,7 +149,7 @@ namespace MGCNTN.Battle
             battleUI.selection.selectTarget += selectTarget;
             battleUI.run += tryRun;
 
-            turnSystem.nextTurn += battleUI.toggleBattleMenu;
+            turnSystem.nextTurn += battleUI.nextTurn;
             InitTargets();
         }
         private void InitTargets()
@@ -184,8 +184,8 @@ namespace MGCNTN.Battle
                 case BattleMainSelections.Items:
                 case BattleMainSelections.Skills:
                     battleUI.revertToMain();
-                    Consumable item = battleUI.getItem();
-                    data.currentActor.commander.useItem(data.currentActor, targets, item.Data);
+                    ObjectData obj = battleUI.getData();
+                    data.currentActor.commander.useItem(data.currentActor, targets, obj);
                     break;
                 default:
                     Debug.Log("Battle Selection Type Not Implemented in Battle Manager");
@@ -200,7 +200,8 @@ namespace MGCNTN.Battle
         {
             battleUI.selection.selectTarget -= selectTarget;
             battleUI.run -= tryRun;
-            turnSystem.nextTurn -= battleUI.toggleBattleMenu;
+            turnSystem.nextTurn -= battleUI.nextTurn;
+
 
             foreach (Actor enemy in data.enemies)
                 data.updateAllies -= enemy.ai.updateTargets;
