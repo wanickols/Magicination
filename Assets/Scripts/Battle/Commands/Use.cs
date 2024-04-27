@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace MGCNTN.Battle
 {
@@ -21,7 +23,14 @@ namespace MGCNTN.Battle
         {
             foreach (var target in targets)
             {
-                BattleCalculations.useItem(user, target, data);
+                try
+                {
+                    BattleCalculations.useItem(user, target, data);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                }
             }
             yield return null;
             isFinished = true;

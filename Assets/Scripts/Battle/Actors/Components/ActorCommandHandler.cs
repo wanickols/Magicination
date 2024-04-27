@@ -40,15 +40,30 @@ namespace MGCNTN.Battle
 
 
         //Battle Choices
-        public void attack(List<Actor> targets)
+        public bool attack(List<Actor> targets)
         {
             Attack command = new Attack(actor, targets);
             executeCommand(command);
+
+            return true;
         }
-        public void useItem(Actor user, List<Actor> targets, ObjectData data)
+        public bool use(List<Actor> targets, ObjectData data)
         {
-            Use command = new Use(user, targets, data);
+            if (!checkSkill(data))
+                return false;
+
+            Use command = new Use(actor, targets, data);
             executeCommand(command);
+
+            return true;
+        }
+
+        public bool checkSkill(ObjectData data)
+        {
+            if (data is SkillData)
+                return ((SkillData)data).cost < actor.Stats.ENG;
+
+            return true;
         }
 
         /// Private Functions

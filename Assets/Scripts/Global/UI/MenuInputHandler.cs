@@ -19,6 +19,7 @@ namespace MGCNTN
         //Audio
         public AudioSource menuChangeSound;
         public AudioSource menuSelectSound;
+        public AudioSource menuFailSound;
 
         /// Public Functions
         //Accessors
@@ -134,6 +135,8 @@ namespace MGCNTN
             {
                 if (selectorManager.Accept())
                     menuSelectSound.Play();
+                else
+                    menuFailSound.Play();
             }
 
             else if (Input.GetKeyDown(KeyCode.Escape))

@@ -102,9 +102,8 @@ namespace MGCNTN.Battle
             enemyGenerator = new EnemyGenerator(currentRegion);
             partyGenerator = new PartyGenerator();
             turnSystem = new TurnSystem(battleUI, data);
-
-
         }
+
         private void Start()
         {
             //List Creation
@@ -176,23 +175,37 @@ namespace MGCNTN.Battle
             //Select Target
             List<Actor> targets = battleUI.selection.targets;
 
+            bool success = false;
+
             switch (battleUI.currBattleSelection)
             {
                 case BattleMainSelections.Attack:
-                    data.currentActor.commander.attack(targets);
+                    success = data.currentActor.commander.attack(targets);
                     break;
                 case BattleMainSelections.Items:
+                    battleUI.revertToMain();
+                    Consumable cons = battleUI.getConsumable();
+                    success = data.currentActor.commander.use(targets, cons.Data);
+                    cons.Consume();
+                    break;
                 case BattleMainSelections.Skills:
                     battleUI.revertToMain();
-                    ObjectData obj = battleUI.getData();
-                    data.currentActor.commander.useItem(data.currentActor, targets, obj);
+                    Skill skill = battleUI.getSKill();
+                    success = data.currentActor.commander.use(targets, skill.Data);
                     break;
                 default:
                     Debug.Log("Battle Selection Type Not Implemented in Battle Manager");
                     break;
             }
 
+            if (!success)
+            {
+                battleUI.Invalid?.Invoke();
+                return;
+            }
+
             battleState = BattleStates.battle;
+
         }
 
         //Deconstructor

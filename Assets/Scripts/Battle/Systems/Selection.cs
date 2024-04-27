@@ -34,6 +34,7 @@ namespace MGCNTN.Battle
         ///Public Functions
         public IEnumerator CO_SelectSingleTarget(BattleData data)
         {
+
             bool live = true;
             List<Actor> allies;
             List<Actor> enemies;
@@ -85,11 +86,19 @@ namespace MGCNTN.Battle
         ///Private Functions
         private void SelectSingleTarget()
         {
-            targets.Clear();
-            hasTarget = true;
-            targets.Add(currSelected);
-            selector.SetActive(false);
-            selectTarget?.Invoke();
+            try
+            {
+                targets.Clear();
+                hasTarget = true;
+                targets.Add(currSelected);
+                selector.SetActive(false);
+                selectTarget?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+                revertSelection();
+            }
         }
         private void VerticalMove(List<Actor> allies, List<Actor> enemies, int change)
         {

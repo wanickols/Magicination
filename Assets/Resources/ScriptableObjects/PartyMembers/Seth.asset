@@ -15,6 +15,7 @@ MonoBehaviour:
   _name: Seth
   actorPrefab: {fileID: 2832430299845234393, guid: 7cf866aeb870638428411e342836889f, type: 3}
   menuPortrait: {fileID: 21300000, guid: 5df3704d82bdd134e9747a216c4eff6a, type: 3}
+  augmentingStats: []
   playableCharacter: 2
   stats:
     lv: 1
@@ -22,27 +23,10 @@ MonoBehaviour:
     nxtExp: 100
     hp: 100
     maxHp: 100
-    mp: 0
-    maxMp: 0
+    eng: 0
+    maxEng: 0
     atk: 3
-    matk: 3
     def: 1
-    mdef: 1
     spd: 4
     evs: 1
-    enc: 3
-  augmentStats:
-    lv: 0
-    exp: 0
-    nxtExp: 0
-    hp: 0
-    maxHp: 0
-    mp: 0
-    maxMp: 0
-    atk: 0
-    matk: 0
-    def: 0
-    mdef: 0
-    spd: 0
-    evs: 0
-    enc: 0
+    enc: 10

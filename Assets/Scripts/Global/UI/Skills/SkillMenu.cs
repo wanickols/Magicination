@@ -13,15 +13,17 @@ namespace MGCNTN.Battle
         private BattleData data;
         private MemberBattleInfo currMember => data.currentActor.memberBattleInfo;
 
-        private void OnEnable() => initSkills();
-        private void OnDisable() => clearSkills();
 
         public void setBattleData(BattleData data) => this.data = data;
 
         public void initSkills()
         {
             if (data == null)
+            {
+                clearSkills();
                 return;
+            }
+
 
             int i = 0;
             foreach (Transform t in content.transform)
@@ -44,7 +46,20 @@ namespace MGCNTN.Battle
             }
         }
 
-        public Skill selectSkill(int index) => options[index].skill;
+        public Skill selectSkill(int index)
+        {
+            if (index >= 0 && index < options.Count)
+            {
+                if (options[index].skill.Data.cost > currMember.Stats.ENG)
+                    return null;
+
+                return options[index].skill;
+            }
+
+
+
+            return null;
+        }
 
         ///Private Functions
         private void clearSkills()

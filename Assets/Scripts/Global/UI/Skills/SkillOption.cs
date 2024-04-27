@@ -26,7 +26,7 @@ namespace MGCNTN
 
         private void updateOption()
         {
-            updateText();
+            updateText(skill.name);
             icon.sprite = skill.Data.sprite;
         }
     }

@@ -11,7 +11,8 @@ namespace MGCNTN.Battle
         /// Public Parameter
         public override Selector CurrentSelector => stateSelector.ContainsKey(menuState) ? stateSelector[menuState] : null;
 
-        public ObjectData currData;
+        public Consumable currConsumable;
+        public Skill currSkill;
         public BattleMainSelections currBattleSelection;
 
         /// Private Parameters
@@ -48,13 +49,21 @@ namespace MGCNTN.Battle
                     ProcessMainSelection();
                     break;
                 case BattleMenuStates.itemSelection:
-                    currData = battleWindow.getItem(CurrentSelector.SelectedIndex).Data;
+                    currConsumable = battleWindow.getItem(CurrentSelector.SelectedIndex);
+
+                    if (currConsumable == null)
+                        return false;
+
                     currBattleSelection = BattleMainSelections.Items;
                     battleWindow.closeItemWindow();
                     manager.trySelect();
                     break;
                 case BattleMenuStates.skillSelection:
-                    currData = battleWindow.getSkill(CurrentSelector.SelectedIndex).Data;
+                    currSkill = battleWindow.getSkill(CurrentSelector.SelectedIndex);
+
+                    if (currSkill == null)
+                        return false;
+
                     currBattleSelection = BattleMainSelections.Skills;
                     battleWindow.closeSkillWindow();
                     manager.trySelect();
@@ -142,16 +151,7 @@ namespace MGCNTN.Battle
                 CurrentSelector.gameObject.SetActive(true);
                 if (!cancel)
                     CurrentSelector.SelectedIndex = 0;
-
-
-
             }
-
-
         }
-
-
-
-
     }
 }

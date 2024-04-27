@@ -11,6 +11,7 @@ namespace MGCNTN.Battle
     {
         ///Events
         public Action run;
+        public Action Invalid;
 
         ///Public Parameters
         public BattleMainSelections currBattleSelection => selectorManager.currBattleSelection;
@@ -45,6 +46,7 @@ namespace MGCNTN.Battle
         {
             this.data = data;
             this.battle = battle;
+            Invalid += invalidSelection;
             selectorManager.init(battleWindow, this); ;
             menuInputHandler.Init(selectorManager);
             selection.cancelTarget += selectorManager.revertSelection;
@@ -87,7 +89,8 @@ namespace MGCNTN.Battle
         public void tryRun() => run?.Invoke();
 
         //Items
-        public ObjectData getData() => selectorManager.currData;
+        public Consumable getConsumable() => selectorManager.currConsumable;
+        public Skill getSKill() => selectorManager.currSkill;
 
 
 
@@ -128,6 +131,12 @@ namespace MGCNTN.Battle
             selection.cancelTarget -= selectorManager.revertSelection;
         }
 
+        private void invalidSelection()
+        {
+            menuInputHandler.menuFailSound.Play();
+            selection.cancelTarget?.Invoke();
+
+        }
 
 
     }

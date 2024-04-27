@@ -18,9 +18,8 @@ MonoBehaviour:
     description: Deals A Status
     requiredLevel: 1
     duration: 3
-    maxStacks: 1
     sprite: {fileID: -1625233169, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
     augData: {fileID: 11400000, guid: f82e5f1f0606bd7428ac2d2223d677aa, type: 2}
-    cost: 20
+    cost: 5
     menuUsable: 1
     status: 2

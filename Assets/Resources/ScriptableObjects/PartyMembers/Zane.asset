@@ -29,4 +29,4 @@ MonoBehaviour:
     def: 1
     spd: 4
     evs: 1
-    enc: 3
+    enc: 10

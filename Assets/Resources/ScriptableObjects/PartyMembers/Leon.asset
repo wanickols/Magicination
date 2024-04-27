@@ -15,6 +15,7 @@ MonoBehaviour:
   _name: Leon
   actorPrefab: {fileID: 2832430299845234393, guid: 7f5ab286dce35cc4d8f25b8873db2c83, type: 3}
   menuPortrait: {fileID: 21300000, guid: 1651b7eede1e9734aa2aa8b05a6679e0, type: 3}
+  augmentingStats: []
   playableCharacter: 1
   stats:
     lv: 1
@@ -22,27 +23,10 @@ MonoBehaviour:
     nxtExp: 100
     hp: 100
     maxHp: 100
-    mp: 0
-    maxMp: 0
+    eng: 0
+    maxEng: 0
     atk: 3
-    matk: 3
     def: 1
-    mdef: 1
     spd: 8
     evs: 1
-    enc: 1
-  augmentStats:
-    lv: 0
-    exp: 0
-    nxtExp: 0
-    hp: 0
-    maxHp: 0
-    mp: 0
-    maxMp: 0
-    atk: 0
-    matk: 0
-    def: 0
-    mdef: 0
-    spd: 0
-    evs: 0
-    enc: 0
+    enc: 10

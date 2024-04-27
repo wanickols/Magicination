@@ -10,7 +10,6 @@ namespace MGCNTN
         public virtual void clear() => textBox.text = string.Empty;
 
         ///Private
-        private void OnDisable() => clear();
 
         protected virtual void updateText(string text = null) => textBox.text = text;
 
