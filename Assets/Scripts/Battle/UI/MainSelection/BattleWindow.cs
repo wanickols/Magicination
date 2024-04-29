@@ -22,10 +22,12 @@ namespace MGCNTN.Battle
         }
 
         /// Public Functions
-        public void ShowItemWindow()
+        public bool ShowItemWindow()
         {
             mainSelectionWindow.SetActive(false);
             ItemWindow.SetActive(true);
+
+            return true;
         }
 
         public void closeItemWindow()
@@ -35,10 +37,15 @@ namespace MGCNTN.Battle
         }
 
         /// Public Functions
-        public void ShowSkillWindow()
+        public bool ShowSkillWindow()
         {
+            if (!skillMenu.hasSkills())
+                return false;
+
             mainSelectionWindow.SetActive(false);
             SkillWindow.SetActive(true);
+
+            return true;
         }
 
         public void closeSkillWindow()

@@ -76,6 +76,9 @@ namespace MGCNTN.Battle
             while (!command.isFinished)
                 yield return null;
 
+            actor.UpdateEnergy();
+            actor.UpdateHealth();
+
             //Battle command here
             StartCoroutine(gfx.EndTurnAnim());
         }

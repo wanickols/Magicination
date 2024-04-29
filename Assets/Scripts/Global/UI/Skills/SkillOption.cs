@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ namespace MGCNTN
     {
 
         [SerializeField] private Image icon;
+        [SerializeField] private TextMeshProUGUI energy;
         public Skill skill { get; private set; }
 
         public void changeOption(Skill skill)
@@ -27,7 +29,16 @@ namespace MGCNTN
         private void updateOption()
         {
             updateText(skill.name);
+            energy.text = "" + skill.Data.cost;
             icon.sprite = skill.Data.sprite;
+        }
+
+        public void hasEnergy(bool valid)
+        {
+            if (valid)
+                energy.color = Color.white;
+            else
+                energy.color = Color.red;
         }
     }
 }

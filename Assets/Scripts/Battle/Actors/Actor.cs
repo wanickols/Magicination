@@ -10,7 +10,7 @@ namespace MGCNTN.Battle
 
         ///Events
         public Action<int, int> updateHealth;
-        public Action<int, int> updateMP;
+        public Action<int, int> updateEnergy;
         public Action Death;
 
 
@@ -107,11 +107,22 @@ namespace MGCNTN.Battle
             handleDamage(damage);
         }
 
+        public void UpdateHealth()
+        {
+            updateHealth?.Invoke(Stats.HP, Stats.MAXHP);
+        }
+
+        public void UpdateEnergy()
+        {
+            updateEnergy?.Invoke(Stats.ENG, Stats.MAXENG);
+        }
+
+        ///Privat Functions
         private void handleDamage(int damage)
         {
             Stats.HP -= damage;
-            checkDeath(false);
             updateHealth?.Invoke(Stats.HP, Stats.MAXHP);
+            checkDeath(true);
         }
 
         ///Destroy

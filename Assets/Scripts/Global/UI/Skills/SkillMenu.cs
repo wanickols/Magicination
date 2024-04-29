@@ -5,7 +5,6 @@ namespace MGCNTN.Battle
 {
     public class SkillMenu : MonoBehaviour
     {
-
         [SerializeField] private GameObject content; //content window
 
         private List<SkillOption> options = new List<SkillOption>();
@@ -13,6 +12,13 @@ namespace MGCNTN.Battle
         private BattleData data;
         private MemberBattleInfo currMember => data.currentActor.memberBattleInfo;
 
+        public bool hasSkills()
+        {
+            if (data == null || currMember.activeSkills.Count <= 0)
+                return false;
+
+            return true;
+        }
 
         public void setBattleData(BattleData data) => this.data = data;
 
@@ -37,6 +43,7 @@ namespace MGCNTN.Battle
                 {
                     t.gameObject.SetActive(true);
                     option.changeOption(currMember.activeSkills.GetSkills()[i]);
+                    option.hasEnergy(currMember.activeSkills.Get(i).Data.cost <= currMember.Stats.ENG);
                     options.Add(option);
                 }
                 else
@@ -45,6 +52,7 @@ namespace MGCNTN.Battle
                 i++;
             }
         }
+
 
         public Skill selectSkill(int index)
         {

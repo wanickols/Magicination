@@ -24,11 +24,10 @@ namespace MGCNTN.Battle
 
             data.use(defender.memberBattleInfo, attacker.Stats);
 
-            defender.checkDeath(false);
 
-            defender.updateHealth?.Invoke(dStats.HP, dStats.MAXHP);
-            defender.updateMP?.Invoke(dStats.ENG, dStats.MAXENG);
             defender.statusApplied();
+            defender.UpdateHealth();
+            defender.UpdateEnergy();
         }
 
 

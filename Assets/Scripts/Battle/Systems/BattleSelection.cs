@@ -46,8 +46,7 @@ namespace MGCNTN.Battle
             switch (menuState)
             {
                 case BattleMenuStates.mainSelection:
-                    ProcessMainSelection();
-                    break;
+                    return ProcessMainSelection();
                 case BattleMenuStates.itemSelection:
                     currConsumable = battleWindow.getItem(CurrentSelector.SelectedIndex);
 
@@ -107,12 +106,13 @@ namespace MGCNTN.Battle
                     battleWindow.ShowSkillWindow();
                     break;
             }
+
         }
 
         public void returnToMain(bool cancel = true) => SetMenuState(BattleMenuStates.mainSelection, cancel);
 
         /// Private Functions
-        private void ProcessMainSelection()
+        private bool ProcessMainSelection()
         {
             switch ((BattleMainSelections)mainSelector.SelectedIndex)
             {
@@ -121,20 +121,27 @@ namespace MGCNTN.Battle
                     manager.trySelect();
                     break;
                 case BattleMainSelections.Items:
-                    battleWindow.ShowItemWindow();
-                    SetMenuState(BattleMenuStates.itemSelection, false);
+                    if (battleWindow.ShowItemWindow())
+                        SetMenuState(BattleMenuStates.itemSelection, false);
+                    else
+                        return false;
                     break;
                 case BattleMainSelections.Skills:
-                    battleWindow.ShowSkillWindow();
-                    SetMenuState(BattleMenuStates.skillSelection, false);
+                    if (battleWindow.ShowSkillWindow())
+                        SetMenuState(BattleMenuStates.skillSelection, false);
+                    else
+                        return false;
+
                     break;
                 case BattleMainSelections.Run:
                     manager.tryRun();
                     break;
                 default:
                     Debug.LogWarning("Not implemented!");
-                    break;
+                    return false;
             }
+
+            return true;
         }
         private void SetMenuState(BattleMenuStates newState, bool cancel)
         {

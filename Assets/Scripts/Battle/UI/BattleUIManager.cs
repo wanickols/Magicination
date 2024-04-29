@@ -112,7 +112,7 @@ namespace MGCNTN.Battle
             actors.Add(actor);
             StatContainer stat = statsContainerList.Last();
             actor.updateHealth += stat.updateHealth;
-            actor.updateMP += stat.updateMP;
+            actor.updateEnergy += stat.updateMP;
 
 
         }
@@ -126,7 +126,7 @@ namespace MGCNTN.Battle
             {
                 StatContainer stat = statsContainerList[i];
                 actor.updateHealth -= stat.updateHealth;
-                actor.updateMP -= stat.updateMP;
+                actor.updateEnergy -= stat.updateMP;
             }
             selection.cancelTarget -= selectorManager.revertSelection;
         }
@@ -135,7 +135,6 @@ namespace MGCNTN.Battle
         {
             menuInputHandler.menuFailSound.Play();
             selection.cancelTarget?.Invoke();
-
         }
 
 
