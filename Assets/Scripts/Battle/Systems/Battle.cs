@@ -191,7 +191,7 @@ namespace MGCNTN.Battle
                 case BattleMainSelections.Skills:
                     battleUI.revertToMain();
                     Skill skill = battleUI.getSKill();
-                    success = data.currentActor.commander.use(targets, skill.Data);
+                    success = data.currentActor.commander.useSkill(targets, skill);
                     break;
                 default:
                     Debug.Log("Battle Selection Type Not Implemented in Battle Manager");

@@ -14,6 +14,7 @@ namespace MGCNTN
 
         public int cost;
         public bool menuUsable;
+        public int Power = 0;
 
         [SerializeField] private SkillStatus status = SkillStatus.hidden;
 

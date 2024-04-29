@@ -21,11 +21,11 @@ namespace MGCNTN.Battle
         public bool isFinished { get; private set; } = false;
         public IEnumerator Co_Execute()
         {
-            foreach (var target in targets)
+            foreach (Actor target in targets)
             {
                 try
                 {
-                    BattleCalculations.useItem(user, target, data);
+                    BattleCalculations.Use(user, target, data);
                 }
                 catch (Exception ex)
                 {

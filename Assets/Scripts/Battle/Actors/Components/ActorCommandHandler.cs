@@ -49,8 +49,7 @@ namespace MGCNTN.Battle
         }
         public bool use(List<Actor> targets, ObjectData data)
         {
-            if (!checkSkill(data))
-                return false;
+
 
             Use command = new Use(actor, targets, data);
             executeCommand(command);
@@ -58,15 +57,23 @@ namespace MGCNTN.Battle
             return true;
         }
 
-        public bool checkSkill(ObjectData data)
+        public bool useSkill(List<Actor> targets, Skill skill)
         {
-            if (data is SkillData)
-                return ((SkillData)data).cost < actor.Stats.ENG;
+            if (!checkSkill(skill.Data))
+                return false;
+
+
+            UseSkill command = new UseSkill(actor, targets, skill);
+            executeCommand(command);
 
             return true;
         }
 
+
+
         /// Private Functions
+
+        private bool checkSkill(SkillData data) => data.cost < actor.Stats.ENG;
         private void executeCommand(ICommand command) => StartCoroutine(CO_ExecuteCommand(command));
 
         private IEnumerator CO_ExecuteCommand(ICommand command)

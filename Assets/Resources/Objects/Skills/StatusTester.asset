@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fd1397b651a274680aebcc05a89e95, type: 3}
   m_Name: StatusTester
   m_EditorClassIdentifier: 
+  skillPrefab: {fileID: 8383384687657792533, guid: de565a75496286641894eee3975bf24f, type: 3}
+  animationClips:
+  - {fileID: 7400000, guid: 019a03e2a219dda4a959cfb52f87b214, type: 2}
+  - {fileID: 7400000, guid: fff55b318862bdf47bea6dcbb63f57d7, type: 2}
+  - {fileID: 7400000, guid: 1e874996b899f964197f31905d9e54b5, type: 2}
   data:
     id: 3
     displayName: Status Test
@@ -22,4 +27,5 @@ MonoBehaviour:
     augData: {fileID: 11400000, guid: f82e5f1f0606bd7428ac2d2223d677aa, type: 2}
     cost: 5
     menuUsable: 1
+    Power: 5
     status: 2

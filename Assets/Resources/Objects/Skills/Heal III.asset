@@ -18,9 +18,9 @@ MonoBehaviour:
     description: Heals a lot of health
     requiredLevel: 1
     duration: 0
-    maxStacks: 1
     sprite: {fileID: -343394817, guid: ac4dda5c0cc76bb42a24aec8ed610153, type: 3}
     augData: {fileID: 11400000, guid: 35f81a74b68f7084ca9144fd18721e31, type: 2}
     cost: 20
     menuUsable: 1
+    Power: -400
     status: 2

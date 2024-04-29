@@ -106,23 +106,15 @@ namespace MGCNTN.Battle
             StartCoroutine(gfx.CO_DamageAnimation(damage, Color.white));
             handleDamage(damage);
         }
-
-        public void UpdateHealth()
-        {
-            updateHealth?.Invoke(Stats.HP, Stats.MAXHP);
-        }
-
-        public void UpdateEnergy()
-        {
-            updateEnergy?.Invoke(Stats.ENG, Stats.MAXENG);
-        }
+        public void UpdateHealth() => updateHealth?.Invoke(Stats.HP, Stats.MAXHP);
+        public void UpdateEnergy() => updateEnergy?.Invoke(Stats.ENG, Stats.MAXENG);
 
         ///Privat Functions
         private void handleDamage(int damage)
         {
             Stats.HP -= damage;
             updateHealth?.Invoke(Stats.HP, Stats.MAXHP);
-            checkDeath(true);
+            checkDeath(false);
         }
 
         ///Destroy
