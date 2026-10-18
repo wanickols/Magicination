@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fd1397b651a274680aebcc05a89e95, type: 3}
   m_Name: Heal II
   m_EditorClassIdentifier: 
+  skillPrefab: {fileID: 0}
+  animationClips: []
   data:
     id: 1
     displayName: Heal II
@@ -22,5 +24,6 @@ MonoBehaviour:
     augData: {fileID: 11400000, guid: 35f81a74b68f7084ca9144fd18721e31, type: 2}
     cost: 20
     menuUsable: 1
-    Power: -200
+    Power: 200
+    isHeal: 1
     status: 1

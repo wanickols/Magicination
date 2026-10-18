@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0968e1c09e3e5745b0a2f5a59754a0a, type: 3}
   m_Name: Battle Data
   m_EditorClassIdentifier: 
+  currentActor: {fileID: 0}
+  allies: []
+  enemies: []
+  nextSix: []
+  enemyPack: {fileID: 0}

@@ -22,12 +22,14 @@ MonoBehaviour:
     eng: 0
     maxEng: 0
     atk: 0
+    matk: 0
     def: 0
+    mdef: 0
     spd: 0
     evs: 0
     enc: 0
   hasStatus: 1
   statusList:
   - type: 0
-    duration: 3
+    duration: 2
     severityLevel: 1

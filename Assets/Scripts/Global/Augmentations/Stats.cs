@@ -17,6 +17,9 @@ namespace MGCNTN
         protected const int MAX_POSSIBLE_ATK = 999; //Physical Attack
         protected const int MAX_POSSIBLE_DEF = 999; //Physical Defense
 
+        protected const int MAX_POSSIBLE_MATK = 999; //Magical Attack
+        protected const int MAX_POSSIBLE_MDEF = 999; //Magical Defense
+
         protected const int MAX_POSSIBLE_SPD = 99; //Speed 
         protected const int MAX_POSSIBLE_EVS = 99; //Evasion
 
@@ -32,16 +35,18 @@ namespace MGCNTN
         [SerializeField] protected int eng;
         [SerializeField] protected int maxEng;
         [SerializeField] protected int atk;
+        [SerializeField] protected int matk;
         [SerializeField] protected int def;
+        [SerializeField] protected int mdef;
         [SerializeField] protected int spd;
         [SerializeField] protected int evs;
         [SerializeField] protected int enc;
 
 
         /// Public Functions
-        public Stats() => lv = exp = hp = maxHp = eng = maxEng = atk = def = spd = evs = 0;
+        public Stats() => lv = exp = hp = maxHp = eng = maxEng = atk = def = matk = mdef = spd = evs = 0;
 
-        public Stats(int lv, int exp, int hp, int maxHp, int eng, int maxEng, int atk, int def, int spd, int evs)
+        public Stats(int lv, int exp, int hp, int maxHp, int eng, int maxEng, int atk, int def, int matk, int mdef, int spd, int evs)
         {
             this.lv = lv;
             this.exp = exp;
@@ -50,7 +55,9 @@ namespace MGCNTN
             this.maxEng = maxEng;
             this.eng = eng;
             this.atk = atk;
+            this.matk = matk;
             this.def = def;
+            this.mdef = mdef;
             this.spd = spd;
             this.evs = evs;
         }
@@ -132,12 +139,30 @@ namespace MGCNTN
             }
         }
 
+        public int MATK
+        {
+            get => matk;
+            set
+            {
+                matk = Mathf.Clamp(value, 0, MAX_POSSIBLE_MATK);
+            }
+        }
+
         public int DEF
         {
             get => def;
             set
             {
                 def = Mathf.Clamp(value, 0, MAX_POSSIBLE_DEF);
+            }
+        }
+
+        public int MDEF
+        {
+            get => mdef;
+            set
+            {
+               mdef = Mathf.Clamp(value, 0, MAX_POSSIBLE_MDEF);
             }
         }
         public int SPD
@@ -189,6 +214,8 @@ namespace MGCNTN
             result.ENG = a.eng + b.eng;
             result.ATK = a.atk + b.atk;
             result.DEF = a.def + b.def;
+            result.MATK = a.matk + b.matk;
+            result.MDEF = a.mdef + b.mdef;
             result.SPD = a.spd + b.spd;
             result.EVS = a.evs + b.evs;
             result.ENC = a.enc + b.enc;
@@ -218,6 +245,8 @@ namespace MGCNTN
             result.ENG = a.eng - b.eng;
             result.ATK = a.atk - b.atk;
             result.DEF = a.def - b.def;
+            result.MATK = a.matk - b.matk;
+            result.MDEF = a.mdef - b.mdef;
             result.SPD = a.spd - b.spd;
             result.EVS = a.evs - b.evs;
             result.ENC = a.enc - b.enc;

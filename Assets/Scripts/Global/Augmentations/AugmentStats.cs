@@ -8,7 +8,7 @@ namespace MGCNTN
         public int parentID = 0;
         public int duration = 0;
 
-        public AugmentStats(int lv, int exp, int hp, int maxHp, int mp, int maxMp, int atk, int def, int spd, int evs, int duration, int parentID) : base(lv, exp, hp, maxHp, mp, maxMp, atk, def, spd, evs)
+        public AugmentStats(int lv, int exp, int hp, int maxHp, int eng, int maxEng, int atk, int def, int matk, int mdef, int spd, int evs, int duration, int parentID) : base(lv, exp, hp, maxHp, eng, maxEng, atk, def, matk, mdef, spd, evs)
         {
             this.duration = duration;
             this.parentID = parentID;

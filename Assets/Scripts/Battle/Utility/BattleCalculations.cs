@@ -7,9 +7,9 @@ namespace MGCNTN.Battle
     public static class BattleCalculations
     {
 
-        public static void Attack(Actor attacker, Actor defender)
+        public static void Attack(Actor attacker, Actor defender, int power = 0)
         {
-            int damage = attacker.Stats.ATK - defender.Stats.DEF;
+            int damage = attacker.Stats.ATK - defender.Stats.DEF + power;
 
             if (damage < 1)
                 damage = 1;
@@ -31,12 +31,11 @@ namespace MGCNTN.Battle
         public static void UseSkill(Actor attacker, Actor defender, SkillData skillData)
         {
 
-            //Check Damage
-            if (skillData.Power > 0)
-                Attack(attacker, defender);
-            else if (skillData.Power < 0)
-                defender.takeDamage(skillData.Power);
-
+            if(skillData.isHeal)
+                defender.takeDamage(-skillData.Power);
+            else
+                Attack(attacker, defender, skillData.Power);
+    
             Use(attacker, defender, skillData);
         }
 
