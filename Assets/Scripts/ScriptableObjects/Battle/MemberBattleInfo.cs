@@ -15,10 +15,11 @@ public class MemberBattleInfo : ScriptableObject
     public virtual Stats baseStats { get; set; }
 
     [HideInInspector] public List<AugmentStats> augmentingStats = new List<AugmentStats>();
+    [HideInInspector] public List<Stats> additionalStats = new List<Stats>();
 
     public Stats Stats { get; private set; }
 
-    public void updateStats()
+    public virtual void updateStats()
     {
         Stats combinedStats = new Stats();
 
@@ -37,6 +38,12 @@ public class MemberBattleInfo : ScriptableObject
         foreach (var augmentingStat in augmentingStats)
         {
             combinedStats += augmentingStat;
+        }
+
+        //Add Permenent Stats
+        foreach(var additionalStat in additionalStats)
+        {
+            combinedStats += additionalStat;
         }
 
         Stats = combinedStats;

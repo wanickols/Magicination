@@ -22,6 +22,8 @@ namespace MGCNTN
             results.Add(eng);
             results.Add(atk);
             results.Add(def);
+            results.Add(matk);
+            results.Add(mdef);
             results.Add(spd);
             results.Add(evs);
 
@@ -36,8 +38,10 @@ namespace MGCNTN
                 1 => eng,
                 2 => atk,
                 3 => def,
-                4 => spd,
-                5 => evs,
+                4 => matk,
+                5 => mdef,
+                6 => spd,
+                7 => evs,
                 _ => 0
             };
         }

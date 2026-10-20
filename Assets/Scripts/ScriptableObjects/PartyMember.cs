@@ -14,8 +14,14 @@ public class PartyMember : MemberBattleInfo
     string folderpath => "Playtime/PartyMembers/" + DisplayName + "/";
 
     public override Stats baseStats { get => stats; set => stats = value; }
+    
+    public override void updateStats()
+    {
+        this.additionalStats.Clear();
+        this.additionalStats.Add(equipment.getEquipmentTotalStats());
+        base.updateStats();
+    }
 
-    public Stats CombinedStats => baseStats + equipment.getEquipmentTotalStats();
     public void LoadFromFile(string filePath)
     {
 
@@ -69,6 +75,16 @@ public class PartyMember : MemberBattleInfo
 
         File.WriteAllLines(path, jsons);
         return path;
+    }
+
+    private void OnEnable()
+    {
+        equipment.changedEquipment += updateStats;
+    }
+
+    private void OnDisable()
+    {
+        equipment.changedEquipment -= updateStats;
     }
 
 }

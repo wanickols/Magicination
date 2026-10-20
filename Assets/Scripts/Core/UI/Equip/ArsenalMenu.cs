@@ -47,7 +47,7 @@ namespace MGCNTN.Core
 
             //Init Stat Comparison Lists
             List<int> displayStats, equippedStats;
-            displayStats = equippedStats = new List<int> { 0, 0, 0, 0, 0, 0 };
+            displayStats = equippedStats = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 };
 
             //Null Cheks
             //Selected
