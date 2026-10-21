@@ -30,6 +30,12 @@ namespace MGCNTN.Core
             initRarityLists();
         }
 
+        private void OnValidate()
+        {
+            initLowestWeight();
+            initRarityLists();
+        }
+
         private int lowestWeight = -1;
 
         private void initLowestWeight()
