@@ -167,7 +167,7 @@ namespace MGCNTN.Battle
             attackSetupComplete = false;
 
 
-            if (anim)
+            if (anim.HasAnimation("Moving"))
             {
                 do yield return null;
                 while (!canAnimate);
@@ -182,7 +182,7 @@ namespace MGCNTN.Battle
                 yield return null;
             }
 
-            if (anim)
+            if (anim.HasAnimation("Idle"))
                 anim.Play("Idle");
 
             yield return new WaitForSeconds(.3f);
@@ -196,7 +196,7 @@ namespace MGCNTN.Battle
             do yield return null;
             while (!canAnimate);
 
-            if (anim)
+            if (anim.HasAnimation("Moving"))
                 anim.Play("Moving");
 
             while (currPosition != targetPosition)
@@ -205,7 +205,7 @@ namespace MGCNTN.Battle
                 yield return null;
             }
 
-            if (anim)
+            if (anim.HasAnimation("Idle") && anim.HasAnimation("Moving"))
             {
                 anim.Play("Idle");
                 yield return new WaitForSeconds(.5f);
@@ -219,7 +219,7 @@ namespace MGCNTN.Battle
             }
 
 
-            if (anim)
+            if (anim.HasAnimation("Idle"))
                 anim.Play("Idle");
 
             actor.isTakingTurn = false; ///Maybe reconsider using an an action
@@ -231,7 +231,7 @@ namespace MGCNTN.Battle
             do yield return null;
             while (!canAnimate);
 
-            if (anim != null)
+            if (anim.HasAnimation("Death"))
             {
                 anim.Play("Death");
                 do yield return null;
@@ -255,7 +255,7 @@ namespace MGCNTN.Battle
             targetPos = targetPos + offset;
 
             //Start
-            if (anim)
+            if (anim.HasAnimation("Moving"))
                 anim.Play("Moving");
 
             //Move
@@ -270,7 +270,7 @@ namespace MGCNTN.Battle
 
 
             //Atack
-            if (anim)
+            if (anim.HasAnimation("Attack") && anim.HasAnimation("Idle"))
             {
                 anim.Play("Attack");
 
@@ -288,7 +288,7 @@ namespace MGCNTN.Battle
             do yield return null;
             while (!canAnimate);
 
-            if (!anim)
+            if (!anim.HasAnimation("Damaged"))
             {
                 spawnDamageNumbers(damage, color);
                 yield return null;

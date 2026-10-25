@@ -48,6 +48,12 @@ namespace MGCNTN
         //Animator
         public static bool IsAnimating(this Animator animator, int layer = 0) => animator.GetCurrentAnimatorStateInfo(layer).normalizedTime < 1;
 
+        public static bool HasAnimation(this Animator anim, string animationName)
+        {
+            return anim &&
+                anim.HasState(0, Animator.StringToHash(animationName));
+        }
+
         //Actor List
 
         public static List<Actor> getLive(this List<Actor> actors)
