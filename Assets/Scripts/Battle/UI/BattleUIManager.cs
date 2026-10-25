@@ -31,7 +31,7 @@ namespace MGCNTN.Battle
         [SerializeField] private BattleWindow battleWindow;
 
 
-        private BattleData data;
+        private BattleData data => battle.data;
         private Battle battle;
         private List<StatContainer> statsContainerList = new List<StatContainer>();
         private List<Actor> actors = new List<Actor>();
@@ -42,9 +42,8 @@ namespace MGCNTN.Battle
 
         /// Public Functions
         //Init
-        public void init(BattleData data, Battle battle)
+        public void init(Battle battle)
         {
-            this.data = data;
             this.battle = battle;
             Invalid += invalidSelection;
             selectorManager.init(battleWindow, this); ;

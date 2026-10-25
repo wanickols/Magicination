@@ -29,7 +29,7 @@ namespace MGCNTN.Battle
         [Header("Managers")]
         [SerializeField] private BattleUIManager battleUI = new BattleUIManager();
         [SerializeField] private TurnBar turnBar;
-        [SerializeField] private BattleData data;
+        [SerializeField] public BattleData data;
 
         private TurnSystem turnSystem;
 
@@ -54,43 +54,29 @@ namespace MGCNTN.Battle
             }
         }
 
-        public void death()
+        public void death(Actor actor)
         {
-            bool alliesDead = true;
+            if (actor.type == ActorType.Enemy)
+            {
+                //TODO: Award EXP and record loot here. 
+                data.enemies.Remove(actor);
+
+                if (data.enemies.Count == 0)
+                {
+                    tryEnd(true);
+                    return;
+                }
+            }
+            else if (actor.type == ActorType.Ally)
+            {
+                if (data.allies.TrueForAll(ally => ally.IsDead))
+                {
+                    tryEnd(false);
+                    return;
+                }
+            }
+
             data.setTargets();
-            foreach (Actor ally in data.allies)
-            {
-                if (ally.IsDead) continue;
-                else
-                {
-                    alliesDead = false;
-                    break;
-                }
-            }
-
-            if (alliesDead)
-            {
-                tryEnd(false);
-                return;
-            }
-
-            bool enemiesDead = true;
-            foreach (Actor enemy in data.enemies)
-            {
-                if (enemy.IsDead) continue;
-                else
-                {
-                    enemiesDead = false;
-                    break;
-                }
-            }
-
-            if (enemiesDead)
-            {
-                tryEnd(true);
-                return;
-            }
-
             turnSystem.DetermineTurnOrder(turnBar);
         }
 
@@ -98,7 +84,7 @@ namespace MGCNTN.Battle
         private void Awake()
         {
             battleState = BattleStates.battle;
-            battleUI.init(data, this);
+            battleUI.init(this);
             enemyGenerator = new EnemyGenerator(currentRegion);
             partyGenerator = new PartyGenerator();
             turnSystem = new TurnSystem(battleUI, data);

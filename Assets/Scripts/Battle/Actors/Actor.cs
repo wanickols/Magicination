@@ -11,7 +11,7 @@ namespace MGCNTN.Battle
         ///Events
         public Action<int, int> updateHealth;
         public Action<int, int> updateEnergy;
-        public Action Death;
+        public Action<Actor> Death;
 
 
         ///Public Parameters
@@ -52,7 +52,7 @@ namespace MGCNTN.Battle
             {
                 isDead = value;
                 if (isDead)
-                    Death?.Invoke();
+                    Death?.Invoke(this);
             }
         }
 

@@ -239,7 +239,7 @@ namespace MGCNTN.Battle
                 anim.StopPlayback();
             }
 
-            actor.IsDead = true;
+                actor.IsDead = true;
         }
 
         //Attack Anim
