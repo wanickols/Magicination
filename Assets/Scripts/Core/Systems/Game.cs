@@ -45,9 +45,12 @@ namespace MGCNTN.Core
         {
             //Singleton implementations (yes I know issues with these)
             if (manager != null && manager != this)
-                Destroy(this);
-            else
-                manager = this;
+            {
+                Destroy(gameObject);
+                return;
+            }
+                
+            manager = this;
 
             //Gamestate
             initUI();
@@ -71,6 +74,15 @@ namespace MGCNTN.Core
 
             //
             saveManager.Load();
+        }
+
+        private void OnDestroy()
+        {
+            if (manager != this)
+                return;
+
+            encounterManager?.Shutdown();
+            manager = null;
         }
 
         //Init Functions

@@ -6,13 +6,15 @@ namespace MGCNTN.Core
     [Serializable]
     public class EncounterManager
     {
+        private readonly Guid debugId = Guid.NewGuid();
         private StateManager stateManager;
         private MapManager mapManager;
         private Map map => mapManager.map;
         private SceneLoader sceneLoader;
 
-        [SerializeField] private GameObject transitionPrefab;
 
+        [SerializeField] private GameObject transitionPrefab;
+        private Region subscribedRegion;
 
         public EncounterManager() { }
 
@@ -22,20 +24,22 @@ namespace MGCNTN.Core
             this.mapManager = mapManager;
             this.sceneLoader = sceneLoader;
 
-            if (map.region != null)
-            {
-                map.region.TriggerBattle += StartBattle;
-                Debug.Log("Added battle trigger");
-            }
+            SubscribeToRegion(map.region);
         }
-        /*
-                public void debugUpdate()
-                {
-                    if (Input.GetKeyDown(KeyCode.E))
-                        EndBattle();
-                }*/
+      
+
+        public void Shutdown() => UnsubscribeFromRegion();
+
+       
         public void StartBattle()
         {
+           Debug.Log(
+               $"StartBattle: EncounterManager ID={debugId}, " +
+               $"Map={(map ? map.GetInstanceID().ToString() : "NULL")}"
+           );
+
+
+            if (!map) return;
 
             if (!stateManager.tryState(GameState.Battle))
                 return;
@@ -66,10 +70,24 @@ namespace MGCNTN.Core
 
         }
 
-        ~EncounterManager()
+        //private
+        private void SubscribeToRegion(Region region)
         {
-            if (map.region != null)
-                map.region.TriggerBattle -= StartBattle;
+            UnsubscribeFromRegion();
+
+            if (region == null)
+                return;
+
+            subscribedRegion = region;
+            subscribedRegion.TriggerBattle += StartBattle;
+        }
+        private void UnsubscribeFromRegion()
+        {
+            if (subscribedRegion == null)
+                return;
+
+            subscribedRegion.TriggerBattle -= StartBattle;
+            subscribedRegion = null;
         }
 
     }
