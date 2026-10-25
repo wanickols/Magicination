@@ -150,6 +150,8 @@ namespace MGCNTN
             //DEbug
             Skill status = Resources.Load<Skill>("Objects/Skills/StatusTester");
             activeMembers[0].activeSkills.Add(0, status);
+            activeMembers[1].activeSkills.Add(0, status);
+            activeMembers[2].activeSkills.Add(0, status);
             //Consumable revive = Resources.Load<Consumable>("items/consumables/revive");
 
             //bag.Add(potion);

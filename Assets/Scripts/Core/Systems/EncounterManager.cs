@@ -23,7 +23,10 @@ namespace MGCNTN.Core
             this.sceneLoader = sceneLoader;
 
             if (map.region != null)
+            {
                 map.region.TriggerBattle += StartBattle;
+                Debug.Log("Added battle trigger");
+            }
         }
         /*
                 public void debugUpdate()

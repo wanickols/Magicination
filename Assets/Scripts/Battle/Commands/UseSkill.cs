@@ -41,11 +41,20 @@ public class UseSkill : ICommand
 
     private void finish()
     {
+        if (isFinished)
+            return;
+
+        isFinished = true;
+
         if (success)
         {
             foreach (Actor target in targets)
+            {
+                if (target == null)
+                    continue;
+
                 BattleCalculations.UseSkill(user, target, skill.Data);
+            }
         }
-        isFinished = true;
     }
 }

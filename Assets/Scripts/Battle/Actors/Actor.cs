@@ -101,11 +101,8 @@ namespace MGCNTN.Battle
             handleDamage(damage);
         }
 
-        public void takeDamage(int damage)
-        {
-            StartCoroutine(gfx.CO_DamageAnimation(damage, Color.white));
-            handleDamage(damage);
-        }
+        public void takeDamage(int damage) => takeDamage(damage, Color.white);
+       
         public void UpdateHealth() => updateHealth?.Invoke(Stats.HP, Stats.MAXHP);
         public void UpdateEnergy() => updateEnergy?.Invoke(Stats.ENG, Stats.MAXENG);
 

@@ -26,6 +26,7 @@ namespace MGCNTN.Core
 
         public bool Save()
         {
+            Debug.Log("Saving...");
             bool success = true;
             foreach (ISavable obj in saveObjects)
             {
@@ -35,7 +36,7 @@ namespace MGCNTN.Core
                     Debug.Log("Saving failed of " + obj.ErrorMessage);
                 }
             }
-
+            Debug.Log("Saved");
             return success;
         }
 
