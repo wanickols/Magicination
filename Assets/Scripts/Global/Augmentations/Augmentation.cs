@@ -44,8 +44,8 @@ namespace MGCNTN
         {
             if (augments is AugmentStats) //temp
                 target.augmentingStats.Add((AugmentStats)augments);
-            else //permanent
-                target.baseStats += augments;
+            //else //permanent
+            //    target.Stats += augments;
 
         }
         private void augmentStatus() => target.Statuses.Add(statusList);

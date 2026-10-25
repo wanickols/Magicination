@@ -29,22 +29,22 @@ namespace MGCNTN
 
         public static int nextID = 0;
 
-        protected override void usePerm(MemberBattleInfo target, Stats user)
+        protected override void usePerm(MemberBattleInfo target, MemberBattleInfo user)
         {
-            if (user.ENG < cost)
+            if (user.Stats.ENG < cost)
                 return; //Call Invalid action noise or something
 
-            user.ENG -= cost;
+            user.incrementEnergyUsed(cost);
 
             base.usePerm(target, user);
         }
 
-        protected override void useTemp(MemberBattleInfo target, Stats user)
+        protected override void useTemp(MemberBattleInfo target, MemberBattleInfo user)
         {
-            if (user.ENG < cost)
+            if (user.Stats.ENG < cost)
                 return; //Call Invalid action noise or something
 
-            user.ENG -= cost;
+            user.incrementEnergyUsed(cost);
 
             base.useTemp(target, user);
         }

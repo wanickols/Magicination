@@ -84,11 +84,10 @@ namespace MGCNTN
         private void applyPoison(Status status)
         {
 
-            int maxHP = m_battleInfo.baseStats.MAXHP;
+            int maxHP = m_battleInfo.Stats.MAXHP;
             int poisonDamage = Mathf.RoundToInt(maxHP * poisonPercentage * status.severityLevel);
 
             // Apply poison damage to current HP
-            m_battleInfo.baseStats.HP -= poisonDamage;
             coloredDamage?.Invoke(poisonDamage, Color.magenta);
         }
 
@@ -96,7 +95,6 @@ namespace MGCNTN
         {
             int burnDamage = 10 * status.severityLevel;
 
-            m_battleInfo.baseStats.HP -= burnDamage;
             coloredDamage?.Invoke(burnDamage, Color.red);
         }
         private void tickStats() => augmentStats.tickDuration();

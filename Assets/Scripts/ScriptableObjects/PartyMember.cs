@@ -13,7 +13,7 @@ public class PartyMember : MemberBattleInfo
 
     string folderpath => "Playtime/PartyMembers/" + DisplayName + "/";
 
-    public override Stats baseStats { get => stats; set => stats = value; }
+    protected override Stats baseStats { get => stats; set => stats = value; }
     
     public override void updateStats()
     {

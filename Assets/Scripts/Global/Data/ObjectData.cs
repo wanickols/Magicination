@@ -17,7 +17,7 @@ namespace MGCNTN
         [Header("Augmentation")]
         public AugmentationData augData;
 
-        public void use(MemberBattleInfo target, Stats user)
+        public void use(MemberBattleInfo target, MemberBattleInfo user)
         {
             if (duration == 0)
                 usePerm(target, user);
@@ -25,9 +25,9 @@ namespace MGCNTN
                 useTemp(target, user);
         }
 
-        protected virtual void usePerm(MemberBattleInfo target, Stats user) => augData.CreateAugmentation(target).ApplyEffect();
+        protected virtual void usePerm(MemberBattleInfo target, MemberBattleInfo user) => augData.CreateAugmentation(target).ApplyEffect();
 
-        protected virtual void useTemp(MemberBattleInfo target, Stats user) => augData.CreateAugmentation(target, duration, id).ApplyEffect();
+        protected virtual void useTemp(MemberBattleInfo target, MemberBattleInfo user) => augData.CreateAugmentation(target, duration, id).ApplyEffect();
 
 
 

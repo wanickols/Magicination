@@ -11,5 +11,5 @@ public class EnemyData : MemberBattleInfo
     public EnemyRarity enemyRarity => stats.enemyRarity;
 
     [SerializeField] private EnemyStats stats;
-    public override Stats baseStats => stats;
+    protected override Stats baseStats => stats;
 }

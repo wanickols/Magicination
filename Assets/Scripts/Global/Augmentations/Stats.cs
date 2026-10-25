@@ -30,9 +30,9 @@ namespace MGCNTN
         [SerializeField] protected int lv;
         [SerializeField] protected int exp;
         [SerializeField] protected int nxtExp;
-        [SerializeField] protected int hp;
+        [SerializeField] protected int damageTaken;
         [SerializeField] protected int maxHp;
-        [SerializeField] protected int eng;
+        [SerializeField] protected int energyUsed;
         [SerializeField] protected int maxEng;
         [SerializeField] protected int atk;
         [SerializeField] protected int matk;
@@ -44,16 +44,16 @@ namespace MGCNTN
 
 
         /// Public Functions
-        public Stats() => lv = exp = hp = maxHp = eng = maxEng = atk = def = matk = mdef = spd = evs = 0;
+        public Stats() => lv = exp = damageTaken = maxHp = energyUsed = maxEng = atk = def = matk = mdef = spd = evs = 0;
 
-        public Stats(int lv, int exp, int hp, int maxHp, int eng, int maxEng, int atk, int def, int matk, int mdef, int spd, int evs)
+        public Stats(int lv, int exp, int damageTaken, int maxHp, int energyUsed, int maxEng, int atk, int def, int matk, int mdef, int spd, int evs)
         {
             this.lv = lv;
             this.exp = exp;
-            this.hp = hp;
+            this.damageTaken = damageTaken;
             this.maxHp = maxHp;
             this.maxEng = maxEng;
-            this.eng = eng;
+            this.energyUsed = energyUsed;
             this.atk = atk;
             this.matk = matk;
             this.def = def;
@@ -94,23 +94,20 @@ namespace MGCNTN
         }
 
 
-        public int HP
-        {
-            get => hp;
-            set
-            {
-                hp = Mathf.Clamp(value, 0, maxHp);
-            }
+        public int HP => Mathf.Max(0, MAXHP - damageTaken);
+
+        public int EnergyUsed {
+            get => energyUsed;
+            set => energyUsed = Mathf.Clamp(value, 0, MAX_POSSIBLE_ENG);
         }
 
-        public int ENG
+        public int DamageTaken
         {
-            get => eng;
-            set
-            {
-                eng = Mathf.Clamp(value, 0, maxEng);
-            }
+            get => damageTaken;
+            set => damageTaken = Mathf.Clamp(value, 0, MAX_POSSIBLE_HP);
         }
+
+        public int ENG => maxEng - energyUsed;
 
         public int MAXHP
         {
@@ -209,9 +206,9 @@ namespace MGCNTN
             result.NXTEXP = a.nxtExp + b.nxtExp;
             result.EXP = a.exp + b.exp;
             result.MAXHP = a.maxHp + b.maxHp;
-            result.HP = a.hp + b.hp;
+            result.DamageTaken = a.damageTaken + b.damageTaken;
             result.MAXENG = a.maxEng + b.maxEng;
-            result.ENG = a.eng + b.eng;
+            result.EnergyUsed = a.energyUsed + b.energyUsed;
             result.ATK = a.atk + b.atk;
             result.DEF = a.def + b.def;
             result.MATK = a.matk + b.matk;
@@ -240,9 +237,9 @@ namespace MGCNTN
             result.NXTEXP = a.nxtExp - b.nxtExp;
             result.EXP = a.exp - b.exp;
             result.MAXHP = a.maxHp - b.maxHp;
-            result.HP = a.hp - b.hp;
+            result.DamageTaken = a.damageTaken - b.damageTaken;
             result.MAXENG = a.maxEng + b.maxEng;
-            result.ENG = a.eng - b.eng;
+            result.EnergyUsed = a.energyUsed - b.energyUsed;
             result.ATK = a.atk - b.atk;
             result.DEF = a.def - b.def;
             result.MATK = a.matk - b.matk;

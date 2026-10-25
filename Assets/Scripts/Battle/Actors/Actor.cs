@@ -85,8 +85,6 @@ namespace MGCNTN.Battle
         {
             if (Stats.HP <= 0)
             {
-                Stats.HP = 0;
-
                 if (instant)
                     IsDead = true;
 
@@ -109,7 +107,7 @@ namespace MGCNTN.Battle
         ///Privat Functions
         private void handleDamage(int damage)
         {
-            Stats.HP -= damage;
+            memberBattleInfo.incrementDamage(damage);
             updateHealth?.Invoke(Stats.HP, Stats.MAXHP);
             checkDeath(false);
         }

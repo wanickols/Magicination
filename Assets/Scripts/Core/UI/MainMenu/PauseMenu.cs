@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using UnityEngine;
 
 namespace MGCNTN.Core
@@ -58,6 +59,7 @@ namespace MGCNTN.Core
         {
             inputHandler.resetLastPressedTime();
             mainSelector.SelectedIndex = 0;
+            mainWindow.UpdateParty();
             animator.Play(menuOpenAnimation);
             openMenu?.Invoke();
         }

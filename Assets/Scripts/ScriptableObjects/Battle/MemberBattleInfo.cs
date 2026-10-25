@@ -12,44 +12,32 @@ public class MemberBattleInfo : ScriptableObject
 
 
     ///Stats
-    public virtual Stats baseStats { get; set; }
+    protected virtual Stats baseStats { get; set; }
 
     [HideInInspector] public List<AugmentStats> augmentingStats = new List<AugmentStats>();
     [HideInInspector] public List<Stats> additionalStats = new List<Stats>();
 
-    public Stats Stats { get; private set; }
+    protected Stats addOnStats { get; set; }
+    public Stats Stats => baseStats + addOnStats;
+
+    public void incrementDamage(int ammount) { baseStats.DamageTaken += ammount; }
+    public void incrementEnergyUsed(int ammount) { baseStats.EnergyUsed += ammount; }
 
     public virtual void updateStats()
     {
-        Stats combinedStats = new Stats();
+        addOnStats = new Stats();
 
-        // Add individual stats
-        if (baseStats != null)
-            combinedStats += baseStats;
-
-        int damageTaken = 0, energyUsed = 0;
-
-        if (Stats != null)
-        {
-            damageTaken = Stats.MAXHP - Stats.HP;
-            energyUsed = Stats.MAXENG - Stats.ENG;
-        }
         // Add augmenting stats
         foreach (var augmentingStat in augmentingStats)
         {
-            combinedStats += augmentingStat;
+            addOnStats += augmentingStat;
         }
 
         //Add Permenent Stats
         foreach(var additionalStat in additionalStats)
         {
-            combinedStats += additionalStat;
+            addOnStats += additionalStat;
         }
-
-        Stats = combinedStats;
-
-        Stats.HP -= damageTaken;
-        Stats.ENG -= energyUsed;
     }
 
 

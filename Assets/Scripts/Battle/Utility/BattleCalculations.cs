@@ -21,7 +21,7 @@ namespace MGCNTN.Battle
         {
 
 
-            data.use(defender.memberBattleInfo, attacker.Stats);
+            data.use(defender.memberBattleInfo, attacker.memberBattleInfo);
 
             defender.statusApplied();
             defender.UpdateHealth();

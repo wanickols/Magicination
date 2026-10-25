@@ -32,7 +32,7 @@ namespace MGCNTN.Core
         public bool canSelectSkill => skillMenu.canSelect;
 
         /// Unity Functions
-        private void Start()
+        private void Awake()
         {
             ShowDefaultView();
 
@@ -167,7 +167,7 @@ namespace MGCNTN.Core
         }
 
 
-        public void skillSelected() => openPartyTargetWindow(PartyTargetSelections.skill, skillMenu.skill.Data, skillMenu.member.Stats);
+        public void skillSelected() => openPartyTargetWindow(PartyTargetSelections.skill, skillMenu.skill.Data, skillMenu.member);
 
         //Skill Action
         public void ShowSkillActionWindow() => skillMenu.openActionBar();
@@ -180,6 +180,15 @@ namespace MGCNTN.Core
 
         public void removeSkill(int index) => skillMenu.back(index);
 
+        public void UpdateParty() {
+            foreach (Transform child in transform)
+            {
+                PartyMemberInfo pmi = child.GetComponent<PartyMemberInfo>();
+                if (pmi != null)
+                    pmi.UpdateInfo();
+            }
+        }
+
         /// Private Functions
         //Party Targeting
         private void hidePartyMembers()
@@ -190,7 +199,7 @@ namespace MGCNTN.Core
                     child.gameObject.SetActive(false);
             }
         }
-        private void openPartyTargetWindow(PartyTargetSelections selectionType, ObjectData data, Stats user)
+        private void openPartyTargetWindow(PartyTargetSelections selectionType, ObjectData data, MemberBattleInfo user)
         {
             PartyTargetWindow.SetActive(true);
             partyTargetMenu.initTargets(selectionType, data, user);

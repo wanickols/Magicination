@@ -13,10 +13,10 @@ namespace MGCNTN.Core
 
         private List<PartyMemberTarget> targets = new List<PartyMemberTarget>();
         private ObjectData data;
-        private Stats user;
+        private MemberBattleInfo user;
 
         /// Public Functions
-        public void initTargets(PartyTargetSelections selectionType, ObjectData data, Stats user)
+        public void initTargets(PartyTargetSelections selectionType, ObjectData data, MemberBattleInfo user)
         {
             this.selectionType = selectionType;
             this.data = data;

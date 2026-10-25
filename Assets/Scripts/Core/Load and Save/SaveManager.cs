@@ -28,12 +28,12 @@ namespace MGCNTN.Core
         {
             Debug.Log("Saving...");
             bool success = true;
-            foreach (ISavable obj in saveObjects)
+             foreach (ISavable obj in saveObjects)
             {
                 if (!obj.SaveData())
                 {
                     success = false;
-                    Debug.Log("Saving failed of " + obj.ErrorMessage);
+                     Debug.Log("Saving failed of " + obj.ErrorMessage);
                 }
             }
             Debug.Log("Saved");

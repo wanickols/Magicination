@@ -19,18 +19,22 @@ namespace MGCNTN.Core
         // Start is called before the first frame update
         void OnEnable()
         {
+            UpdateInfo();
+        }
 
+        public void UpdateInfo()
+        {
             int siblingIndex = this.gameObject.transform.GetSiblingIndex();
             if (siblingIndex < Party.ActiveMembers.Count)
             {
                 partyMember = Party.ActiveMembers[siblingIndex];
-                DisplayInfo();
+                displayInfo();
             }
             else
                 this.gameObject.SetActive(false);
         }
 
-        private void DisplayInfo()
+        private void displayInfo()
         {
             Stats stats = partyMember.Stats;
             memberName.text = partyMember.DisplayName;

@@ -12,14 +12,14 @@ namespace MGCNTN
 
         public EquippableStats() : base() { }
 
-        public EquippableStats(int lv, int exp, int hp, int maxHp, int eng, int maxEng, int atk, int def, int matk, int mdef, int spd, int evs) : base(lv, exp, hp, maxHp, eng, maxEng, atk, def, matk, mdef, spd, evs) { }
+        public EquippableStats(int lv, int exp, int maxHp, int maxEng, int atk, int def, int matk, int mdef, int spd, int evs) : base(lv, exp, 0, maxHp, 0, maxEng, atk, def, matk, mdef, spd, evs) { }
 
         public List<int> getDisplayStatValues()
         {
             List<int> results = new List<int>();
 
-            results.Add(hp);
-            results.Add(eng);
+            results.Add(maxHp);
+            results.Add(maxEng);
             results.Add(atk);
             results.Add(def);
             results.Add(matk);
@@ -34,8 +34,8 @@ namespace MGCNTN
         {
             return index switch
             {
-                0 => hp,
-                1 => eng,
+                0 => maxHp,
+                1 => maxEng,
                 2 => atk,
                 3 => def,
                 4 => matk,
