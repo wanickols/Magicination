@@ -19,9 +19,9 @@ MonoBehaviour:
   additionalStats: []
   playableCharacter: 0
   stats:
-    lv: 0
-    exp: 0
-    nxtExp: 0
+    lv: 1
+    exp: 5
+    nxtExp: 100
     damageTaken: 0
     maxHp: 20
     energyUsed: 0

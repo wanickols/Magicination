@@ -80,13 +80,21 @@ namespace MGCNTN
             get => exp;
             set
             {
-                exp = Mathf.Clamp(value, 0, nxtExp);
+                exp = Mathf.Clamp(value, 0, MAX_POSSIBLE_EXP);
+                tryLevelUp();
+            }
+        }
+
+        private void tryLevelUp() {
+            while (exp > nxtExp && LV < MAX_POSSIBLE_LEVEL && exp < MAX_POSSIBLE_EXP) {
+                LV++;
+                nxtExp = (int)(nxtExp * 1.5);
             }
         }
 
         public int NXTEXP
         {
-            get => (int)(exp * 1.5f); //todo make a better func for this
+            get => nxtExp;
             set
             {
                 nxtExp = Mathf.Clamp(value, 0, MAX_POSSIBLE_EXP);
@@ -216,6 +224,8 @@ namespace MGCNTN
             result.SPD = a.spd + b.spd;
             result.EVS = a.evs + b.evs;
             result.ENC = a.enc + b.enc;
+
+            result.tryLevelUp();
 
             // Return the new Stats object
             return result;

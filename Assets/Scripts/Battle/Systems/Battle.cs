@@ -25,6 +25,7 @@ namespace MGCNTN.Battle
         // Other Battle Handler/Managers/Classes
         private EnemyGenerator enemyGenerator;
         private PartyGenerator partyGenerator;
+        private RewardManager rewardManager;
 
         [Header("Managers")]
         [SerializeField] private BattleUIManager battleUI = new BattleUIManager();
@@ -32,7 +33,6 @@ namespace MGCNTN.Battle
         [SerializeField] public BattleData data;
 
         private TurnSystem turnSystem;
-
 
         /// Public functions
 
@@ -49,8 +49,10 @@ namespace MGCNTN.Battle
             }
             else
             {
+                rewardManager.DetermineRewards(data.allies);
                 //Show Victory Stuff
                 endBattle?.Invoke();
+
             }
         }
 
@@ -58,7 +60,8 @@ namespace MGCNTN.Battle
         {
             if (actor.type == ActorType.Enemy)
             {
-                //TODO: Award EXP and record loot here. 
+                Stats s = actor.memberBattleInfo.Stats;
+                rewardManager.AwardExp(s.LV, s.EXP);
                 data.enemies.Remove(actor);
 
                 if (data.enemies.Count == 0)
@@ -88,6 +91,7 @@ namespace MGCNTN.Battle
             enemyGenerator = new EnemyGenerator(currentRegion);
             partyGenerator = new PartyGenerator();
             turnSystem = new TurnSystem(battleUI, data);
+            rewardManager = new RewardManager();
         }
 
         private void Start()
