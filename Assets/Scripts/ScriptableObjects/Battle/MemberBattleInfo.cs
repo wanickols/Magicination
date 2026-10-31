@@ -1,10 +1,13 @@
 using MGCNTN;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Member Battle Info", menuName = "Member Battle Info")]
 public class MemberBattleInfo : ScriptableObject
 {
+    public Action<int> LevelUp;
+
     [SerializeField] private string _name;
     [SerializeField] private GameObject actorPrefab;
 
@@ -20,7 +23,13 @@ public class MemberBattleInfo : ScriptableObject
     protected Stats addOnStats { get; set; }
     public Stats Stats => baseStats + addOnStats;
 
-    public void incrementExp(int xp) => baseStats.EXP += xp;
+    public void incrementExp(int xp) {
+        baseStats.EXP += xp;
+        int levelsGained = baseStats.tryLevelUp();
+
+        if (levelsGained > 0)
+            LevelUp?.Invoke(levelsGained);
+    }
 
     public void incrementDamage(int ammount) => baseStats.DamageTaken += ammount;
     public void incrementEnergyUsed(int ammount) => baseStats.EnergyUsed += ammount;
