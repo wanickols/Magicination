@@ -16,22 +16,24 @@ MonoBehaviour:
   effect: 0
   data:
     id: 3
-    price: 0
     displayName: Jade Ring
     description: A beautiful ring made of jade, a precious stone that has many meanings
       and benefits. Wearing this ring can increase your prosperity, wisdom, healing,
       and longevity.
-    quantity: 1
-    sprite: {fileID: -1068892641, guid: 0a93def93241cb04a94250d7103e1818, type: 3}
     requiredLevel: 5
+    duration: 0
+    sprite: {fileID: -1068892641, guid: 0a93def93241cb04a94250d7103e1818, type: 3}
+    augData: {fileID: 0}
+    price: 0
+    quantity: 1
   stats:
     lv: 5
     exp: 1
-    nxtExp: 100
-    hp: 0
+    nxtExp: 0
+    damageTaken: 0
     maxHp: 0
-    mp: 0
-    maxMp: 0
+    energyUsed: 0
+    maxEng: 0
     atk: 2
     matk: 0
     def: 0

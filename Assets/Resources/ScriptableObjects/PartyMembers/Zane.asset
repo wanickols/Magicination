@@ -16,14 +16,15 @@ MonoBehaviour:
   actorPrefab: {fileID: 2832430299845234393, guid: b0b68a9c24543714daf6601678877e39, type: 3}
   menuPortrait: {fileID: 21300000, guid: 11d15ed98568fc54b9a15509f3e30d63, type: 3}
   augmentingStats: []
+  additionalStats: []
   playableCharacter: 3
   stats:
     lv: 1
     exp: 1
-    nxtExp: 100
-    hp: 100
+    nxtExp: 5
+    damageTaken: 0
     maxHp: 100
-    eng: 10
+    energyUsed: 0
     maxEng: 10
     atk: 3
     matk: 0

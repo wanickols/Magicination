@@ -18,7 +18,9 @@ public class PartyMember : MemberBattleInfo
     public override void updateStats()
     {
         this.additionalStats.Clear();
-        this.additionalStats.Add(equipment.getEquipmentTotalStats());
+        Stats s = equipment.getEquipmentTotalStats();
+        s.LV = 0;
+        this.additionalStats.Add(s);
         base.updateStats();
     }
 

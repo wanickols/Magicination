@@ -71,7 +71,7 @@ namespace MGCNTN
             get => lv;
             set
             {
-                lv = Mathf.Clamp(value, 1, MAX_POSSIBLE_LEVEL);
+                lv = Mathf.Clamp(value, 0, MAX_POSSIBLE_LEVEL);
             }
         }
 
@@ -86,9 +86,11 @@ namespace MGCNTN
         }
 
         private void tryLevelUp() {
-            while (exp > nxtExp && LV < MAX_POSSIBLE_LEVEL && exp < MAX_POSSIBLE_EXP) {
+            if (nxtExp == 0) return;
+
+            while (exp >= nxtExp && LV < MAX_POSSIBLE_LEVEL && exp < MAX_POSSIBLE_EXP) {
                 LV++;
-                nxtExp = (int)(nxtExp * 1.5);
+                nxtExp += (int)(nxtExp * 1.5);
             }
         }
 

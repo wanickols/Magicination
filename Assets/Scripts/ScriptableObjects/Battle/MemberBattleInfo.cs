@@ -20,8 +20,10 @@ public class MemberBattleInfo : ScriptableObject
     protected Stats addOnStats { get; set; }
     public Stats Stats => baseStats + addOnStats;
 
-    public void incrementDamage(int ammount) { baseStats.DamageTaken += ammount; }
-    public void incrementEnergyUsed(int ammount) { baseStats.EnergyUsed += ammount; }
+    public void incrementExp(int xp) => baseStats.EXP += xp;
+
+    public void incrementDamage(int ammount) => baseStats.DamageTaken += ammount;
+    public void incrementEnergyUsed(int ammount) => baseStats.EnergyUsed += ammount;
 
     public virtual void updateStats()
     {
