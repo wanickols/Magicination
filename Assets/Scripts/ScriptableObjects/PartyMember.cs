@@ -1,5 +1,7 @@
 using MGCNTN;
+using MGCNTN.Battle;
 using MGCNTN.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,13 +10,32 @@ using UnityEngine;
 public class PartyMember : MemberBattleInfo
 {
     [SerializeField] private Stats stats;
+    public Action LevelUp;
 
     public Equipment equipment = new Equipment();
+    protected ProgressionManager progressionManager = new ProgressionManager();
 
     string folderpath => "Playtime/PartyMembers/" + DisplayName + "/";
 
     protected override Stats baseStats { get => stats; set => stats = value; }
-    
+
+    public void incrementExp(int xp)
+    {
+        baseStats.EXP += xp;
+        int levelsGained = baseStats.tryLevelUp();
+
+        if (levelsGained > 0)
+            levelUp(levelsGained);
+    }
+
+    private void levelUp(int levelsGained) 
+    {
+        for (int i = 0; i < levelsGained; i++) {
+            progressionManager.AllocateStats(baseStats);
+            LevelUp?.Invoke();
+        }
+    }
+
     public override void updateStats()
     {
         this.additionalStats.Clear();

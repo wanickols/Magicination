@@ -21,7 +21,7 @@ namespace MGCNTN.Battle
             foreach (Actor ally in allies)
             {
                 int xp = calculateExp(ally.memberBattleInfo.Stats);
-                ally.memberBattleInfo.incrementExp(xp);
+                ((PartyMember)ally.memberBattleInfo).incrementExp(xp);
             }
         }
 
